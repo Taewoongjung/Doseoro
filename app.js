@@ -1,30 +1,41 @@
 const express = require('express');
-const path = require('path');
-const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
+const path = require('path');
 const session = require('express-session');
-const passport = require('passport');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
+const favicon = require('serve-favicon');
+const passport = require('passport');
+const helmet = require('helmet');
+const hpp = require('hpp'); 
+// const redis = require('redis');
+// const RedisStore = require('connect-redis')(session);
 
 dotenv.config();
+// const redisClient = redis.createClient({
+//   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+//   password: process.env.REDIS_PASSWORD,
+// });
+
+const indexRouter = require('./routes/index');
+// const authRouter = require('./routes/auth');
 
 const app = express();
-passportConfig();
-checkAuction();
-app.set('port', process.env.PORT || 8010);
+// passportConfig();
+app.set('port', process.env.PORT || 1000);
 app.set('view engine', 'html');
 nunjucks.configure('views', {
   express: app,
   watch: true,
 });
-sequelize.sync({ force: false })
-  .then(() => {
-    console.log('데이터베이스 연결 성공');
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+// sequelize.sync({ force: false })
+//   .then(() => {
+//     console.log('데이터베이스 연결 성공');
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
 
 const sessionMiddleware = session({
   resave: false,
@@ -37,17 +48,18 @@ const sessionMiddleware = session({
 });
 
 app.use(morgan('dev'));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/img', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, './public')));
+app.use('/img', express.static(path.join(__dirname, './public/img')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(favicon(path.join(__dirname, '/public/img/logo_clear.png')));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
-app.use('/auth', authRouter);
+// app.use('/auth', authRouter);
 
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
@@ -65,6 +77,3 @@ app.use((err, req, res, next) => {
 const server = app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
 });
-
-webSocket(server, app);
-sse(server);
