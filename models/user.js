@@ -19,8 +19,16 @@ module.exports = class User extends Sequelize.Model {
             phone: {
                 type: Sequelize.STRING(11),
                 allowNull: false,
-                defaultValue: 0,
             },
+            created_at: {
+                type: Sequelize.DATE,
+                allowNull: false,
+                defaultValue: Sequelize.NOW,
+            },
+            answer: {
+                type: Sequelize.STRING(100),
+                allowNull: false,
+            }
         }, {
             sequelize,
             timestamps: true,
@@ -36,4 +44,3 @@ module.exports = class User extends Sequelize.Model {
     //     db.User.hasMany(db.);
     // }
 };
-

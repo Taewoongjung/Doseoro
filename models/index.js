@@ -14,6 +14,6 @@ db.User = User;
 
 User.init(sequelize);
 
-User.associate(db);
+// User.associate(db);
 
 module.exports = db;
