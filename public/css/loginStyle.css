@@ -1,0 +1,37 @@
+body {
+    background-color: rgb(243, 243, 243);
+    display: flex;
+    align-items: center;
+}
+.form-signin {
+    width: 100%;
+    max-width: 380px;
+    margin: 10rem auto;
+    height: auto;
+}
+.form-signin input {
+    padding: 0.7rem 0.7rem 0.7rem 1.2rem;
+}
+.form-signin input[type="id"] {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 0.5rem;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+.form-signin ul {
+    margin: 1rem 0rem;
+}
+.form-signin ul a{
+    font-size: 1rem;
+    text-decoration: none;
+}
+.form-signin label {
+    margin: 1rem 0 0.5rem 0;
+}
+.loginLogo {
+    width: 100%;
+    text-align: center;
+}
