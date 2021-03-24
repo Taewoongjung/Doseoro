@@ -8,6 +8,10 @@ module.exports = class User extends Sequelize.Model {
                 allowNull: false,
                 unique: true,
             },
+            name: {
+                type: Sequelize.STRING(40),
+                allowNull: false,
+            },
             nick: {
                 type: Sequelize.STRING(15),
                 allowNull: false,
@@ -17,18 +21,13 @@ module.exports = class User extends Sequelize.Model {
                 allowNull: false,
             },
             phone: {
-                type: Sequelize.STRING(11),
+                type: Sequelize.STRING(14),
                 allowNull: false,
-            },
-            created_at: {
-                type: Sequelize.DATE,
-                allowNull: false,
-                defaultValue: Sequelize.NOW,
             },
             answer: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
-            }
+            },
         }, {
             sequelize,
             timestamps: true,
