@@ -36,9 +36,7 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
 });
 
 router.post('/login', isNotLoggedIn, (req, res, next) => {
-    console.log("들어옴@@");
     passport.authenticate('local', (authError, user, info) => {
-        console.log("passport들어옴@@");
         if (authError) {
             console.error(authError);
             return next(authError);
@@ -46,7 +44,6 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         if (!user) {
             return res.redirect(`/?loginError=${info.message}`);
         }
-        console.log("통과@@");
         return req.login(user, (loginError) => {
             if (loginError) {
                 console.error(loginError);

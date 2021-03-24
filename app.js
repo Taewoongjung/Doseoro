@@ -38,16 +38,6 @@ sequelize.sync({ force: false })
     console.error(err);
   });
 
-const sessionMiddleware = session({
-  resave: false,
-  saveUninitialized: false,
-  secret: process.env.COOKIE_SECRET,
-  cookie: {
-    httpOnly: true,
-    secure: false,
-  },
-});
-
 if (process.env.NODE_ENV === 'production') {
   app.enable('trust proxy');
   app.use(morgan('combined'));
@@ -61,7 +51,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(favicon(path.join(__dirname, '/public/img/logo_clear.png')));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(sessionMiddleware);
+const sessionOption = {
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+  // 배포 시 주석 풀기
+  // store: new RedisStore({ client: redisClient }),
+};
+if (process.env.NODE_ENV === 'production') {  //배포 할 때
+  sessionOption.proxy = true;
+}
+app.use(session(sessionOption));
 app.use(passport.initialize());
 app.use(passport.session());
 
