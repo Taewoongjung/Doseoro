@@ -4,11 +4,7 @@
   "description": "책판매 사이트",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app",
-    // 배포 시 주석 풀기
-    // "start": "NODE_ENV=production PORT=80 node app",
-    // "dev": "nodemon app",
-    // "test": "jest"
+    "start": "nodemon app"
   },
   "author": "Tae",
   "license": "MIT",

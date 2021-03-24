@@ -59,6 +59,7 @@ const sessionOption = {
     httpOnly: true,
     secure: false,
   },
+  name: 'sessionCookie',
   // 배포 시 주석 풀기
   // store: new RedisStore({ client: redisClient }),
 };
