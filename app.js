@@ -1,18 +1,30 @@
 const express = require('express');
-const path = require('path');
-const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
+const path = require('path');
 const session = require('express-session');
-const passport = require('passport');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
+const favicon = require('serve-favicon');
+const passport = require('passport');
+const helmet = require('helmet');
+const hpp = require('hpp'); 
+// const redis = require('redis');
+// const RedisStore = require('connect-redis')(session);
 
 dotenv.config();
+// const redisClient = redis.createClient({
+//   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+//   password: process.env.REDIS_PASSWORD,
+// });
+const { sequelize } = require('./models');
+const passportConfig = require('./passport');
+const indexRouter = require('./routes/index');
+const authRouter = require('./routes/auth');
 
 const app = express();
 passportConfig();
-checkAuction();
-app.set('port', process.env.PORT || 8010);
+app.set('port', process.env.PORT || 1000);
 app.set('view engine', 'html');
 nunjucks.configure('views', {
   express: app,
@@ -26,7 +38,20 @@ sequelize.sync({ force: false })
     console.error(err);
   });
 
-const sessionMiddleware = session({
+if (process.env.NODE_ENV === 'production') {
+  app.enable('trust proxy');
+  app.use(morgan('combined'));
+  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(hpp());
+} else {
+  app.use(morgan('dev'));
+}
+app.use(express.static(path.join(__dirname, './public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(favicon(path.join(__dirname, '/public/img/logo_clear.png')));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+const sessionOption = {
   resave: false,
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET,
@@ -34,15 +59,14 @@ const sessionMiddleware = session({
     httpOnly: true,
     secure: false,
   },
-});
-
-app.use(morgan('dev'));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/img', express.static(path.join(__dirname, 'uploads')));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(sessionMiddleware);
+  name: 'sessionCookie',
+  // 배포 시 주석 풀기
+  // store: new RedisStore({ client: redisClient }),
+};
+if (process.env.NODE_ENV === 'production') {  //배포 할 때
+  sessionOption.proxy = true;
+}
+app.use(session(sessionOption));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -65,6 +89,3 @@ app.use((err, req, res, next) => {
 const server = app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
 });
-
-webSocket(server, app);
-sse(server);

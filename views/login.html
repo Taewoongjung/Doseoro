@@ -8,8 +8,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="../public/css/style.css">
-    <link rel="stylesheet" href="../public/css/loginStyle.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/loginStyle.css">
     <title>로그인</title>
 </head>
 
@@ -18,7 +18,7 @@
         <!-- 상단 바 -->
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light" id="topNav">
             <div class="container-fluid">
-              <a class="navbar-brand" href="index.html"><img src="../public/img/logo3.png" width="200" height="80"></a>
+              <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="200" height="80"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,7 +32,7 @@
                     <a class="nav-link p-3" href="#">관심상품</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link p-3" href="login.html">로그인</a>
+                    <a class="nav-link p-3" href="/login">로그인</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link p-3" href="#">마이페이지</a>
@@ -44,16 +44,16 @@
 
         <!-- 로그인 영역 -->
         <main class="form-signin">
-            <form>
+            <form id="login-form">
                 <div class="loginLogo">
-                    <img class="" src="../public/img/logo3.png" width="250px" height="100px">
+                    <img class="" src="/img/logo3.png" width="250px" height="100px">
                     <h1 class="h3 mt-3 mb-3">Login</h1>
                 </div>
-                <input type="id" class="form-control" placeholder="아이디" required autofocus>
-                <input type="password" class="form-control" placeholder="비밀번호" required>
+                <input type="email" name="email" class="form-control" placeholder="이메일" required autofocus>
+                <input type="password" name="password" class="form-control" placeholder="비밀번호" required>
                 <ul class="row">
                     <li class="col">
-                        <a class="" href="signup.html">회원가입</a>
+                        <a class="" href="/signup">회원가입</a>
                     </li>
                     <li class="col">
                         <a class="" href="#">아이디 찾기</a>
@@ -62,12 +62,12 @@
                         <a class="" href="#">비밀번호 찾기</a>
                     </li>
                 </ul>
-                <button class="btn btn-lg btn-primary w-100" type="submit">로그인</button>
+                <button id="login" type="submit">로그인</button>
             </form>
         </main>
     </div>
-
-    <script src="../public/js/bootstrap.bundle.min.js"></script> 
+    <script src="/js/login-cli.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script> 
 </body>
 
 </html>
