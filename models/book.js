@@ -29,7 +29,7 @@ module.exports = class Book extends Sequelize.Model {
             underscored: false,
             modelName: 'Post',
             tableName: 'posts',
-            paranoid: false,
+            paranoid: true,
             charset: 'utf8mb4',
             collate: 'utf8mb4_general_ci',
         });
