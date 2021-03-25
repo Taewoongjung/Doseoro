@@ -13,7 +13,7 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
     try {
         const exUser = await User.findOne({ where: { email: email } });
         if (exUser) {
-            return res.redirect('/signup?signupError=이미 가입된 이메일입니다.');
+            return res.redirect('/signup/?signupError=이미 가입된 이메일입니다.');
         }
         else if (password !== re_password) {
             return res.redirect('/signup/?signupError=비밀번호가 맞지 않습니다.');
@@ -28,7 +28,7 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
             password: hash,
             answer,
         });
-        return res.redirect('/');
+        return res.redirect('/signup/?signupSuccess=회원가입을 완료했습니다.');
     } catch (error) {
         console.error(error);
         return next(error);
@@ -42,7 +42,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
             return next(authError);
         }
         if (!user) {
-            return res.redirect(`/?loginError=${info.message}`);
+            return res.redirect(`/login/?loginError=${info.message}`);
         }
         return req.login(user, (loginError) => {
             if (loginError) {

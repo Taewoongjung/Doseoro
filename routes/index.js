@@ -3,6 +3,11 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
+router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주기 위함
+    res.locals.user = req.user;
+    next();
+});
+
 router.get('/', async (req, res, next) => {
     try {
         res.render('index.html');
