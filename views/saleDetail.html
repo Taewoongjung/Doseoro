@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="../public/css/saleDetail.css">
+    <link rel="stylesheet" href="/css/saleDetail.css">
+
+    <title>판매 디테일</title>
+</head>
+
+<body>
+    <div class="container-sm">
+        <!-- 상단 바 -->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light" id="topNav"></nav>
+
+        <!-- 컨텐츠 -->
+        <main class="saleDetail border container-sm">
+            <div class="row justify-content-sm-center align-items-center">
+                <div class="bookImg col w-100">
+                    <!-- img-thumbnail은 w와 h를 강제적으로 일치시킴 -->
+                    <a href="#"><img class="" src="../public/img/iconfinder_camera-off_3325074.png" width="350px" height="350px"></a>
+                </div>
+                <div class="col">
+                    <div class="bookInfo">
+                        <h4 class="h3 mt-4 mb-2">책 정보</h4>
+                        <div class="bookTitle row d-flex w-100 align-items-center mt-1 mb-1">
+                            <h4 class="col h4 fw-bold w-25">책 제목</h4>
+                            <a class="col text-body text-decoration-none" id="getBookTitle">책 제목 정보</a>
+                        </div>
+                        <div class="auther row d-flex w-100 align-items-center mt-1 mb-1">
+                            <h4 class="col h4 fw-bold">저자</h4>
+                            <a class="col text-body text-decoration-none" id="getAuther">저자 정보</a>
+                        </div>
+                        <div class="publisher row d-flex w-100 align-items-center mt-1 mb-1">
+                            <h4 class="col h4 fw-bold">출판사</h4>
+                            <a class="col text-body text-decoration-none" id="getPublisher">출판사 정보</a>
+                        </div>
+                        <div class="category row d-flex w-100 align-items-center mt-1 mb-1">
+                            <h4 class="col h4 fw-bold">카테고리</h4>
+                            <a class="col text-body text-decoration-none" id="getCategory">카테고리 정보</a>
+                        </div>
+                        <div class="category row d-flex w-100 align-items-center mt-1 mb-1">
+                            <h4 class="col h4 fw-bold">외관손상</h4>
+                            <a class="col text-body text-decoration-none" id="getAppearanceInfo">외관손상 정보</a>
+                        </div>
+                        <!-- 사용흔적을 넣어야하는지 검토 필요 -->
+                        <div class="category row d-flex w-100 align-items-center mt-1 mb-1">
+                            <h4 class="col h4 fw-bold">사용흔적</h4>
+                            <a class="col text-body text-decoration-none" id="getCategory">사용흔적 정보</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3 border-top w-75 ms-auto me-auto">
+                <a class="text-body text-decoration-none" id="getTitle">게시물 제목을 넣으세요</a>
+            </div>
+        </main>
+    </div>
+    <script src="/js/login-cli.js"></script>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="../public/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/js/topNav.js"></script>
+    <script src="../public/js/topNav.js"></script>
+</body>
+
+</html>
