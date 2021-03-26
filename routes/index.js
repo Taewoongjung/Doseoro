@@ -17,13 +17,12 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.get('/login', isLoggedIn, (req, res) => {
+router.get('/login', isNotLoggedIn, (req, res) => {
     res.render('login.html');
 });
 
 router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('signup.html');
 });
-
 
 module.exports = router;
