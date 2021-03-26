@@ -1,29 +1,18 @@
 const passport = require('passport');
 const KakaoStrategy = require('passport-kakao').Strategy;
-const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
 
 module.exports = () => {
-    passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'password',
-    }, async (email, password, done) => {
+    passport.use(new KakaoStrategy({
+        clientID: process.env.KAKAO_ID,
+        callbackURL: '/auth/kakao/callback',
+    }, async (accessToken, refreshToken, profile, done) => {
+        console.log('kakao profile', profile);
         try {
-            const exUser = await User.findOne({ where: { email } });
-            if (exUser) {
-                const result = await bcrypt.compare(password, exUser.password);
-                if (result) {
-                    done(null, exUser);
-                } else {
-                    done(null, false, { message: '비밀번호가 일치하지 않습니다.' });
-                }
-            } else {
-                done(null, false, { message: '가입되지 않은 회원입니다.' });
-            }
-        } catch (error) {
-            console.error(error);
-            done(error);
+            const exUser = await User.findOne({
+                where: { snsId: profile.id, provider: 'kakao' },
+            })
         }
-    }));
+    }))
 };
