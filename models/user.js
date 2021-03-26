@@ -18,7 +18,7 @@ module.exports = class User extends Sequelize.Model {
             },
             password: {
                 type: Sequelize.STRING(100),
-                allowNull: false,
+                allowNull: true,  // kakao로 로그인 연동할 때는 true
             },
             phone: {
                 type: Sequelize.STRING(14),
@@ -28,6 +28,15 @@ module.exports = class User extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
+            provider: { // kakao로 할 때는 kakao로 바뀜
+                type: Sequelize.STRING(10),
+                allowNull: false,
+                defaultValue: 'local',
+            },
+            snsId: { // 나중에 kakao로 연동할 때 카카오에서 snsnId를 아이디처럼 쓸 수 있기 때문에 저장하는 곳.
+                type: Sequelize.STRING(30),
+                allowNull: true, 
+            }
         }, {
             sequelize,
             timestamps: true,
@@ -39,7 +48,7 @@ module.exports = class User extends Sequelize.Model {
         });
     }
 
-    // static associate(db) {
-    //     db.User.hasMany(db.);
-    // }
+    static associate(db) {
+        db.User.hasMany(db.Book);
+    }
 };
