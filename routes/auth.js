@@ -56,11 +56,18 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logout();
-    // console.log(req.session);
     req.session.destroy();
-    // console.log("after");
-    // console.log(req.session);
     res.redirect('/');
+});
+
+router.get('/findId', (req, res) => {
+    const { phone, answer } = req.body;
+    try {
+        const FindUser = await User.findOne({ where: { phone: phone, answer: answer } });
+        if (FindUser) {
+            
+        }
+    }
 });
 
 router.get('/kakao', passport.authenticate('kakao'));
