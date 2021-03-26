@@ -17,11 +17,11 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.get('/login', (req, res) => {
+router.get('/login', isLoggedIn, (req, res) => {
     res.render('login.html');
 });
 
-router.get('/signup', (req, res) => {
+router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('signup.html');
 });
 
