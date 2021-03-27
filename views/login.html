@@ -17,14 +17,32 @@
 <body>
     <div class="container-sm">
         <!-- 상단 바 -->
-        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light" id="topNav"></nav>
+        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light" id="topNav">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="200" height="80"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
+                    <ul class="navbar-nav mb-2 mb-md-0">
+                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
+                        {% if user and user.id %}
+                        <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/">마이페이지</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
         <!-- 로그인 영역 -->
         <main class="form-signin">
             <form id="login-form">
                 <div class="loginLogo">
                     <img class="" src="/img/logo3.png" width="250px" height="100px">
-                    <h1 class="h3 mt-3 mb-3">Login</h1>
+                    <h1 class="h3 mt-3 mb-3">로그인</h1>
                 </div>
                 <input type="email" name="email" class="form-control" placeholder="이메일" required autofocus>
                 <input type="password" name="password" class="form-control" placeholder="비밀번호" required>
@@ -39,8 +57,8 @@
                         <a class="" href="#">비밀번호 찾기</a>
                     </li>
                 </ul>
-                <button class="btn btn-lg btn-primary w-100" id="login" type="submit">로그인</button>
-                <a id="kakao" href="/auth/kakao" class="btn">카카오톡</a>
+                <button class="btn btn-lg btn-primary mb-3 w-100" id="login" type="submit">로그인</button>
+                <a class="kakaoLogin" id="kakao" href="/auth/kakao"><img src="/img/kakaoLogin.png" class="w-100 p-0"></a>
             </form>
         </main>
 
