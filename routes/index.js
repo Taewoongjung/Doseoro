@@ -25,4 +25,12 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('signup.html');
 });
 
+// 0327 판매 게시판, 판매 게시물 등록
+router.get('/saleDetail', isNotLoggedIn, (req, res) => {
+    res.render('saleDetail.html');
+});
+router.get('/saleBoard', isNotLoggedIn, (req, res) => {
+    res.render('saleBoard.html');
+});
+
 module.exports = router;
