@@ -21,6 +21,7 @@ const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+const pagesRouter = require('./routes/pages');
 
 const app = express();
 passportConfig();
@@ -72,6 +73,7 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/pages', pagesRouter);
 
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

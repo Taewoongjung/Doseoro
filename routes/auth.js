@@ -9,7 +9,7 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.post('/signup', isNotLoggedIn, async (req, res, next) => {
-    const { name, phone, nick, email, password, answer, re_password } = req.body;
+    const { name, phone, nick, email, password, answer, re_password, question } = req.body;
     try {
         const exUser = await User.findOne({ where: { email: email } });
         if (exUser) {
@@ -26,6 +26,7 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
             nick,
             email,
             password: hash,
+            question,
             answer,
         });
         return res.redirect('/signup/?signupSuccess=회원가입을 완료했습니다.');
@@ -60,15 +61,38 @@ router.get('/logout', isLoggedIn, (req, res) => {
     res.redirect('/');
 });
 
-router.get('/findId', (req, res) => {
-    const { phone, answer } = req.body;
+router.post('/ID', async (req, res, next) => {
+    const { phone } = req.body;
     try {
-        const FindUser = await User.findOne({ where: { phone: phone, answer: answer } });
+        const FindUser = await User.findOne({ where: { phone: phone } });
         if (FindUser) {
-            
-        }
+            // return res.render('findID.html', { he: `${FindUser.email}` });  // `/ID/?message=아이디는 ${FindUser.email} 입니다.`
+            return res.send(`<script type="text/javascript">alert("아이디는 ${FindUser.email} 입니다."); location.href="/pages/findID";</script>`);
+        } else {
+            return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/";</script>`);
+            //return res.redirect('/ID/?Error=회원이 존재하지 않습니다.');
+        } 
+    } catch (error) {
+        console.error(error);
+        return next(error);
     }
 });
+
+// router.post('/PW', async (req, res) => {
+//     const { phone } = req.body;
+//     try {
+//         const FindUser = await User.findOne({ where: { phone: phone } });
+//         if (FindUser) {
+//             return res.redirect(`/ID/?message=아이디는 ${FindUser.email} 입니다.`);
+//         } else {
+//             return res.redirect('/ID/?Error=회원이 존재하지 않습니다.');
+//         } 
+//     } catch (error) {
+//         console.error(error);
+//         return next(error);
+//     }
+// });
+
 
 router.get('/kakao', passport.authenticate('kakao'));
 

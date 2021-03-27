@@ -10,7 +10,6 @@
     
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/loginStyle.css">
-    
     <title>로그인</title>
 </head>
 
@@ -33,21 +32,23 @@
                         <a class="" href="/signup">회원가입</a>
                     </li>
                     <li class="col">
-                        <a class="" href="#">아이디 찾기</a>
+                        <a class="" href="/pages/findID">아이디 찾기</a>
                     </li>
                     <li class="col">
-                        <a class="" href="#">비밀번호 찾기</a>
+                        <a class="" href="/pages/findPW">비밀번호 찾기</a>
                     </li>
                 </ul>
                 <button class="btn btn-lg btn-primary w-100" id="login" type="submit">로그인</button>
                 <a id="kakao" href="/auth/kakao" class="btn">카카오톡</a>
             </form>
         </main>
-    </div>
-    <script src="/js/login-cli.js"></script>
 
+        <!-- footer -->
+        <nav class="navbar fixed-bottom navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+    </div>
     <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/topNav.js"></script>
+    <script src="/js/login-cli.js"></script>
+    <!-- <script src="/js/topNav.js"></script> -->
   </body>
 
 </html>

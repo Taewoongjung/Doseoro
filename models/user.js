@@ -24,6 +24,10 @@ module.exports = class User extends Sequelize.Model {
                 type: Sequelize.STRING(14),
                 allowNull: true,
             },
+            question: {
+                type: Sequelize.STRING(100),
+                allowNull: true,
+            },
             answer: {
                 type: Sequelize.STRING(100),
                 allowNull: true,
@@ -47,7 +51,7 @@ module.exports = class User extends Sequelize.Model {
             collate: 'utf8_general_ci',
         });
     }
-
+    
     static associate(db) {
         db.User.hasMany(db.Book);
     }
