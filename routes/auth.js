@@ -13,10 +13,12 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
     try {
         const exUser = await User.findOne({ where: { email: email } });
         if (exUser) {
-            return res.redirect('/signup/?signupError=이미 가입된 이메일입니다.');
+            // return res.redirect('/signup/?signupError=이미 가입된 이메일입니다.');
+            return res.send(`<script type="text/javascript">alert("이미 가입된 이메일입니다."); location.href="/signup/";</script>`);
         }
         else if (password !== re_password) {
-            return res.redirect('/signup/?signupError=비밀번호가 맞지 않습니다.');
+            // return res.redirect('/signup/?signupError=비밀번호가 맞지 않습니다.');
+            return res.send(`<script type="text/javascript">alert("비밀번호가 맞지 않습니다."); location.href="/signup/";</script>`);
         }
         sanitize(password);
         const hash = await bcrypt.hash(password, 12);
