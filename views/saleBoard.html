@@ -17,8 +17,28 @@
 <body>
     <div class="container-sm">
         <!-- 상단 바 -->
-        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light" id="topNav"></nav>
-    
+        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light" id="topNav">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="200" height="80"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
+                    <ul class="navbar-nav mb-2 mb-md-0">
+                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
+                        {% if user and user.id %}
+                        <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/">마이페이지</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- footer -->
+        <nav class="navbar fixed-bottom navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script> 
