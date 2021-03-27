@@ -1,10 +1,3 @@
-window.onload = () => {
-  console.log("@asdsadasdasdasdasdas");
-  if (new URL(location.href).searchParams.get('loginError')) {
-    alert(new URL(location.href).searchParams.get('loginError'));
-  }
-}
-
 const request = document.getElementById('login-form');
 
 const signup_btn = document.getElementById('login');

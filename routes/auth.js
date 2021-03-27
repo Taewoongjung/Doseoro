@@ -13,11 +13,9 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
     try {
         const exUser = await User.findOne({ where: { email: email } });
         if (exUser) {
-            // return res.redirect('/signup/?signupError=이미 가입된 이메일입니다.');
             return res.send(`<script type="text/javascript">alert("이미 가입된 이메일입니다."); location.href="/signup/";</script>`);
         }
         else if (password !== re_password) {
-            // return res.redirect('/signup/?signupError=비밀번호가 맞지 않습니다.');
             return res.send(`<script type="text/javascript">alert("비밀번호가 맞지 않습니다."); location.href="/signup/";</script>`);
         }
         sanitize(password);
@@ -31,7 +29,7 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
             question,
             answer,
         });
-        return res.redirect('/signup/?signupSuccess=회원가입을 완료했습니다.');
+        return res.send(`<script type="text/javascript">alert("회원가입을 완료했습니다."); location.href="/signup/";</script>`);
     } catch (error) {
         console.error(error);
         return next(error);
@@ -45,7 +43,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
             return next(authError);
         }
         if (!user) {
-            return res.redirect(`/login/?loginError=${info.message}`);
+            return res.send(`<script type="text/javascript">alert("${info.message}"); location.href="/login/";</script>`);
         }
         return req.login(user, (loginError) => {
             if (loginError) {
@@ -68,11 +66,9 @@ router.post('/ID', async (req, res, next) => {
     try {
         const FindUser = await User.findOne({ where: { phone: phone } });
         if (FindUser) {
-            // return res.render('findID.html', { he: `${FindUser.email}` });  // `/ID/?message=아이디는 ${FindUser.email} 입니다.`
-            return res.send(`<script type="text/javascript">alert("아이디는 ${FindUser.email} 입니다."); location.href="/pages/findID";</script>`);
+            return res.send(`<script type="text/javascript">alert("아이디는 ${FindUser.email} 입니다."); location.href="/login";</script>`);
         } else {
-            return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/";</script>`);
-            //return res.redirect('/ID/?Error=회원이 존재하지 않습니다.');
+            return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/pages/findID";</script>`);
         } 
     } catch (error) {
         console.error(error);
