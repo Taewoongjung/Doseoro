@@ -5,28 +5,28 @@ module.exports = class User extends Sequelize.Model {
         return super.init({
             email: {
                 type: Sequelize.STRING(40),
-                allowNull: false,
+                allowNull: true,
                 unique: true,
             },
             name: {
                 type: Sequelize.STRING(40),
-                allowNull: false,
+                allowNull: true,
             },
             nick: {
                 type: Sequelize.STRING(15),
-                allowNull: false,
+                allowNull: true,
             },
             password: {
                 type: Sequelize.STRING(100),
-                allowNull: true,  // kakao로 로그인 연동할 때는 true
+                allowNull: true,
             },
             phone: {
                 type: Sequelize.STRING(14),
-                allowNull: false,
+                allowNull: true,
             },
             answer: {
                 type: Sequelize.STRING(100),
-                allowNull: false,
+                allowNull: true,
             },
             provider: { // kakao로 할 때는 kakao로 바뀜
                 type: Sequelize.STRING(10),
