@@ -17,28 +17,32 @@
 
 <body>
     <form id="findPW-form">
-
-        {% if user and user.name %}
+        {% if user %}
         <input type="text" name="name" class="form-control" value={{name}}> <!-- 입력 못하게 막기 -->
 
         <input type="text" name="answer" class="form-control" placeholder= "질문: [ {{question}} ]">
-        <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit" onclick="window.location.href='/auth/PW_sec'">비밀번호 찾기</button>
-        
+        <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit" onclick="two()">비밀번호 바꾸기</button>
+
         {% else %}
         <input type="text" name="name" class="form-control" placeholder="사용자 이름">
-        <button class="btn btn-lg btn-primary w-100" id="find" type="submit">확인</button>
+        <button class="btn btn-lg btn-primary w-100" id="find" type="submit" onclick="one()">확인</button>
 
         {% endif %}
     </form>
     <!-- <script src="/js/find_ID_PW-cli.js"></script> -->
     <script>
-        const request = document.getElementById('findPW-form');
-
-        const signup_btn = document.getElementById('find');
-        signup_btn.addEventListener('click', () => {
+        function one() {
+            const request = document.getElementById('findPW-form');
             request.setAttribute('action', '/auth/PW_fir');
             request.setAttribute('method', 'POST');
-        });
+        }
+
+        function two() {
+            const request = document.getElementById('findPW-form');
+            request.setAttribute('action', '/auth/PW_sec');
+            request.setAttribute('method', 'POST');
+        }
+
     </script>
 </body>
 
