@@ -84,7 +84,7 @@ router.post('/PW_fir', async (req, res) => {
             // console.log(FindUser);
             return res.render('findPW.html', { user: FindUser, question : FindUser.question });
         } else {
-            return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/pages/findID";</script>`);
+            return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/pages/findPW";</script>`);
         }
     } catch (error) {
         console.error(error);
@@ -99,8 +99,8 @@ router.post('/PW_sec', async (req, res) => {
         if (FindUser) {
             return res.render('findPW.html,', { question : FindUser.email});
         } else {
-            return res.redirect('/ID/?Error=회원이 존재하지 않습니다.');
-        } 
+            return res.send(`<script type="text/javascript">alert("다시 입력 해주세요"); location.href="/pages/findPW";</script>`);
+        }
     } catch (error) {
         console.error(error);
         return next(error);

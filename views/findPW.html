@@ -17,14 +17,17 @@
 
 <body>
     <form id="findPW-form">
-        {% if user and user.name %}
-        <input type="password" name="answer" class="form-control" placeholder="질문의 답" required>
-        <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit">비밀번호 찾기</button>
-        <p>{{question}}</p>
-
-        {% else %}
-        <input type="text" name="name" class="form-control" placeholder="사용자 이름" required>
+        <input type="text" name="name" class="form-control" placeholder="사용자 이름">
         <button class="btn btn-lg btn-primary w-100" id="find" type="submit">확인</button>
+
+        {% if user and user.name %}
+        <input type="text" name="answer" class="form-control" placeholder="질문의 답">
+        <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit" onclick="window.location.href='/auth/PW_sec'">비밀번호 찾기</button>
+        
+        <p>{{question}}</p>
+        
+        {% else %}
+        <p></p>
 
         {% endif %}
     </form>
@@ -37,6 +40,14 @@
             request.setAttribute('action', '/auth/PW_fir');
             request.setAttribute('method', 'POST');
         });
+
+        // const request = document.getElementById('findPW-form');
+
+        // const signup_btn = document.getElementById('findPW');
+        // signup_btn.addEventListener('click', () => {
+        //     request.setAttribute('action', '/auth/PW_sec');
+        //     request.setAttribute('method', 'POST');
+        // });
     </script>
 </body>
 
