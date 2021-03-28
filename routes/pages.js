@@ -10,5 +10,4 @@ router.get('/findPW', (req, res) => {
     res.render('findPW.html');
 });
 
-
 module.exports = router;

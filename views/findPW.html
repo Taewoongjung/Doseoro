@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/loginStyle.css">
-    
+
     <title>아이디 찾기</title>
 </head>
+
 <body>
     <form id="findPW-form">
-        <input type="text" name="name" class="form-control" placeholder="사용자 이름" required>
-        <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit">확인</button>
+        {% if user and user.name %}
         <input type="password" name="answer" class="form-control" placeholder="질문의 답" required>
         <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit">비밀번호 찾기</button>
+        <p>{{question}}</p>
+
+        {% else %}
+        <input type="text" name="name" class="form-control" placeholder="사용자 이름" required>
+        <button class="btn btn-lg btn-primary w-100" id="find" type="submit">확인</button>
+
+        {% endif %}
     </form>
-    <script src="/js/find_ID_PW-cli.js"></script>
+    <!-- <script src="/js/find_ID_PW-cli.js"></script> -->
+    <script>
+        const request = document.getElementById('findPW-form');
+
+        const signup_btn = document.getElementById('find');
+        signup_btn.addEventListener('click', () => {
+            request.setAttribute('action', '/auth/PW_fir');
+            request.setAttribute('method', 'POST');
+        });
+    </script>
 </body>
+
 </html>

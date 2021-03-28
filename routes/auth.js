@@ -76,21 +76,36 @@ router.post('/ID', async (req, res, next) => {
     }
 });
 
-// router.post('/PW', async (req, res) => {
-//     const { phone } = req.body;
-//     try {
-//         const FindUser = await User.findOne({ where: { phone: phone } });
-//         if (FindUser) {
-//             return res.redirect(`/ID/?message=아이디는 ${FindUser.email} 입니다.`);
-//         } else {
-//             return res.redirect('/ID/?Error=회원이 존재하지 않습니다.');
-//         } 
-//     } catch (error) {
-//         console.error(error);
-//         return next(error);
-//     }
-// });
+router.post('/PW_fir', async (req, res) => {
+    const { name } = req.body;
+    try {
+        const FindUser = await User.findOne({ where: { name: name } });
+        if (FindUser) {
+            // console.log(FindUser);
+            return res.render('findPW.html', { user: FindUser, question : FindUser.question });
+        } else {
+            return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/pages/findID";</script>`);
+        }
+    } catch (error) {
+        console.error(error);
+        return next(error);
+    }
+});
 
+router.post('/PW_sec', async (req, res) => {
+    const { name } = req.body;
+    try {
+        const FindUser = await User.findOne({ where: { name: name } });
+        if (FindUser) {
+            return res.render('findPW.html,', { question : FindUser.email});
+        } else {
+            return res.redirect('/ID/?Error=회원이 존재하지 않습니다.');
+        } 
+    } catch (error) {
+        console.error(error);
+        return next(error);
+    }
+});
 
 router.get('/kakao', passport.authenticate('kakao'));
 
