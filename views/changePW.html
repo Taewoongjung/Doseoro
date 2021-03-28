@@ -16,18 +16,22 @@
 </head>
 
 <body>
-    <form id="findPW-form">
+    <form id="changePW-form">
+        {% if user %}
+        <p>{{user}}님 비밀번호 변경 해주세요.</p>
+        <input type="hidden" name="name", value="{{user}}">
         <input type="password" name="newPW" class="form-control" placeholder="새로운 비밀번호">
         <input type="password" name="check_newPW" class="form-control" placeholder="비밀번호 확인">
-        <button class="btn btn-lg btn-primary w-100" id="find" type="submit">확인</button>
-
+        <button class="btn btn-lg btn-primary w-100" id="change" type="submit">확인</button>
+        {% else %}
+        {% endif %}
     </form>
     <script>
-        const request = document.getElementById('findPW-form');
+        const request = document.getElementById('changePW-form');
 
-        const signup_btn = document.getElementById('find');
+        const signup_btn = document.getElementById('change');
         signup_btn.addEventListener('click', () => {
-            request.setAttribute('action', '/auth/PW_fir');
+            request.setAttribute('action', '/auth/changePW');
             request.setAttribute('method', 'POST');
         });
     </script>

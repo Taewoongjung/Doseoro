@@ -69,20 +69,20 @@ router.post('/ID', async (req, res, next) => {
             return res.send(`<script type="text/javascript">alert("아이디는 ${FindUser.email} 입니다."); location.href="/login";</script>`);
         } else {
             return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/pages/findID";</script>`);
-        } 
+        }
     } catch (error) {
         console.error(error);
         return next(error);
     }
 });
 
-router.post('/PW_fir', async (req, res) => {
+router.post('/PW_fir', async (req, res, next) => {
     const { name } = req.body;
     try {
         const FindUser = await User.findOne({ where: { name: name } });
         if (FindUser) {
             // console.log(FindUser);
-            return res.render('findPW.html', { user: FindUser, question : FindUser.question, name: FindUser.name });
+            return res.render('findPW.html', { user: FindUser, question: FindUser.question, name: FindUser.name });
         } else {
             return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/pages/findPW";</script>`);
         }
@@ -92,12 +92,12 @@ router.post('/PW_fir', async (req, res) => {
     }
 });
 
-router.post('/PW_sec', async (req, res) => {
+router.post('/PW_sec', async (req, res, next) => {
     const { answer } = req.body;
     try {
         const FindUser = await User.findOne({ where: { answer: answer } });
         if (FindUser) {
-            return res.render('changePW.html', { answer : FindUser.answer});
+            return res.render('changePW.html', { user: FindUser.name });
         } else {
             return res.send(`<script type="text/javascript">alert("다시 입력 해주세요"); location.href="/pages/findPW";</script>`);
         }
@@ -107,28 +107,22 @@ router.post('/PW_sec', async (req, res) => {
     }
 });
 
-router.post('/changePW', async (req, res) => {
-    const { newPW, check_newPW } = req.body;
+router.post('/changePW', async (req, res, next) => {
+    const { newPW, check_newPW, name } = req.body;
     try {
-        // const exUser = await User.findOne({ where: { email: email } });
-        // if (exUser) {
-        //     return res.send(`<script type="text/javascript">alert("이미 가입된 이메일입니다."); location.href="/signup/";</script>`);
-        // }
+        const FindUser = await User.findOne({ where: { name: name } });
         if (newPW !== check_newPW) {
             return res.send(`<script type="text/javascript">alert("비밀번호가 맞지 않습니다."); location.href="/auth/PW_sec/";</script>`);
+        } else if (FindUser) {
+            sanitize(newPW);
+            const hash = await bcrypt.hash(newPW, 12);
+            await User.update({
+                password: hash,
+            }, {
+                where: { name: FindUser.name }
+            });
+            return res.send(`<script type="text/javascript">alert("비밀번호 변경 완료!"); location.href="/";</script>`);
         }
-        sanitize(password);
-        const hash = await bcrypt.hash(password, 12);
-        await User.create({
-            name,
-            phone,
-            nick,
-            email,
-            password: hash,
-            question,
-            answer,
-        });
-        return res.send(`<script type="text/javascript">alert("회원가입을 완료했습니다."); location.href="/signup/";</script>`);
     } catch (error) {
         console.error(error);
         return next(error);
@@ -139,9 +133,9 @@ router.post('/changePW', async (req, res) => {
 router.get('/kakao', passport.authenticate('kakao'));
 
 router.get('/kakao/callback', passport.authenticate('kakao', {
-  failureRedirect: '/',  // kakao 로그인 실패
+    failureRedirect: '/',  // kakao 로그인 실패
 }), (req, res) => {
-  res.redirect('/');  // kakao 로그인 성공
+    res.redirect('/');  // kakao 로그인 성공
 });
 
 module.exports = router;
