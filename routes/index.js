@@ -33,4 +33,8 @@ router.get('/saleBoard', isNotLoggedIn, (req, res) => {
     res.render('saleBoard.html');
 });
 
+router.get('/mypage', isLoggedIn, (req, res) => {
+    res.render('myPage.html');
+});
+
 module.exports = router;
