@@ -19,7 +19,7 @@
     <form id="changePW-form">
         {% if user %}
         <p>{{user}}님 비밀번호 변경 해주세요.</p>
-        <input type="hidden" name="name", value="{{user}}">
+        <input type="hidden" name="nick", value="{{user}}">
         <input type="password" name="newPW" class="form-control" placeholder="새로운 비밀번호">
         <input type="password" name="check_newPW" class="form-control" placeholder="비밀번호 확인">
         <button class="btn btn-lg btn-primary w-100" id="change" type="submit">확인</button>

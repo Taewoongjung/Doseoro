@@ -101,7 +101,7 @@ router.post('/PW_sec', async (req, res, next) => {
     try {
         const FindUser = await User.findOne({ where: { answer: answer } });
         if (FindUser) {
-            return res.render('changePW.html', { user: FindUser.name });
+            return res.render('changePW.html', { user: FindUser.nick });
         } else {
             return res.send(`<script type="text/javascript">alert("다시 입력 해주세요"); location.href="/pages/findPW";</script>`);
         }
@@ -112,9 +112,9 @@ router.post('/PW_sec', async (req, res, next) => {
 });
 
 router.post('/changePW', async (req, res, next) => {
-    const { newPW, check_newPW, name } = req.body;
+    const { newPW, check_newPW, nick } = req.body;
     try {
-        const FindUser = await User.findOne({ where: { name: name } });
+        const FindUser = await User.findOne({ where: { nick: nick } });
         if (newPW !== check_newPW) {
             return res.send(`<script type="text/javascript">alert("비밀번호가 맞지 않습니다."); location.href="/auth/PW_sec/";</script>`);
         } else if (FindUser) {
