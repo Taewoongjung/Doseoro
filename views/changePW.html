@@ -17,20 +17,22 @@
 
 <body>
     <form id="findPW-form">
-
-        {% if user and user.name %}
-        <input type="text" name="name" class="form-control" value={{name}}> <!-- 입력 못하게 막기 -->
-
-        <input type="text" name="answer" class="form-control" placeholder= "질문: [ {{question}} ]">
-        <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit" onclick="window.location.href='/auth/PW_sec'">비밀번호 찾기</button>
-        
-        {% else %}
-        <input type="text" name="name" class="form-control" placeholder="사용자 이름">
+        <input type="password" name="newPW" class="form-control" placeholder="새로운 비밀번호">
+        <input type="password" name="check_newPW" class="form-control" placeholder="비밀번호 확인">
         <button class="btn btn-lg btn-primary w-100" id="find" type="submit">확인</button>
 
-        {% endif %}
+        <!-- {% if user and user.name %}
+        <p>{{question}}</p>
+
+        <input type="text" name="answer" class="form-control" placeholder="질문의 답">
+        <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit" onclick="window.location.href='/auth/PW_sec'">비밀번호 찾기</button>
+        
+        
+        {% else %}
+        <p></p>
+
+        {% endif %} -->
     </form>
-    <!-- <script src="/js/find_ID_PW-cli.js"></script> -->
     <script>
         const request = document.getElementById('findPW-form');
 

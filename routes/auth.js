@@ -82,7 +82,7 @@ router.post('/PW_fir', async (req, res) => {
         const FindUser = await User.findOne({ where: { name: name } });
         if (FindUser) {
             // console.log(FindUser);
-            return res.render('findPW.html', { user: FindUser, question : FindUser.question });
+            return res.render('findPW.html', { user: FindUser, question : FindUser.question, name: FindUser.name });
         } else {
             return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/pages/findPW";</script>`);
         }
@@ -93,11 +93,11 @@ router.post('/PW_fir', async (req, res) => {
 });
 
 router.post('/PW_sec', async (req, res) => {
-    const { name } = req.body;
+    const { answer } = req.body;
     try {
-        const FindUser = await User.findOne({ where: { name: name } });
+        const FindUser = await User.findOne({ where: { answer: answer } });
         if (FindUser) {
-            return res.render('findPW.html,', { question : FindUser.email});
+            return res.render('changePW.html,', { answer : FindUser.answer});
         } else {
             return res.send(`<script type="text/javascript">alert("다시 입력 해주세요"); location.href="/pages/findPW";</script>`);
         }

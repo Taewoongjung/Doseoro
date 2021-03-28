@@ -5,3 +5,10 @@ signup_btn.addEventListener('click', () => {
     request.setAttribute('action', '/auth/ID');
     request.setAttribute('method', 'POST');
 });
+
+
+async function changePW(id) {
+    try {
+        
+    }
+}
