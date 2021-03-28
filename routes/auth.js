@@ -12,9 +12,13 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
     const { name, phone, nick, email, password, answer, re_password, question } = req.body;
     try {
         const exUser = await User.findOne({ where: { email: email } });
+        const exNick = await User.findOne({ where: { nick: nick } });
         if (exUser) {
             return res.send(`<script type="text/javascript">alert("이미 가입된 이메일입니다."); location.href="/signup/";</script>`);
         }
+        else if (exNick) {
+            return res.send(`<script type="text/javascript">alert("사용할 수 없는 닉네임입니다."); location.href="/signup/";</script>`);
+        } 
         else if (password !== re_password) {
             return res.send(`<script type="text/javascript">alert("비밀번호가 맞지 않습니다."); location.href="/signup/";</script>`);
         }
