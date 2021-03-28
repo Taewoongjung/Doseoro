@@ -81,12 +81,12 @@ router.post('/ID', async (req, res, next) => {
 });
 
 router.post('/PW_fir', async (req, res, next) => {
-    const { name } = req.body;
+    const { nick } = req.body;
     try {
-        const FindUser = await User.findOne({ where: { name: name } });
+        const FindUser = await User.findOne({ where: { nick: nick } });
         if (FindUser) {
             // console.log(FindUser);
-            return res.render('findPW.html', { user: FindUser, question: FindUser.question, name: FindUser.name });
+            return res.render('findPW.html', { user: FindUser, question: FindUser.question, nick: FindUser.nick });
         } else {
             return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/pages/findPW";</script>`);
         }
