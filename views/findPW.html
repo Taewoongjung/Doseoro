@@ -16,19 +16,56 @@
 </head>
 
 <body>
-    <form id="findPW-form">
-        {% if user %}
-        <input type="text" name="nick" class="form-control" value={{nick}}> <!-- 입력 못하게 막기 -->
+    <div class="flex w-100">
+        <!-- 상단 바 -->
+        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light" id="topNav">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="160" height="64"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
+                    <ul class="navbar-nav mb-2 mb-md-0">
+                        <li class="nav-item"><a class="nav-link p-3" href="/">관심상품</a></li>
+                        {% if user and user.id %}
+                        <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-        <input type="text" name="answer" class="form-control" placeholder= "질문: [ {{question}} ]">
-        <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit" onclick="two()">비밀번호 바꾸기</button>
-    
-        {% else %}
-        <input type="text" name="nick" class="form-control" placeholder="사용자 닉네임">
-        <button class="btn btn-lg btn-primary w-100" id="find" type="submit" onclick="one()">확인</button>
+        <!-- 비밀번호 찾기 -->
+        <main class="findBox container-sm form-signin p-5">
+            <div class="w-100 text-center mb-4">
+                <a class=""><img src="/img/logo3.png" width="145px" height="58px"></a>
+                <h1 class="h2">비밀번호 찾기</h1>
+            </div>
+            <div class="moveFind w-100 text-center p-2">
+                <a class="h6 ps-2 pe-2 text-decoration-none text-dark" href="/pages/findID">아이디 찾기</a>
+                <a class="h6 ps-2 pe-2 text-decoration-none" href="/pages/findPW">비밀번호 찾기</a>
+            </div>
+            <form id="findPW-form">
+                {% if user %}
+                <input type="text" name="nick" class="form-control" value={{nick}}> <!-- 입력 못하게 막기 -->
+        
+                <input type="text" name="answer" class="form-control" placeholder= "질문: [ {{question}} ]">
+                <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit" onclick="two()">비밀번호 바꾸기</button>
+            
+                {% else %}
+                <input type="text" name="nick" class="form-control" placeholder="사용자 닉네임">
+                <button class="btn btn-lg btn-primary w-100" id="find" type="submit" onclick="one()">비밀번호 찾기</button>
+        
+                {% endif %}
+            </form>
+        </main>
 
-        {% endif %}
-    </form>
+        <!-- footer -->
+        <nav class="navbar fixed-bottom navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+    </div>
     <!-- <script src="/js/find_ID_PW-cli.js"></script> -->
     <script>
         function one() {
@@ -44,6 +81,8 @@
         }
 
     </script>
-</body>
 
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/topNav.js"></script>
+</body>
 </html>

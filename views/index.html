@@ -1,9 +1,7 @@
 <!doctype html>
 <html lang="en">
 <!-- 
-  미구현(추후 추가 예정)
-  - 비밀번호 확인 구현
-  - 핸드폰 양식에 맞춰 '-' 넣는 기능 구현
+  footer는 현재 fixed-bottom 이지만 구현이 완료된 후 static으로 바꿔야함
  -->
 
 <head>
@@ -19,11 +17,11 @@
 </head>
 
 <body>
-    <div class="container-sm">
+    <div class="flex w-100">
         <!-- 상단 바 -->
         <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light" id="topNav">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="200" height="80"></a>
+                <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="160" height="64"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
@@ -43,7 +41,9 @@
 
         <!-- main -->
         <div class="container-sm">
-            컨텐츠 영역
+            <div class="banner bg-warning">
+
+            </div>
         </div>
 
         <!-- footer -->
