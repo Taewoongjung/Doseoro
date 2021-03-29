@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="register_book">
+    <form action="/good" id="good-form" method="post" enctype="multipart/form-data">
+      <div class="input-group">
+        <label for="book-name">책 이름</label>
+        <input type="text" id="book-name" name="name" required autofocus>
+      </div>
+      <div class="input-group">
+        <label for="book-photo">상품 사진</label>
+        <input type="file" id="book-photo" name="img" required>
+      </div>
+      <div class="input-group">
+        <label for="book-price">가격</label>
+        <input type="number" id="book-price" name="price" required>
+      </div>
+      <button id="join-btn" class="btn" type="submit">상품 등록</button>
+    </form>
+  </div>
+{% endblock %}
