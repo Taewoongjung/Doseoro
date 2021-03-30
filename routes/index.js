@@ -35,11 +35,10 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
 router.post('/book', isLoggedIn, async (req, res, next) => {
     try {
         const { title, price } = req.body;
-        console.log(price);
-        console.log("title", title);
-        const book = await Book.create({
+        await Book.create({
             OwnerId: req.user.id,
             title: title,
+            author: req.user.nick,
             // img: req.file.filename,
             price: price,
         });
