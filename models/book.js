@@ -54,12 +54,11 @@ module.exports = class Book extends Sequelize.Model {
         }, {
             sequelize,
             timestamps: true,
-            underscored: false,
             modelName: 'Book',
             tableName: 'books',
             paranoid: true,
-            charset: 'utf8mb4',
-            collate: 'utf8mb4_general_ci',
+            charset: 'utf8',
+            collate: 'utf8_general_ci',
         });
     }
 

@@ -1,5 +1,7 @@
 const express = require('express');
-// const multer = require('multer');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 const { User, Book, Whobot } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -31,22 +33,40 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('signup.html');
 });
 
+// 0331파일 올리기 
 try {
-    FileSystemLoader.
+    fs.readdirSync('uploads');
+} catch (error) {
+    console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
+    fs.mkdirSync('uploads');
 }
+const upload = multer({
+    storage: multer.diskStorage({
+        destination(req, file, cb) {
+            cb(null, 'uploads/');
+        },
+        filename(req, file, cb) {
+            const ext = path.extname(file.originalname);
+            cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext); // 파일 덮어씌어지는거 방지
+        },
+    }),
+    limits: { fileSize: 5 * 1024 * 1024},
+});
 
 // 0330 책 등록
+// 0331 이미지 등록
 router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
+        console.log(req.file);
         const { title, price } = req.body;
         await Book.create({
             OwnerId: req.user.id,
             title: title,
             author: req.user.nick,
-            // img: req.file.filename,
+            img: req.file.filename,
             price: price,
         });
-        res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/";</script>`);
+        res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
         next(error);
