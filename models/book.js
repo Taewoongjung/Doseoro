@@ -66,5 +66,6 @@ module.exports = class Book extends Sequelize.Model {
     static associate(db) {
         db.Book.belongsTo(db.User, { as: 'Owner' });
         db.Book.belongsTo(db.User, { as: 'Sold' });
+        db.Book.hasMany(db.Whobot);
     }
 };

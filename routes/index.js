@@ -1,7 +1,7 @@
 const express = require('express');
 // const multer = require('multer');
 
-const { User, Book } = require('../models');
+const { User, Book, Whobot } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -43,6 +43,28 @@ router.post('/book', isLoggedIn, async (req, res, next) => {
             price: price,
         });
         res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+router.get('/book/:id', isLoggedIn, async (req, res, next) => {
+    try {
+        const [ book ] = await Promise.all([
+            Book.findOne({
+                where: { id: req.params.id },
+                include: {
+                    model: User,
+                    as: 'Owner',
+                },
+            }),
+        ]);
+        res.render('auction', {
+            title: `${good.name} - NodeAuction`,
+            good,
+            auction,
+        });
     } catch (error) {
         console.error(error);
         next(error);

@@ -47,12 +47,24 @@
                 <form id="book-form">
                    <a href="/pages/regi-book">책 등록</a>
                 </form>
-                {% for book in books %}
+                <!-- {% for book in books %}
                     <h2>책 이름: {{book.title}}</h2>
                     <div>등록자: {{book.author}}</div>
                     <div>가격: {{book.price}}원</div>
                     <strong id="time" data-start="{{book.createdAt}}"></strong>
-                    <!-- <img id="good-img" src="/img/{{good.img}}"> -->
+                    <img id="good-img" src="/img/{{good.img}}">
+                {% endfor %} -->
+                {% for book in books %}
+                    <tr>
+                        <td>{{book.title}}</td>
+                        <td>
+                        <img src="/img/{{good.img}}">
+                        </td>
+                        <td>{{book.price}}</td>
+                        <td>
+                        <a href="/book/{{book.id}}" class="enter btn">구경하러가기</a>
+                        </td>
+                    </tr>
                 {% endfor %}
             </div>
         </div>

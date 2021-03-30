@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>책 등록</title>
+</head>
+
+<body>
+  <form id="register_book-form">
+    <div class="input-group">
+      <label for="book-name">책 이름</label>
+      <input type="text" id="book-name" name="title" required autofocus>
+    </div>
+    <!-- <div class="input-group">
+        <label for="book-photo">상품 사진</label>
+        <input type="file" id="book-photo" name="img" required>
+      </div> -->
+    <div class="input-group">
+      <label for="book-price">가격</label>
+      <input type="number" id="book-price" name="price" required>
+    </div>
+    <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">상품 등록</button>
+  </form>
+  <script>
+    function one() {
+      const request = document.getElementById('register_book-form');
+      request.setAttribute('action', '/book');
+      request.setAttribute('method', 'POST');
+    }
+  </script>
+</body>
+
+</html>
