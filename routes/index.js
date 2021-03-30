@@ -1,7 +1,7 @@
 const express = require('express');
 // const multer = require('multer');
 
-// const { User, Book } = require('../models');
+const { User, Book } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -13,7 +13,10 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 
 router.get('/', async (req, res, next) => {
     try {
-        res.render('index.html');
+        const books = await Book.findAll({ where: { SoldId: null } }); // 낙찰되지 않은 상품들만 보여줌(누군가 낙찰 받았으면 안보여주기)
+        res.render('index.html', {
+            books,
+        });
     } catch (error) {
         console.error(error);
         next(error);
@@ -28,42 +31,24 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('signup.html');
 });
 
-// router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
-//     try {
-//         const { name, price } = req.body;
-//         const good = await Good.create({
-//             OwnerId: req.user.id,
-//             name,
-//             img: req.file.filename,
-//             price,
-//         });
-//         const end = new Date();
-//         end.setDate(end.getDate() + 1); // 하루 뒤
-//         schedule.scheduleJob(end, async () => {
-//             const t = await sequelize.transaction();  // transaction으로 묶인것은 같이 행동한다. 
-//             try{
-//                 const success = await Auction.findOne({
-//                     where: { GoodId: good.id },
-//                     order: [['bid', 'DESC']],
-//                 });
-//                 await Good.update({ SoldId: success.UserId }, { where: { id: good.id }, transaction: t });
-//                 await User.update({
-//                     money: sequelize.literal(`money - ${success.bid}`),
-//                 }, {
-//                     where: { id: success.UserId },
-//                     transaction: t
-//                 });
-//                 await t.commit();  // 성공하면 commit 호출되게함 
-//             } catch (error) {
-//                 await t.rollback(); // 셋 중 하나라도 실패하면 셋 다 롤백된다.
-//             }
-//         });
-//         res.redirect('/');
-//     } catch (error) {
-//         console.error(error);
-//         next(error);
-//     }
-// });
+// 0330 책 등록
+router.post('/book', isLoggedIn, async (req, res, next) => {
+    try {
+        const { title, price } = req.body;
+        console.log(price);
+        console.log("title", title);
+        const book = await Book.create({
+            OwnerId: req.user.id,
+            title: title,
+            // img: req.file.filename,
+            price: price,
+        });
+        res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
 
 // 0327 판매 게시판, 판매 게시물 등록
 router.get('/saleDetail', isNotLoggedIn, (req, res) => {

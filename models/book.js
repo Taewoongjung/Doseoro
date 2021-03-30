@@ -12,27 +12,27 @@ module.exports = class Book extends Sequelize.Model {
             },
             title: {
                 type: Sequelize.STRING(100),
-                allowNull: false,
+                allowNull: true,
             },
             author: {
                 type: Sequelize.STRING(100),
-                allowNull: false,
+                allowNull: true,
             },
             publisher: {
                 type: Sequelize.STRING(100),
-                allowNull: false,
+                allowNull: true,
             },
             category: {
                 type: Sequelize.STRING(100),
-                allowNull: false,
+                allowNull: true,
             },
             demaged: {
                 type: Sequelize.STRING(100),
-                allowNull: false,
+                allowNull: true,
             },
             state: {
                 type: Sequelize.STRING(100),
-                allowNull: false,
+                allowNull: true,
             },
             img: {
                 type: Sequelize.STRING(200),
@@ -40,12 +40,12 @@ module.exports = class Book extends Sequelize.Model {
             },
             like: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 defaultValue: 0,
             },
             sold: {
                 type: Sequelize.BOOLEAN,
-                allowNull: false,
+                allowNull: true,
             },
             about: {
                 type: Sequelize.STRING(1000),
@@ -64,6 +64,7 @@ module.exports = class Book extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.Book.belongsTo(db.User);
+        db.Book.belongsTo(db.User, { as: 'Owner' });
+        db.Book.belongsTo(db.User, { as: 'Sold' });
     }
 };
