@@ -57,7 +57,6 @@ const upload = multer({
 // 0331 이미지 등록
 router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
-        console.log(req.file);
         const { title, price } = req.body;
         await Book.create({
             OwnerId: req.user.id,
