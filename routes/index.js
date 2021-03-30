@@ -60,10 +60,9 @@ router.get('/book/:id', isLoggedIn, async (req, res, next) => {
                 },
             }),
         ]);
-        res.render('auction', {
-            title: `${good.name} - NodeAuction`,
-            good,
-            auction,
+        res.render('saleDetail.html', {
+            title: `책 구경 - ${book.title}`,
+            book,
         });
     } catch (error) {
         console.error(error);

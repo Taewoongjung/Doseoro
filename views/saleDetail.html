@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/saleDetail.css">
 
-    <title>판매 디테일</title>
+    <!-- <title>판매 디테일</title> -->
+    <title>{{title}}</title>
 </head>
 
 <body>
@@ -56,15 +57,15 @@
                         </div>
                         <div class="bookTitle d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">가격</h4>
-                            <a class="text-body text-decoration-none" id="getBookPrice">n원</a>
+                            <a class="text-body text-decoration-none" id="getBookPrice">{{book.price}}원</a>
                         </div>
                         <div class="bookTitle d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">책 제목</h4>
-                            <a class="text-body text-decoration-none" id="getBookTitle">책 제목 정보</a>
+                            <a class="text-body text-decoration-none" id="getBookTitle">{{book.title}}</a>
                         </div>
                         <div class="auther d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">저자</h4>
-                            <a class="text-body text-decoration-none" id="getAuther">저자 정보</a>
+                            <a class="text-body text-decoration-none" id="getAuther">{{book.author}}
                         </div>
                         <div class="publisher d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">출판사</h4>

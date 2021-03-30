@@ -6,25 +6,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>책 등록</title>
+  <title>{{title}}</title>
 </head>
 
 <body>
-  <form id="register_book-form">
-    <div class="input-group">
-      <label for="book-name">책 이름</label>
-      <input type="text" id="book-name" name="title" required autofocus>
-    </div>
-    <!-- <div class="input-group">
-        <label for="book-photo">상품 사진</label>
-        <input type="file" id="book-photo" name="img" required>
-      </div> -->
-    <div class="input-group">
-      <label for="book-price">가격</label>
-      <input type="number" id="book-price" name="price" required>
-    </div>
-    <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">상품 등록</button>
-  </form>
+
+  <h2>책 이름: {{book.title}}</h2>
+  <div>등록자: {{book.author}}</div>
+  <div>가격: {{book.price}}원</div>
+  <strong id="time" data-start="{{book.createdAt}}"></strong>
+  <!-- <img id="good-img" src="/img/{{good.img}}"> -->
+
   <script>
     function one() {
       const request = document.getElementById('register_book-form');

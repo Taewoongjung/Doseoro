@@ -4,7 +4,7 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
 
 router.get('/regi-book', isLoggedIn, (req, res) => {
-    res.render('book.html');
+    res.render('registerBook.html');
 })
 
 router.get('/findID', isNotLoggedIn, (req, res) => {

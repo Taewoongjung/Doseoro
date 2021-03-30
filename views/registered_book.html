@@ -1,9 +1,0 @@
-{% extends 'index.html' %}
-
-{% block book %}
-  <h2>{{book.title}}</h2>
-  <div>등록자: {{book.Owner.nick}}</div>
-  <div>시작가: {{book.price}}원</div>
-  <strong id="time" data-start="{{book.createdAt}}"></strong>
-  <!-- <img id="good-img" src="/img/{{good.img}}"> -->
-{% endblock %}
