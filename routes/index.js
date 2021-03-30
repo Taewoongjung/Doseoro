@@ -31,8 +31,12 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('signup.html');
 });
 
+try {
+    FileSystemLoader.
+}
+
 // 0330 책 등록
-router.post('/book', isLoggedIn, async (req, res, next) => {
+router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
         const { title, price } = req.body;
         await Book.create({
