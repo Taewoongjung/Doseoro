@@ -49,7 +49,7 @@ router.post('/book', isLoggedIn, async (req, res, next) => {
     }
 });
 
-router.get('/book/:id', isNotLoggedIn, async (req, res, next) => {
+router.get('/book/:id', async (req, res, next) => {
     try {
         const [ book ] = await Promise.all([
             Book.findOne({
