@@ -5,7 +5,32 @@ const Sequelize = require('sequelize');
 module.exports = class Book extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
+            price: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 0,
+            },
             title: {
+                type: Sequelize.STRING(100),
+                allowNull: false,
+            },
+            author: {
+                type: Sequelize.STRING(100),
+                allowNull: false,
+            },
+            publisher: {
+                type: Sequelize.STRING(100),
+                allowNull: false,
+            },
+            category: {
+                type: Sequelize.STRING(100),
+                allowNull: false,
+            },
+            demaged: {
+                type: Sequelize.STRING(100),
+                allowNull: false,
+            },
+            state: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
@@ -13,15 +38,18 @@ module.exports = class Book extends Sequelize.Model {
                 type: Sequelize.STRING(200),
                 allowNull: true,
             },
-            price: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                defaultValue: 0,
-            },
             like: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 defaultValue: 0,
+            },
+            sold: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+            },
+            about: {
+                type: Sequelize.STRING(1000),
+                allowNull: true,
             },
         }, {
             sequelize,
