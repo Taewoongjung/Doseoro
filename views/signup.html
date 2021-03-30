@@ -50,8 +50,10 @@
                 
                 <!-- 핸드폰 양식 미구현 -->
                 <label for="inputPhone">핸드폰</label>
-                <input type="tel" name="phone" id="inputPhone"class="form-control" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" placeholder="휴대전화" required>
-                
+                <!-- <input type="tel" name="phone" id="inputPhone"class="form-control" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" placeholder="휴대전화" required> -->
+                <input type="tel" name="phone" id="inputPhone" class="form-control" onkeyup="telFormat(this)"
+                    pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" placeholder="휴대전화" required>
+
                 <label for="inputNickname">닉네임</label>
                 <input type="text" name="nick" id="inputNickname" class="form-control" placeholder="닉네임" required>
                 
@@ -60,8 +62,9 @@
                 
                 <!-- 비밀번호 확인 미구현 -->
                 <label for="userPassword">비밀번호</label>
-                <input type="password" name="password" id="userPassword" class="form-control" placeholder="비밀번호" required>
-                <input type="password" name="re_password" class="form-control" placeholder="비밀번호 확인" required>
+                <input type="password" name="password" id="userPassword" class="form-control" onchange="checkPwd()" placeholder="비밀번호" required>
+                <input type="password" name="re_password" id="userPasswordCheck" class="form-control" onchange="checkPwd()" placeholder="비밀번호 확인" required>
+                <div class="text-danger mb-2"id="pwdCheck"></div>
 
                 <label for="">비밀번호 찾기 질문</label>
                 <select class="form-select mb-1" id="inputHint" name="question">
@@ -85,6 +88,7 @@
         <nav class="navbar fixed-bottom navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     
+    <script src="/js/checkFormat.js"></script>
     <script src="/js/signup-cli.js"></script>
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
