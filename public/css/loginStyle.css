@@ -4,7 +4,7 @@ body {
 }
 .form-signin {
     max-width: 380px;
-    margin: 5rem auto 10rem auto;
+    margin: 0 auto 0 auto;
 }
 .form-signin input {
     padding: 0.7rem 0.7rem 0.7rem 1.2rem;
@@ -32,11 +32,4 @@ body {
 .loginLogo {
     width: 100%;
     text-align: center;
-}
-/* .findBox {
-    border: 1px solid rgb(197, 197, 197);
-    border-radius: 10px;
-} */
-.moveFind {
-    
 }

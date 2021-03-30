@@ -39,8 +39,16 @@
         </nav>
 
         <!-- 컨텐츠 -->
-        <main class="saleDetail border container-sm overflow-hidden pt-5 pb-5">
+        <main class="saleDetail border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
             <div class="w-75 ms-auto me-auto">
+                <!-- 제목 -->
+                <div class="d-lg-flex align-items-center w-100 pb-2 mb-4 border-bottom">
+                    <h1 class="h2 w-50 text-decoration-none fw-bold" id="getPostingTitle">게시물 제목</h1>
+                    <!-- 등록 시간을 DB에서 받아와 YMD 형석으로 바꿀 JS코드 필요 -->
+                    <a class="me-0 w-50 text-decoration-none text-end text-dark" id="getPostingDate">{{book.createdAt}}</a>
+                </div>
+
+                <!-- 책 정보 -->
                 <div class="wrapBookInfo d-lg-flex align-items-center ">
                     <div class="bookImg mb-3">
                         <a href="#" class=""><img class="" src="/img/noPhoto.png" style="border-radius:21px" width="400px" height="400px"></a>
@@ -66,7 +74,7 @@
                         </div>
                         <div class="auther d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">저자</h4>
-                            <a class="text-body text-decoration-none" id="getAuther">{{book.author}}
+                            <a class="text-body text-decoration-none" id="getAuther">{{book.author}}</a>
                         </div>
                         <div class="publisher d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">출판사</h4>
@@ -88,18 +96,15 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 게시물 내용 -->
             <div class="mt-3 border-top w-75 ms-auto me-auto pt-4">
-                <div class="d-lg-flex align-items-center w-100">
-                    <h1 class="h2 w-50 text-decoration-none fw-bold" id="getPostingTitle">게시물 제목</h1>
-                    <!-- 등록 시간을 DB에서 받아와 YMD 형석으로 바꿀 JS코드 필요 -->
-                    <a class="me-0 w-50 text-decoration-none text-end text-dark" id="getPostingDate">{{book.createdAt}}</a>
-                </div>
                 <div class="mt-3"><a id="getPostingContents">게시물에 대한 내용을 입력하세요</a></div>
             </div>
         </main>
 
         <!-- footer -->
-        <nav class="navbar fixed-bottom navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+        <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/topNav.js"></script>

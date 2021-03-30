@@ -37,14 +37,14 @@
         </nav>
 
         <!-- 로그인 영역 -->
-        <main class="form-signin container-sm">
+        <main class="form-signin container-sm mt-5">
             <form id="login-form">
                 <div class="loginLogo">
                     <img class="" src="/img/logo3.png" width="250px" height="100px">
                     <h1 class="h3 mt-3 mb-3">로그인</h1>
                 </div>
-                <input type="email" name="email" class="form-control" placeholder="이메일" required autofocus>
-                <input type="password" name="password" class="form-control" placeholder="비밀번호" required>
+                <input type="email" name="email" class="form-control" placeholder="이메일" autofocus>
+                <input type="password" name="password" class="form-control" placeholder="비밀번호">
                 <ul class="row">
                     <li class="col">
                         <a class="" href="/signup">회원가입</a>
@@ -57,8 +57,8 @@
                     </li>
                 </ul>
                 <button class="btn btn-lg btn-primary mb-3 w-100" id="login" type="submit">로그인</button>
-                <a class="kakaoLogin" id="kakao" href="/auth/kakao"><img src="/img/kakaoLogin.png" class="w-100 p-0"></a>
-                <a class="googleLogin" id="google" href="/auth/google">구글로그인</a>
+                <a class="kakaoLogin" id="kakao" href="/auth/kakao"><img src="/img/kakaoLogin.png" class="w-100 mb-2 p-0"></a>
+                <a class="googleLogin" id="google" href="/auth/google"><img src="/img/googleLogin.png" height="67" class="w-100"></a>
             </form>
         </main>
 
