@@ -8,8 +8,9 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
-router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주기 위함
+router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주기
     res.locals.user = req.user;
+    // res.locals.like = 0;  // 좋아요 기능 추가 전
     next();
 });
 
@@ -98,7 +99,7 @@ router.get('/saleBoard', isNotLoggedIn, (req, res) => {
     res.render('saleBoard.html');
 });
 
-router.get('/mypage', isLoggedIn, (req, res) => {
+router.get('/mypage', isLoggedIn, (req, res, next) => {
     res.render('myPage.html');
 });
 
