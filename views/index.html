@@ -38,7 +38,7 @@
                 </div>
             </div>
         </nav>
-
+        
         <!-- main -->
         <div class="container-sm">
             <div class="banner bg-warning">
@@ -47,13 +47,6 @@
                 <form id="book-form">
                    <a href="/pages/regi-book">책 등록</a>
                 </form>
-                <!-- {% for book in books %}
-                    <h2>책 이름: {{book.title}}</h2>
-                    <div>등록자: {{book.author}}</div>
-                    <div>가격: {{book.price}}원</div>
-                    <strong id="time" data-start="{{book.createdAt}}"></strong>
-                    <img id="good-img" src="/img/{{good.img}}">
-                {% endfor %} -->
                 {% for book in books %}
                     <tr>
                         <td>{{book.title}}</td>

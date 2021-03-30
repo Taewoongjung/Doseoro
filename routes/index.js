@@ -13,7 +13,7 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 
 router.get('/', async (req, res, next) => {
     try {
-        const books = await Book.findAll({ where: { SoldId: null } }); // 낙찰되지 않은 상품들만 보여줌(누군가 낙찰 받았으면 안보여주기)
+        const books = await Book.findAll({ where: { SoldId: null } });
         res.render('index.html', {
             books,
         });
@@ -71,9 +71,6 @@ router.get('/book/:id', isNotLoggedIn, async (req, res, next) => {
 });
 
 // 0327 판매 게시판, 판매 게시물 등록
-router.get('/saleDetail', isNotLoggedIn, (req, res) => {
-    res.render('saleDetail.html');
-});
 router.get('/saleBoard', isNotLoggedIn, (req, res) => {
     res.render('saleBoard.html');
 });
