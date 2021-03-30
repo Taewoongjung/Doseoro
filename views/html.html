@@ -2,18 +2,20 @@
     MySQL "user" table에 question 추가 필요 
     2021-03-30~
         < 구현 할 것 >
-            - 구글로그인 구현
+            - 구글로그인 구현  (완료)
             - 책 등록      <- (작업중)
-            - 채팅기능
+            - 채팅기능      
 
         < 수정한 것 >
             - 'models/book.js'을 table이름을 books로 고침 그래서 mysql에 테이블 드롭하고 다시 생성해야할듯. => 그냥 mysql에 테이블 다 지우고 npm start하면 생성됨.
             - 'models/book.js'에 price: 가격 / title: 책 제목 / author: 저자 / publisher: 출판사 / category: 카테고리 
               / demaged: 외관손상 / state: 사용흔적 / img: 이미지 / like: 좋아요 / sold: 팔렸는지 판단 / about: 책 에대한 내용 (판매자 하고싶은말 등)
-        
+            - 'models/whobot.js' 추가. 왜냐하면 누가 무엇을 샀는지 빨리 구분할 수 있게 하려고.
+
         < 추가한 것 >
             - models/whoobot.js
             - views/registerBook.html (구현중이라 다 하고 말씀 드릴테니 그 때 디자인 부탁드려요)
+            - 구글 api사용하여 구글로 로그인 가능하게 함
 
         < 조치 필요 사항 >
             (공통)

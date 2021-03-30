@@ -3,22 +3,11 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const User = require('../models/user');
 
-// {"web":{
-// "client_id":"761701334575-tfu8kdj10m33htg4nfffkuqqoi05688n.apps.googleusercontent.com"  ***
-// ,"project_id":"peaceful-field-309212"
-// ,"auth_uri":"https://accounts.google.com/o/oauth2/auth" ***
-// ,"token_uri":"https://oauth2.googleapis.com/token"  ***
-// ,"auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"
-// ,"client_secret":"PVDJSTpU47BINZ2LB-_ta-w2" ***
-// ,"redirect_uris":["http://localhost:1000/auth/google/callback"]}}  ***
-
 module.exports = () => {
     passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_ID,
         clientSecret: process.env.GOOGLE_SECRET,
         tokenURL: process.env.GOOGLE_TOKEN,
-        // authorizationURL:'https://accounts.google.com/o/oauth2/auth',
-        // authorizationURL: process.env.GOOGLE_AUTH,
         callbackURL: '/auth/google/callback',
     }, async (accessToken, refreshToken, profile, done) => {  // 이 서비스에서는 구글 profile만 받아옴
         console.log('google profile', profile);
