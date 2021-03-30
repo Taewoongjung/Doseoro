@@ -26,13 +26,7 @@
                 <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
                     <ul class="navbar-nav mb-2 mb-md-0">
                         <li class="nav-item"><a class="nav-link p-3" href="/">관심상품</a></li>
-                        {% if user and user.id %}
-                        <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
-                        {% else %}
-                        <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
+                        <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>
                     </ul>
                 </div>
             </div>
@@ -50,13 +44,13 @@
             </div>
             <form id="findPW-form">
                 {% if user %}
-                <input type="text" name="nick" class="form-control" value={{nick}}> <!-- 입력 못하게 막기 -->
+                <input type="text" name="nick" class="form-control" value={{email}}> <!-- 입력 못하게 막기 -->
         
                 <input type="text" name="answer" class="form-control" placeholder= "질문: [ {{question}} ]">
                 <button class="btn btn-lg btn-primary w-100" id="findPW" type="submit" onclick="two()">비밀번호 바꾸기</button>
             
                 {% else %}
-                <input type="text" name="nick" class="form-control" placeholder="사용자 닉네임">
+                <input type="email" name="email" class="form-control" placeholder="사용자 이메일">
                 <button class="btn btn-lg btn-primary w-100" id="find" type="submit" onclick="one()">비밀번호 찾기</button>
         
                 {% endif %}

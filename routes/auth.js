@@ -81,12 +81,11 @@ router.post('/ID', async (req, res, next) => {
 });
 
 router.post('/PW_fir', async (req, res, next) => {
-    const { nick } = req.body;
+    const { email } = req.body;
     try {
-        const FindUser = await User.findOne({ where: { nick: nick } });
+        const FindUser = await User.findOne({ where: { email: email } });
         if (FindUser) {
-            // console.log(FindUser);
-            return res.render('findPW.html', { user: FindUser, question: FindUser.question, nick: FindUser.nick });
+            return res.render('findPW.html', { user: FindUser, question: FindUser.question, email: FindUser.email });
         } else {
             return res.send(`<script type="text/javascript">alert("회원이 존재하지 않습니다."); location.href="/pages/findPW";</script>`);
         }
@@ -101,7 +100,7 @@ router.post('/PW_sec', async (req, res, next) => {
     try {
         const FindUser = await User.findOne({ where: { answer: answer } });
         if (FindUser) {
-            return res.render('changePW.html', { user: FindUser.nick });
+            return res.render('changePW.html', { user: FindUser.email });
         } else {
             return res.send(`<script type="text/javascript">alert("다시 입력 해주세요"); location.href="/pages/findPW";</script>`);
         }
@@ -142,8 +141,6 @@ router.get('/google', passport.authenticate('google', { scope: [
     'https://www.googleapis.com/auth/blogger'],
     accessType: 'offline', approvalPrompt: 'force'})
 );
-
-
 
 router.get('/kakao/callback', passport.authenticate('kakao', {
     failureRedirect: '/',  // kakao 로그인 실패
