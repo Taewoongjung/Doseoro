@@ -48,6 +48,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(morgan('dev'));
 }
 app.use(express.static(path.join(__dirname, './public')));
+app.use('/img', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(favicon(path.join(__dirname, '/public/img/logo_clear.png')));
