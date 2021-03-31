@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = class User extends Sequelize.Model {
+module.exports = class Chat extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
             email: {
@@ -53,7 +53,6 @@ module.exports = class User extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.User.hasMany(db.Whobot);
-        db.User.hasMany(db.Chat);
+        db.Chat.belongsTo(db.User);
     }
 };

@@ -34,6 +34,10 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('signup.html');
 });
 
+router.get('/mypage', isLoggedIn, (req, res, next) => {
+    res.render('myPage.html');
+});
+
 // 0331파일 올리기 
 try {
     fs.readdirSync('uploads');
@@ -41,7 +45,7 @@ try {
     console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
     fs.mkdirSync('uploads');
 }
-const upload = multer({
+const upload = multer({  // multer 설정
     storage: multer.diskStorage({
         destination(req, file, cb) {
             cb(null, 'uploads/');
@@ -51,7 +55,7 @@ const upload = multer({
             cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext); // 파일 덮어씌어지는거 방지
         },
     }),
-    limits: { fileSize: 5 * 1024 * 1024},
+    limits: { fileSize: 5 * 1024 * 1024},  // 파일 크기 제한 ( 나중에 논의 )
 });
 
 // 0330 책 등록
@@ -94,13 +98,26 @@ router.get('/book/:id', async (req, res, next) => {
     }
 });
 
+// 0331 채팅방 생성
+router.post('/room', async (req, res, next) => {  // 채팅방 생성 라우터
+    try {
+        const newRoom = await Room.create({
+            who: req.body.title,  // 방 제목 설정
+            owner: req.session.color,
+        });
+        const io =req.app.get('io');
+        io.of('/room').emit('newRoom', newRoom);
+        res.redirect(`/room/${newRoom._id}?password=${req.body.password}`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+
 // 0327 판매 게시판, 판매 게시물 등록
 router.get('/saleBoard', isNotLoggedIn, (req, res) => {
     res.render('saleBoard.html');
-});
-
-router.get('/mypage', isLoggedIn, (req, res, next) => {
-    res.render('myPage.html');
 });
 
 module.exports = router;
