@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const { User, Book, Whobot } = require('../models');
+const { User, Book, Whobot, Chat } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -36,6 +36,11 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
 
 router.get('/mypage', isLoggedIn, (req, res, next) => {
     res.render('myPage.html');
+});
+
+// 0331 채팅방 모음 들어가기
+router.get('/chat', isLoggedIn, (req, res, next) => {
+    res.render('chatRoom.html');
 });
 
 // 0331파일 올리기 
@@ -99,15 +104,15 @@ router.get('/book/:id', async (req, res, next) => {
 });
 
 // 0331 채팅방 생성
-router.post('/room', async (req, res, next) => {  // 채팅방 생성 라우터
+router.post('/chat', isLoggedIn, async (req, res, next) => {  // 채팅방 생성 라우터
     try {
-        const newRoom = await Room.create({
+        const newChat = await Chat.create({
             who: req.body.title,  // 방 제목 설정
             owner: req.session.color,
         });
         const io =req.app.get('io');
-        io.of('/room').emit('newRoom', newRoom);
-        res.redirect(`/room/${newRoom._id}?password=${req.body.password}`);
+        io.of('/chat').emit('newRoom', newChat);
+        res.redirect(`/chat/${newChat._id}`);
     } catch (error) {
         console.error(error);
         next(error);
