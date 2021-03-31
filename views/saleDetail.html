@@ -9,7 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/saleDetail.css">
 
     <!-- <title>판매 디테일</title> -->
     <title>{{title}}</title>
@@ -51,7 +50,7 @@
                 <!-- 책 정보 -->
                 <div class="wrapBookInfo d-lg-flex align-items-center ">
                     <div class="bookImg mb-3">
-                        <a href="#" class=""><img class="" src="/img/{{book.img}}" style="border-radius:21px" width="400px" height="400px"></a>
+                        <a href="#" class=""><img class="" src="/img/{{book.img}}" style="border-radius:21px" width="320px" height="400px"></a>
                     </div>
                     <div class="bookInfo w-75 me-0 ms-sm-5">
                         <div class="d-flex mb-3">
@@ -67,12 +66,12 @@
                             </div> -->
                         </div>
                         <div class="bookTitle d-flex align-items-center mt-2 mb-2">
-                            <h4 class="h4 fw-bold w-50">가격</h4>
-                            <a class="text-body text-decoration-none" id="getBookPrice">{{book.price}}원</a>
-                        </div>
-                        <div class="bookTitle d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">책 제목</h4>
                             <a class="text-body text-decoration-none" id="getBookTitle">{{book.title}}</a>
+                        </div>
+                        <div class="bookTitle d-flex align-items-center mt-2 mb-2">
+                            <h4 class="h4 fw-bold w-50">가격</h4>
+                            <a class="text-body text-decoration-none" id="getBookPrice">{{book.price}}원</a>
                         </div>
                         <div class="auther d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">저자</h4>
@@ -91,10 +90,10 @@
                             <a class="text-body text-decoration-none" id="getAppearanceInfo">외관손상 정보</a>
                         </div>
                         <!-- 사용흔적을 넣어야하는지 검토 필요 -->
-                        <div class="category d-flex align-items-center mt-2 mb-2">
+                        <!-- <div class="category d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">사용흔적</h4>
                             <a class="text-body text-decoration-none" id="getCategory">사용흔적 정보</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

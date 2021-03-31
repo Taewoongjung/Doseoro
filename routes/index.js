@@ -38,11 +38,6 @@ router.get('/mypage', isLoggedIn, (req, res, next) => {
     res.render('myPage.html');
 });
 
-// 0331 채팅방 모음 들어가기
-router.get('/chat', isLoggedIn, (req, res, next) => {
-    res.render('chatRoom.html');
-});
-
 // 0331파일 올리기 
 try {
     fs.readdirSync('uploads');
@@ -102,23 +97,6 @@ router.get('/book/:id', async (req, res, next) => {
         next(error);
     }
 });
-
-// 0331 채팅방 생성
-router.post('/chat', isLoggedIn, async (req, res, next) => {  // 채팅방 생성 라우터
-    try {
-        const newChat = await Chat.create({
-            who: req.body.title,  // 방 제목 설정
-            owner: req.session.color,
-        });
-        const io =req.app.get('io');
-        io.of('/chat').emit('newRoom', newChat);
-        res.redirect(`/chat/${newChat._id}`);
-    } catch (error) {
-        console.error(error);
-        next(error);
-    }
-});
-
 
 // 0327 판매 게시판, 판매 게시물 등록
 router.get('/saleBoard', isNotLoggedIn, (req, res) => {
