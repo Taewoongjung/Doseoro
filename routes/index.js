@@ -59,14 +59,14 @@ const upload = multer({
 router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
         const { title, price } = req.body;
-        await Book.create({
+        const book = await Book.create({
             OwnerId: req.user.id,
             title: title,
             author: req.user.nick,
             img: req.file.filename,
             price: price,
         });
-        res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+        res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
         next(error);
@@ -85,7 +85,7 @@ router.get('/book/:id', async (req, res, next) => {
             }),
         ]);
         res.render('saleDetail.html', {
-            title: `책 구경 - ${book.title}`,
+            title: `책 구경`,
             book,
         });
     } catch (error) {
