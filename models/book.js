@@ -23,15 +23,11 @@ module.exports = class Book extends Sequelize.Model {
                 allowNull: true,
             },
             category: {
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            demaged: {
-                type: Sequelize.STRING(100),
+                type: Sequelize.JSON,
                 allowNull: true,
             },
             state: {
-                type: Sequelize.STRING(100),
+                type: Sequelize.JSON,
                 allowNull: true,
             },
             img: {
