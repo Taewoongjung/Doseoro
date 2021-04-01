@@ -121,13 +121,17 @@ router.get('/book/:id', async (req, res, next) => {
 // 찜 하기 기능
 router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
-        // const { }
-        const FindUser = await Book.findOne({ where: { email: email } });
+        const { user } = req.body;
+        const FindBook = await Book.findOne({ where: { id: user } });
         // const { postmessage, title, price, author, publisher, checkCategory, checkState , dealRoot, about } = req.body;
-        const book = await Book.update({
+        await Book.update({
             likeId: req.user.id,
             // likecount: ,
+        }, {
+            where: { OwnerId: FindBook.OwnerId },
         });
+        return res.send(`<script type="text/javascript">alert("찜 했습니다!"); location.href="/";</script>`);
+
     } catch (error) {
         console.error(error);
         next(error);

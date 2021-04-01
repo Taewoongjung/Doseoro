@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/css/style.css">
 
@@ -20,7 +21,8 @@
         <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light" id="topNav">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="160" height="64"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
                     <ul class="navbar-nav mb-2 mb-md-0">
@@ -44,13 +46,15 @@
                 <div class="d-lg-flex align-items-center w-100 pb-2 mb-4 border-bottom">
                     <h1 class="h2 w-50 text-decoration-none fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
                     <!-- 등록 시간을 DB에서 받아와 YMD 형석으로 바꿀 JS코드 필요 => 해결 -->
-                    <a class="me-0 w-50 text-decoration-none text-end text-dark" id="getPostingDate">{{book.createdAt}}</a>
+                    <a class="me-0 w-50 text-decoration-none text-end text-dark"
+                        id="getPostingDate">{{book.createdAt}}</a>
                 </div>
 
                 <!-- 책 정보 -->
                 <div class="wrapBookInfo d-lg-flex align-items-center ">
                     <div class="bookImg mb-3">
-                        <a href="#" class=""><img class="" src="/img/{{book.img}}" style="border-radius:21px" width="320px" height="400px"></a>
+                        <a href="#" class=""><img class="" src="/img/{{book.img}}" style="border-radius:21px"
+                                width="320px" height="400px"></a>
                     </div>
                     <div class="bookInfo w-75 me-0 ms-sm-5">
                         <div class="d-flex mb-3">
@@ -59,7 +63,10 @@
                             </div>
                             <form id="book_like-form">
                                 <div class="saleCheck border-0 p-2 me-4" style="border-radius: 10px">
-                                    <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">찜 하기</button>
+                                    <!-- 책 올린 사람 찾기 위함 -->
+                                    <input type="hidden" name="user" value="{{user}}">
+                                    <button class="btn btn-lg btn-primary w-100" class="btn" type="submit"
+                                        onclick="one()">찜 하기</button>
                                 </div>
                             </form>
                             <!-- 관심상품 버튼 -->
@@ -103,9 +110,6 @@
                 <div class="mt-3"><a id="getPostingContents">{{book.about}}</a></div>
             </div>
 
-            <!-- 책 올린 사람 찾기 위함 -->
-            <input type="hidden" name="user" value="{{user}}">
-
         </main>
 
         <!-- footer -->
@@ -113,9 +117,9 @@
     </div>
     <script>
         function one() {
-          const request = document.getElementById('book_like-form');
-          request.setAttribute('action', '/like');
-          request.setAttribute('method', 'POST');
+            const request = document.getElementById('book_like-form');
+            request.setAttribute('action', '/like');
+            request.setAttribute('method', 'POST');
         }
     </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
