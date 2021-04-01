@@ -48,7 +48,7 @@
                 </form>
                 {% for book in books %}
                     <tr>
-                        <td>{{book.title}}</td>
+                        <td>{{book.postmessage}}</td>
                         <td><img src="/img/{{book.img}}" style="border-radius:21px" width="320px" height="400px"></td>
                         <td>{{book.price}} 원</td>
                         <td><a href="/book/{{book.id}}" class="enter btn">구경하러가기</a></td>
