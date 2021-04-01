@@ -64,7 +64,7 @@
                             <form id="book_like-form">
                                 <div class="saleCheck border-0 p-2 me-4" style="border-radius: 10px">
                                     <!-- 책 올린 사람 찾기 위함 -->
-                                    <input type="text" name="user" value="{{user}}">
+                                    <input type="hidden" name="user" value="{{user}}">
                                     <input type="hidden" name="postTitle" value="{{book.postmessage}}">
                                     <button class="btn btn-lg btn-primary w-100" class="btn" type="submit"
                                         onclick="one()">찜 하기</button>

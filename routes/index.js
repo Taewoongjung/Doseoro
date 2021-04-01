@@ -122,18 +122,16 @@ router.get('/book/:id', async (req, res, next) => {
 router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
         const { user, postTitle } = req.body;
-        // const FindBook = await Book.findOne({ where: { id: user } });
-        // await Book.update({
-        //     likeId: req.user.id,
-        //     // likecount: ,
-        // }, {
-        //     where: { OwnerId: FindBook.OwnerId },
-        // });
-        // return res.send(`<script type="text/javascript">alert("찜 했습니다!"); location.href="/";</script>`);
+        const FindBook = await Book.findOne({ where: { id: user } });
         await Who.create({
             thisbook: user,
             posttitle: postTitle,
             liked: req.user.id,
+        });
+        await Book.update({
+            likecount: FindBook.likecount + 1,
+        }, {
+            where: { id: user }
         });
         return res.send(`<script type="text/javascript">alert("찜 했습니다!"); location.href="/";</script>`);
     } catch (error) {
