@@ -116,6 +116,30 @@ router.get('/book/:id', async (req, res, next) => {
     }
 });
 
+// 찜 하기 기능
+router.post('/like', isLoggedIn, async (req, res, next) => {
+    try {
+        const { postmessage, title, price, author, publisher, checkCategory, checkState , dealRoot, about } = req.body;
+        const book = await Book.create({
+            OwnerId: req.user.id,
+            postmessage: postmessage,
+            title: title,
+            author: author,
+            publisher: publisher,
+            img: req.file.filename,
+            category: checkCategory,
+            state: checkState,
+            price: price,
+            tradingmethod: dealRoot,
+            about: about,
+        });
+        res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 // 0327 판매 게시판, 판매 게시물 등록
 router.get('/saleBoard', isNotLoggedIn, (req, res) => {
     res.render('saleBoard.html');
