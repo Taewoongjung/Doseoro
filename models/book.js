@@ -42,7 +42,7 @@ module.exports = class Book extends Sequelize.Model {
                 type: Sequelize.STRING(200),
                 allowNull: true,
             },
-            like: {
+            likecount: {
                 type: Sequelize.INTEGER,
                 allowNull: true,
                 defaultValue: 0,
@@ -53,6 +53,10 @@ module.exports = class Book extends Sequelize.Model {
             },
             about: {
                 type: Sequelize.STRING(1000),
+                allowNull: true,
+            },
+            wholiked: {
+                type: Sequelize.INTEGER,
                 allowNull: true,
             },
         }, {
@@ -69,6 +73,7 @@ module.exports = class Book extends Sequelize.Model {
     static associate(db) {
         db.Book.belongsTo(db.User, { as: 'Owner' });
         db.Book.belongsTo(db.User, { as: 'Sold' });
+        db.Book.belongsTo(db.User, { as: 'like' });
         db.Book.hasMany(db.Whobot);
     }
 };

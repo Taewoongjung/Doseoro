@@ -38,10 +38,17 @@ router.get('/mypage', isLoggedIn, (req, res, next) => {
     res.render('myPage.html');
 });
 
-router.get('/like', isLoggedIn, (req, res, next) => {
-    res.render('likedProduct.html', { nick: req.user.nick });
+router.get('/like', async (req, res, next) => {
+    try {
+        const books = await Book.findAll({ where: { SoldId: null } });
+        res.render('likedProduct.html', {
+            books,
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
 });
-
 
 // 0331파일 올리기 
 try {
