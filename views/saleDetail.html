@@ -42,7 +42,7 @@
             <div class="w-75 ms-auto me-auto">
                 <!-- 제목 -->
                 <div class="d-lg-flex align-items-center w-100 pb-2 mb-4 border-bottom">
-                    <h1 class="h2 w-50 text-decoration-none fw-bold" id="getPostingTitle">게시물 제목</h1>
+                    <h1 class="h2 w-50 text-decoration-none fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
                     <!-- 등록 시간을 DB에서 받아와 YMD 형석으로 바꿀 JS코드 필요 => 해결 -->
                     <a class="me-0 w-50 text-decoration-none text-end text-dark" id="getPostingDate">{{book.createdAt}}</a>
                 </div>
@@ -79,28 +79,27 @@
                         </div>
                         <div class="publisher d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">출판사</h4>
-                            <a class="text-body text-decoration-none" id="getPublisher">출판사 정보</a>
+                            <a class="text-body text-decoration-none" id="getPublisher">{{book.publisher}}</a>
                         </div>
                         <div class="category d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">카테고리</h4>
-                            <a class="text-body text-decoration-none" id="getCategory">카테고리 정보</a>
+                            <a class="text-body text-decoration-none" id="getCategory">{{book.category}}</a>
                         </div>
                         <div class="category d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">외관손상</h4>
-                            <a class="text-body text-decoration-none" id="getAppearanceInfo">외관손상 정보</a>
+                            <a class="text-body text-decoration-none" id="getAppearanceInfo">{{book.state}}</a>
                         </div>
-                        <!-- 사용흔적을 넣어야하는지 검토 필요 -->
-                        <!-- <div class="category d-flex align-items-center mt-2 mb-2">
-                            <h4 class="h4 fw-bold w-50">사용흔적</h4>
-                            <a class="text-body text-decoration-none" id="getCategory">사용흔적 정보</a>
-                        </div> -->
+                        <div class="category d-flex align-items-center mt-2 mb-2">
+                            <h4 class="h4 fw-bold w-50">거래방법</h4>
+                            <a class="text-body text-decoration-none" id="getAppearanceInfo">{{book.tradingmethod}}</a>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- 게시물 내용 -->
             <div class="mt-3 border-top w-75 ms-auto me-auto pt-4">
-                <div class="mt-3"><a id="getPostingContents">게시물에 대한 내용을 입력하세요</a></div>
+                <div class="mt-3"><a id="getPostingContents">{{book.about}}</a></div>
             </div>
         </main>
 

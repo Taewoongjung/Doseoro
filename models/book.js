@@ -5,6 +5,10 @@ const Sequelize = require('sequelize');
 module.exports = class Book extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
+            postmessage: {
+                type: Sequelize.STRING(150),
+                allowNull: true,
+            },
             price: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
@@ -28,6 +32,10 @@ module.exports = class Book extends Sequelize.Model {
             },
             state: {
                 type: Sequelize.JSON,
+                allowNull: true,
+            },
+            tradingmethod: {
+                type: Sequelize.STRING(15),
                 allowNull: true,
             },
             img: {

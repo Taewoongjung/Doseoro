@@ -42,7 +42,7 @@
     <!-- 책 등록 -->
     <main class="registerForm border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
       <form id="register_book-form" enctype="multipart/form-data" class="p-5">
-        <input type="text" class="form-control p-3" id="postTitle" name="" placeholder="제목" required autofocus>
+        <input type="text" class="form-control p-3" id="postTitle" name="postmessage" placeholder="제목" required autofocus>
 
         <div class="input-group">
           <label for="book-name">책 이름</label>
@@ -126,15 +126,20 @@
 
         <h1 class="h4 mt-3">거래방법</h1>
         <select class="form-select mb-1 p-2" id="dealMethod" name="dealRoot">
-          <option value="직거래, 택배" selected>직거래, 택배</option>
-          <option value="직거래">직거래</option>
-          <option value="택배">택배</option>
+          <option  name="dealRoot"value="직거래, 택배" selected>직거래, 택배</option>
+          <option name="dealRoot" value="직거래">직거래</option>
+          <option name="dealRoot" value="택배">택배</option>
         </select>
 
         <h1 class="h4 mt-3">상품 사진</h1>
         <div class="input-group mb-3">
           <label for="book-photo">상품 사진</label>
           <input type="file" class="form-control" id="book-photo" name="img" required>
+        </div>
+
+        <div class="input-group">
+          <label for="book-about">상품설명</label>
+          <input type="text" class="form-control p-3" id="book-about" name="about" placeholder="책 설명">
         </div>
 
         <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">상품 등록</button>

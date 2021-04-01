@@ -62,9 +62,10 @@ const upload = multer({  // multer 설정
 // 0331 이미지 등록
 router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
-        const { title, price, author, publisher, checkCategory, checkState } = req.body;
+        const { postmessage, title, price, author, publisher, checkCategory, checkState , dealRoot, about } = req.body;
         const book = await Book.create({
             OwnerId: req.user.id,
+            postmessage: postmessage,
             title: title,
             author: author,
             publisher: publisher,
@@ -72,6 +73,8 @@ router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) =>
             category: checkCategory,
             state: checkState,
             price: price,
+            tradingmethod: dealRoot,
+            about: about,
         });
         res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
