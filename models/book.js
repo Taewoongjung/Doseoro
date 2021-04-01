@@ -56,7 +56,7 @@ module.exports = class Book extends Sequelize.Model {
                 allowNull: true,
             },
             wholiked: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.JSON,
                 allowNull: true,
             },
         }, {
@@ -73,7 +73,6 @@ module.exports = class Book extends Sequelize.Model {
     static associate(db) {
         db.Book.belongsTo(db.User, { as: 'Owner' });
         db.Book.belongsTo(db.User, { as: 'Sold' });
-        db.Book.belongsTo(db.User, { as: 'like' });
         db.Book.hasMany(db.Who);
     }
 };

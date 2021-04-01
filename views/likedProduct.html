@@ -13,7 +13,7 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/css/style.css">
-    <title>도서로</title>
+    <title>도서로 - 관심상품</title>
 </head>
 
 <body>
@@ -28,7 +28,6 @@
                     <ul class="navbar-nav mb-2 mb-md-0">
                         <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
                     </ul>
                 </div>
@@ -40,11 +39,11 @@
             <div class="banner bg-warning">
                 {% for book in books %}
                     <tr>
-                        <td>{{book.postmessage}}</td>
-                        <td><img src="/img/{{book.img}}" style="border-radius:21px" width="320px" height="400px"></td>
+                        <td>{{book.posttitle}}</td>
                         <td>{{book.price}} 원</td>
                         <td><a href="/book/{{book.id}}" class="enter btn">구경하러가기</a></td>
                     </tr>
+                    <br>
                 {% endfor %}
             </div>
         </main>

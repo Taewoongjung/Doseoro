@@ -11,9 +11,18 @@ module.exports = class Who extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: true,
             },
+            title: {
+                type: Sequelize.STRING(100),
+                allowNull: true,
+            },
             liked: {
                 type: Sequelize.STRING(100),
                 allowNull: true,
+            },
+            price: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 0,
             },
             bought: {
                 type: Sequelize.STRING(100),

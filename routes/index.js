@@ -38,9 +38,12 @@ router.get('/mypage', isLoggedIn, (req, res, next) => {
     res.render('myPage.html');
 });
 
+// 관심상품 창
 router.get('/like', async (req, res, next) => {
     try {
-        const books = await Book.findAll({ where: { SoldId: null } });
+        const books = await Who.findAll({ where: { liked: req.user.id } });
+        // console.log('@@@ ', what_liked );
+        // const books = await Book.findAll({ where: { id: what_liked } });
         res.render('likedProduct.html', {
             books,
         });
@@ -121,11 +124,13 @@ router.get('/book/:id', async (req, res, next) => {
 // 찜 하기 기능
 router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
-        const { user, postTitle } = req.body;
+        const { user, postmessage, title, price } = req.body;
         const FindBook = await Book.findOne({ where: { id: user } });
         await Who.create({
             thisbook: user,
-            posttitle: postTitle,
+            posttitle: postmessage,
+            title: title,
+            price: price,
             liked: req.user.id,
         });
         await Book.update({
