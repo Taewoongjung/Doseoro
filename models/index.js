@@ -3,7 +3,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
 const User = require('./user');
 const Book = require('./book');
-const Whobot = require('./whobot');
+const Who = require('./who');
 
 const db = {};
 const sequelize = new Sequelize(
@@ -13,14 +13,14 @@ const sequelize = new Sequelize(
 db.sequelize = sequelize;
 db.User = User;
 db.Book = Book;
-db.Whobot = Whobot;
+db.Who = Who;
 
 User.init(sequelize);
 Book.init(sequelize);
-Whobot.init(sequelize);
+Who.init(sequelize);
 
 User.associate(db);
 Book.associate(db);
-Whobot.associate(db);
+Who.associate(db);
 
 module.exports = db;

@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const { User, Book, Whobot, Chat } = require('../models');
+const { User, Book, Who } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -121,17 +121,21 @@ router.get('/book/:id', async (req, res, next) => {
 // 찜 하기 기능
 router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
-        const { user } = req.body;
-        const FindBook = await Book.findOne({ where: { id: user } });
-        // const { postmessage, title, price, author, publisher, checkCategory, checkState , dealRoot, about } = req.body;
-        await Book.update({
-            likeId: req.user.id,
-            // likecount: ,
-        }, {
-            where: { OwnerId: FindBook.OwnerId },
+        const { user, postTitle } = req.body;
+        // const FindBook = await Book.findOne({ where: { id: user } });
+        // await Book.update({
+        //     likeId: req.user.id,
+        //     // likecount: ,
+        // }, {
+        //     where: { OwnerId: FindBook.OwnerId },
+        // });
+        // return res.send(`<script type="text/javascript">alert("찜 했습니다!"); location.href="/";</script>`);
+        await Who.create({
+            thisbook: user,
+            posttitle: postTitle,
+            liked: req.user.id,
         });
         return res.send(`<script type="text/javascript">alert("찜 했습니다!"); location.href="/";</script>`);
-
     } catch (error) {
         console.error(error);
         next(error);
