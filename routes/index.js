@@ -38,6 +38,11 @@ router.get('/mypage', isLoggedIn, (req, res, next) => {
     res.render('myPage.html');
 });
 
+router.get('/like', isLoggedIn, (req, res, next) => {
+    res.render('likedProduct.html', { nick: req.user.nick });
+});
+
+
 // 0331파일 올리기 
 try {
     fs.readdirSync('uploads');
