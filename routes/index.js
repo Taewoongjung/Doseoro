@@ -169,13 +169,13 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
     }
 });
 
-router.get('/hashtag', async (req, res, next) => {
-    const query = req.query.hashtag;
+router.get('/search', async (req, res, next) => {
+    const query = req.query.words;
     if (!query) {
       return res.redirect('/');
     }
     try {
-      const hashtag = await Hashtag.findOne({ where: { title: query } });
+      const Book = await Book.findOne({ where: { title: query } });
       let posts = [];
       if (hashtag) {
         posts = await hashtag.getPosts({ include: [{ model: User }] });
