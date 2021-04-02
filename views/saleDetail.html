@@ -26,13 +26,13 @@
                     <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
                     <ul class="navbar-nav mb-2 mb-md-0">
-                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
-                        {% if user and user.id %}
-                        <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
+                        {% if users and users.id %}
+                        <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{users.nick}}님</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/like">관심상품</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
                         {% else %}
+                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
                     </ul>
                 </div>

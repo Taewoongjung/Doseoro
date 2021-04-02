@@ -42,8 +42,6 @@ router.get('/mypage', isLoggedIn, (req, res, next) => {
 router.get('/like', async (req, res, next) => {
     try {
         const books = await Who.findAll({ where: { liked: req.user.id } });
-        // console.log('@@@ ', what_liked );
-        // const books = await Book.findAll({ where: { id: what_liked } });
         res.render('likedProduct.html', {
             books,
         });
@@ -109,12 +107,22 @@ router.get('/book/:id', async (req, res, next) => {
                 },
             }),
         ]);
-        res.render('saleDetail.html', {
-            title: `책 구경`,
-            book,
-            // user: req.user.id,  현재 사용자의 아이디 찍어주는 것
-            user: book.OwnerId,
-        });
+        if (res.locals.user){
+            console.log("login");
+            res.render('saleDetail.html', {
+                title: `책 구경`,
+                book,
+                users: res.locals.user,
+                user: book.OwnerId,
+            });
+        } else if (isNotLoggedIn) {
+            console.log("not login");
+            res.render('saleDetail.html', {
+                title: `책 구경`,
+                book,
+                user: book.OwnerId,
+            });
+        }
     } catch (error) {
         console.error(error);
         next(error);
