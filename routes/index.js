@@ -82,23 +82,19 @@ router.post('/comment', isLoggedIn, upload2.none(), async (req, res, next) => {
         img: req.body.url,
         UserId: req.user.id,
       });
-      const hashtags = req.body.content.match(/#[^\s#]*/g);
-      if (hashtags) {
-        const result = await Promise.all(
-          hashtags.map(tag => {
-            return Hashtag.findOrCreate({
-              where: { title: tag.slice(1).toLowerCase() },
-            })
-          }),
-        );
-        await post.addHashtags(result.map(r => r[0]));
-      }
+    // 해쉬 태그 고민중 
       res.redirect('/');
     } catch (error) {
       console.error(error);
       next(error);
     }
-  });
+});
+
+// 0403 댓글에 이미지 추가 기능 + 이미지 추가하면 미리보기 기능(고민)
+router.post('/comment/img', isLoggedIn, upload.single('img'), (req, res) => {
+    console.log(req.file);
+    res.json({ url: `/img/${req.file.filename}` });
+});
 
 // 0330 책 등록
 // 0331 이미지 등록
