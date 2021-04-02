@@ -169,6 +169,49 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
     }
 });
 
+router.get('/hashtag', async (req, res, next) => {
+    const query = req.query.hashtag;
+    if (!query) {
+      return res.redirect('/');
+    }
+    try {
+      const hashtag = await Hashtag.findOne({ where: { title: query } });
+      let posts = [];
+      if (hashtag) {
+        posts = await hashtag.getPosts({ include: [{ model: User }] });
+      }
+  
+      return res.render('main', {
+        title: `${query} | NodeBird`,
+        twits: posts,
+      });
+    } catch (error) {
+      console.error(error);
+      return next(error);
+    }
+  });
+
+
+
+// router.get("/bookSearch/:searchWord", async (req, res, next) => {
+//     try {
+//         console.log("@@@@@@@search");
+//         const searchWord = req.params.searchWord;
+//         const searchResult = await Book.findAll({
+//             where:{
+//                 postmessage: {
+//                     [Op.like]: "%" + searchWord + "%"
+//                 }
+//             }
+//         });
+//         console.log("search = ", searchResult);
+//     } catch (error) {
+//         console.error(error);
+//         next(error);
+//     }
+// });
+
+
 // 0327 판매 게시판, 판매 게시물 등록
 router.get('/saleBoard', isNotLoggedIn, (req, res) => {
     res.render('saleBoard.html');

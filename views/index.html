@@ -25,9 +25,11 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
-                    <form id="hashtag-form" action="/hashtag">
+                    <!-- 검색 기능 -->
+                    <form id="search-form" action="/bookSearch">
                         <tr>
-                            <td><input type="text" class="form-control p-3" id="book-publisher" name="searching" placeholder="검색"></td>
+                            <!-- 프론트 참고 사항) id="book-publisher로 되어있습니다. -->
+                            <td><input type="text" class="form-control p-3" id="book-publisher" name="searchWord" placeholder="검색"></td>
                             <td><button class="btn btn-lg btn-primary w-100" class="btn" type="submit">검색</button></td>
                         </tr>
                     </form>
@@ -65,7 +67,13 @@
         <!-- footer -->
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
-
+    <!-- <script>
+        function one() {
+          const request = document.getElementById('search-form');
+          request.setAttribute('action', '/bookSearch{{searchWord}}');
+          request.setAttribute('method', 'GET');
+        }
+    </script> -->
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
