@@ -5,6 +5,10 @@ const Sequelize = require('sequelize');
 module.exports = class Book extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
+            postmessage: {
+                type: Sequelize.STRING(150),
+                allowNull: true,
+            },
             price: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
@@ -23,22 +27,22 @@ module.exports = class Book extends Sequelize.Model {
                 allowNull: true,
             },
             category: {
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
-            demaged: {
-                type: Sequelize.STRING(100),
+                type: Sequelize.JSON,
                 allowNull: true,
             },
             state: {
-                type: Sequelize.STRING(100),
+                type: Sequelize.JSON,
+                allowNull: true,
+            },
+            tradingmethod: {
+                type: Sequelize.STRING(15),
                 allowNull: true,
             },
             img: {
                 type: Sequelize.STRING(200),
                 allowNull: true,
             },
-            like: {
+            likecount: {
                 type: Sequelize.INTEGER,
                 allowNull: true,
                 defaultValue: 0,
@@ -51,10 +55,13 @@ module.exports = class Book extends Sequelize.Model {
                 type: Sequelize.STRING(1000),
                 allowNull: true,
             },
+            wholiked: {
+                type: Sequelize.JSON,
+                allowNull: true,
+            },
         }, {
             sequelize,
             timestamps: true,
-            underscored: false,
             modelName: 'Book',
             tableName: 'books',
             paranoid: true,
@@ -66,6 +73,6 @@ module.exports = class Book extends Sequelize.Model {
     static associate(db) {
         db.Book.belongsTo(db.User, { as: 'Owner' });
         db.Book.belongsTo(db.User, { as: 'Sold' });
-        db.Book.hasMany(db.Whobot);
+        db.Book.hasMany(db.Who);
     }
 };

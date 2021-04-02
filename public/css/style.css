@@ -60,3 +60,14 @@ table {
 		font-size : 18px;
 	}	
 }
+
+/* registerBook.html style */
+.registerForm {
+	
+}
+.registerForm label {
+	display: none;
+}
+.categoryBox label, .stateBox label {
+	padding-top : 5px;
+}

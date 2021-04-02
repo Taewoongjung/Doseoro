@@ -9,7 +9,9 @@
   "author": "TaeWoongJung",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
+    "color-hash": "^1.0.3",
     "connect-redis": "^5.1.0",
     "cookie-parser": "^1.4.5",
     "csurf": "^1.11.0",
@@ -19,10 +21,10 @@
     "helmet": "^4.4.1",
     "hpp": "^0.2.3",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "mysql2": "^2.2.5",
-    "nodemailer": "^6.5.0",
     "nunjucks": "^3.2.2",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
@@ -34,7 +36,9 @@
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0",
     "serve-favicon": "^2.5.0",
-    "winston": "^3.3.3"
+    "socket.io": "^2.4.1",
+    "winston": "^3.3.3",
+    "ws": "^7.4.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

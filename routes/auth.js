@@ -33,7 +33,7 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
             question,
             answer,
         });
-        return res.send(`<script type="text/javascript">alert("회원가입을 완료했습니다."); location.href="/signup/";</script>`);
+        return res.send(`<script type="text/javascript">alert("회원가입을 완료했습니다."); location.href="/login/";</script>`);
     } catch (error) {
         console.error(error);
         return next(error);
@@ -111,9 +111,9 @@ router.post('/PW_sec', async (req, res, next) => {
 });
 
 router.post('/changePW', async (req, res, next) => {
-    const { newPW, check_newPW, nick } = req.body;
+    const { newPW, check_newPW, email } = req.body;
     try {
-        const FindUser = await User.findOne({ where: { nick: nick } });
+        const FindUser = await User.findOne({ where: { email: email } });
         if (newPW !== check_newPW) {
             return res.send(`<script type="text/javascript">alert("비밀번호가 맞지 않습니다."); location.href="/auth/PW_sec/";</script>`);
         } else if (FindUser) {

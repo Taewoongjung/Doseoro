@@ -1,17 +1,19 @@
-
 <!doctype html>
 <html lang="en">
+<!-- 
+  footer는 현재 fixed-bottom 이지만 구현이 완료된 후 static으로 바꿔야함
+ -->
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
     <link rel="stylesheet" href="/css/style.css">
-    
-    <title>판매 게시판</title>
+    <title>도서로 - 관심상품</title>
 </head>
 
 <body>
@@ -24,29 +26,33 @@
                     <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
                     <ul class="navbar-nav mb-2 mb-md-0">
-                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
-                        {% if user and user.id %}
                         <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
-                        {% else %}
-                        <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
-
-        <main class="container-sm">
-            컨텐츠
+        
+        <!-- main -->
+        <main class="container-sm mt-0 mb-0 min-vh-100">
+            <div class="banner bg-warning">
+                {% for book in books %}
+                    <tr>
+                        <td>{{book.posttitle}}</td>
+                        <td>{{book.price}} 원</td>
+                        <td><a href="/book/{{book.thisbook}}" class="enter btn">구경하러가기</a></td>
+                    </tr>
+                    <br>
+                {% endfor %}
+            </div>
         </main>
 
         <!-- footer -->
-        <nav class="navbar fixed-bottom navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+        <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
 
-    <script src="/js/bootstrap.bundle.min.js"></script> 
     <script src="/js/topNav.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

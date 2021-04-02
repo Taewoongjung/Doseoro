@@ -26,6 +26,7 @@
                         <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
                         {% if user and user.id %}
                         <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/chat">채팅</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
@@ -37,7 +38,7 @@
         </nav>
 
         <!-- 로그인 영역 -->
-        <main class="form-signin container-sm mt-5">
+        <main class="form-signin container-sm mt-5 vh-100">
             <form id="login-form">
                 <div class="loginLogo">
                     <img class="" src="/img/logo3.png" width="250px" height="100px">
@@ -63,7 +64,7 @@
         </main>
 
         <!-- footer -->
-        <nav class="navbar fixed-bottom navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+        <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script src="/js/login-cli.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
