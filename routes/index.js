@@ -68,14 +68,14 @@ const upload = multer({  // multer 설정
             cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext); // 파일 덮어씌어지는거 방지
         },
     }),
-    limits: { fileSize: 5 * 1024 * 1024},  // 파일 크기 제한 ( 나중에 논의 )
+    limits: { fileSize: 5 * 1024 * 1024 },  // 파일 크기 제한 ( 나중에 논의 )
 });
 
 // 0330 책 등록
 // 0331 이미지 등록
 router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
-        const { postmessage, title, price, author, publisher, checkCategory, checkState , dealRoot, about } = req.body;
+        const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
         const book = await Book.create({
             OwnerId: req.user.id,
             postmessage: postmessage,
@@ -98,7 +98,7 @@ router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) =>
 
 router.get('/book/:id', async (req, res, next) => {
     try {
-        const [ book ] = await Promise.all([
+        const [book] = await Promise.all([
             Book.findOne({
                 where: { id: req.params.id },
                 include: {
@@ -107,7 +107,7 @@ router.get('/book/:id', async (req, res, next) => {
                 },
             }),
         ]);
-        if (res.locals.user){
+        if (res.locals.user) {
             console.log("login");
             res.render('saleDetail.html', {
                 title: `책 구경`,
@@ -135,24 +135,27 @@ router.get('/book/:id', async (req, res, next) => {
 router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
         const { user, bookId, createdat, postmessage, title, price } = req.body;
-        console.log("@@@@@@@@시발이거왜안되냐고", createdat);
-        const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: user } });
-        console.log("@@@@@@@@시발왜안ㄴ되는데", FindBook.likecount);
-        const add = FindBook.likecount + 1;
-        console.log("@@@@@@@@시발왜 + 안되는데", add);
-        await Who.create({
-            thisbook: user,
-            posttitle: postmessage,
-            title: title,
-            price: price,
-            liked: req.user.id,
-        });
-        await Book.update({
-            likecount: add,
-        }, {
-            where: { id: bookId }
-        });
-        return res.send(`<script type="text/javascript">alert("찜 했습니다!"); location.href="/";</script>`);
+
+        const isheliked = await Who.findOne({ where: { thisbook: bookId, liked: req.user.id } });
+        if (isheliked) {
+            return res.send(`<script type="text/javascript">alert("찜 해제됐습니다!"); location.href="/";</script>`);
+        } else {
+            const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: user } });
+            const add = FindBook.likecount + 1;
+            await Who.create({
+                thisbook: user,
+                posttitle: postmessage,
+                title: title,
+                price: price,
+                liked: req.user.id,
+            });
+            await Book.update({
+                likecount: add,
+            }, {
+                where: { id: bookId }
+            });
+            return res.send(`<script type="text/javascript">alert("찜 했습니다!"); location.href="/";</script>`);
+        }
     } catch (error) {
         console.error(error);
         next(error);
