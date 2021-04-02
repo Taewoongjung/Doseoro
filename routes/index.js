@@ -138,12 +138,21 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 
         const isheliked = await Who.findOne({ where: { thisbook: bookId, liked: req.user.id } });
         if (isheliked) {
+            const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: user } });
+            const add = FindBook.likecount - 1;
+            console.log("@@@@@@@", req.user.id);
+            await Who.destroy({ where: { thisbook: FindBook.id, liked: req.user.id } });
+            await Book.update({
+                likecount: add,
+            }, {
+                where: { id: bookId }
+            });
             return res.send(`<script type="text/javascript">alert("찜 해제됐습니다!"); location.href="/";</script>`);
         } else {
             const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: user } });
             const add = FindBook.likecount + 1;
             await Who.create({
-                thisbook: user,
+                thisbook: bookId,
                 posttitle: postmessage,
                 title: title,
                 price: price,

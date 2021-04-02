@@ -33,7 +33,7 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
             question,
             answer,
         });
-        return res.send(`<script type="text/javascript">alert("회원가입을 완료했습니다."); location.href="/signup/";</script>`);
+        return res.send(`<script type="text/javascript">alert("회원가입을 완료했습니다."); location.href="/login/";</script>`);
     } catch (error) {
         console.error(error);
         return next(error);
