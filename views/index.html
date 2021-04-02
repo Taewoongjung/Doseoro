@@ -19,26 +19,19 @@
 <body>
     <div class="flex w-100">
         <!-- 상단 바 -->
-        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light" id="topNav">
+        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ps-3 pe-3" id="topNav">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="160" height="64"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
-                    <!-- 검색 기능 -->
-                    <form id="search-form" action="/search/{{searchWord}}">
-                        <tr>
-                            <!-- 프론트 참고 사항) id="book-publisher로 되어있습니다. -->
-                            <td><input type="text" class="form-control p-3" id="book-publisher" name="searchWord" placeholder="검색"></td>
-                            <td><button class="btn btn-lg btn-primary w-100" class="btn" type="submit">검색</button></td>
-                        </tr>
-                    </form>
-                    <ul class="navbar-nav mb-2 mb-md-0">
+                <div class="collapse navbar-collapse justify-content-sm-end align-items-center" id="navbarCollapse">
+                    <ul class="navbar-nav mb-md-0">
                         {% if user and user.id %}
                         <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="/like">관심상품</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/like">관심상품</a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link p-3" href="/">관심상품</a></li>
                         <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
@@ -46,34 +39,101 @@
                 </div>
             </div>
         </nav>
-        
+
         <!-- main -->
         <main class="container-sm mt-0 mb-0 min-vh-100">
-            <div class="banner bg-warning">
+            <!-- 검색 기능 -->
+            <form id="search-form" action="/search/{{searchWord}}" class="searchForm d-flex container pt-2">
+                <!-- 프론트 참고 사항) id="book-publisher로 되어있습니다. -->
+                <select class="form-select w-25" name="searchFilter">
+                    <option value>전체</option>
+                    <option value="bookTitle">책 제목</option>
+                    <option value="bookAuther">저자</option>
+                    <option value="bookPublisher">출판사</option>
+                </select>
+                <input type="text" class="form-control ps-3" id="book-publisher" name="searchWord" placeholder="검색">
+                <button class="btn btn-primary" type="submit"><img src="img/pngegg.png" width="35" height="25" class="mt-1"></button>
+            </form>
+
+            <!-- 메뉴이동 -->
+            <div class="menuForm container mt-2 mb-2 justify-content-center d-flex" role="group">
+                <div class="ms-1 me-1"><button type="button" class="btn fw-bold">팝니다</button></div>
+                <div class="ms-1 me-1"><button type="button" class="btn fw-bold">삽니다</button></div>
+                <div class="ms-1 me-1"><button type="button" class="btn fw-bold">무료나눔</button></div>
+                <div class="ms-1 me-1"><button type="button" class="btn fw-bold">커뮤니티</button></div>
+            </div>
+
+            <!-- 배너 -->
+            <div>
+                <div class="bd-example">
+                <div id="bannerList" class="carousel slide" data-bs-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <li data-bs-target="#bannerList" data-bs-slide-to="0" class="active"></li>
+                    <li data-bs-target="#bannerList" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#bannerList" data-bs-slide-to="2"></li>
+                  </ol>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false"><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#555" dy=".3em">첫번째 슬라이드</text></svg>
+                      <div class="carousel-caption d-none d-md-block">
+                        <h2>첫번째 슬라이드</h2>
+                        <p>슬라이드1입니다.</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false"><rect width="100%" height="100%" fill="#666"/><text x="50%" y="50%" fill="#444" dy=".3em">두번째 슬라이드</text></svg>
+                      <div class="carousel-caption d-none d-md-block">
+                        <h2>두번째 슬라이드</h2>
+                        <p>슬라이드2입니다.</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false"><rect width="100%" height="100%" fill="#555"/><text x="50%" y="50%" fill="#333" dy=".3em">세번째 슬라이드</text></svg>
+                      <div class="carousel-caption d-none d-md-block">
+                        <h2>세번째 슬라이드</h2>
+                        <p>슬라이드3입니다.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#bannerList" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#bannerList" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </a>
+                </div>
+                </div>
+              </div>
+
+            <!-- 판매리스트 -->
+            <div class="saleList">
                 <form id="book-form">
-                   <a href="/pages/regi-book">책 등록</a>
+                    <a href="/pages/regi-book">책 등록</a>
                 </form>
                 {% for book in books %}
-                    <tr>
-                        <td>{{book.postmessage}}</td>
-                        <td><img src="/img/{{book.img}}" style="border-radius:21px" width="320px" height="400px"></td>
-                        <td>{{book.price}} 원</td>
-                        <td><a href="/book/{{book.id}}" class="enter btn">구경하러가기</a></td>
-                    </tr>
+                <tr>
+                    <td>{{book.postmessage}}</td>
+                    <td><img src="/img/{{book.img}}" style="border-radius:21px" width="320px" height="400px"></td>
+                    <td>{{book.price}} 원</td>
+                    <td><a href="/book/{{book.id}}" class="enter btn">구경하러가기</a></td>
+                </tr>
                 {% endfor %}
-                    <br>
-                    <br>
-                    <br>
+                <br>
+                <br>
+                <br>
                 {% for foundBook in foundBooks %}
-                    <p>------- 검색 결과 -------</p>
-                    <div>
-                        <tr>
-                            <td>{{foundBook.postmessage}}</td>
-                            <td><img src="/img/{{foundBook.img}}" style="border-radius:21px" width="320px" height="400px"></td>
-                            <td>{{foundBook.price}} 원</td>
-                            <td><a href="/book/{{foundBook.id}}" class="enter btn">구경하러가기</a></td>
-                        </tr>
-                    </div>
+                <p>------- 검색 결과 -------</p>
+                <div>
+                    <tr>
+                        <td>{{foundBook.postmessage}}</td>
+                        <td><img src="/img/{{foundBook.img}}" style="border-radius:21px" width="320px" height="400px">
+                        </td>
+                        <td>{{foundBook.price}} 원</td>
+                        <td><a href="/book/{{foundBook.id}}" class="enter btn">구경하러가기</a></td>
+                    </tr>
+                </div>
                 {% endfor %}
             </div>
         </main>
@@ -91,4 +151,5 @@
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
