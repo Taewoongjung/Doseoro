@@ -39,7 +39,7 @@ router.get('/mypage', isLoggedIn, (req, res, next) => {
     res.render('myPage.html');
 });
 
-// 관심상품 창
+// 0403 관심상품 창
 router.get('/like', async (req, res, next) => {
     try {
         const books = await Who.findAll({ where: { liked: req.user.id } });
@@ -71,6 +71,34 @@ const upload = multer({  // multer 설정
     }),
     limits: { fileSize: 5 * 1024 * 1024 },  // 파일 크기 제한 ( 나중에 논의 )
 });
+
+// 0403 댓글기능
+const upload2 = multer();
+router.post('/comment', isLoggedIn, upload2.none(), async (req, res, next) => {
+    try {
+      console.log(req.user);
+      const post = await Post.create({
+        content: req.body.content,
+        img: req.body.url,
+        UserId: req.user.id,
+      });
+      const hashtags = req.body.content.match(/#[^\s#]*/g);
+      if (hashtags) {
+        const result = await Promise.all(
+          hashtags.map(tag => {
+            return Hashtag.findOrCreate({
+              where: { title: tag.slice(1).toLowerCase() },
+            })
+          }),
+        );
+        await post.addHashtags(result.map(r => r[0]));
+      }
+      res.redirect('/');
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  });
 
 // 0330 책 등록
 // 0331 이미지 등록
@@ -131,7 +159,7 @@ router.get('/book/:id', async (req, res, next) => {
     }
 });
 
-// 찜 하기 기능
+// 0403 찜 하기 기능
 router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
         const { user, bookId, createdat, postmessage, title, price } = req.body;
@@ -171,7 +199,7 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
     }
 });
 
-// 검색
+// 0403 검색
 router.get('/search', async (req, res, next) => {
     try {
         const [foundBooks] = await Promise.all([
