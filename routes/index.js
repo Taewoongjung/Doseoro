@@ -175,15 +175,15 @@ router.get('/search', async (req, res, next) => {
       return res.redirect('/');
     }
     try {
-      const Book = await Book.findOne({ where: { title: query } });
-      let posts = [];
+      const Book = await Book.findOne({ where: { postmessage: query } });
+      const posts = [];
       if (hashtag) {
         posts = await hashtag.getPosts({ include: [{ model: User }] });
       }
   
-      return res.render('main', {
+      return res.render('index', {
         title: `${query} | NodeBird`,
-        twits: posts,
+        posts: posts,
       });
     } catch (error) {
       console.error(error);

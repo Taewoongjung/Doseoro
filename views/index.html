@@ -61,6 +61,20 @@
                         <td><a href="/book/{{book.id}}" class="enter btn">구경하러가기</a></td>
                     </tr>
                 {% endfor %}
+                    <br>
+                    <br>
+                    <br>
+                {% for post in posts %}
+                    <p>------- 검색 결과 -------</p>
+                    <div>
+                        <tr>
+                            <td>{{book.postmessage}}</td>
+                            <td><img src="/img/{{book.img}}" style="border-radius:21px" width="320px" height="400px"></td>
+                            <td>{{book.price}} 원</td>
+                            <td><a href="/book/{{book.id}}" class="enter btn">구경하러가기</a></td>
+                        </tr>
+                    </div>
+                {% endfor %}
             </div>
         </main>
 
