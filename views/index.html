@@ -26,11 +26,11 @@
                     <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
                     <!-- 검색 기능 -->
-                    <form id="search-form" action="/search/{{searchWord}}">
+                    <form id="search-form">
                         <tr>
                             <!-- 프론트 참고 사항) id="book-publisher로 되어있습니다. -->
                             <td><input type="text" class="form-control p-3" id="book-publisher" name="searchWord" placeholder="검색"></td>
-                            <td><button class="btn btn-lg btn-primary w-100" class="btn" type="submit">검색</button></td>
+                            <td><button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">검색</button></td>
                         </tr>
                     </form>
                     <ul class="navbar-nav mb-2 mb-md-0">
@@ -81,13 +81,13 @@
         <!-- footer -->
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
-    <!-- <script>
+    <script>
         function one() {
           const request = document.getElementById('search-form');
-          request.setAttribute('action', '/bookSearch{{searchWord}}');
+          request.setAttribute('action', '/search{{searchWord}}');
           request.setAttribute('method', 'GET');
         }
-    </script> -->
+    </script>
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
