@@ -177,19 +177,19 @@ router.get('/search', async (req, res, next) => {
     try {
       const Book = await Book.findOne({ where: { postmessage: query } });
       const posts = [];
-      if (hashtag) {
-        posts = await hashtag.getPosts({ include: [{ model: User }] });
+      if (Book) {
+        posts = await Book.getPosts({ include: [{ model: User }] });
       }
   
       return res.render('index', {
-        title: `${query} | NodeBird`,
+        title: `${query} | hi`,
         posts: posts,
       });
     } catch (error) {
       console.error(error);
       return next(error);
     }
-  });
+});
 
 
 
