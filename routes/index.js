@@ -193,15 +193,14 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 //     }
 // });
 
+// 검색
 router.get('/search', async (req, res, next) => {
     try {
-        console.log("@@@@@@@search");
-        const searchWord = req.params.searchWord;
         const [foundBooks] = await Promise.all([
             Book.findAll({
                 where:{
                     postmessage: {
-                        [Op.like]: "%" + searchWord + "%"
+                        [Op.like]: "%" + req.query.searchWord + "%"
                     },
                 },
             }),
