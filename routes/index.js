@@ -2,6 +2,8 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const sequelize = require("sequelize");
+const Op = sequelize.Op;
 
 const { User, Book, Who } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -169,31 +171,54 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
     }
 });
 
-router.get('/search', async (req, res, next) => {
-    const query = req.query.words;
-    if (!query) {
-      return res.redirect('/');
-    }
-    try {
-      const Book = await Book.findOne({ where: { postmessage: query } });
-      const posts = [];
-      if (Book) {
-        posts = await Book.getPosts({ include: [{ model: User }] });
-      }
+// router.get('/search', async (req, res, next) => {
+//     const query = req.query.words;
+//     if (!query) {
+//       return res.redirect('/');
+//     }
+//     try {
+//       const Book = await Book.findOne({ where: { postmessage: query } });
+//       let posts = [];
+//       if (Book) {
+//         posts = await Book.getPosts({ include: [{ model: User }] });
+//       }
   
-      return res.render('index', {
-        title: `${query} | hi`,
-        posts: posts,
-      });
+//       return res.render('index', {
+//         title: `${query} | hi`,
+//         posts: posts,
+//       });
+//     } catch (error) {
+//       console.error(error);
+//       return next(error);
+//     }
+// });
+
+router.get('/search', async (req, res, next) => {
+    try {
+        console.log("@@@@@@@search");
+        const searchWord = req.params.searchWord;
+        const [foundBooks] = await Promise.all([
+            Book.findAll({
+                where:{
+                    postmessage: {
+                        [Op.like]: "%" + searchWord + "%"
+                    },
+                },
+            }),
+        ]);
+        res.render('index.html', {
+            title: `책 구경`,
+            foundBooks,
+            user: foundBooks.OwnerId,
+            bookId: req.params.id,
+        });
     } catch (error) {
-      console.error(error);
-      return next(error);
+        console.error(error);
+        next(error);
     }
 });
 
-
-
-// router.get("/bookSearch/:searchWord", async (req, res, next) => {
+// router.get("/search/:searchWord", async (req, res, next) => {
 //     try {
 //         console.log("@@@@@@@search");
 //         const searchWord = req.params.searchWord;

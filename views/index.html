@@ -26,10 +26,10 @@
                     <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
                     <!-- 검색 기능 -->
-                    <form id="search-form" action="/search">
+                    <form id="search-form" action="/search/{{searchWord}}">
                         <tr>
                             <!-- 프론트 참고 사항) id="book-publisher로 되어있습니다. -->
-                            <td><input type="text" class="form-control p-3" id="book-publisher" name="words" placeholder="검색"></td>
+                            <td><input type="text" class="form-control p-3" id="book-publisher" name="searchWord" placeholder="검색"></td>
                             <td><button class="btn btn-lg btn-primary w-100" class="btn" type="submit">검색</button></td>
                         </tr>
                     </form>
@@ -64,14 +64,14 @@
                     <br>
                     <br>
                     <br>
-                {% for post in posts %}
+                {% for foundBook in foundBooks %}
                     <p>------- 검색 결과 -------</p>
                     <div>
                         <tr>
-                            <td>{{book.postmessage}}</td>
-                            <td><img src="/img/{{book.img}}" style="border-radius:21px" width="320px" height="400px"></td>
-                            <td>{{book.price}} 원</td>
-                            <td><a href="/book/{{book.id}}" class="enter btn">구경하러가기</a></td>
+                            <td>{{foundBook.postmessage}}</td>
+                            <td><img src="/img/{{foundBook.img}}" style="border-radius:21px" width="320px" height="400px"></td>
+                            <td>{{foundBook.price}} 원</td>
+                            <td><a href="/book/{{foundBook.id}}" class="enter btn">구경하러가기</a></td>
                         </tr>
                     </div>
                 {% endfor %}
