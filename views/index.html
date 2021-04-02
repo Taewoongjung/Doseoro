@@ -25,6 +25,12 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
+                    <form id="hashtag-form" action="/hashtag">
+                        <tr>
+                            <td><input type="text" class="form-control p-3" id="book-publisher" name="searching" placeholder="검색"></td>
+                            <td><button class="btn btn-lg btn-primary w-100" class="btn" type="submit">검색</button></td>
+                        </tr>
+                    </form>
                     <ul class="navbar-nav mb-2 mb-md-0">
                         {% if user and user.id %}
                         <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>

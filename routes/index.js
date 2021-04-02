@@ -10,7 +10,6 @@ const router = express.Router();
 
 router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주기
     res.locals.user = req.user;
-    // res.locals.like = 0;  // 좋아요 기능 추가 전
     next();
 });
 
@@ -131,7 +130,6 @@ router.get('/book/:id', async (req, res, next) => {
 });
 
 // 찜 하기 기능
-// who 테이블에서 찜 안 되어 있으면 FindBook.likecount + 1, 안되어 있으면 FindBook.likecount + 1 하고 who에서 없애기
 router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
         const { user, bookId, createdat, postmessage, title, price } = req.body;
