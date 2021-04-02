@@ -65,7 +65,11 @@
                             <form id="book_like-form">
                                 <div class="saleCheck border-0 p-2 me-4" style="border-radius: 10px">
                                     <!-- 책 올린 사람 찾기 위함 -->
-                                    <input type="hidden" name="user" value="{{user}}">
+                                    <input type="text" name="createdat" value="{{book.createdAt}}">
+                                    <!-- OwnerId -->
+                                    <input type="text" name="user" value="{{user}}">  
+                                    <!-- BookId -->
+                                    <input type="text" name="bookId" value="{{bookId}}">  
                                     <input type="hidden" name="postmessage" value="{{book.postmessage}}">
                                     <input type="hidden" name="title" value="{{book.title}}">
                                     <input type="hidden" name="price" value="{{book.price}}">
