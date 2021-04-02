@@ -171,28 +171,6 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
     }
 });
 
-// router.get('/search', async (req, res, next) => {
-//     const query = req.query.words;
-//     if (!query) {
-//       return res.redirect('/');
-//     }
-//     try {
-//       const Book = await Book.findOne({ where: { postmessage: query } });
-//       let posts = [];
-//       if (Book) {
-//         posts = await Book.getPosts({ include: [{ model: User }] });
-//       }
-  
-//       return res.render('index', {
-//         title: `${query} | hi`,
-//         posts: posts,
-//       });
-//     } catch (error) {
-//       console.error(error);
-//       return next(error);
-//     }
-// });
-
 // 검색
 router.get('/search', async (req, res, next) => {
     try {
@@ -216,25 +194,6 @@ router.get('/search', async (req, res, next) => {
         next(error);
     }
 });
-
-// router.get("/search/:searchWord", async (req, res, next) => {
-//     try {
-//         console.log("@@@@@@@search");
-//         const searchWord = req.params.searchWord;
-//         const searchResult = await Book.findAll({
-//             where:{
-//                 postmessage: {
-//                     [Op.like]: "%" + searchWord + "%"
-//                 }
-//             }
-//         });
-//         console.log("search = ", searchResult);
-//     } catch (error) {
-//         console.error(error);
-//         next(error);
-//     }
-// });
-
 
 // 0327 판매 게시판, 판매 게시물 등록
 router.get('/saleBoard', isNotLoggedIn, (req, res) => {
