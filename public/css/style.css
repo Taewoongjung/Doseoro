@@ -61,10 +61,47 @@ table {
 	}	
 }
 
-/* registerBook.html style */
-.registerForm {
-	
+/* index style */
+.searchForm {
+	max-width: 500px;
 }
+.searchForm select {
+	border-color: rgb(197, 197, 197);
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	font-weight: bold;
+}
+.searchForm input {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+.searchForm button {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	background-color: rgb(6, 143, 255);
+	border:0px;
+}
+.menuForm {
+	max-width: 500px;
+	/* margin: auto 0 auto 0; */
+}
+.menuForm button:hover {
+	background-color: rgb(6, 143, 255);
+	color:rgb(255, 255, 255)
+}
+.banner {
+	max-width: 1000px;
+	max-height: 500px;
+}
+.saleList {
+	background-color: rgb(195, 195, 195);
+}
+
+/* registerBook.html style */
 .registerForm label {
 	display: none;
 }
