@@ -16,7 +16,9 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 });
 
 router.get('/', async (req, res, next) => {
-    try {
+    try { 
+        // --------- 인기 순으로 정렬하기 ---------
+        //
         // // 좋아요 6개 이상
         // const [hit_books] = await Promise.all([
         //     Book.findAll({
@@ -36,6 +38,7 @@ router.get('/', async (req, res, next) => {
         //         },
         //     })
         // ]);
+
         const [books] = await Promise.all([
             Book.findAll({
                 where: { SoldId: null } })
@@ -120,26 +123,6 @@ router.post('/comment/img', isLoggedIn, upload.single('img'), (req, res) => {
     res.json({ url: `/img/${req.file.filename}` });
 });
 
-// router.get('/postComment', async (req, res, next) => {
-//     try {
-//         const posts = await Post.findAll({
-//             include: {
-//                 model: User,
-//                 attributes: ['id', 'nick'],
-//               },
-//               order: [['createdAt', 'DESC']],
-//         });
-//         res.render('saleDetail.html', {
-//             title: 'NodeBird',
-//             comments: posts,
-//         });
-//     } catch (err) {
-//         console.error(err);
-//         next(err);
-//       }
-// });
-
-
 // 0330 책 등록
 // 0331 이미지 등록
 router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
@@ -222,7 +205,6 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
         if (isheliked) {
             const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: user } });
             const add = FindBook.likecount - 1;
-            console.log("@@@@@@@", req.user.id);
             await Who.destroy({ where: { thisbook: FindBook.id, liked: req.user.id } });
             await Book.update({
                 likecount: add,
