@@ -36,7 +36,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	font-family: "NanumSquareR";
 	line-height: 1;
-	background-color: rgb(243, 243, 243);
+	background-color: rgb(248, 248, 248);
 	padding-top: 6rem;
 	min-height: 100%;
 }
@@ -58,7 +58,7 @@ table {
 @media (min-width: 768px) {
 	.nav-item a {
 		font-size : 18px;
-	}	
+	}
 }
 
 /* index style */
@@ -97,10 +97,21 @@ table {
 	max-width: 1000px;
 	max-height: 500px;
 }
-.saleList {
-	background-color: rgb(195, 195, 195);
+.saleCard {
+	border-radius: 15px;
+	background: none;
+	border: none;
 }
-
+.saleCard img {
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+.postTitle {
+	width: 200px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 /* registerBook.html style */
 .registerForm label {
 	display: none;
