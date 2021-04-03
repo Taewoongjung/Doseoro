@@ -103,8 +103,12 @@ table {
 	border: none;
 }
 .saleCard img {
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
+	/* border-top-left-radius: 15px;
+	border-top-right-radius: 15px; */
+	border-radius: 12px;
+}
+.saleCard:hover {
+	cursor: pointer;
 }
 .postTitle {
 	width: 200px;
@@ -112,6 +116,10 @@ table {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+.addBook {
+	border-radius: 5px;
+}
+
 /* registerBook.html style */
 .registerForm label {
 	display: none;

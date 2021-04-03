@@ -19,7 +19,7 @@
 <body>
   <div class="flex w-100">
     <!-- 상단 바 -->
-    <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ps-3 pe-3" id="topNav">
+    <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white ps-3 pe-3" id="topNav">
       <div class="container-fluid">
         <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="160" height="64"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -44,10 +44,10 @@
     <main class="container-sm mt-0 mb-0 min-vh-100">
       <!-- 검색 기능 -->
       <form id="search-form" action="/search/{{searchWord}}" class="searchForm d-flex container pt-2">
-        <!-- 프론트 참고 사항) id="book-publisher로 되어있습니다. -->
         <select class="form-select w-25" name="searchFilter">
           <option value>전체</option>
-          <option value="bookTitle">책 제목</option>
+          <option value="bookTitle">게시물</option>
+          <option value="bookTitle">책</option>
           <option value="bookAuther">저자</option>
           <option value="bookPublisher">출판사</option>
         </select>
@@ -59,7 +59,7 @@
       <!-- 메뉴이동 -->
       <div class="menuForm container mt-2 mb-2 justify-content-center d-flex" role="group">
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold">팝니다</button></div>
-        <div class="ms-1 me-1"><button type="button" class="btn fw-bold">삽니다</button></div>
+        <div class="ms-1 me-1"><button type="button" class="btn fw-bold" onclick="location.href='saleBoard.html'">삽니다</button></div>
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold">무료나눔</button></div>
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold">커뮤니티</button></div>
       </div>
@@ -121,41 +121,40 @@
       </div>
 
       <!-- 판매리스트 -->
-      <div class="saleList">
-        <h1 class="h2">판매중인 책</h1>
+      <div class="saleList pt-5 mt-5 border-top">
+        <h1 class="h2 fw-bold">판매중인 책</h1><br>
+        <form id="book-form"><a href="/pages/regi-book"class="addBook text-decoration-none btn-primary p-2">상품 등록</a></form>
 
-        <form id="book-form">
-          <a href="/pages/regi-book">판매 등록</a>
-        </form>
-
-        <div class="d-md-flex justify-content-center flex-wrap">
+        <div class="d-flex justify-content-center flex-wrap">
           {% for book in books %}
-          <div class="saleCard card m-md-5 mt-5 mb-5" style="max-width: 250px;">
-            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="320px">
+          <div class="saleCard card m-5" style="max-width: 250px;" onclick="location.href='/book/{{book.id}}'">
+            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="300px">
             <div class="card-body">
-              <p class="postTitle card-title fw-bold">{{book.postmessage}}</p>
+              <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
               <a>{{book.price}} 원</a>
-              <a href="/book/{{book.id}}" class="enter btn-secondary">자세히</a>
+              <!-- <a href="/book/{{book.id}}" class="enter btn-primary ms-5 p-2 text-decoration-none">자세히</a> -->
             </div>
           </div>
           {% endfor %}
         </div>
-        
-        <br>
-        <br>
-        <br>
-        {% for foundBook in foundBooks %}
-        <p>------- 검색 결과 -------</p>
-        <div>
-          <tr>
-            <td>{{foundBook.postmessage}}</td>
-            <td><img src="/img/{{foundBook.img}}" style="border-radius:21px" width="320px" height="400px">
-            </td>
-            <td>{{foundBook.price}} 원</td>
-            <td><a href="/book/{{foundBook.id}}" class="enter btn">구경하러가기</a></td>
-          </tr>
+
+        <!-- 검색결과 -->
+        <div class="searchResult mt-5">
+          <div class="d-flex justify-content-center flex-wrap">
+            <p class="h4 fw-bold">검색 결과</p>
+            {% for foundBook in foundBooks %}
+            <div class="saleCard card m-5" style="max-width: 250px;" onclick="location.href='/book/{{book.id}}'">
+              <img src="/img/{{foundBook.img}}" class="card-img-top" width="100%" height="300px">
+              <div class="card-body">
+                <p class="postTitle card-title fw-bold mb-3">{{foundBook.postmessage}}</p>
+                <a>{{foundBook.price}} 원</a>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
         </div>
-        {% endfor %}
+
       </div>
     </main>
 
@@ -169,6 +168,7 @@
       request.setAttribute('method', 'GET');
     }
   </script>
+  <!-- <script src="/js/searchDisplay.js"></script> -->
   <script src="/js/topNav.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
