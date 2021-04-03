@@ -5,7 +5,7 @@ const fs = require('fs');
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
-const { User, Book, Who } = require('../models');
+const { User, Book, Who, Post } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -74,18 +74,20 @@ const upload = multer({  // multer 설정
 
 // 0403 댓글기능
 const upload2 = multer();
-router.post('/comment', isLoggedIn, upload2.none(), async (req, res, next) => {
+router.post('/book/:id/comment', isLoggedIn, upload2.none(), async (req, res, next) => {
     try {
-      console.log(req.user);
-      const post = await Post.create({
-        content: req.body.content,
-        img: req.body.url,
-        UserId: req.user.id,
-      });
-      res.redirect('/');
+        const { comment } = req.body;
+        console.log("@@@@@@@@@@", comment);
+        const post = await Post.create({
+            content: comment,
+            // img: req.body.url,
+            UserId: req.user.id,
+            BookId: req.params.id,
+        });
+        console.log("post@@@@@@@@@@@@", post);
     } catch (error) {
-      console.error(error);
-      next(error);
+        console.error(error);
+        next(error);
     }
 });
 
@@ -94,6 +96,26 @@ router.post('/comment/img', isLoggedIn, upload.single('img'), (req, res) => {
     console.log(req.file);
     res.json({ url: `/img/${req.file.filename}` });
 });
+
+// router.get('/postComment', async (req, res, next) => {
+//     try {
+//         const posts = await Post.findAll({
+//             include: {
+//                 model: User,
+//                 attributes: ['id', 'nick'],
+//               },
+//               order: [['createdAt', 'DESC']],
+//         });
+//         res.render('saleDetail.html', {
+//             title: 'NodeBird',
+//             comments: posts,
+//         });
+//     } catch (err) {
+//         console.error(err);
+//         next(err);
+//       }
+// });
+
 
 // 0330 책 등록
 // 0331 이미지 등록
@@ -131,6 +153,15 @@ router.get('/book/:id', async (req, res, next) => {
                 },
             }),
         ]);
+        const [comments] = await Promise.all([
+            Post.findAll({
+                include: {
+                    model: User,
+                    as: 'Commenting',
+                },
+                order: [['createdAt', 'DESC']],
+            }),
+        ]);
         if (res.locals.user) {
             console.log("login");
             res.render('saleDetail.html', {
@@ -139,6 +170,7 @@ router.get('/book/:id', async (req, res, next) => {
                 users: res.locals.user,
                 user: book.OwnerId,
                 bookId: req.params.id,
+                comments: comments,
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
@@ -199,7 +231,7 @@ router.get('/search', async (req, res, next) => {
     try {
         const [foundBooks] = await Promise.all([
             Book.findAll({
-                where:{
+                where: {
                     postmessage: {
                         [Op.like]: "%" + req.query.searchWord + "%"
                     },
