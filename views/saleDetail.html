@@ -74,7 +74,7 @@
                                     <input type="hidden" name="title" value="{{book.title}}">
                                     <input type="hidden" name="price" value="{{book.price}}">
                                     <button class="btn btn-lg btn-primary w-100" class="btn" type="submit"
-                                        onclick="one()">찜 하기</button>
+                                        onclick="like()">찜 하기</button>
                                 </div>
                             </form>
                             <!-- 좋아요 눌린 갯수 -->
@@ -129,6 +129,7 @@
                 <div class="input-group">
                     <textarea id="comment" name="content" maxlength="140"></textarea>
                 </div>
+                <!-- 사진 업로드는 추 후 -->
                 <!-- <div class="img-preview">
                     <img id="img-preview" src="" style="display: none;" width="250" alt="미리보기">
                     <input id="img-url" type="hidden" name="url">
@@ -136,7 +137,7 @@
                 <div>
                     <label id="img-label" for="img">사진 업로드</label>
                     <input id="img" type="file" accept="image/*"> -->
-                    <button id="comment-btn" type="submit" class="btn">댓글달기</button>
+                    <button id="comment-btn" type="submit" class="btn" onclick="comment()">댓글달기</button>
                 </div>
             </form>
         </main>
@@ -144,9 +145,15 @@
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script>
-        function one() {
+        function like() {
             const request = document.getElementById('book_like-form');
             request.setAttribute('action', '/like');
+            request.setAttribute('method', 'POST');
+        }
+
+        function comment() {
+            const request = document.getElementById('book_like-form');
+            request.setAttribute('action', '/comment');
             request.setAttribute('method', 'POST');
         }
     </script>

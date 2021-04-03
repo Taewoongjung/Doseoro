@@ -52,7 +52,7 @@ router.get('/like', async (req, res, next) => {
     }
 });
 
-// 0331파일 올리기 
+// 0331 파일 올리기 
 try {
     fs.readdirSync('uploads');
 } catch (error) {
@@ -72,29 +72,28 @@ const upload = multer({  // multer 설정
     limits: { fileSize: 5 * 1024 * 1024 },  // 파일 크기 제한 ( 나중에 논의 )
 });
 
-// // 0403 댓글기능
-// const upload2 = multer();
-// router.post('/comment', isLoggedIn, upload2.none(), async (req, res, next) => {
-//     try {
-//       console.log(req.user);
-//       const post = await Post.create({
-//         content: req.body.content,
-//         img: req.body.url,
-//         UserId: req.user.id,
-//       });
-//     // 해쉬 태그 고민중 
-//       res.redirect('/');
-//     } catch (error) {
-//       console.error(error);
-//       next(error);
-//     }
-// });
+// 0403 댓글기능
+const upload2 = multer();
+router.post('/comment', isLoggedIn, upload2.none(), async (req, res, next) => {
+    try {
+      console.log(req.user);
+      const post = await Post.create({
+        content: req.body.content,
+        img: req.body.url,
+        UserId: req.user.id,
+      });
+      res.redirect('/');
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+});
 
-// // 0403 댓글에 이미지 추가 기능 + 이미지 추가하면 미리보기 기능(고민)
-// router.post('/comment/img', isLoggedIn, upload.single('img'), (req, res) => {
-//     console.log(req.file);
-//     res.json({ url: `/img/${req.file.filename}` });
-// });
+// 0403 댓글에 이미지 추가 기능 + 이미지 추가하면 미리보기 기능(고민)
+router.post('/comment/img', isLoggedIn, upload.single('img'), (req, res) => {
+    console.log(req.file);
+    res.json({ url: `/img/${req.file.filename}` });
+});
 
 // 0330 책 등록
 // 0331 이미지 등록
