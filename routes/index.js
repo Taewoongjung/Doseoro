@@ -111,6 +111,7 @@ router.post('/book/:id/comment', isLoggedIn, upload2.none(), async (req, res, ne
             BookId: req.params.id,
         });
         console.log("post@@@@@@@@@@@@", post);
+        return res.send(`<script type="text/javascript">location.href="/book/${post.BookId}";</script>`);        
     } catch (error) {
         console.error(error);
         next(error);

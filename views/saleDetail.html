@@ -123,48 +123,53 @@
                     </div>
                 </div>
             </div>
-                <!-- 게시물 내용 -->
-                <div class="mt-3 border-top w-75 ms-auto me-auto pt-4">
-                    <div class="mt-3"><a id="getPostingContents">{{book.about}}</a></div>
+            <!-- 게시물 내용 -->
+            <div class="mt-3 border-top w-75 ms-auto me-auto pt-4">
+                <div class="mt-3"><a id="getPostingContents">{{book.about}}</a></div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <!-- 댓글 달기 -->
+            {% if users and users.id %}
+            <form id="comment-form" enctype="multipart/form-data">
+                <div class="input-group">
+                    <textarea id="comment" name="comment" maxlength="140"></textarea>
                 </div>
 
-                <!-- 댓글 달기 -->
-                <div class="mt-5 border-top w-75 ms-auto me-auto pt-4">
-                    <p class="h4">댓글</p>
-                    {% if users and users.id %}
-                    <form id="comment-form" enctype="multipart/form-data" class="d-flex mt-3">
-                        <div class="sinput-group d-flex border mb-2 w-100">
-                            <input id="comment" name="content" maxlength="140" class="border-0 form-control"></input>
-                            <button id="comment-btn" type="submit" class="btn btn-primary" onclick="location.reload()" value="Click" style="width: 7%;">등록</button>
-                        </div>
-
-                        <!-- <div class="img-preview">
-                                <img id="img-preview" src="" style="display: none;" width="250" alt="미리보기">
-                                <input id="img-url" type="hidden" name="url">
-                            </div> -->
-                        <div>
-                            <!-- <label id="img-label" for="img">사진 업로드</label>
-                                <input id="img" type="file" accept="image/*"> -->
-                            <!-- <button id="comment-btn" type="submit" class="btn" onclick="comment()">댓글달기</button> -->
-                        </div>
-                    </form>
-                    {% endif %}
-                    <div id=comments-collection>
-                        {% for comment in comments %}
-                        <table>
-                            <tr>
-                                <form id="comment-ED-form">
-                                    <input type="hidden" name="commentId" value="{{comment.id}}">
-                                    <td><div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div></td>
-                                    <td><div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div></td>
-                                    <td><button id="comment-edit-btn" type="submit" class="btn" onclick="comment_edit()">수정</button></td>
-                                    <td><button id="comment-delete-btn" type="submit" class="btn" onclick="location.reload()">삭제</button></td>
-                                </form>
-                            </tr>
-                        </table>
-                        {% endfor %}
+                <!-- <div class="img-preview">
+                        <img id="img-preview" src="" style="display: none;" width="250" alt="미리보기">
+                        <input id="img-url" type="hidden" name="url">
+                    </div> -->
+                <div>
+                    <!-- <label id="img-label" for="img">사진 업로드</label>
+                        <input id="img" type="file" accept="image/*"> -->
+                    <!-- <button id="comment-btn" type="submit" class="btn" onclick="comment()">댓글달기</button> -->
+                    <input type="hidden" name="bookId" value="{{bookId}}">
+                    <button id="comment-btn" type="submit" class="btn" onclick="postComment()" value="Click">댓글달기</button>
                 </div>
-            
+            </form>
+            {% endif %}
+            <div id=comments-collection>
+                {% for comment in comments %}
+                <table>
+                    <tr>
+                        <form id="comment-ED-form">
+                            {% if users and users.id %}
+                                <input type="hidden" name="commentId" value="{{comment.id}}">
+                                <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
+                                <td><div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div></td>
+                                <td><div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div></td>
+                                <td><button id="comment-edit-btn" type="submit" class="btn">수정</button></td>
+                                <td><button id="comment-delete-btn" type="submit" class="btn">삭제</button></td>
+                            {% else %}
+                                <td><div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div></td>
+                                <td><div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div></td>
+                            {% endif %}
+                        </form>
+                    </tr>
+                </table>
+                {% endfor %}
             </div>
         </main>
         <!-- footer -->
@@ -172,42 +177,38 @@
     </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+
+        function postComment() {
+            const request = document.getElementById('comment-form');
+            request.setAttribute('action', '/book/{{bookId}}/comment');
+            request.setAttribute('method', 'POST');
+        }
+
         function like() {
             const request = document.getElementById('book_like-form');
             request.setAttribute('action', '/like');
             request.setAttribute('method', 'POST');
         }
 
-        function comment_edit() {
+        function edit() {
             const request = document.getElementById('comment-ED-form');
             request.setAttribute('action', '/comment/commentEdit');
             request.setAttribute('method', 'GET');
-            location.reload();
         }
 
         function comment_delete() {
             const request = document.getElementById('comment-ED-form');
-            request.setAttribute('action', '/book/{{book.id}}/{{comment}}');
+            request.setAttribute('action', '/comment/commentDelete');
             request.setAttribute('method', 'GET');
         }
 
-        document.querySelector('#comment-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const errorMessage = document.querySelector('.error-message');
-            axios.post('/book/{{book.id}}/comment', {
-                comment: e.target.comment.value,
-            })
-                .catch((err) => {
-                    console.error(err);
-                    alert(err.response.data);
-                })
-                .finally(() => {
-                    e.target.comment.value = '';
-                    errorMessage.textContent = '';
-
-                });
+        const request = document.getElementById('comment-ED-form');
+        const btn = document.getElementById('comment-delete-btn');
+        btn.addEventListener('click', () => {
+            request.setAttribute('action', '/comment/commentDelete');
+            request.setAttribute('method', 'GET');
         });
-        
+
     </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/topNav.js"></script>
