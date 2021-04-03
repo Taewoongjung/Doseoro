@@ -17,7 +17,29 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 
 router.get('/', async (req, res, next) => {
     try {
-        const books = await Book.findAll({ where: { SoldId: null } });
+        // // 좋아요 6개 이상
+        // const [hit_books] = await Promise.all([
+        //     Book.findAll({
+        //         where: { 
+        //             likecount: { [Op.gte]: 6 }, 
+        //             SoldId: null 
+        //         },
+        //     })
+        // ]);
+        // // 좋아요 5개 이하
+        // console.log("@@@@@@@@@", hit_books);
+        // const [reg_books] = await Promise.all([
+        //     Book.findAll({
+        //         where: { 
+        //             likecount: { [Op.lte]: 5 }, 
+        //             SoldId: null 
+        //         },
+        //     })
+        // ]);
+        const [books] = await Promise.all([
+            Book.findAll({
+                where: { SoldId: null } })
+        ]);
         res.render('index.html', {
             books,
         });
@@ -80,6 +102,7 @@ router.post('/book/:id/comment', isLoggedIn, upload2.none(), async (req, res, ne
         console.log("@@@@@@@@@@", comment);
         const post = await Post.create({
             content: comment,
+            commentingNick: req.user.nick,
             // img: req.body.url,
             UserId: req.user.id,
             BookId: req.params.id,
@@ -155,6 +178,9 @@ router.get('/book/:id', async (req, res, next) => {
         ]);
         const [comments] = await Promise.all([
             Post.findAll({
+                where: { 
+                    BookId: req.params.id 
+                },
                 include: {
                     model: User,
                     as: 'Commenting',
@@ -178,6 +204,7 @@ router.get('/book/:id', async (req, res, next) => {
                 title: `책 구경`,
                 book,
                 user: book.OwnerId,
+                comments: comments,
             });
         }
     } catch (error) {

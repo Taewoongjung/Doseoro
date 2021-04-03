@@ -145,7 +145,7 @@
             {% endif %}
             <div id=comments-collection>
                 {% for comment in comments %}
-                <div class="comment-content">{{comment.content}}</div>
+                    <div class="comment-content">{{comment.content}}</div>
                 {% endfor %}
             </div>
         </main>
@@ -181,10 +181,6 @@
                     errorMessage.textContent = '';
 
                 });
-        });
-
-        document.getElementById("#btn").click(function () {
-            location.reload(true);
         });
         
     </script>
