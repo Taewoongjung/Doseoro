@@ -16,19 +16,36 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 });
 
 // 0403 댓글 수정
-router.get('/commentEdit', async (req, res, next) => {
+router.get('/commentEdit', isLoggedIn, async (req, res, next) => {
     try {
-        const { commentId } = req.body;
-        const posts = await Post.findOne({ where: { id: commentId } });
-        res.render('saleDetail.html', {
-            title: 'NodeBird',
-            comments: posts,
-        });
+        console.log("@@@");
+        const { commentId } = req.query;
+        await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
+        return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/pages/";</script>`);
     } catch (err) {
         console.error(err);
         next(err);
       }
 });
 
+// 0403 댓글 삭제
+router.get('/commentDelete', isLoggedIn, async (req, res, next) => {
+    try {
+        const { commentId, comment_createdAt } = req.query;
+        console.log();
+        console.log("@@@@@@@");
+        console.log(req.query);
+        console.log("@@@@@@@");
+        console.log();        
+        const thisBook = await Post.findOne({ where: { id: commentId, UserId: req.user.id } });
+        console.log("@@111",req.user.id);
+        await Post.destroy({ where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } });
+        console.log("@@",thisBook.BookId);
+        return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/book/${thisBook.BookId}";</script>`);        
+    } catch (err) {
+        console.error(err);
+        next(err);
+      }
+});
 
 module.exports = router;
