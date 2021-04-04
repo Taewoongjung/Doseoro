@@ -36,7 +36,7 @@ router.get('/commentDelete', isLoggedIn, async (req, res, next) => {
         console.log("@@@@@@@");
         console.log(req.query);
         console.log("@@@@@@@");
-        console.log();        
+        console.log();
         const thisBook = await Post.findOne({ where: { id: commentId, UserId: req.user.id } });
         console.log("@@111",req.user.id);
         await Post.destroy({ where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } });
