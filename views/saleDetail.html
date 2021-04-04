@@ -166,6 +166,8 @@
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
                             <td><div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div></td>
                             <td><div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div></td>
+
+                            <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment" value="{{comment.id}}">
                             <td><button id="comment-edit-btn-{{comment.id}}" type="submit" class="btn" onclick="comment_edit('{{comment.id}}')">수정</button></td>
 
                             <td><button id="comment-delete-btn-{{comment.id}}" type="submit" class="btn" onclick="comment_delete('{{comment.id}}')">삭제</button></td>
@@ -202,12 +204,15 @@
         }
 
         function comment_edit(id) {
+            var Com = prompt('수정 할 문구를 적어주세요');
+            document.getElementById(`edit_it-${id}`).value = `${Com}`;
+
             const request = document.getElementById(`comment-ED-form-${id}`);
-            var Com = prompt('수정 할 문구를 적어주세요'); 
-            request.setAttribute('action', '/comment/commentEdit', Com);
+            request.setAttribute('action', `/comment/commentEdit?Com`);
+            // request.setAttribute('Com', `${Com}`);
             request.setAttribute('method', 'GET');
         }
-        var Com = prompt('수정 할 문구를 적어주세요', ''); document.write(Com); location.href="/book/${thisBook.id}";
+
         function comment_delete(id) {
             const request = document.getElementById(`comment-ED-form-${id}`);
             request.setAttribute('action', '/comment/commentDelete');

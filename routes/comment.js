@@ -18,12 +18,16 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 // 0403 댓글 수정
 router.get('/commentEdit', isLoggedIn, async (req, res, next) => {
     try {
-        const { UserId, commentId, comment_createdAt, bookId, Com } = req.query;
-        console.log("com", Com);
+        const { UserId, commentId, comment_createdAt, bookId, edited_comment } = req.query;
+        console.log("Com = ", edited_comment);
         const thisBook = await Book.findOne({ where: { id: bookId } });
         if (UserId === String(res.locals.user.id)){
               
-            await Post.update({ where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } });
+            await Post.update({ 
+                content: edited_comment,
+            }, {
+                where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } 
+            });
             
             return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/book/${thisBook.id}";</script>`);   
 
