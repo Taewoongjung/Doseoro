@@ -118,11 +118,11 @@ router.post('/book/:id/comment', isLoggedIn, upload2.none(), async (req, res, ne
     }
 });
 
-// 0403 댓글에 이미지 추가 기능 + 이미지 추가하면 미리보기 기능(고민)
-router.post('/comment/img', isLoggedIn, upload.single('img'), (req, res) => {
-    console.log(req.file);
-    res.json({ url: `/img/${req.file.filename}` });
-});
+// // 0403 댓글에 이미지 추가 기능 + 이미지 추가하면 미리보기 기능(고민)
+// router.post('/comment/img', isLoggedIn, upload.single('img'), (req, res) => {
+//     console.log(req.file);
+//     res.json({ url: `/img/${req.file.filename}` });
+// });
 
 // 0330 책 등록
 // 0331 이미지 등록
@@ -151,7 +151,6 @@ router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) =>
 
 router.get('/book/:id', async (req, res, next) => {
     try {
-        console.log("@@@!@!@!여기가 된다고?");
         const [book] = await Promise.all([
             Book.findOne({
                 where: { id: req.params.id },
@@ -240,30 +239,32 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 // 0403 검색
 router.get('/search', async (req, res, next) => {
     try {
-        const [foundBooks] = await Promise.all([
-            Book.findAll({
-                where: {
-                    postmessage: {
-                        [Op.like]: "%" + req.query.searchWord + "%"
+        console.log("aaaaaaa= ", req.query);
+        if ( req.query.searchFilter === 'postTitle' ) { }
+        else if ( req.query.searchFilter === 'bookTitle' ) { }
+        else if ( req.query.searchFilter === 'bookAuther' ) { }
+        else if ( req.query.searchFilter === 'bookPublisher' ) { }
+        else { 
+            const [foundBooks] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        postmessage: {
+                            [Op.like]: "%" + req.query.searchWord + "%"
+                        },
                     },
-                },
-            }),
-        ]);
-        res.render('index.html', {
-            title: `책 구경`,
-            foundBooks,
-            user: foundBooks.OwnerId,
-            bookId: req.params.id,
-        });
+                }),
+            ]);
+            res.render('index.html', {
+                title: `책 구경`,
+                foundBooks,
+                user: foundBooks.OwnerId,
+                bookId: req.params.id,
+            });
+        }
     } catch (error) {
         console.error(error);
         next(error);
     }
-});
-
-// 0327 판매 게시판, 판매 게시물 등록
-router.get('/saleBoard', isNotLoggedIn, (req, res) => {
-    res.render('saleBoard.html');
 });
 
 module.exports = router;
