@@ -124,17 +124,19 @@
                 </div>
             </div>
             <!-- 게시물 내용 -->
-            <div class="mt-3 border-top w-75 ms-auto me-auto pt-4">
+            <div class="mt-3 border-top w-75 ms-auto me-auto mb-5 pt-4">
                 <div class="mt-3"><a id="getPostingContents">{{book.about}}</a></div>
             </div>
-            <br>
-            <br>
-            <br>
+
             <!-- 댓글 달기 -->
             {% if users and users.id %}
-            <form id="comment-form" enctype="multipart/form-data">
+            <form id="comment-form" enctype="multipart/form-data" class="mt-5 w-75 ms-auto me-auto">
                 <div class="input-group">
-                    <textarea id="comment" name="comment" maxlength="140"></textarea>
+                    <input id="comment" class="form-control p-2" name="comment">
+                    <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
+
+                    <input type="hidden" name="bookId" value="{{bookId}}">
+                    <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()" value="Click">댓글달기</button>
                 </div>
 
                 <!-- <div class="img-preview">
@@ -145,13 +147,14 @@
                     <!-- <label id="img-label" for="img">사진 업로드</label>
                         <input id="img" type="file" accept="image/*"> -->
                     <!-- <button id="comment-btn" type="submit" class="btn" onclick="comment()">댓글달기</button> -->
-                    <input type="hidden" name="bookId" value="{{bookId}}">
+
+                    <!-- <input type="hidden" name="bookId" value="{{bookId}}">
                     <button id="comment-btn" type="submit" class="btn" onclick="postComment()"
-                        value="Click">댓글달기</button>
+                        value="Click">댓글달기</button> -->
                 </div>
             </form>
             {% endif %}
-            <div id=comments-collection>
+            <div id="comments-collection" class="w-75 ms-auto me-auto">
                 {% for comment in comments %}
                 <table>
                     <tr>
@@ -164,26 +167,31 @@
                             <input type="hidden" name="UserId" value="{{comment.UserId}}">
                             <input type="hidden" name="commentId" value="{{comment.id}}">
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
-                            <td><div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div></td>
-                            <td><div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div></td>
+                            <td><div class="comment-nick me-3">{{comment.commentingNick}}</div></td>
+                            <td><div class="comment-content me-3">{{comment.content}}</div></td>
 
                             <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment" value="{{comment.id}}">
-                            <td><button id="comment-edit-btn-{{comment.id}}" type="submit" class="btn" onclick="comment_edit('{{comment.id}}')">수정</button></td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown" aria-expanded="true"></a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                        <li><button id="comment-edit-btn-{{comment.id}}"  class="dropdown-item" role="menuitem" tabindex="-1" type="submit" class="btn" onclick="comment_edit('{{comment.id}}')">수정</button></li>
+                                        <li><button id="comment-delete-btn-{{comment.id}}"  class="dropdown-item" role="menuitem" tabindex="-1" type="submit" class="btn" onclick="comment_delete('{{comment.id}}')">삭제</button></li>
+                                    </ul>
+                                </div>
+                            </td>
 
-                            <td><button id="comment-delete-btn-{{comment.id}}" type="submit" class="btn" onclick="comment_delete('{{comment.id}}')">삭제</button></td>
+                            <td></td>
                             {% else %}
-                            <td>
-                                <div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div>
-                            </td>
-                            <td>
-                                <div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div>
-                            </td>
+                            <td><div class="comment-nick me-3">{{comment.commentingNick}}</div></td>
+                            <td><div class="comment-content me-3">{{comment.content}}</div></td>
                             {% endif %}
                         </form>
                     </tr>
                 </table>
                 {% endfor %}
             </div>
+        
         </main>
         <!-- footer -->
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
