@@ -31,18 +31,18 @@ router.get('/commentEdit', isLoggedIn, async (req, res, next) => {
 // 0403 댓글 삭제
 router.get('/commentDelete', isLoggedIn, async (req, res, next) => {
     try {
-        const { commentId, comment_createdAt } = req.query;
-        console.log();
-        console.log("@@@@@@@");
-        console.log(req.query);
-        console.log("@@@@@@@");
-        console.log();
-        const thisBook = await Post.findOne({ where: { id: commentId, UserId: req.user.id } });
-        console.log("@@111",req.user.id);
-        await Post.destroy({ where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } });
-        console.log("@@",thisBook.BookId);
-        return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/book/${thisBook.BookId}";</script>`);        
-    } catch (err) {
+        const { user, UserId, commentId, comment_createdAt, bookId } = req.query;  // user = Book.OwnerId
+        console.log("UserId ", typeof(UserId));
+        console.log("res.locals.user ", typeof(res.locals.user.id));
+        const thisBook = await Book.findOne({ where: { id: bookId } });
+        console.log("thisbook = ", thisBook);
+        if (UserId === String(res.locals.user.id)){
+            await Post.destroy({ where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } });
+
+            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/book/${thisBook.id}";</script>`);        
+        } else {
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/book/${thisBook.id}";</script>`);  
+        }} catch (err) {
         console.error(err);
         next(err);
       }
