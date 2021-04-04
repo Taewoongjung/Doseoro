@@ -146,8 +146,7 @@
                         <input id="img" type="file" accept="image/*"> -->
                     <!-- <button id="comment-btn" type="submit" class="btn" onclick="comment()">댓글달기</button> -->
                     <input type="hidden" name="bookId" value="{{bookId}}">
-                    <button id="comment-btn" type="submit" class="btn" onclick="postComment()"
-                        value="Click">댓글달기</button>
+                    <button id="comment-btn" type="submit" class="btn" onclick="postComment()" value="Click">댓글달기</button>
                 </div>
             </form>
             {% endif %}
@@ -157,65 +156,28 @@
                     <tr>
                         <form id="comment-ED-form">
                             {% if users and users.id %}
-                            <input type="hidden" name="commentId" value="{{comment.id}}">
-                            <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
-                            <td>
-                                <div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div>
-                            </td>
-                            <td>
-                                <div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div>
-                            </td>
-                            <td><button id="comment-edit-btn" type="submit" class="btn">수정</button></td>
-                            <button id="comment-delete-btn" type="submit" class="btn"
-                                onclick="comment_delete()">삭제</button>
+                                <input type="hidden" name="commentId" value="{{comment.id}}">
+                                <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
+                                <td><div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div></td>
+                                <td><div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div></td>
+                                <td><button id="comment-edit-btn" type="submit" class="btn">수정</button></td>
+                                <td><button id="comment-delete-btn" type="submit" class="btn">삭제</button></td>
                             {% else %}
-                            <td>
-                                <div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div>
-                            </td>
-                            <td>
-                                <div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div>
-                            </td>
+                                <td><div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div></td>
+                                <td><div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div></td>
                             {% endif %}
                         </form>
                     </tr>
                 </table>
                 {% endfor %}
             </div>
-
-            <!-- <div id=comments-collection>
-                {% if users and users.id %}
-                <table>
-                    <tr>
-                        {% for comment in comments %}
-                            <form id="comment-ED-form">
-                                    <input type="hidden" name="commentId" value="{{comment.id}}">
-                                    <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
-                                    <td><div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div></td>
-                                    <td><div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div></td>
-                                    <td><button id="comment-edit-btn" type="submit" class="btn">수정</button></td>
-                                    <td><button id="comment-delete-btn" type="submit" class="btn">삭제</button></td>
-                            </form>
-                        {% endfor %}
-                    </tr>
-                </table>
-                {% else %}
-                <table>
-                    <tr>
-                        {% for comment in comments %}
-                            <form id="comment-ED-form">
-                                <td><div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div></td>
-                                <td><div class="comment-content">{{comment.content}} &nbsp&nbsp&nbsp</div></td>
-                            </form>
-                        {% endfor %}
-                    </tr>
-                </table>
-                {% endif %}
-            </div> -->
         </main>
         <!-- footer -->
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+
         function postComment() {
             const request = document.getElementById('comment-form');
             request.setAttribute('action', '/book/{{bookId}}/comment');
@@ -240,12 +202,12 @@
             request.setAttribute('method', 'GET');
         }
 
-        // const request = document.getElementById('comment-ED-form');
-        // const btn = document.getElementById('comment-delete-btn');
-        // btn.addEventListener('click', () => {
-        //     request.setAttribute('action', '/comment/commentDelete');
-        //     request.setAttribute('method', 'GET');
-        // });
+        const request = document.getElementById('comment-ED-form');
+        const btn = document.getElementById('comment-delete-btn');
+        btn.addEventListener('click', () => {
+            request.setAttribute('action', '/comment/commentDelete');
+            request.setAttribute('method', 'GET');
+        });
 
     </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
