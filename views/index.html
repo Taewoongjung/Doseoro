@@ -59,8 +59,12 @@
       <!-- 메뉴이동 -->
       <div class="menuForm container mt-2 mb-2 justify-content-center d-flex" role="group">
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold">팝니다</button></div>
+<<<<<<< HEAD
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
             onclick="location.href='saleBoard.html'">삽니다</button></div>
+=======
+        <div class="ms-1 me-1"><button type="button" class="btn fw-bold" onclick="location.href='saleBoard.html'">삽니다</button></div>
+>>>>>>> refs/remotes/origin/main
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold">무료나눔</button></div>
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold">커뮤니티</button></div>
       </div>
@@ -123,6 +127,7 @@
 
       <!-- 판매리스트 -->
       <div class="saleList pt-5 mt-5 border-top">
+<<<<<<< HEAD
         <h1 class="h2">판매중인 책</h1>
 
         <form id="book-form">
@@ -159,6 +164,41 @@
           </div>
         </div>
 
+=======
+        <h1 class="h2 fw-bold">판매중인 책</h1><br>
+        <form id="book-form"><a href="/pages/regi-book"class="addBook text-decoration-none btn-primary p-2">상품 등록</a></form>
+
+        <div class="d-flex justify-content-center flex-wrap">
+          {% for book in books %}
+          <div class="saleCard card m-5" style="max-width: 250px;" onclick="location.href='/book/{{book.id}}'">
+            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="300px">
+            <div class="card-body">
+              <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
+              <a>{{book.price}} 원</a>
+              <!-- <a href="/book/{{book.id}}" class="enter btn-primary ms-5 p-2 text-decoration-none">자세히</a> -->
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- 검색결과 -->
+        <div class="searchResult mt-5">
+          <div class="d-flex justify-content-center flex-wrap">
+            <p class="h4 fw-bold">검색 결과</p>
+            {% for foundBook in foundBooks %}
+            <div class="saleCard card m-5" style="max-width: 250px;" onclick="location.href='/book/{{book.id}}'">
+              <img src="/img/{{foundBook.img}}" class="card-img-top" width="100%" height="300px">
+              <div class="card-body">
+                <p class="postTitle card-title fw-bold mb-3">{{foundBook.postmessage}}</p>
+                <a>{{foundBook.price}} 원</a>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+
+>>>>>>> refs/remotes/origin/main
       </div>
     </main>
 
