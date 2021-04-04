@@ -16,7 +16,7 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 });
 
 router.get('/', async (req, res, next) => {
-    try { 
+    try {
         // --------- 인기 순으로 정렬하기 ---------
         //
         // // 좋아요 6개 이상
@@ -41,7 +41,8 @@ router.get('/', async (req, res, next) => {
 
         const [books] = await Promise.all([
             Book.findAll({
-                where: { SoldId: null } })
+                where: { SoldId: null }
+            })
         ]);
         res.render('index.html', {
             books,
@@ -111,7 +112,7 @@ router.post('/book/:id/comment', isLoggedIn, upload2.none(), async (req, res, ne
             BookId: req.params.id,
         });
         console.log("post@@@@@@@@@@@@", post);
-        return res.send(`<script type="text/javascript">location.href="/book/${post.BookId}";</script>`);        
+        return res.send(`<script type="text/javascript">location.href="/book/${post.BookId}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -162,8 +163,8 @@ router.get('/book/:id', async (req, res, next) => {
         ]);
         const [comments] = await Promise.all([
             Post.findAll({
-                where: { 
-                    BookId: req.params.id 
+                where: {
+                    BookId: req.params.id
                 },
                 include: {
                     model: User,
@@ -240,11 +241,71 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 router.get('/search', async (req, res, next) => {
     try {
         console.log("aaaaaaa= ", req.query);
-        if ( req.query.searchFilter === 'postTitle' ) { }
-        else if ( req.query.searchFilter === 'bookTitle' ) { }
-        else if ( req.query.searchFilter === 'bookAuther' ) { }
-        else if ( req.query.searchFilter === 'bookPublisher' ) { }
-        else { 
+        if (req.query.searchFilter === 'postTitle') { 
+            const [foundBooks] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        postmessage: {
+                            [Op.like]: "%" + req.query.searchWord + "%"
+                        },
+                    },
+                }),
+            ]);
+            res.render('index.html', {
+                title: `책 구경`,
+                foundBooks,
+                user: foundBooks.OwnerId,
+                bookId: req.params.id,
+            });
+        } else if (req.query.searchFilter === 'bookTitle') {
+            const [foundBooks] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        title: {
+                            [Op.like]: "%" + req.query.searchWord + "%"
+                        },
+                    },
+                }),
+            ]);
+            res.render('index.html', {
+                title: `책 구경`,
+                foundBooks,
+                user: foundBooks.OwnerId,
+                bookId: req.params.id,
+            });
+        } else if (req.query.searchFilter === 'bookAuther') {
+            const [foundBooks] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        author: {
+                            [Op.like]: "%" + req.query.searchWord + "%"
+                        },
+                    },
+                }),
+            ]);
+            res.render('index.html', {
+                title: `책 구경`,
+                foundBooks,
+                user: foundBooks.OwnerId,
+                bookId: req.params.id,
+            });
+        } else if (req.query.searchFilter === 'bookPublisher') {
+            const [foundBooks] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        publisher: {
+                            [Op.like]: "%" + req.query.searchWord + "%"
+                        },
+                    },
+                }),
+            ]);
+            res.render('index.html', {
+                title: `책 구경`,
+                foundBooks,
+                user: foundBooks.OwnerId,
+                bookId: req.params.id,
+            });
+        } else {  // 전체
             const [foundBooks] = await Promise.all([
                 Book.findAll({
                     where: {
