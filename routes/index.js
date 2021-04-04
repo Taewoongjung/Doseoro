@@ -309,9 +309,24 @@ router.get('/search', async (req, res, next) => {
             const [foundBooks] = await Promise.all([
                 Book.findAll({
                     where: {
-                        postmessage: {
-                            [Op.like]: "%" + req.query.searchWord + "%"
-                        },
+                        [Op.or]: [
+                            {
+                            postmessage: {
+                                [Op.like]: "%" + req.query.searchWord + "%"
+                            },
+                        }, {
+                            publisher: {
+                                [Op.like]: "%" + req.query.searchWord + "%"
+                            },
+                        }, {
+                            author: {
+                                [Op.like]: "%" + req.query.searchWord + "%"
+                            },
+                        }, {
+                            title: {
+                                [Op.like]: "%" + req.query.searchWord + "%"
+                            },
+                        }]
                     },
                 }),
             ]);
