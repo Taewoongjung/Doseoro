@@ -238,10 +238,11 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 });
 
 // 0403 검색
+// 0404 카테고리 검색
 router.get('/search', async (req, res, next) => {
     try {
         console.log("aaaaaaa= ", req.query);
-        if (req.query.searchFilter === 'postTitle') { 
+        if (req.query.searchFilter === 'postTitle') { // 게시물명 으로 찾기
             const [foundBooks] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -257,7 +258,7 @@ router.get('/search', async (req, res, next) => {
                 user: foundBooks.OwnerId,
                 bookId: req.params.id,
             });
-        } else if (req.query.searchFilter === 'bookTitle') {
+        } else if (req.query.searchFilter === 'bookTitle') {  // 책 이름으로 찾기
             const [foundBooks] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -273,7 +274,7 @@ router.get('/search', async (req, res, next) => {
                 user: foundBooks.OwnerId,
                 bookId: req.params.id,
             });
-        } else if (req.query.searchFilter === 'bookAuther') {
+        } else if (req.query.searchFilter === 'bookAuther') {  // 책 저자명 으로 찾기
             const [foundBooks] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -289,7 +290,7 @@ router.get('/search', async (req, res, next) => {
                 user: foundBooks.OwnerId,
                 bookId: req.params.id,
             });
-        } else if (req.query.searchFilter === 'bookPublisher') {
+        } else if (req.query.searchFilter === 'bookPublisher') {  // 출판사명 으로 찾기
             const [foundBooks] = await Promise.all([
                 Book.findAll({
                     where: {
