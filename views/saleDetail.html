@@ -174,15 +174,6 @@
 
                             <td><button id="comment-delete-btn-{{comment.id}}" type="submit"
                                     onclick="comment_delete('{{comment.id}}')">삭제</button></td>
-                            <!-- <script>
-                                function comment_delete(id) {
-                                    console.log(id);
-                                    const request = document.getElementById('comment-ED-form-{{id}}');
-                                    console.log('@@@');
-                                    request.setAttribute('action', '/comment/commentDelete');
-                                    request.setAttribute('method', 'GET');
-                                }
-                            </script> -->
                             {% else %}
                             <td>
                                 <div class="comment-nick">{{comment.commentingNick}} &nbsp&nbsp&nbsp</div>
@@ -222,11 +213,7 @@
         }
 
         function comment_delete(id) {
-            console.log(id);
-            console.log("{{id}}");
-            console.log(`@@@@@!!!${id}`);
             const request = document.getElementById(`comment-ED-form-${id}`);
-            console.log('@@@', request);
             request.setAttribute('action', '/comment/commentDelete');
             request.setAttribute('method', 'GET');
         }
