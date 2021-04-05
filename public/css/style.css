@@ -128,9 +128,6 @@ table {
 }
 
 /* myPage.html */
-.myPage {
-	
-}
 .profile img {
 	max-width: 200px;
 	max-height: 200px;
@@ -162,4 +159,14 @@ table {
 	border-radius: 15px;
 	background-color: rgb(153, 209, 241);
 	cursor: pointer;
+}
+
+/* listProduct.html */
+.likeList {
+	border-radius: 12px;
+	padding: 2rem;
+}
+.likeList:hover {
+	cursor: pointer;
+	background-color: rgb(233, 237, 240);
 }
