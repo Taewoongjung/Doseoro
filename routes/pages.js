@@ -26,8 +26,18 @@ router.get('/changePW', isNotLoggedIn, (req, res) => {
     res.render('changePW.html');
 })
 
-router.get('/saleBoard', (req, res) => {
-    res.render('saleBoard.html');
+router.get('/saleBoard', async (req, res) => {
+    try {
+        const [books] = await Promise.all([
+            Book.findAll({ where: { isSelling: null } }),
+        ]);
+        res.render('saleBoard.html', {
+            books,
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
 })
 
 // 0403 관심상품 창

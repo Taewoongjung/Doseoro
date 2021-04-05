@@ -57,6 +57,10 @@ module.exports = class Book extends Sequelize.Model {
                 type: Sequelize.JSON,
                 allowNull: true,
             },
+            isSelling: {
+                type: Sequelize.BOOLEAN,
+                allowNull: true,
+            },
         }, {
             sequelize,
             timestamps: true,

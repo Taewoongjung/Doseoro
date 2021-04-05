@@ -68,7 +68,7 @@
 
         <div class="d-flex justify-content-center flex-wrap">
           {% for book in books %}
-          <div class="saleCard card m-5" style="max-width: 250px;" onclick="location.href='/book/{{book.id}}'">
+          <div class="saleCard card m-5" style="max-width: 250px;" onclick="location.href='/book/{{book.thisbook}}'">
             <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="300px">
             <div class="card-body">
               <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
