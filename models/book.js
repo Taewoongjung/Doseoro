@@ -1,7 +1,5 @@
 const Sequelize = require('sequelize');
 
-// 책 좋아요 누를 때 연동 addFollowings...
-
 module.exports = class Book extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
@@ -75,5 +73,6 @@ module.exports = class Book extends Sequelize.Model {
         db.Book.belongsTo(db.User, { as: 'Sold' });
         db.Book.hasMany(db.Who);
         db.Book.hasMany(db.Post);
+        db.Book.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
     }
 };

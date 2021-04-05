@@ -129,7 +129,7 @@ router.post('/book/:id/comment', isLoggedIn, upload2.none(), async (req, res, ne
 // 0331 이미지 등록
 router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
-        const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
+        const { postmessage, title, price, author, publisher, hashtag, checkCategory, checkState, dealRoot, about } = req.body;
         const book = await Book.create({
             OwnerId: req.user.id,
             postmessage: postmessage,
