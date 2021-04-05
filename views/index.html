@@ -52,14 +52,14 @@
           <option value="bookPublisher">출판사</option>
         </select>
         <input type="text" class="form-control ps-3" id="book-publisher" name="searchWord" placeholder="검색">
-        <button class="btn btn-primary" type="submit"><img src="img/pngegg.png" width="35" height="25"
+        <button class="btn btn-primary" type="submit"><img src="/img/pngegg.png" width="35" height="25"
             class="mt-1"></button>
       </form>
 
       <!-- 메뉴이동 -->
       <div class="menuForm container mt-2 mb-2 justify-content-center d-flex" role="group">
-        <div class="ms-1 me-1"><button type="button" class="btn fw-bold">팝니다</button></div>
-        <div class="ms-1 me-1"><button type="button" class="btn fw-bold" onclick="location.href='/pages/saleBoard'">삽니다</button></div>
+        <div class="ms-1 me-1"><button type="button" class="btn fw-bold" onclick="location.href='/pages/saleBoard'">팝니다</button></div>
+        <div class="ms-1 me-1"><button type="button" class="btn fw-bold">삽니다</button></div>
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold">무료나눔</button></div>
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold">커뮤니티</button></div>
       </div>
@@ -125,10 +125,10 @@
         <h1 class="h2 fw-bold">판매중인 책</h1><br>
         <form id="book-form"><a href="/pages/regi-book"class="addBook text-decoration-none btn-primary p-2">상품 등록</a></form>
 
-        <div class="d-flex justify-content-center flex-wrap">
+        <div class="d-flex justify-content-center flex-wrap mt-5">
           {% for book in books %}
-          <div class="saleCard card m-5" style="max-width: 250px;" onclick="location.href='/book/{{book.id}}'">
-            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="300px">
+          <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
+            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="280px">
             <div class="card-body">
               <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
               <a>{{book.price}} 원</a>
@@ -140,11 +140,11 @@
 
         <!-- 검색결과 -->
         <div class="searchResult mt-5">
+          <p class="h4 fw-bold">검색 결과</p>
           <div class="d-flex justify-content-center flex-wrap">
-            <p class="h4 fw-bold">검색 결과</p>
             {% for foundBook in foundBooks %}
-            <div class="saleCard card m-5" style="max-width: 250px;" onclick="location.href='/book/{{book.id}}'">
-              <img src="/img/{{foundBook.img}}" class="card-img-top" width="100%" height="300px">
+            <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
+              <img src="/img/{{foundBook.img}}" class="card-img-top" width="100%" height="280px">
               <div class="card-body">
                 <p class="postTitle card-title fw-bold mb-3">{{foundBook.postmessage}}</p>
                 <a>{{foundBook.price}} 원</a>

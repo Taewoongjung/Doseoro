@@ -35,15 +35,18 @@
         </nav>
         
         <!-- main -->
-        <main class="container-sm mt-0 mb-0 min-vh-100">
-            <div class="banner bg-warning">
+        <main class="container-sm mt-0 mb-0 min-vh-100 border">
+            <div class="p-5">
+                <h1 class="h4 fw-bold">찜 목록</h1>
                 {% for book in books %}
-                    <tr>
-                        <td>{{book.posttitle}}</td>
-                        <td>{{book.price}} 원</td>
-                        <td><a href="/book/{{book.thisbook}}" class="enter btn">구경하러가기</a></td>
-                    </tr>
-                    <br>
+                    <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
+                        <img src="/img/{{book.img}}" class="" width="150px" height="200px">
+                        <div class="ms-4">
+                            <h1 class="h2 m-1 fw-bold">{{book.posttitle}}</h1>
+                            <h4 class="h5 m-1">{{book.price}} 원</h4>
+                        </div>
+                        <!-- <a class="m-1" href="/book/{{book.thisbook}}" class="enter btn">구경하러가기</a> -->
+                    </div>
                 {% endfor %}
             </div>
         </main>
