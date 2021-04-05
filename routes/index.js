@@ -136,6 +136,7 @@ router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) =>
             title: title,
             author: author,
             publisher: publisher,
+            tags: hashtag,
             img: req.file.filename,
             category: checkCategory,
             state: checkState,

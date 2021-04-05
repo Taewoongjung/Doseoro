@@ -57,6 +57,10 @@ module.exports = class Book extends Sequelize.Model {
                 type: Sequelize.JSON,
                 allowNull: true,
             },
+            tags: {
+                type: Sequelize.STRING(100),
+                allowNull: true,
+            },
         }, {
             sequelize,
             timestamps: true,
@@ -73,6 +77,5 @@ module.exports = class Book extends Sequelize.Model {
         db.Book.belongsTo(db.User, { as: 'Sold' });
         db.Book.hasMany(db.Who);
         db.Book.hasMany(db.Post);
-        db.Book.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
     }
 };
