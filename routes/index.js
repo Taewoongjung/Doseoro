@@ -65,19 +65,6 @@ router.get('/mypage', isLoggedIn, (req, res, next) => {
     res.render('myPage.html');
 });
 
-// 0403 관심상품 창
-router.get('/like', async (req, res, next) => {
-    try {
-        const books = await Who.findAll({ where: { liked: req.user.id } });
-        res.render('likedProduct.html', {
-            books,
-        });
-    } catch (error) {
-        console.error(error);
-        next(error);
-    }
-});
-
 // 0331 파일 올리기 
 try {
     fs.readdirSync('uploads');
@@ -180,6 +167,7 @@ router.get('/book/:id', async (req, res, next) => {
                 book,
                 users: res.locals.user,
                 user: book.OwnerId,
+                img: book.img,
                 bookId: req.params.id,
                 comments: comments,
             });

@@ -1,4 +1,6 @@
 const express = require('express');
+
+const { User, Book, Who, Post } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -27,5 +29,19 @@ router.get('/changePW', isNotLoggedIn, (req, res) => {
 router.get('/saleBoard', (req, res) => {
     res.render('saleBoard.html');
 })
+
+// 0403 관심상품 창
+router.get('/like', isLoggedIn, async (req, res, next) => {
+    try {
+        const books = await Who.findAll({ where: { liked: req.user.id } });
+        res.render('likedProduct.html', {
+            books,
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 
 module.exports = router;
