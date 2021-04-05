@@ -1,14 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
     <title>내 정보</title>
 </head>
+
 <body>
-    <a href="">판매내역</a>
+    <div class="flex w-100">
+        <!-- top -->
+        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white" id="topNav">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="160" height="64"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
+                <ul class="navbar-nav mb-2 mb-md-0">
+                {% if user and user.id %}
+                <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
+                <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
+                <li class="nav-item"><a class="nav-link p-3" href="/like">관심상품</a></li>
+                <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
+                <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
+                </ul>
+            </div>
+            </div>
+        </nav>
+
+        <!-- 마이페이지 -->
+        <main class="myPage min-vh-100 container-sm border p-5">
+            <div class="profile d-flex align-items-center pb-5">
+                <!-- 프로필 이미지 추가 여부 논의 필요 -->
+                <img src="/img/profileImg.png" class="rounded-circle w-25" alt="profile">
+                <div class="ms-5">
+                    <h1 class="h3 fw-bold">{{user.nick}}</h1>
+                    <a class="h5 mt-2 text-decoration-none" href="#">프로필</a>
+                </div>
+            </div>
+
+            <div class="myPageList text-center d-flex flex-wrap justify-content-center">
+                <a class="m-sm-4" href="/like">
+                    <img src="/img/bookmark.png" alt="관심상품"><p class="text-decoration-none">관심상품</p>
+                </a>
+                <a class="m-sm-4">
+                    <img src="/img/saleList.png" alt="판매내역"><p>판매내역</p>
+                </a>
+                <a class="m-sm-4">
+                    <img src="/img/purchaseList.png" alt="구매내역"><p>구매내역</p>
+                </a>
+                <a class="m-sm-4">
+                    <img src="/img/qna.png" alt="고객문의"><p>고객문의</p>
+                </a>
+                <!-- <a href="#">프로필</a>
+                <a href="#">지역설정</a>
+                <a href="#">고객문의</a> -->
+            </div>
+        </main>
+
+        <!-- footer -->
+        <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+    </div>
+
+    <!-- 이전 -->
+    <!-- <a href="">판매내역</a>
     <a href="">구매내역</a>
     <a href="">장바구니</a>
     <a href="">프로필</a>
     <a href="">지역설정</a>
-    <a href="">고객문의</a>
+    <a href="">고객문의</a> -->
+
+    <script src="/js/topNav.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
