@@ -144,6 +144,18 @@ router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) =>
             tradingmethod: dealRoot,
             about: about,
         });
+        const hashtags = hashtag.match(/#[^\s#]*/g);
+        if (hashtags) {
+            const result = await Promise.all(
+                hashtags.map(tag => {
+                    return Book.findOrCreate({
+                        where: { title: tag.slice(1).toLowerCase() },
+                    })
+                }),
+            );
+            await post.addHashtags(result.map(r => r[0]));
+        }
+
         res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
@@ -313,22 +325,22 @@ router.get('/search', async (req, res, next) => {
                     where: {
                         [Op.or]: [
                             {
-                            postmessage: {
-                                [Op.like]: "%" + req.query.searchWord + "%"
-                            },
-                        }, {
-                            publisher: {
-                                [Op.like]: "%" + req.query.searchWord + "%"
-                            },
-                        }, {
-                            author: {
-                                [Op.like]: "%" + req.query.searchWord + "%"
-                            },
-                        }, {
-                            title: {
-                                [Op.like]: "%" + req.query.searchWord + "%"
-                            },
-                        }]
+                                postmessage: {
+                                    [Op.like]: "%" + req.query.searchWord + "%"
+                                },
+                            }, {
+                                publisher: {
+                                    [Op.like]: "%" + req.query.searchWord + "%"
+                                },
+                            }, {
+                                author: {
+                                    [Op.like]: "%" + req.query.searchWord + "%"
+                                },
+                            }, {
+                                title: {
+                                    [Op.like]: "%" + req.query.searchWord + "%"
+                                },
+                            }]
                     },
                 }),
             ]);
