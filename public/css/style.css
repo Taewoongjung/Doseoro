@@ -126,3 +126,40 @@ table {
 .categoryBox label, .stateBox label {
 	padding-top : 5px;
 }
+
+/* myPage.html */
+.myPage {
+	
+}
+.profile img {
+	max-width: 200px;
+	max-height: 200px;
+	min-width: 150px;
+	min-height: 150px;
+}
+.myPageList {
+	background-color: rgb(243, 243, 243);
+	border: 1px solid;
+	border-color: rgb(230, 230, 230);
+	border-radius: 1rem;
+}
+.myPageList a {
+	margin: 1rem;
+	text-decoration: none;
+}
+.myPageList a p {
+	color: black;
+	font-weight: bold;
+	font-size: 18px;
+}
+.myPageList a img {
+	width: 154px;
+	height: 154px;
+	padding: 10px;
+}
+.myPageList a:hover {
+	padding: 5px;
+	border-radius: 15px;
+	background-color: rgb(153, 209, 241);
+	cursor: pointer;
+}
