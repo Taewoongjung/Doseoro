@@ -57,10 +57,6 @@ module.exports = class Book extends Sequelize.Model {
                 type: Sequelize.JSON,
                 allowNull: true,
             },
-            tags: {
-                type: Sequelize.STRING(100),
-                allowNull: true,
-            },
         }, {
             sequelize,
             timestamps: true,

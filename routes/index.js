@@ -129,14 +129,13 @@ router.post('/book/:id/comment', isLoggedIn, upload2.none(), async (req, res, ne
 // 0331 이미지 등록
 router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
-        const { postmessage, title, price, author, publisher, hashtag, checkCategory, checkState, dealRoot, about } = req.body;
+        const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
         const book = await Book.create({
             OwnerId: req.user.id,
             postmessage: postmessage,
             title: title,
             author: author,
             publisher: publisher,
-            tags: hashtag,
             img: req.file.filename,
             category: checkCategory,
             state: checkState,
@@ -144,18 +143,6 @@ router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) =>
             tradingmethod: dealRoot,
             about: about,
         });
-        const hashtags = hashtag.match(/#[^\s#]*/g);
-        if (hashtags) {
-            const result = await Promise.all(
-                hashtags.map(tag => {
-                    return Book.findOrCreate({
-                        where: { title: tag.slice(1).toLowerCase() },
-                    })
-                }),
-            );
-            await post.addHashtags(result.map(r => r[0]));
-        }
-
         res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
