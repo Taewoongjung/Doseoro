@@ -15,6 +15,10 @@ module.exports = class Who extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: true,
             },
+            img: {
+                type: Sequelize.STRING(200),
+                allowNull: true,
+            },
             liked: {
                 type: Sequelize.STRING(100),
                 allowNull: true,

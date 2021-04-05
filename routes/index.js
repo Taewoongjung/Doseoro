@@ -82,7 +82,7 @@ const upload = multer({  // multer 설정
             cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext); // 파일 덮어씌어지는거 방지
         },
     }),
-    limits: { fileSize: 5 * 1024 * 1024 },  // 파일 크기 제한 ( 나중에 논의 )
+    limits: { fileSize: 5 * 1024 * 1024 },
 });
 
 // 0403 댓글기능
@@ -90,27 +90,18 @@ const upload2 = multer();
 router.post('/book/:id/comment', isLoggedIn, upload2.none(), async (req, res, next) => {
     try {
         const { comment } = req.body;
-        console.log("@@@@@@@@@@", comment);
         const post = await Post.create({
             content: comment,
             commentingNick: req.user.nick,
-            // img: req.body.url,
             UserId: req.user.id,
             BookId: req.params.id,
         });
-        console.log("post@@@@@@@@@@@@", post);
         return res.send(`<script type="text/javascript">location.href="/book/${post.BookId}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
     }
 });
-
-// // 0403 댓글에 이미지 추가 기능 + 이미지 추가하면 미리보기 기능(고민)
-// router.post('/comment/img', isLoggedIn, upload.single('img'), (req, res) => {
-//     console.log(req.file);
-//     res.json({ url: `/img/${req.file.filename}` });
-// });
 
 // 0330 책 등록
 // 0331 이미지 등록
@@ -209,6 +200,7 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
                 thisbook: bookId,
                 posttitle: postmessage,
                 title: title,
+                img: FindBook.img,
                 price: price,
                 liked: req.user.id,
             });
