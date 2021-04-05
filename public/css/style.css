@@ -103,8 +103,9 @@ table {
 	border: none;
 }
 .saleCard img {
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
+	border-radius: 12px;
+	/* border-top-left-radius: 15px;
+	border-top-right-radius: 15px; */
 }
 .saleCard:hover {
 	cursor: pointer;
