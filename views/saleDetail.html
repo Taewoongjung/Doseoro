@@ -137,7 +137,8 @@
                     <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
 
                     <input type="hidden" name="bookId" value="{{bookId}}">
-                    <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()" value="Click">댓글달기</button>
+                    <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()"
+                        value="Click">댓글달기</button>
                 </div>
 
                 <!-- <div class="img-preview">
@@ -168,36 +169,50 @@
                             <input type="hidden" name="UserId" value="{{comment.UserId}}">
                             <input type="hidden" name="commentId" value="{{comment.id}}">
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
-                            <td><div class="comment-nick me-3">{{comment.commentingNick}}</div></td>
-                            <td><div class="comment-content me-3">{{comment.content}}</div></td>
+                            <td>
+                                <div class="comment-nick me-3">{{comment.commentingNick}}</div>
+                            </td>
+                            <td>
+                                <div class="comment-content me-3">{{comment.content}}</div>
+                            </td>
 
-                            <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment" value="{{comment.id}}">
+                            <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment"
+                                value="{{comment.id}}">
                             <td>
                                 <div class="dropdown">
-                                    <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown" aria-expanded="true"></a>
+                                    <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
+                                        aria-expanded="true"></a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                        <li><button id="comment-edit-btn-{{comment.id}}"  class="dropdown-item" role="menuitem" tabindex="-1" type="submit" class="btn" onclick="comment_edit('{{comment.id}}')">수정</button></li>
-                                        <li><button id="comment-delete-btn-{{comment.id}}"  class="dropdown-item" role="menuitem" tabindex="-1" type="submit" class="btn" onclick="comment_delete('{{comment.id}}')">삭제</button></li>
+                                        <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
+                                                role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                onclick="comment_edit('{{comment.id}}')">수정</button></li>
+                                        <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
+                                                role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                onclick="comment_delete('{{comment.id}}')">삭제</button></li>
                                     </ul>
                                 </div>
                             </td>
 
                             <td></td>
                             {% else %}
-                            <td><div class="comment-nick me-3">{{comment.commentingNick}}</div></td>
-                            <td><div class="comment-content me-3">{{comment.content}}</div></td>
+                            <td>
+                                <div class="comment-nick me-3">{{comment.commentingNick}}</div>
+                            </td>
+                            <td>
+                                <div class="comment-content me-3">{{comment.content}}</div>
+                            </td>
                             {% endif %}
                         </form>
                     </tr>
                 </table>
                 {% endfor %}
             </div>
-        
+
         </main>
         <!-- footer -->
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
-    
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         function postComment() {

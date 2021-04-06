@@ -44,7 +44,7 @@ module.exports = class User extends Sequelize.Model {
             snsId: { // 나중에 kakao로 연동할 때 카카오에서 snsnId를 아이디처럼 쓸 수 있기 때문에 저장하는 곳.
                 type: Sequelize.STRING(30),
                 allowNull: true, 
-            }
+            },
         }, {
             sequelize,
             timestamps: true,
