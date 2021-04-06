@@ -55,9 +55,9 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
 
 
 // 0407 판매내역 창
-router.get('/like', isLoggedIn, async (req, res, next) => {
+router.get('/selling', isLoggedIn, async (req, res, next) => {
     try {
-        const books = await Who.findAll({ where: { liked: req.user.id } });
+        const books = await Book.findAll({ where: { OwnerId: req.user.id } });
         res.render('sellingList.html', {
             books,
         });
