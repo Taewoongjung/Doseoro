@@ -66,13 +66,13 @@
         <h1 class="h2 fw-bold">판매중인 책</h1><br>
         <form id="book-form"><a href="/pages/regi-book"class="addBook text-decoration-none btn-primary p-2">상품 등록</a></form>
 
-        <div class="d-flex justify-content-center flex-wrap">
+        <div class="d-flex justify-content-center flex-wrap mt-5">
           {% for book in books %}
-          <div class="saleCard card m-5" style="max-width: 250px;" onclick="location.href='/book/{{book.thisbook}}'">
-            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="300px">
-            <div class="card-body">
+          <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
+            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="280px">
+            <div class="card-body text-center">
               <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
-              <a>{{book.price}} 원</a>
+              <p>{{book.price}} 원</p>
               <!-- <a href="/book/{{book.id}}" class="enter btn-primary ms-5 p-2 text-decoration-none">자세히</a> -->
             </div>
           </div>
@@ -81,11 +81,11 @@
 
         <!-- 검색결과 -->
         <div class="searchResult mt-5">
+          <p class="h4 fw-bold">검색 결과</p>
           <div class="d-flex justify-content-center flex-wrap">
-            <p class="h4 fw-bold">검색 결과</p>
             {% for foundBook in foundBooks %}
-            <div class="saleCard card m-5" style="max-width: 250px;" onclick="location.href='/book/{{book.id}}'">
-              <img src="/img/{{foundBook.img}}" class="card-img-top" width="100%" height="300px">
+            <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
+              <img src="/img/{{foundBook.img}}" class="card-img-top" width="100%" height="280px">
               <div class="card-body">
                 <p class="postTitle card-title fw-bold mb-3">{{foundBook.postmessage}}</p>
                 <a>{{foundBook.price}} 원</a>

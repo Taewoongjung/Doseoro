@@ -67,5 +67,10 @@ router.get('/selling', isLoggedIn, async (req, res, next) => {
     }
 });
 
+// 0408 프로필
+router.get('/myProfile', isNotLoggedIn, (req,res) => {
+    res.render('myProfile.html');
+});
+
 
 module.exports = router;
