@@ -180,11 +180,22 @@ router.get('/book/:id', async (req, res, next) => {
 // 0403 찜 하기 기능
 router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
-        const { user, bookId, createdat, postmessage, title, price } = req.body;
-
+        /*
+            1. 자신의 물건인 경우
+                자신의 물건에는 할 수 없습니다
+            2. 자신의 물건이 아닌 경우
+                2-1. 좋아요가 이미 눌러진 상태인 경우
+                    찜 해제됐습니다
+                2-2. 아닌 경우
+                    찜 했습니다
+        */
+        const { user: owner, bookId, createdat, postmessage, title, price } = req.body;
         const isheliked = await Who.findOne({ where: { thisbook: bookId, liked: req.user.id } });
-        if (isheliked) {
-            const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: user } });
+        if ( String(req.user.id) === String(owner) ) {
+            return res.send(`<script type="text/javascript">alert("자신의 물건에는 할 수 없습니다."); location.href="/";</script>`);
+        }
+        else if (isheliked) {
+            const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: owner } });
             const add = FindBook.likecount - 1;
             await Who.destroy({ where: { thisbook: FindBook.id, liked: req.user.id } });
             await Book.update({
@@ -193,8 +204,9 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
                 where: { id: bookId }
             });
             return res.send(`<script type="text/javascript">alert("찜 해제됐습니다!"); location.href="/";</script>`);
-        } else {
-            const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: user } });
+        }
+        else {
+            const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: owner } });
             const add = FindBook.likecount + 1;
             await Who.create({
                 thisbook: bookId,

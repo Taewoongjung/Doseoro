@@ -55,34 +55,69 @@ const upload = multer({  // multer 설정
 // // 0407 수정내용을 저장하는 라우터
 router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
-        const { this_item_id, postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
-        const [book] = await Promise.all([
-            Book.update({
-                postmessage: postmessage,
-                title: title,
-                author: author,
-                publisher: publisher,
-                img: req.file.filename,
-                category: checkCategory,
-                state: checkState,
-                price: price,
-                tradingmethod: dealRoot,
-                about: about,
-            }, {
-                where: { id: this_item_id }
-            }),
-        ], [
-            Who.update({
-                thisbook: this_item_id,
-                posttitle: postmessage,
-                title: title,
-                img: req.file.filename,
-                price: price,
-            }, {
-                where: { liked: req.user.id }
-            }),
-        ]);
+        console.log("2@@@@@@!@!@@!");
+        const { this_item_id, this_item_owner, postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
+        
+        /*
+            1. 책 내용을 수정한다.
+            2. who테이블 수정한다.
+        */
+        const book = await Book.update({
+            postmessage: postmessage,
+            title: title,
+            author: author,
+            publisher: publisher,
+            img: req.file.filename,
+            category: checkCategory,
+            state: checkState,
+            price: price,
+            tradingmethod: dealRoot,
+            about: about,
+        }, {
+            where: { id: this_item_id }
+        });
+        
+        // const userbook = await Who.update({
+        //     thisbook: this_item_id,
+        //     posttitle: postmessage,
+        //     liked: this_item_owner,
+        //     title: title,
+        //     img: req.file.filename,
+        //     price: price,
+        // }, {
+        //     where: { liked: req.user.id }
+        // });
+
+        // const [book] = await Promise.all([
+        //     Book.update({
+        //         postmessage: postmessage,
+        //         title: title,
+        //         author: author,
+        //         publisher: publisher,
+        //         img: req.file.filename,
+        //         category: checkCategory,
+        //         state: checkState,
+        //         price: price,
+        //         tradingmethod: dealRoot,
+        //         about: about,
+        //     }, {
+        //         where: { id: this_item_id }
+        //     }),
+        // ]);
+        // const [userbook] = await Promise.all([
+        //     Who.update({
+        //         thisbook: this_item_id,
+        //         posttitle: postmessage,
+        //         liked: this_item_owner,
+        //         title: title,
+        //         img: req.file.filename,
+        //         price: price,
+        //     }, {
+        //         where: { liked: req.user.id }
+        //     }),
+        // ]);
         console.log("2@@@@@",book);
+        // console.log("2@@@@@",userbook);
         res.send(`<script type="text/javascript">alert("책 정보 수정 완료"); location.href="/book/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);

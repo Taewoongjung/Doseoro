@@ -51,7 +51,8 @@
                             </div>
                             <div>
                                 <form id="item-ED-form-{{book.id}}">
-                                    <input type="hidden" id="delete_it-{{book.id}}" name="this_item" value="{{book.id}}">
+                                    <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{book.id}}">
+                                    <input type="hidden" id="delete_it-{{book.id}}" name="this_item_owner" value="{{book.OwnerId}}">
                                     <div class="dropdown">
                                         <a class="btn" href="#" data-bs-toggle="dropdown"
                                             aria-expanded="true">⁝</a>

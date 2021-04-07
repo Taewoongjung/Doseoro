@@ -43,7 +43,13 @@ router.get('/saleBoard', async (req, res) => {
 // 0403 관심상품 창
 router.get('/like', isLoggedIn, async (req, res, next) => {
     try {
-        const books = await Who.findAll({ where: { liked: req.user.id } });
+        console.log("req = ", req.user.id);
+        const [bo] = await Promise.all([
+            Who.findAll({ where: { liked: req.user.id  } }),
+        ]);
+        // const bo = await Who.findAll({ where: { liked: req.user.id } });
+        console.log("@!@@!@@@@ ", bo.thisbook);
+        const books = await Book.findAll({ where: { id: bo.thisbook } });
         res.render('likedProduct.html', {
             books,
         });
@@ -53,7 +59,7 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
     }
 });
 
-
+ 
 // 0407 판매내역 창
 router.get('/selling', isLoggedIn, async (req, res, next) => {
     try {

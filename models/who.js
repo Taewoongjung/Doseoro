@@ -25,7 +25,7 @@ module.exports = class Who extends Sequelize.Model {
             },
             price: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 defaultValue: 0,
             },
             bought: {
