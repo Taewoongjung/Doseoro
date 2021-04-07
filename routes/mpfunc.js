@@ -14,10 +14,12 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 router.get('/delete', isLoggedIn, async (req, res, next) => {
     try {
         console.log("@@@!@!@!@!");
-        // const books = await Book.findOne({ where: { OwnerId: req.user.id } });
-        // res.render('sellingList.html', {
-        //     books,
-        // });
+        const { delete_this_item} = req.query;
+        console.log("@!@!!@", delete_this_item);
+        await Book.destroy({
+            where: { id: delete_this_item } 
+        });
+        res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/selling";</script>`);
     } catch (error) {
         console.error(error);
         next(error);

@@ -38,8 +38,8 @@
         <main class="container-sm mt-0 mb-0 min-vh-100 border">
             <div class="p-5">
                 <h1 class="h4 fw-bold">판매 목록</h1>
-                {% for book in books %}
-                <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
+                    {% for book in books %}
+                    <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
                         <img src="/img/{{book.img}}" class="" width="150px" height="200px">
                         <div class="ms-4">
                             <h1 class="h2 m-1 fw-bold">{{book.title}}</h1>
@@ -47,7 +47,24 @@
                             <h4 class="h5 m-1">카테고리: {{book.category}} 원</h4>
                             <h4 class="h5 m-1">거래 방법: {{book.tradingmethod}} 원</h4>
                         </div>
-                   </div>
+                        <div>
+                            <form id="item-ED-form-{{book.id}}">
+                                <input type="hidden" id="delete_it-{{book.id}}" name="delete_this_item" value="{{book.id}}">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
+                                        aria-expanded="true"></a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                        <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
+                                                role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                onclick="comment_edit('{{book.id}}')">수정</button></li>
+                                        <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
+                                                role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                onclick="item_delete('{{book.id}}')">삭제</button></li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
         </main>
@@ -55,7 +72,13 @@
         <!-- footer -->
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
-
+    <script>
+        function item_delete(id) {
+            const request = document.getElementById(`item-ED-form-${id}`);
+            request.setAttribute('action', '/mpfunc/delete');
+            request.setAttribute('method', 'GET');
+        }
+    </script>
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
