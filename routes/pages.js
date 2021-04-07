@@ -44,12 +44,16 @@ router.get('/saleBoard', async (req, res) => {
 router.get('/like', isLoggedIn, async (req, res, next) => {
     try {
         console.log("req = ", req.user.id);
-        const [bo] = await Promise.all([
-            Who.findAll({ where: { liked: req.user.id  } }),
+        const [books] = await Promise.all([
+            Who.findAll({ 
+                include: {
+                    model: Book,
+                    attributes: ['img', 'price', 'postmessage']
+                },
+                where: { liked: req.user.id }, 
+            }),
         ]);
-        // const bo = await Who.findAll({ where: { liked: req.user.id } });
-        console.log("@!@@!@@@@ ", bo.thisbook);
-        const books = await Book.findAll({ where: { id: bo.thisbook } });
+        
         res.render('likedProduct.html', {
             books,
         });
