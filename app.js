@@ -23,6 +23,7 @@ const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const pagesRouter = require('./routes/pages');
 const commentRouter = require('./routes/comment');
+const mpfuncRouter = require('./routes/mpfunc');
 
 const app = express();
 passportConfig();
@@ -77,6 +78,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/pages', pagesRouter);
 app.use('/comment', commentRouter);
+app.use('/mpfunc', mpfuncRouter);
 
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
