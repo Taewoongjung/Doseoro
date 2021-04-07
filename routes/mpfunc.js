@@ -11,7 +11,7 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 });
 
 // 0407 판매내역 삭제
-router.get('/selling/delete', isLoggedIn, async (req, res, next) => {
+router.get('/delete', isLoggedIn, async (req, res, next) => {
     try {
         console.log("@@@!@!@!@!");
         // const books = await Book.findOne({ where: { OwnerId: req.user.id } });
