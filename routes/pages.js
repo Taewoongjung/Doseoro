@@ -68,4 +68,19 @@ router.get('/selling', isLoggedIn, async (req, res, next) => {
 });
 
 
+// 0407 판매내역 삭제
+router.get('/selling/delete', isLoggedIn, async (req, res, next) => {
+    try {
+        console.log("@@@!@!@!@!");
+        // const books = await Book.findOne({ where: { OwnerId: req.user.id } });
+        // res.render('sellingList.html', {
+        //     books,
+        // });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+
 module.exports = router;
