@@ -140,7 +140,7 @@
           <label for="book-about">상품설명</label>
           <input type="text" class="form-control p-3" id="book-about" name="about" placeholder="{{books.about}}">
         </div>
-
+        <input type="hidden" id="delete_it-{{book.id}}" name="this_item" value="{{books.id}}">
         <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">상품 등록</button>
       </form>
     </main>
