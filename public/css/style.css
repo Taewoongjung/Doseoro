@@ -111,7 +111,7 @@ table {
 	cursor: pointer;
 }
 .postTitle {
-	width: 200px;
+	/* width: 200px; */
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -170,4 +170,8 @@ table {
 .likeList:hover {
 	cursor: pointer;
 	background-color: rgb(233, 237, 240);
+}
+.likeList img {
+	border-radius: 10px;
+	box-shadow: 3px 3px 5px rgb(235, 235, 235);
 }

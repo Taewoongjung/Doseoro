@@ -45,6 +45,8 @@
                 <!-- 제목 -->
                 <div class="d-lg-flex align-items-center w-100 pb-2 mb-4 border-bottom">
                     <h1 class="h2 text-decoration-none w-100 fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
+                    <!-- 게시자 닉네임 표시가 필요합니다 -->
+                    <p class="w-100">게시자 닉네임</p>
                     <!-- 등록 시간을 DB에서 받아와 YMD 형석으로 바꿀 JS코드 필요 => 해결 -->
                     <a class="text-decoration-none w-100 text-dark text-end" id="getPostingDate">{{book.createdAt}}</a>
                 </div>
@@ -55,42 +57,49 @@
                         <a href="#" class=""><img class="" src="/img/{{book.img}}" style="border-radius:21px"
                                 width="320px" height="400px"></a>
                     </div>
-                    <div class="bookInfo w-75 me-0 ms-sm-5">
-                        <div class="d-flex mb-3 align-items-center w-100">
-                            <div class="saleCheck border-0 p-2 me-2" style="border-radius: 10px">
-                                <a class="h5 text-decoration-none fw-bold">판매</a>
-                            </div>
-                            <!-- 좋아요 눌린 갯수 -->
-                            <!-- <div class="saleCheck border-0 p-2 me-4" style="border-radius: 10px">
-                                <a class="h5 text-decoration-none fw-bold">♥ + {{book.likecount}}</a>
-                            </div> -->
-                            <!-- 찜 하기 -->
-                            <div class="float-sm-end">
-                                <form id="book_like-form">
-                                    <div class="saleCheck border-0 p-2 d-flex" style="border-radius: 10px">
-                                        <!-- 책 올린 사람 찾기 위함 -->
-                                        <input type="hidden" name="createdat" value="{{book.createdAt}}">
-                                        <!-- OwnerId -->
-                                        <input type="hidden" name="user" value="{{user}}">
-                                        <!-- BookId -->
-                                        <input type="hidden" name="bookId" value="{{bookId}}">
-                                        <input type="hidden" name="postmessage" value="{{book.postmessage}}">
-                                        <input type="hidden" name="title" value="{{book.title}}">
-                                        <input type="hidden" name="price" value="{{book.price}}">
-                                        <button class="btn  btn-outline-primary" class="btn" type="submit"
-                                            onclick="like()" style="border: 0px">❤️</button>
-
-                                        <!-- 좋아요 눌린 갯수 -->
-                                        <div class="saleCheck border-0 pt-1" style="border-radius: 10px">
-                                            <a class="h5 text-decoration-none fw-bold">+ {{book.likecount}}</a>
+                    <div class="bookInfo w-75 me-0 ms-sm-5 align-content-between">
+                        <div class="d-flex mb-3 align-items-center w-100 justify-content-between">
+                            <div class="saleCheck d-flex border-0 p-2 me-2 align-items-center" style="border-radius: 10px">
+                                <a class="h5 mb-0 text-decoration-none fw-bold">판매</a>
+                                <div class="">
+                                    <form id="book_like-form">
+                                        <div class="saleCheck border-0 p-2 d-flex" style="border-radius: 10px">
+                                            <!-- 책 올린 사람 찾기 위함 -->
+                                            <input type="hidden" name="createdat" value="{{book.createdAt}}">
+                                            <!-- OwnerId -->
+                                            <input type="hidden" name="user" value="{{user}}">
+                                            <!-- BookId -->
+                                            <input type="hidden" name="bookId" value="{{bookId}}">
+                                            <input type="hidden" name="postmessage" value="{{book.postmessage}}">
+                                            <input type="hidden" name="title" value="{{book.title}}">
+                                            <input type="hidden" name="price" value="{{book.price}}">
+                                            <button class="btn  btn-outline-primary" class="btn" type="submit"
+                                                onclick="like()" style="border: 0px">❤️</button>
+    
+                                            <!-- 좋아요 눌린 갯수 -->
+                                            <div class="saleCheck border-0 pt-1" style="border-radius: 10px">
+                                                <a class="h5 text-decoration-none fw-bold">+ {{book.likecount}}</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
-                            <!-- 관심상품 버튼 -->
-                            <!-- <div class="border-0 bg-white p-2">
-                                <a class="h6 text-decoration-none text-dark"><img src="/img/like_a.png" width="15px" height="12px"></a>
-                            </div> -->
+                            
+
+                            <!-- 수정/삭제 -->
+                            <div class="dropdown">
+                                <a class="btn" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="true">⁝</a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                    <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
+                                            role="menuitem" tabindex="-1" type="submit" class="btn"
+                                            onclick="">수정</button></li>
+                                    <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
+                                            role="menuitem" tabindex="-1" type="submit" class="btn"
+                                            onclick="">삭제</button></li>
+                                </ul>
+                            </div>
+
                         </div>
                         <div class="bookTitle d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">책 제목</h4>
