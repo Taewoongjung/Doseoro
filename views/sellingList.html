@@ -49,14 +49,14 @@
                         </div>
                         <div>
                             <form id="item-ED-form-{{book.id}}">
-                                <input type="hidden" id="delete_it-{{book.id}}" name="delete_this_item" value="{{book.id}}">
+                                <input type="hidden" id="delete_it-{{book.id}}" name="this_item" value="{{book.id}}">
                                 <div class="dropdown">
                                     <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
                                         aria-expanded="true"></a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                         <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
                                                 role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                onclick="comment_edit('{{book.id}}')">수정</button></li>
+                                                onclick="item_edit('{{book.id}}')">수정</button></li>
                                         <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
                                                 role="menuitem" tabindex="-1" type="submit" class="btn"
                                                 onclick="item_delete('{{book.id}}')">삭제</button></li>
@@ -73,6 +73,12 @@
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script>
+        function item_edit(id) {
+            const request = document.getElementById(`item-ED-form-${id}`);
+            request.setAttribute('action', '/mpfunc/editIt');
+            request.setAttribute('method', 'POST');
+        }
+
         function item_delete(id) {
             const request = document.getElementById(`item-ED-form-${id}`);
             request.setAttribute('action', '/mpfunc/delete');
