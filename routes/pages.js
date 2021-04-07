@@ -12,7 +12,7 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 
 router.get('/regi-book', isLoggedIn, (req, res) => {
     res.render('registerBook.html');
-});
+})
 
 router.get('/findID', isNotLoggedIn, (req, res) => {
     res.render('findID.html');
@@ -24,11 +24,7 @@ router.get('/findPW', isNotLoggedIn,  (req, res) => {
 
 router.get('/changePW', isNotLoggedIn, (req, res) => {
     res.render('changePW.html');
-});
-
-router.get('/myProfile', isNotLoggedIn, (req, res) => {
-    res.render('myProfile.html');
-});
+})
 
 router.get('/saleBoard', async (req, res) => {
     try {
@@ -42,7 +38,7 @@ router.get('/saleBoard', async (req, res) => {
         console.error(error);
         next(error);
     }
-});
+})
 
 // 0403 관심상품 창
 router.get('/like', isLoggedIn, async (req, res, next) => {
@@ -57,6 +53,7 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
     }
 });
 
+
 // 0407 판매내역 창
 router.get('/selling', isLoggedIn, async (req, res, next) => {
     try {
@@ -68,6 +65,11 @@ router.get('/selling', isLoggedIn, async (req, res, next) => {
         console.error(error);
         next(error);
     }
+});
+
+// 0408 프로필
+router.get('/myProfile', isNotLoggedIn, (req,res) => {
+    res.render('myProfile.html');
 });
 
 
