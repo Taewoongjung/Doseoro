@@ -17,6 +17,7 @@ router.get('/delete', isLoggedIn, async (req, res, next) => {
     try {
         const { this_item } = req.query;
         await Book.destroy({ where: { id: this_item } });
+        await Who.destroy({ where: { thisbook: this_item } });
         res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/selling";</script>`);
     } catch (error) {
         console.error(error);
@@ -55,21 +56,32 @@ const upload = multer({  // multer 설정
 router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
         const { this_item, postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
-        const book = await Book.update({
-            // OwnerId: req.user.id,
-            postmessage: postmessage,
-            title: title,
-            author: author,
-            publisher: publisher,
-            img: req.file.filename,
-            category: checkCategory,
-            state: checkState,
-            price: price,
-            tradingmethod: dealRoot,
-            about: about,
-        }, {
-            where: { id: this_item }
-        });
+        const [book] = await Promise.all([
+            Book.update({
+                postmessage: postmessage,
+                title: title,
+                author: author,
+                publisher: publisher,
+                img: req.file.filename,
+                category: checkCategory,
+                state: checkState,
+                price: price,
+                tradingmethod: dealRoot,
+                about: about,
+            }, {
+                where: { id: this_item }
+            }),
+        ],[
+            Who.update({
+                thisbook: this_item,
+                posttitle: postmessage,
+                title: title,
+                img: req.file.filename,
+                price: price,
+            }, {
+                where: { liked: req.user.id }
+            }),
+        ]);
         res.send(`<script type="text/javascript">alert("책 정보 수정 완료"); location.href="/book/${this_item}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
