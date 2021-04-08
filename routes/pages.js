@@ -46,17 +46,9 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
         console.log("user id = ", String(req.user.id));
         const [books] = await Promise.all([
             Who.findAll({ 
-                // include: {
-                //     model: Book,
-                //     attributes: ['img', 'price', 'postmessage']
-                // },
                 where: { liked: String(req.user.id) }, 
             }),
         ]);
-        // console.log("book = ", book);
-        // const bookss = book.map(bok => bok.thisbook);
-        // const books = await Book.findAll({ id: bookss})
-        // console.log("@@ = ", books);
         res.render('likedProduct.html', {
             books,
         });
