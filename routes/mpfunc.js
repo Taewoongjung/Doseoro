@@ -76,17 +76,20 @@ router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) =>
         }, {
             where: { id: this_item_id }
         });
+        console.log("book = ", book);
         console.log(req.body);
+        console.log("req.user.id = ", req.user.id);
+        console.log("this_item_id = ", this_item_id);
         const userbook = await Who.update({
             thisbook: this_item_id,
             posttitle: postmessage,
-            liked: req.user.id,
             title: title,
             img: req.file.filename,
             price: price,
         }, {
-            where: { thisbook: this_item_id, liked: req.user.id }
-        })
+            where: { thisbook: this_item_id }
+        });
+        console.log("userbook = ", userbook);
         // const [userbook] = await Promise.all([
         //     Who.update({
         //         thisbook: this_item_id,
@@ -114,7 +117,6 @@ router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) =>
         //         where: { id: this_item_id }
         //     }),
         // ]);
-        console.log("Who", userbook);
         res.send(`<script type="text/javascript">alert("책 정보 수정 완료"); location.href="/book/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
