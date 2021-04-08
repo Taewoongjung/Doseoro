@@ -56,8 +56,7 @@ const upload = multer({  // multer 설정
 // 0408 오류 수정
 router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
-        console.log("2@@@@@@!@!@@!");
-        const { this_item_id, this_item_owner, postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
+        const { this_item_id, postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
         /*
             1. 책 내용을 수정한다.
             2. who테이블 수정한다.
