@@ -22,6 +22,21 @@ function success(position) {
     // alert("현재위치 : " + latitude + ' / ' + longitude);
 }
 
+// 카카오 맵
+// function success(position) {
+//     const mapContainer = document.getElementById('kakao_map');
+//     const latitude = position.coords.latitude;
+//     const longitude = position.coords.longitude;
+//     // map.innerHTML = '<a>' + "나의 위치 : " + latitude + ' / ' + longitude + '</a>';
+//     mapOption = { 
+//         center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+//         level: 3 
+//     }
+//     const map = new kakao.maps.Map(mapContainer, mapOption); 
+//     // alert("현재위치 : " + latitude + ' / ' + longitude);
+// }
+
+
 function error(error) {
     console.error(error);
 }
