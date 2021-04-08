@@ -52,17 +52,17 @@ const upload = multer({  // multer 설정
     limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-// // 0407 수정내용을 저장하는 라우터
+// 0407 수정내용을 저장하는 라우터
+// 0408 오류 수정
 router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
         console.log("2@@@@@@!@!@@!");
         const { this_item_id, this_item_owner, postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
-        
         /*
             1. 책 내용을 수정한다.
             2. who테이블 수정한다.
         */
-        const book = await Book.update({
+        await Book.update({
             postmessage: postmessage,
             title: title,
             author: author,
@@ -76,11 +76,8 @@ router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) =>
         }, {
             where: { id: this_item_id }
         });
-        console.log("book = ", book);
-        console.log(req.body);
-        console.log("req.user.id = ", req.user.id);
-        console.log("this_item_id = ", this_item_id);
-        const userbook = await Who.update({
+
+        await Who.update({
             thisbook: this_item_id,
             posttitle: postmessage,
             title: title,
@@ -89,34 +86,7 @@ router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) =>
         }, {
             where: { thisbook: this_item_id }
         });
-        console.log("userbook = ", userbook);
-        // const [userbook] = await Promise.all([
-        //     Who.update({
-        //         thisbook: this_item_id,
-        //         posttitle: postmessage,
-        //         liked: req.user.id,
-        //         title: title,
-        //         img: req.file.filename,
-        //         price: price,
-        //     }, {
-        //         where: { thisbook: this_item_id, liked: req.user.id }
-        //     }),
-        // ], [
-        //     Book.update({
-        //         postmessage: postmessage,
-        //         title: title,
-        //         author: author,
-        //         publisher: publisher,
-        //         img: req.file.filename,
-        //         category: checkCategory,
-        //         state: checkState,
-        //         price: price,
-        //         tradingmethod: dealRoot,
-        //         about: about,
-        //     }, {
-        //         where: { id: this_item_id }
-        //     }),
-        // ]);
+
         res.send(`<script type="text/javascript">alert("책 정보 수정 완료"); location.href="/book/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
