@@ -120,6 +120,7 @@ router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) =>
             price: price,
             tradingmethod: dealRoot,
             about: about,
+            usernick: req.user.nick,
         });
         res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {

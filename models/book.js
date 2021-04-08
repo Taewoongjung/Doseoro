@@ -53,8 +53,8 @@ module.exports = class Book extends Sequelize.Model {
                 type: Sequelize.STRING(1000),
                 allowNull: true,
             },
-            wholiked: {
-                type: Sequelize.JSON,
+            usernick: {
+                type: Sequelize.STRING(100),
                 allowNull: true,
             },
             isSelling: {

@@ -46,7 +46,7 @@
                 <div class="d-lg-flex align-items-center w-100 pb-2 mb-4 border-bottom">
                     <h1 class="h2 text-decoration-none w-100 fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
                     <!-- 게시자 닉네임 표시가 필요합니다 -->
-                    <p class="w-100">게시자 닉네임</p>
+                    <p class="w-100">{{book.usernick}}</p>
                     <!-- 등록 시간을 DB에서 받아와 YMD 형석으로 바꿀 JS코드 필요 => 해결 -->
                     <a class="text-decoration-none w-100 text-dark text-end" id="getPostingDate">{{book.createdAt}}</a>
                 </div>
