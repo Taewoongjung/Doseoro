@@ -76,19 +76,29 @@ router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) =>
         }, {
             where: { id: this_item_id }
         });
-        
-        // const userbook = await Who.update({
-        //     thisbook: this_item_id,
-        //     posttitle: postmessage,
-        //     liked: this_item_owner,
-        //     title: title,
-        //     img: req.file.filename,
-        //     price: price,
-        // }, {
-        //     where: { liked: req.user.id }
-        // });
-
-        // const [book] = await Promise.all([
+        console.log(req.body);
+        const userbook = await Who.update({
+            thisbook: this_item_id,
+            posttitle: postmessage,
+            liked: req.user.id,
+            title: title,
+            img: req.file.filename,
+            price: price,
+        }, {
+            where: { thisbook: this_item_id, liked: req.user.id }
+        })
+        // const [userbook] = await Promise.all([
+        //     Who.update({
+        //         thisbook: this_item_id,
+        //         posttitle: postmessage,
+        //         liked: req.user.id,
+        //         title: title,
+        //         img: req.file.filename,
+        //         price: price,
+        //     }, {
+        //         where: { thisbook: this_item_id, liked: req.user.id }
+        //     }),
+        // ], [
         //     Book.update({
         //         postmessage: postmessage,
         //         title: title,
@@ -104,26 +114,12 @@ router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) =>
         //         where: { id: this_item_id }
         //     }),
         // ]);
-        // const [userbook] = await Promise.all([
-        //     Who.update({
-        //         thisbook: this_item_id,
-        //         posttitle: postmessage,
-        //         liked: this_item_owner,
-        //         title: title,
-        //         img: req.file.filename,
-        //         price: price,
-        //     }, {
-        //         where: { liked: req.user.id }
-        //     }),
-        // ]);
-        console.log("2@@@@@",book);
-        // console.log("2@@@@@",userbook);
+        console.log("Who", userbook);
         res.send(`<script type="text/javascript">alert("책 정보 수정 완료"); location.href="/book/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
         next(error);
     }
 });
-
 
 module.exports = router;

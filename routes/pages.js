@@ -43,17 +43,16 @@ router.get('/saleBoard', async (req, res) => {
 // 0403 관심상품 창
 router.get('/like', isLoggedIn, async (req, res, next) => {
     try {
-        console.log("req = ", req.user.id);
         const [books] = await Promise.all([
             Who.findAll({ 
-                include: {
-                    model: Book,
-                    attributes: ['img', 'price', 'postmessage']
-                },
+                // include: {
+                //     model: Book,
+                //     attributes: ['img', 'price', 'postmessage']
+                // },
                 where: { liked: req.user.id }, 
             }),
         ]);
-        
+        console.log("@@ = ", books);
         res.render('likedProduct.html', {
             books,
         });
