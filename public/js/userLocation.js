@@ -19,15 +19,20 @@ function success(position) {
     const mapContainer = document.getElementById('kakao_map');
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    // map.innerHTML = '<a>' + "나의 위치 : " + latitude + ' / ' + longitude + '</a>';
+
+
+    const map1 = document.getElementById('map1');
+    const map2 = document.getElementById('map2');
+
+    // map1.innerHTML = '<a>' + "나의 위치 : " + latitude + ' / ' + longitude + '</a>';
+    mapContainer.style.display = 'block';
     mapOption = { 
         center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-        level: 3 
+        level: 6
     }
     const map = new kakao.maps.Map(mapContainer, mapOption); 
     // alert("현재위치 : " + latitude + ' / ' + longitude);
 }
-
 
 function error(error) {
     console.error(error);
