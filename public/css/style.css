@@ -175,3 +175,24 @@ table {
 	border-radius: 10px;
 	box-shadow: 3px 3px 5px rgb(235, 235, 235);
 }
+
+/* bookRequest */
+.postingTitle {
+	width: 50%;
+}
+.postingBody {
+	width: 100%;
+}
+.postingTitle, .postingBody {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.postingList:hover {
+	background-color: rgb(241, 241, 241);
+	cursor: pointer;
+}
+.regiRequest {
+	max-width: 800px;
+	margin: 0 auto;
+}
