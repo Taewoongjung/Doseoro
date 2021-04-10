@@ -83,8 +83,20 @@ router.get('/bookRequest', (req,res) => {
 });
 
 // 0409 삽니다 등록
-router.get('/registRequest', isLoggedIn, (req, res) => {
-    res.render('registRequest.html');
+router.get('/registRequest', isLoggedIn, async (req, res) => {
+    try {
+        const [books] = await Promise.all([
+            Book.findAll({
+                where: { SoldId: null, isSelling: '1' }
+            })
+        ]);
+        res.render('registRequest.html', {
+            books,
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
 })
 
 module.exports = router;
