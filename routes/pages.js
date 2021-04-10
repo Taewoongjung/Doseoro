@@ -77,20 +77,21 @@ router.get('/myProfile', isNotLoggedIn, (req,res) => {
     res.render('myProfile.html');
 });
 
-// 0409 삽니다
-router.get('/bookRequest', (req,res) => {
-    res.render('bookRequest.html');
+// 0409 삽니다 등록
+router.get('/registRequest', isLoggedIn, (req,res) => {
+    res.render('registRequest.html');
 });
 
-// 0409 삽니다 등록
-router.get('/registRequest', isLoggedIn, async (req, res) => {
+// 0409 삽니다
+router.get('/bookRequest', async (req, res) => {
     try {
         const [books] = await Promise.all([
             Book.findAll({
                 where: { SoldId: null, isSelling: '1' }
             })
         ]);
-        res.render('registRequest.html', {
+        
+        res.render('bookRequest.html', {
             books,
         });
     } catch (error) {
