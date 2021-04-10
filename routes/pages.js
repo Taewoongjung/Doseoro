@@ -77,12 +77,12 @@ router.get('/myProfile', isNotLoggedIn, (req,res) => {
     res.render('myProfile.html');
 });
 
-// 0409 삽니다(로그인하면 링크가 안들어가짐)
+// 0409 삽니다
 router.get('/bookRequest', (req,res) => {
     res.render('bookRequest.html');
 });
 
-// 삽니다 등록(isLoggedIn으로 변경필요)
+// 0409 삽니다 등록
 router.get('/registRequest', isLoggedIn, (req, res) => {
     res.render('registRequest.html');
 })
