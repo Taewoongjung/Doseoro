@@ -1,6 +1,4 @@
 const express = require('express');
-const multer = require('multer');
-const path = require('path');
 
 const { User, Book, Who, Post } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -12,14 +10,24 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
     next();
 });
 
-// 0407 판매내역 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
-router.post('/editIt', isLoggedIn, async (req, res, next) => {
+router.post('/book', isLoggedIn, async (req, res, next) => {
     try {
-        const { this_item_id } = req.body;
-        const books = await Book.findOne({ where: { id: this_item_id } });
-        res.render('edit_saleDetail.html', {
-            books,
+        const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
+        const book = await Book.create({
+            OwnerId: req.user.id,
+            postmessage: postmessage,
+            title: title,
+            author: author,
+            publisher: publisher,
+            img: req.file.filename,
+            category: checkCategory,
+            state: checkState,
+            price: price,
+            tradingmethod: dealRoot,
+            about: about,
+            usernick: req.user.nick,
         });
+        res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
         next(error);
