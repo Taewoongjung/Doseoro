@@ -49,9 +49,9 @@ router.get('/delete', isLoggedIn, async (req, res, next) => {
 // 0410 구매내역 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt', isLoggedIn, async (req, res, next) => {
     try {
-        console.log("@@@@@@@");
         const { this_item_id } = req.body;
         const books = await Book.findOne({ where: { id: this_item_id, isSelling: '1' } });
+        console.log("books = ", books);
         res.render('edit_buyDetail.html', {
             books,
         });
@@ -60,5 +60,33 @@ router.post('/editIt', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
+
+// 구매요청 게시물 수정하기
+router.post('/edit', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, postmessage, title, price, author, publisher, checkCategory, dealRoot, about } = req.body;
+        console.log("body = ", req.body);
+        const a = await Book.update({
+            postmessage: postmessage,
+            title: title,
+            author: author,
+            publisher: publisher,
+            category: checkCategory,
+            price: price,
+            tradingmethod: dealRoot,
+            about: about,
+        }, {
+            where: { id: this_item_id, isSelling: '1' }
+        });
+        console.log("body = ", req.body);
+        console.log("aa = ", a);
+
+        res.send(`<script type="text/javascript">alert("구매하기 정보 수정 완료"); location.href="/book/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 
 module.exports = router;

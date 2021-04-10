@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/css/style.css">
   <!-- <link rel="stylesheet" href="/css/saleDetail.css"> -->
 
-  <title>책 정보 수정</title>
+  <title>구매물품 정보 수정</title>
 </head>
 
 <body>
@@ -41,7 +41,7 @@
 
     <!-- 책 등록 -->
     <main class="registerForm border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
-      <form id="register_book-form" enctype="multipart/form-data" class="p-5">
+      <form id="edit_book-form" class="p-5">
         <input type="text" class="form-control p-3" id="postTitle" name="postmessage" placeholder="{{books.postmessage}}" required autofocus>
 
         <div class="input-group">
@@ -113,8 +113,8 @@
           <label for="book-about">상품설명</label>
           <input type="text" class="form-control p-3" id="book-about" name="about" placeholder="{{books.about}}">
         </div>
-        <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{books.id}}">
-        <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{books.createdAt}}">
+        <input type="hidden" name="this_item_id" value="{{books.id}}">
+        <input type="hidden" name="this_item_createdAt" value="{{books.createdAt}}">
         <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">상품 등록</button>
       </form>
     </main>
@@ -126,7 +126,8 @@
 
   <script>
     function one() {
-      const request = document.getElementById('register_book-form');
+      console.log("@!@@!@!!@");
+      const request = document.getElementById('edit_book-form');
       request.setAttribute('action', '/wannabuy/edit');
       request.setAttribute('method', 'POST');
     }

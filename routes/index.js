@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const sequelize = require("sequelize");
+const moment = require('moment-timezone');
 const Op = sequelize.Op;
 
 const { User, Book, Who, Post } = require('../models');
@@ -157,6 +158,7 @@ router.get('/book/:id', async (req, res, next) => {
             res.render('saleDetail.html', {
                 title: `책 구경`,
                 book,
+                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 users: res.locals.user,
                 user: book.OwnerId,
                 img: book.img,

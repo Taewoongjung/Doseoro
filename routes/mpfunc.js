@@ -58,10 +58,7 @@ const upload = multer({  // multer 설정
 router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
         const { this_item_id, postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
-        /*
-            1. 책 내용을 수정한다.
-            2. who테이블 수정한다.
-        */
+
         await Book.update({
             postmessage: postmessage,
             title: title,
