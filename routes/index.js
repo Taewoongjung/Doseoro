@@ -41,7 +41,7 @@ router.get('/', async (req, res, next) => {
 
         const [books] = await Promise.all([
             Book.findAll({
-                where: { SoldId: null }
+                where: { SoldId: null, isSelling: null }
             })
         ]);
         res.render('index.html', {
