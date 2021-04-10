@@ -105,6 +105,7 @@ router.get('/bookRequest', async (req, res) => {
         
         res.render('bookRequest.html', {
             books,
+            createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
         });
     } catch (error) {
         console.error(error);

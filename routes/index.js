@@ -164,12 +164,14 @@ router.get('/book/:id', async (req, res, next) => {
                 img: book.img,
                 bookId: req.params.id,
                 comments: comments,
+                comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
             res.render('saleDetail.html', {
                 title: `책 구경`,
                 book,
+                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
                 comments: comments,
             });
