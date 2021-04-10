@@ -49,9 +49,10 @@ router.get('/delete', isLoggedIn, async (req, res, next) => {
 // 0410 구매내역 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("@@@@@@@");
         const { this_item_id } = req.body;
         const books = await Book.findOne({ where: { id: this_item_id, isSelling: '1' } });
-        res.render('edit_saleDetail.html', {
+        res.render('edit_buyDetail.html', {
             books,
         });
     } catch (error) {

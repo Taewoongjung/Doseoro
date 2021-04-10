@@ -78,11 +78,12 @@
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script>
-        // function item_edit(id) {
-        //     const request = document.getElementById(`item-ED-form-${id}`);
-        //     request.setAttribute('action', '/wannabuy/editIt');
-        //     request.setAttribute('method', 'POST');
-        // }
+        function item_edit(id) {
+            console.log("@!@@");
+            const request = document.getElementById(`item-ED-form-${id}`);
+            request.setAttribute('action', '/wannabuy/editIt');
+            request.setAttribute('method', 'POST');
+        }
 
         function item_delete(id) {
             const request = document.getElementById(`item-ED-form-${id}`);
