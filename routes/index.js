@@ -250,7 +250,7 @@ router.get('/search', async (req, res, next) => {
             res.render('index.html', {
                 title: `책 구경`,
                 foundBooks,
-                user: foundBooks.OwnerId,
+                user: res.locals.user,
                 bookId: req.params.id,
             });
         } else if (req.query.searchFilter === 'bookTitle') {  // 책 이름으로 찾기
@@ -266,7 +266,7 @@ router.get('/search', async (req, res, next) => {
             res.render('index.html', {
                 title: `책 구경`,
                 foundBooks,
-                user: foundBooks.OwnerId,
+                user: res.locals.user,
                 bookId: req.params.id,
             });
         } else if (req.query.searchFilter === 'bookAuther') {  // 책 저자명 으로 찾기
@@ -282,7 +282,7 @@ router.get('/search', async (req, res, next) => {
             res.render('index.html', {
                 title: `책 구경`,
                 foundBooks,
-                user: foundBooks.OwnerId,
+                user: res.locals.user,
                 bookId: req.params.id,
             });
         } else if (req.query.searchFilter === 'bookPublisher') {  // 출판사명 으로 찾기
@@ -298,7 +298,7 @@ router.get('/search', async (req, res, next) => {
             res.render('index.html', {
                 title: `책 구경`,
                 foundBooks,
-                user: foundBooks.OwnerId,
+                user: res.locals.user,
                 bookId: req.params.id,
             });
         } else {  // 전체
@@ -329,7 +329,7 @@ router.get('/search', async (req, res, next) => {
             res.render('index.html', {
                 title: `책 구경`,
                 foundBooks,
-                user: foundBooks.OwnerId,
+                user: res.locals.user,
                 bookId: req.params.id,
             });
         }
