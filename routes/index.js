@@ -87,8 +87,7 @@ const upload = multer({  // multer 설정
 });
 
 // 0403 댓글기능
-const upload2 = multer();
-router.post('/book/:id/comment', isLoggedIn, upload2.none(), async (req, res, next) => {
+router.post('/book/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
         const { comment } = req.body;
         const post = await Post.create({

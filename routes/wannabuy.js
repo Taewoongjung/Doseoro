@@ -89,7 +89,7 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
     }
 });
 
-
+// 0411 구매 책 디테일
 router.get('/buybook/:id', async (req, res, next) => {
     try {
         const [book] = await Promise.all([
@@ -116,7 +116,7 @@ router.get('/buybook/:id', async (req, res, next) => {
         if (res.locals.user) {
             console.log("login");
             res.render('buyDetail.html', {
-                title: `책 구경`,
+                title: `책 구매`,
                 book,
                 createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 users: res.locals.user,
@@ -127,14 +127,32 @@ router.get('/buybook/:id', async (req, res, next) => {
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
-            res.render('saleDetail.html', {
-                title: `책 구경`,
+            res.render('buyDetail.html', {
+                title: `책 구매`,
                 book,
                 createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
                 comments: comments,
             });
         }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 0411 댓글기능
+router.post('/buybook/:id/comment', isLoggedIn, async (req, res, next) => {
+    try {
+        const { comment } = req.body;
+        console.log("comment = ", comment);
+        const post = await Post.create({
+            content: comment,
+            commentingNick: req.user.nick,
+            UserId: req.user.id,
+            BookId: req.params.id,
+        });
+        return res.send(`<script type="text/javascript">location.href="/wannabuy/buybook/${post.BookId}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);

@@ -133,7 +133,7 @@
 
             <!-- 댓글 달기 -->
             {% if users and users.id %}
-            <form id="comment-form" enctype="multipart/form-data" class="mt-5 w-75 ms-auto me-auto">
+            <form id="comment-form" class="mt-5 w-75 ms-auto me-auto">
                 <div class="input-group">
                     <input id="comment" class="form-control p-2" name="comment">
                     <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
@@ -143,13 +143,6 @@
                         value="Click">댓글달기</button>
                 </div>
 
-                <div>
-                    <button id="comment-btn" type="submit" class="btn" onclick="comment()">댓글달기</button>
-
-                    <input type="hidden" name="bookId" value="{{bookId}}">
-                    <button id="comment-btn" type="submit" class="btn" onclick="postComment()"
-                        value="Click">댓글달기</button> 
-                </div>
             </form>
             {% endif %}
             <div id="comments-collection" class="w-75 ms-auto me-auto">
@@ -216,7 +209,7 @@
     <script>
         function postComment() {
             const request = document.getElementById('comment-form');
-            request.setAttribute('action', '/book/{{bookId}}/comment');
+            request.setAttribute('action', '/wannabuy/buybook/{{bookId}}/comment');
             request.setAttribute('method', 'POST');
         }
 
@@ -231,13 +224,13 @@
             document.getElementById(`edit_it-${id}`).value = `${Com}`;
 
             const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', `/comment/commentEdit?Com`);
+            request.setAttribute('action', `/comment/commentEdit_buy?Com`);
             request.setAttribute('method', 'GET');
         }
-
+        
         function comment_delete(id) {
             const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', '/comment/commentDelete');
+            request.setAttribute('action', '/comment/commentDelete_buy');
             request.setAttribute('method', 'GET');
         }
 
