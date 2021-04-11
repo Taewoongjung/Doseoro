@@ -70,13 +70,6 @@
                                             <input type="hidden" name="postmessage" value="{{book.postmessage}}">
                                             <input type="hidden" name="title" value="{{book.title}}">
                                             <input type="hidden" name="price" value="{{book.price}}">
-                                            <button class="btn  btn-outline-primary" class="btn" type="submit"
-                                                onclick="like()" style="border: 0px">❤️</button>
-    
-                                            <!-- 좋아요 눌린 갯수 -->
-                                            <div class="saleCheck border-0 pt-1" style="border-radius: 10px">
-                                                <a class="h5 text-decoration-none fw-bold">+ {{book.likecount}}</a>
-                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -213,12 +206,6 @@
             request.setAttribute('method', 'POST');
         }
 
-        function like() {
-            const request = document.getElementById('book_like-form');
-            request.setAttribute('action', '/like');
-            request.setAttribute('method', 'POST');
-        }
-
         function comment_edit(id) {
             var Com = prompt('수정 할 문구를 적어주세요');
             document.getElementById(`edit_it-${id}`).value = `${Com}`;
@@ -227,7 +214,7 @@
             request.setAttribute('action', `/comment/commentEdit_buy?Com`);
             request.setAttribute('method', 'GET');
         }
-        
+
         function comment_delete(id) {
             const request = document.getElementById(`comment-ED-form-${id}`);
             request.setAttribute('action', '/comment/commentDelete_buy');
