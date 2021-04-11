@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="/css/style.css">
 
-    <!-- <title>판매 디테일</title> -->
+    <!-- <title>구매 디테일</title> -->
     <title>{{title}}</title>
 </head>
 
@@ -54,14 +54,10 @@
 
                 <!-- 책 정보 -->
                 <div class="wrapBookInfo d-lg-flex align-items-center ">
-                    <div class="bookImg mb-3">
-                        <a href="#" class=""><img class="" src="/img/{{book.img}}" style="border-radius:21px"
-                                width="320px" height="400px"></a>
-                    </div>
                     <div class="bookInfo w-75 me-0 ms-sm-5 align-content-between">
                         <div class="d-flex mb-3 align-items-center w-100 justify-content-between">
                             <div class="saleCheck d-flex border-0 p-2 me-2 align-items-center" style="border-radius: 10px">
-                                <a class="h5 mb-0 text-decoration-none fw-bold">판매</a>
+                                <a class="h5 mb-0 text-decoration-none fw-bold">구매</a>
                                 <div class="">
                                     <form id="book_like-form">
                                         <div class="saleCheck border-0 p-2 d-flex" style="border-radius: 10px">
@@ -74,13 +70,6 @@
                                             <input type="hidden" name="postmessage" value="{{book.postmessage}}">
                                             <input type="hidden" name="title" value="{{book.title}}">
                                             <input type="hidden" name="price" value="{{book.price}}">
-                                            <button class="btn  btn-outline-primary" class="btn" type="submit"
-                                                onclick="like()" style="border: 0px">❤️</button>
-    
-                                            <!-- 좋아요 눌린 갯수 -->
-                                            <div class="saleCheck border-0 pt-1" style="border-radius: 10px">
-                                                <a class="h5 text-decoration-none fw-bold">+ {{book.likecount}}</a>
-                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -123,10 +112,6 @@
                             <a class="text-body text-decoration-none" id="getCategory">{{book.category}}</a>
                         </div>
                         <div class="category d-flex align-items-center mt-2 mb-2">
-                            <h4 class="h4 fw-bold w-50">외관손상</h4>
-                            <a class="text-body text-decoration-none" id="getAppearanceInfo">{{book.state}}</a>
-                        </div>
-                        <div class="category d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">거래방법</h4>
                             <a class="text-body text-decoration-none" id="getAppearanceInfo">{{book.tradingmethod}}</a>
                         </div>
@@ -141,7 +126,7 @@
 
             <!-- 댓글 달기 -->
             {% if users and users.id %}
-            <form id="comment-form" enctype="multipart/form-data" class="mt-5 w-75 ms-auto me-auto">
+            <form id="comment-form" class="mt-5 w-75 ms-auto me-auto">
                 <div class="input-group">
                     <input id="comment" class="form-control p-2" name="comment">
                     <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
@@ -151,19 +136,6 @@
                         value="Click">댓글달기</button>
                 </div>
 
-                <!-- <div class="img-preview">
-                        <img id="img-preview" src="" style="display: none;" width="250" alt="미리보기">
-                        <input id="img-url" type="hidden" name="url">
-                    </div> -->
-                <div>
-                    <!-- <label id="img-label" for="img">사진 업로드</label>
-                        <input id="img" type="file" accept="image/*"> -->
-                    <!-- <button id="comment-btn" type="submit" class="btn" onclick="comment()">댓글달기</button> -->
-
-                    <!-- <input type="hidden" name="bookId" value="{{bookId}}">
-                    <button id="comment-btn" type="submit" class="btn" onclick="postComment()"
-                        value="Click">댓글달기</button> -->
-                </div>
             </form>
             {% endif %}
             <div id="comments-collection" class="w-75 ms-auto me-auto">
@@ -230,13 +202,7 @@
     <script>
         function postComment() {
             const request = document.getElementById('comment-form');
-            request.setAttribute('action', '/book/{{bookId}}/comment');
-            request.setAttribute('method', 'POST');
-        }
-
-        function like() {
-            const request = document.getElementById('book_like-form');
-            request.setAttribute('action', '/like');
+            request.setAttribute('action', '/wannabuy/buybook/{{bookId}}/comment');
             request.setAttribute('method', 'POST');
         }
 
@@ -245,13 +211,13 @@
             document.getElementById(`edit_it-${id}`).value = `${Com}`;
 
             const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', `/comment/commentEdit?Com`);
+            request.setAttribute('action', `/comment/commentEdit_buy?Com`);
             request.setAttribute('method', 'GET');
         }
 
         function comment_delete(id) {
             const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', '/comment/commentDelete');
+            request.setAttribute('action', '/comment/commentDelete_buy');
             request.setAttribute('method', 'GET');
         }
 

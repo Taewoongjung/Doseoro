@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const sequelize = require("sequelize");
+const moment = require('moment-timezone');
 const Op = sequelize.Op;
 
 const { User, Book, Who, Post } = require('../models');
@@ -41,7 +42,7 @@ router.get('/', async (req, res, next) => {
 
         const [books] = await Promise.all([
             Book.findAll({
-                where: { SoldId: null }
+                where: { SoldId: null, isSelling: null }
             })
         ]);
         res.render('index.html', {
@@ -86,8 +87,7 @@ const upload = multer({  // multer 설정
 });
 
 // 0403 댓글기능
-const upload2 = multer();
-router.post('/book/:id/comment', isLoggedIn, upload2.none(), async (req, res, next) => {
+router.post('/book/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
         const { comment } = req.body;
         const post = await Post.create({
@@ -157,17 +157,20 @@ router.get('/book/:id', async (req, res, next) => {
             res.render('saleDetail.html', {
                 title: `책 구경`,
                 book,
+                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 users: res.locals.user,
                 user: book.OwnerId,
                 img: book.img,
                 bookId: req.params.id,
                 comments: comments,
+                comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
             res.render('saleDetail.html', {
                 title: `책 구경`,
                 book,
+                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
                 comments: comments,
             });
@@ -234,7 +237,6 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 // 0404 카테고리 검색
 router.get('/search', async (req, res, next) => {
     try {
-        console.log("aaaaaaa= ", req.query);
         if (req.query.searchFilter === 'postTitle') { // 게시물명 으로 찾기
             const [foundBooks] = await Promise.all([
                 Book.findAll({

@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment-timezone');
 
 const { User, Book, Who, Post } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -58,11 +59,24 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
     }
 });
 
- 
+// 0410 구매내역 창
+router.get('/buying', isLoggedIn, async (req, res, next) => {
+    try {
+        const books = await Book.findAll({ where: { OwnerId: req.user.id, isSelling: '1'} });
+        res.render('buyingList.html', {
+            books,
+            // createdAt: moment(books.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 // 0407 판매내역 창
 router.get('/selling', isLoggedIn, async (req, res, next) => {
     try {
-        const books = await Book.findAll({ where: { OwnerId: req.user.id } });
+        const books = await Book.findAll({ where: { OwnerId: req.user.id, isSelling: null} });
         res.render('sellingList.html', {
             books,
         });
@@ -77,14 +91,27 @@ router.get('/myProfile', isNotLoggedIn, (req,res) => {
     res.render('myProfile.html');
 });
 
-// 0409 삽니다(로그인하면 링크가 안들어가짐)
-router.get('/bookRequest', isNotLoggedIn, (req,res) => {
-    res.render('bookRequest.html');
+// 0409 삽니다 등록
+router.get('/registRequest', isLoggedIn, (req,res) => {
+    res.render('registRequest.html');
 });
 
-// 삽니다 등록(isLoggedIn으로 변경필요)
-router.get('/registRequest', isNotLoggedIn, (req, res) => {
-    res.render('registRequest.html');
+// 0409 삽니다
+router.get('/bookRequest', async (req, res, next) => {
+    try {
+        const [books] = await Promise.all([
+            Book.findAll({
+                where: { SoldId: null, isSelling: '1' }
+            })
+        ]);
+        res.render('bookRequest.html', {
+            books,
+            // createdAt: moment(books.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
 })
 
 module.exports = router;

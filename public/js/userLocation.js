@@ -20,7 +20,6 @@ function success(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
 
-
     const map1 = document.getElementById('map1');
     const map2 = document.getElementById('map2');
 

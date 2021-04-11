@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
     <title>내 정보</title>
 </head>
@@ -17,67 +18,69 @@
         <!-- top -->
         <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white" id="topNav">
             <div class="container-fluid">
-            <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="160" height="64"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
-                <ul class="navbar-nav mb-2 mb-md-0">
-                {% if user and user.id %}
-                <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
-                <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
-                <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
-                <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
-                {% else %}
-                <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
-                <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
-                </ul>
-            </div>
+                <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="160" height="64"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
+                    <ul class="navbar-nav mb-2 mb-md-0">
+                        {% if user and user.id %}
+                        <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
+                        <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
+                    </ul>
+                </div>
             </div>
         </nav>
 
         <!-- 메인페이지 -->
         <main class="myPage min-vh-100 container-sm border p-5">
-             <!-- 검색 기능 -->
+            <!-- 검색 기능 -->
             <form id="search-form" action="/search/{{searchWord}}" class="searchForm d-flex container pt-2">
                 <select class="form-select w-25" name="searchFilter">
-                <option value>전체</option>
-                <option value="postTitle">게시물</option>
-                <option value="bookTitle">책</option>
-                <option value="bookAuther">저자</option>
-                <option value="bookPublisher">출판사</option>
+                    <option value>전체</option>
+                    <option value="postTitle">게시물</option>
+                    <option value="bookTitle">책</option>
+                    <option value="bookAuther">저자</option>
+                    <option value="bookPublisher">출판사</option>
                 </select>
                 <input type="text" class="form-control ps-3" id="book-publisher" name="searchWord" placeholder="검색">
                 <button class="btn btn-primary" type="submit"><img src="/img/pngegg.png" width="35" height="25"
-                    class="mt-1"></button>
+                        class="mt-1"></button>
             </form>
 
             <!-- 메뉴이동 -->
             <div class="menuForm container mt-2 mb-2 justify-content-center d-flex" role="group">
-                <div class="ms-1 me-1"><button type="button" class="btn fw-bold" onclick="location.href='/pages/saleBoard'">팝니다</button></div>
-                <div class="ms-1 me-1"><button type="button" class="btn fw-bold" onclick="location.href='/pages/bookRequest'">삽니다</button></div>
+                <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
+                        onclick="location.href='/pages/saleBoard'">팝니다</button></div>
+                <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
+                        onclick="location.href='/pages/bookRequest'">삽니다</button></div>
                 <div class="ms-1 me-1"><button type="button" class="btn fw-bold">무료나눔</button></div>
                 <div class="ms-1 me-1"><button type="button" class="btn fw-bold">커뮤니티</button></div>
             </div>
 
             <h1 class="h2 fw-bold mb-4">삽니다</h1>
-            <form id="book-form" class="mb-5"><a href="/pages/registRequest" class="addBook text-decoration-none btn-primary p-2">요청 등록</a></form>
+            <form id="book-form" class="mb-5"><a href="/pages/registRequest"
+                    class="addBook text-decoration-none btn-primary p-2">요청 등록</a></form>
 
-            <div class="" onclick="location.href=''">
-
-                <!-- 각 게시물 -->
-                <div class="postingList border p-5">
+            <!-- 각 게시물 -->
+            {% for book in books %}
+                <div class="postingList border p-5" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
                     <div class="pb-3 border-bottom">
                         <div class="d-sm-flex justify-content-between align-items-center">
-                            <h1 class="postingTitle h3 fw-bold">asdasdasdasdasdasdadasdasdasdasdasdasdasdasdad</h1>
-                            <a class="text-decoration-none text-dark">작성일</a>
+                            <h1 class="postingTitle h3 fw-bold">{{book.postmessage}}</h1>
+                            <a class="text-decoration-none text-dark">{{createdAt}}</a>
                         </div>
-                        <p class="mt-3">작성자</p>
+                        <p class="mt-3">{{book.usernick}}</p>
                     </div>
-                    <p class="postingBody pt-3">hfuidfhuisdfhusdhfuihsudhfushuifhibjiojbnniofgjnbiofjniofjionfgjio</p>
+                    <p class="postingBody pt-3">{{book.about}}</p>
                 </div>
+            {% endfor %}
 
-            </div>
         </main>
 
         <!-- footer -->
