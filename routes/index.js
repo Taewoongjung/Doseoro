@@ -237,7 +237,6 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 // 0404 카테고리 검색
 router.get('/search', async (req, res, next) => {
     try {
-        console.log("aaaaaaa= ", req.query);
         if (req.query.searchFilter === 'postTitle') { // 게시물명 으로 찾기
             const [foundBooks] = await Promise.all([
                 Book.findAll({

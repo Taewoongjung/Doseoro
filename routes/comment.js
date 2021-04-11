@@ -46,7 +46,7 @@ router.get('/commentEdit_buy', isLoggedIn, async (req, res, next) => {
         console.log("Com = ", edited_comment);
         const thisBook = await Book.findOne({ where: { id: bookId } });
         if (UserId === String(res.locals.user.id)){
-              
+
             await Post.update({ 
                 content: edited_comment,
             }, {
