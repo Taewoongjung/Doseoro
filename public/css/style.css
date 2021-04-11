@@ -108,6 +108,7 @@ table {
 	border-top-right-radius: 15px; */
 }
 .saleCard:hover {
+	background-color: rgb(243, 243, 243);
 	cursor: pointer;
 }
 .postTitle {

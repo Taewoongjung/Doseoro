@@ -42,26 +42,26 @@
     <!-- 책 등록 -->
     <main class="registerForm border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
       <form id="register_book-form" enctype="multipart/form-data" class="p-5">
-        <input type="text" class="form-control p-3" id="postTitle" name="postmessage" placeholder="{{books.postmessage}}" required autofocus>
+        <input type="text" class="form-control p-3" id="postTitle" name="postmessage" value="{{books.postmessage}}" required autofocus>
 
         <div class="input-group">
           <label for="book-name">책 이름</label>
-          <input type="text" class="form-control p-3" id="book-name" name="title" placeholder="{{books.title}}" required>
+          <input type="text" class="form-control p-3" id="book-name" name="title" value="{{books.title}}" required>
         </div>
 
         <div class="input-group">
           <label for="book-price">가격</label>
-          <input type="number" class="form-control p-3" id="book-price" name="price" placeholder="{{books.price}}" required>
+          <input type="number" class="form-control p-3" id="book-price" name="price" value="{{books.price}}" required>
         </div>
 
         <div class="input-group">
           <label for="book-author">저자</label>
-          <input type="text" class="form-control p-3" id="book-author" name="author" placeholder="{{books.author}}">
+          <input type="text" class="form-control p-3" id="book-author" name="author" value="{{books.author}}">
         </div>
 
         <div class="input-group">
           <label for="book-publisher">출판사</label>
-          <input type="text" class="form-control p-3" id="book-publisher" name="publisher" placeholder="{{books.publisher}}">
+          <input type="text" class="form-control p-3" id="book-publisher" name="publisher" value="{{books.publisher}}">
         </div>
 
         <h1 class="h4 mt-3">카테고리</h1>
@@ -124,6 +124,8 @@
         </div>
 
         <h1 class="h4 mt-3">거래방법</h1>
+        <!-- 여기에 사용자 위치를 표시합니다 -->
+        <a class="fw-bold h5 text-black-50 text-decoration-none" id="postMyLocation">내 위치</a>
         <select class="form-select mb-1 p-2" id="dealMethod" name="dealRoot">
           <option  name="dealRoot"value="직거래, 택배" selected>직거래, 택배</option>
           <option name="dealRoot" value="직거래">직거래</option>
@@ -138,7 +140,7 @@
 
         <div class="input-group">
           <label for="book-about">상품설명</label>
-          <input type="text" class="form-control p-3" id="book-about" name="about" placeholder="{{books.about}}">
+          <input type="text" class="form-control p-3" id="book-about" name="about" value="{{books.about}}">
         </div>
         <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{books.id}}">
         <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{books.createdAt}}">
