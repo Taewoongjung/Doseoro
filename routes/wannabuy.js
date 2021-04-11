@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment-timezone');
 
 const { User, Book, Who, Post } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -88,5 +89,56 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
     }
 });
 
+
+router.get('/buybook/:id', async (req, res, next) => {
+    try {
+        const [book] = await Promise.all([
+            Book.findOne({
+                where: { id: req.params.id },
+                include: {
+                    model: User,
+                    as: 'Owner',
+                },
+            }),
+        ]);
+        const [comments] = await Promise.all([
+            Post.findAll({
+                where: {
+                    BookId: req.params.id
+                },
+                include: {
+                    model: User,
+                    as: 'Commenting',
+                },
+                order: [['createdAt', 'DESC']],
+            }),
+        ]);
+        if (res.locals.user) {
+            console.log("login");
+            res.render('buyDetail.html', {
+                title: `책 구경`,
+                book,
+                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                users: res.locals.user,
+                user: book.OwnerId,
+                bookId: req.params.id,
+                comments: comments,
+                comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+            });
+        } else if (isNotLoggedIn) {
+            console.log("not login");
+            res.render('saleDetail.html', {
+                title: `책 구경`,
+                book,
+                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                user: book.OwnerId,
+                comments: comments,
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
 
 module.exports = router;

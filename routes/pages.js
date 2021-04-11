@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment-timezone');
 
 const { User, Book, Who, Post } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -64,6 +65,7 @@ router.get('/buying', isLoggedIn, async (req, res, next) => {
         const books = await Book.findAll({ where: { OwnerId: req.user.id, isSelling: '1'} });
         res.render('buyingList.html', {
             books,
+            // createdAt: moment(books.createdAt).format('YYYY-MM-DD HH:mm:ss'),
         });
     } catch (error) {
         console.error(error);
@@ -95,17 +97,16 @@ router.get('/registRequest', isLoggedIn, (req,res) => {
 });
 
 // 0409 삽니다
-router.get('/bookRequest', async (req, res) => {
+router.get('/bookRequest', async (req, res, next) => {
     try {
         const [books] = await Promise.all([
             Book.findAll({
                 where: { SoldId: null, isSelling: '1' }
             })
         ]);
-        
         res.render('bookRequest.html', {
             books,
-            createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+            // createdAt: moment(books.createdAt).format('YYYY-MM-DD HH:mm:ss'),
         });
     } catch (error) {
         console.error(error);
