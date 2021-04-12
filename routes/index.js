@@ -64,6 +64,10 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
 
 router.get('/mypage', isLoggedIn, (req, res, next) => {
     res.render('myPage.html');
+    // if (req.query) {
+    //     console.log("@@!!!!");
+    //     res.render('myPage.html');
+    // }
 });
 
 // 0331 파일 올리기 
@@ -230,6 +234,21 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
     } catch (error) {
         console.error(error);
         next(error);
+    }
+});
+
+router.get('/location', async (req, res, next) => {
+    try {
+        const { address } = req.query;
+        console.log("req.body", address);
+        await User.update({
+            location: address,
+        }, {
+            where: { id: res.locals.user.id }
+        });
+    } catch (error) {
+        console.error(error);
+        return next(error);
     }
 });
 

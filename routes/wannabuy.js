@@ -28,7 +28,7 @@ router.post('/thisbook', isLoggedIn, async (req, res, next) => {
             usernick: req.user.nick,
             isSelling: '1',
         });
-        res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+        res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/wannabuy/buybook/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
         next(error);

@@ -37,19 +37,24 @@ function searchAddrFromCoords(coords, callback) {
     geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
 }
 
+function redirection(address) {
+    window.location.href=`/location?address=${address}`;
+}
+
 // 주소정보를 표시
 function displayCenterInfo(result, status) {
     if (status === kakao.maps.services.Status.OK) {
         const infoDiv = document.getElementById('myAddr');
         const getInfo = document.getElementById('getMyAddr');
 
-
         for(var i = 0; i < result.length; i++) {
             // 행정동의 region_type 값은 'H'
             if (result[i].region_type === 'H') {
                 infoDiv.innerHTML = '<a>나의 위치 : </a>' + result[i].address_name;
                 getInfo.value = result[i].address_name;
-                break;
+                console.log("getInfo.value = ", getInfo.value);
+                redirection(getInfo.value);
+                return
             }
         }
     }    
