@@ -239,10 +239,8 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 
 router.get('/location', async (req, res, next) => {
     try {
-        const { address } = req.query;
-        console.log("req.body", address);
         await User.update({
-            location: address,
+            location: req.query.address,
         }, {
             where: { id: res.locals.user.id }
         });
