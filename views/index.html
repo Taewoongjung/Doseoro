@@ -28,13 +28,13 @@
         <div class="collapse navbar-collapse justify-content-sm-end align-items-center" id="navbarCollapse">
           <ul class="navbar-nav mb-md-0">
             {% if user %}
-              <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
-              <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
-              <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
-              <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
+            <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
+            <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
+            <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
+            <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
             {% else %}
-              <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
-              <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>
+            <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
+            <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>
             {% endif %}
           </ul>
         </div>
@@ -42,7 +42,7 @@
     </nav>
 
     <!-- main -->
-    <main class="container-sm mt-0 mb-0 min-vh-100">
+    <main class="container-sm mt-0 mb-0 min-vh-100 pt-5">
       <!-- 검색 기능 -->
       <form id="search-form" action="/search/{{searchWord}}" class="searchForm d-flex container pt-2">
         <select class="form-select w-25" name="searchFilter">
@@ -63,8 +63,10 @@
             onclick="location.href='/pages/saleBoard'">팝니다</button></div>
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
             onclick="location.href='/pages/bookRequest'">삽니다</button></div>
-        <div class="ms-1 me-1"><button type="button" class="btn fw-bold">무료나눔</button></div>
-        <div class="ms-1 me-1"><button type="button" class="btn fw-bold">커뮤니티</button></div>
+        <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
+            onclick="location.href='/pages/donationBoard'">무료나눔</button></div>
+        <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
+            onclick="location.href='/pages/community'">커뮤니티</button></div>
       </div>
 
       <!-- 배너 -->
@@ -175,7 +177,7 @@
             </div>
             {% endif %}
             {% endfor %}
-      </div>
+          </div>
     </main>
 
     <!-- footer -->
