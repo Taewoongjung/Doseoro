@@ -114,9 +114,29 @@ router.get('/bookRequest', async (req, res, next) => {
     }
 })
 
-// 0414 작성한 글 목록myPostingList
+// 0414 작성한 글 목록
 router.get('/myPostingList', isLoggedIn, (req,res) => {
     res.render('myPostingList.html');
+});
+
+// 0414 무료나눔
+router.get('/donationBoard', isLoggedIn, (req,res) => {
+    res.render('donationBoard.html');
+});
+
+// 0414 커뮤니티
+router.get('/community', isLoggedIn, (req,res) => {
+    res.render('community.html');
+});
+
+// 0414 커뮤니티 등록
+router.get('/registCommunity', isLoggedIn, (req,res) => {
+    res.render('registCommunity.html');
+});
+
+// 0414 나눔 등록
+router.get('/registDonation', isLoggedIn, (req,res) => {
+    res.render('registDonation.html');
 });
 
 module.exports = router;
