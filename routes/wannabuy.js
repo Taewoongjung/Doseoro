@@ -40,7 +40,7 @@ router.get('/delete', isLoggedIn, async (req, res, next) => {
     try {
         const { this_item_id, this_item_createdAt, this_item_OwnerId } = req.query;
         await Book.destroy({ where: { id: this_item_id, createdAt: this_item_createdAt, OwnerId: this_item_OwnerId, isSelling: '1' }, });
-        res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/buying";</script>`);
+        res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/myPostingList";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
