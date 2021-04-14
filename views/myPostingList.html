@@ -239,6 +239,20 @@
             request.setAttribute('action', '/mpfunc/delete');
             request.setAttribute('method', 'GET');
         }
+
+        // 구매내역 스크립트
+
+        function item_edit(id) {
+            const request = document.getElementById(`item-ED-form-${id}`);
+            request.setAttribute('action', '/wannabuy/editIt');
+            request.setAttribute('method', 'POST');
+        }
+
+        function item_delete(id) {
+            const request = document.getElementById(`item-ED-form-${id}`);
+            request.setAttribute('action', '/wannabuy/delete');
+            request.setAttribute('method', 'GET');
+        }
     </script>
     <script src="/js/changePostingHistory.js"></script>
     <script src="/js/topNav.js"></script>
