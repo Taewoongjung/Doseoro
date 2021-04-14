@@ -134,23 +134,23 @@ router.get('/myPostingList', isLoggedIn, async (req,res) => {
 });
 
 // 0414 무료나눔
-router.get('/donationBoard', isLoggedIn, (req,res) => {
+router.get('/donationBoard', (req,res) => {
     res.render('donationBoard.html');
 });
 
 // 0414 커뮤니티
-router.get('/community', isLoggedIn, (req,res) => {
+router.get('/community', (req,res) => {
     res.render('community.html');
-});
-
-// 0414 커뮤니티 등록
-router.get('/registCommunity', isLoggedIn, (req,res) => {
-    res.render('registCommunity.html');
 });
 
 // 0414 나눔 등록
 router.get('/registDonation', isLoggedIn, (req,res) => {
     res.render('registDonation.html');
+});
+
+// 0414 커뮤니티 등록
+router.get('/registCommunity', isLoggedIn, (req,res) => {
+    res.render('registCommunity.html');
 });
 
 module.exports = router;
