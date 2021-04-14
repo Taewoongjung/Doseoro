@@ -77,7 +77,7 @@
                                 <h4 class="h5 m-1 mb-2">거래 방법: {{book.tradingmethod}}</h4>
                             </div>
                             <div>
-                                <form id="item-ED-form-{{book.id}}">
+                                <form id="sell_item-ED-form-{{book.id}}">
                                     <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{book.id}}">
                                     <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
                                     <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
@@ -105,7 +105,7 @@
                 <h1 class="h4 fw-bold">구매글</h1>
 
                     <!-- 게시물 불러오는 위치 -->
-                    {% for book in wantsell_books %}
+                    {% for book in wantbuy_books %}
                         <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
                             <div class="pb-3 border-bottom w-100">
                                 <div class="d-flex justify-content-between align-items-center w-100">
@@ -116,7 +116,7 @@
                                     </div>
 
                                     <div>
-                                        <form id="item-ED-form-{{book.id}}">
+                                        <form id="buy_item-ED-form-{{book.id}}">
                                             <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{book.id}}">
                                             <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
                                             <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
@@ -158,7 +158,7 @@
                             <h4 class="h5 m-1 mb-2">거래 방법: {{book.tradingmethod}}</h4>
                         </div>
                         <div>
-                            <form id="item-ED-form-{{book.id}}">
+                            <form id="free_item-ED-form-{{book.id}}">
                                 <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{book.id}}">
                                 <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
                                 <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
@@ -194,7 +194,7 @@
                                 </div>
 
                                 <div>
-                                    <form id="item-ED-form-{{book.id}}">
+                                    <form id="community_item-ED-form-{{book.id}}">
                                         <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{book.id}}">
                                         <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
                                         <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
@@ -229,13 +229,13 @@
     <script>
         // 판매내역 스크립트
         function item_edit(id) {
-            const request = document.getElementById(`item-ED-form-${id}`);
+            const request = document.getElementById(`sell_item-ED-form-${id}`);
             request.setAttribute('action', '/mpfunc/editIt');
             request.setAttribute('method', 'POST');
         }
 
         function item_delete(id) {
-            const request = document.getElementById(`item-ED-form-${id}`);
+            const request = document.getElementById(`sell_item-ED-form-${id}`);
             request.setAttribute('action', '/mpfunc/delete');
             request.setAttribute('method', 'GET');
         }
@@ -243,13 +243,13 @@
         // 구매내역 스크립트
 
         function item_edit(id) {
-            const request = document.getElementById(`item-ED-form-${id}`);
+            const request = document.getElementById(`buy_item-ED-form-${id}`);
             request.setAttribute('action', '/wannabuy/editIt');
             request.setAttribute('method', 'POST');
         }
 
         function item_delete(id) {
-            const request = document.getElementById(`item-ED-form-${id}`);
+            const request = document.getElementById(`buy_item-ED-form-${id}`);
             request.setAttribute('action', '/wannabuy/delete');
             request.setAttribute('method', 'GET');
         }
