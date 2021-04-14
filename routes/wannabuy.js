@@ -82,7 +82,7 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
         console.log("body = ", req.body);
         console.log("aa = ", a);
 
-        res.send(`<script type="text/javascript">alert("구매하기 정보 수정 완료"); location.href="/book/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+        res.send(`<script type="text/javascript">alert("구매하기 정보 수정 완료"); location.href="/wannabuy/buybook/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
         next(error);

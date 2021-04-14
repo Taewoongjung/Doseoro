@@ -87,10 +87,10 @@
                                         <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                             <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                    onclick="item_edit('{{book.id}}')">수정</button></li>
+                                                    onclick="sell_item_edit('{{book.id}}')">수정</button></li>
                                             <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                    onclick="item_delete('{{book.id}}')">삭제</button></li>
+                                                    onclick="sell_item_delete('{{book.id}}')">삭제</button></li>
                                         </ul>
                                     </div>
                                 </form>
@@ -126,10 +126,10 @@
                                                 <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                                     <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
                                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                            onclick="item_edit('{{book.id}}')">수정</button></li>
+                                                            onclick="buy_item_edit('{{book.id}}')">수정</button></li>
                                                     <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
                                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                            onclick="item_delete('{{book.id}}')">삭제</button></li>
+                                                            onclick="buy_item_delete('{{book.id}}')">삭제</button></li>
                                                 </ul>
                                             </div>
                                         </form>
@@ -228,27 +228,27 @@
     </div>
     <script>
         // 판매내역 스크립트
-        function item_edit(id) {
+        function sell_item_edit(id) {
+            console.log("22");
             const request = document.getElementById(`sell_item-ED-form-${id}`);
             request.setAttribute('action', '/mpfunc/editIt');
             request.setAttribute('method', 'POST');
         }
 
-        function item_delete(id) {
+        function sell_item_delete(id) {
             const request = document.getElementById(`sell_item-ED-form-${id}`);
             request.setAttribute('action', '/mpfunc/delete');
             request.setAttribute('method', 'GET');
         }
 
         // 구매내역 스크립트
-
-        function item_edit(id) {
+        function buy_item_edit(id) {
             const request = document.getElementById(`buy_item-ED-form-${id}`);
             request.setAttribute('action', '/wannabuy/editIt');
             request.setAttribute('method', 'POST');
         }
 
-        function item_delete(id) {
+        function buy_item_delete(id) {
             const request = document.getElementById(`buy_item-ED-form-${id}`);
             request.setAttribute('action', '/wannabuy/delete');
             request.setAttribute('method', 'GET');

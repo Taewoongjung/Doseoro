@@ -57,6 +57,7 @@ const upload = multer({  // multer 설정
 // 0408 오류 수정
 router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
+        console.log("edit에 왜 안넘어와?");
         const { this_item_id, postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
 
         await Book.update({
