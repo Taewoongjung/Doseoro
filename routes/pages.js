@@ -114,4 +114,9 @@ router.get('/bookRequest', async (req, res, next) => {
     }
 })
 
+// 0414 작성한 글 목록myPostingList
+router.get('/myPostingList', isLoggedIn, (req,res) => {
+    res.render('myPostingList.html');
+});
+
 module.exports = router;

@@ -136,13 +136,13 @@ table {
 	min-width: 150px;
 	min-height: 150px;
 }
-.myPageList {
+.myPageList, .selectPosting {
 	background-color: rgb(243, 243, 243);
 	border: 1px solid;
 	border-color: rgb(230, 230, 230);
 	border-radius: 1rem;
 }
-.myPageList a {
+.myPageList a, .selectPosting a {
 	margin: 1rem;
 	text-decoration: none;
 }
@@ -159,8 +159,24 @@ table {
 .myPageList a:hover {
 	padding: 5px;
 	border-radius: 15px;
-	background-color: rgb(153, 209, 241);
+	background-color: rgb(155, 211, 243);
 	cursor: pointer;
+}
+
+/* myPostingList.html */
+.selectPosting a {
+	padding: 10px;
+}
+.selectPosting a:hover {
+	border-radius: 10px;
+	background-color: rgb(155, 211, 243);
+	cursor: pointer;
+}
+.postTitle {
+	/* width: 100%; */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 /* listProduct.html */
