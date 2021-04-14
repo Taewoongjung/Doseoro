@@ -115,13 +115,13 @@ router.get('/bookRequest', async (req, res, next) => {
 })
 
 // 0414 작성한 글 목록
-router.get('/myPostingList', isLoggedIn, (req,res) => {
+router.get('/myPostingList', isLoggedIn, async (req,res) => {
     try {
         const [wantsell_books] = await Promise.all([
-            Book.findAll({ where: { isSelling: null } }),
+            Book.findAll({ where: { OwnerId: req.user.id, isSelling: null } }),
         ]);
         const [wantbuy_books] = await Promise.all([
-            Book.findAll({ where: { isSelling: null } }),
+            Book.findAll({ where: { OwnerId: req.user.id, isSelling: '1'}}),
         ]);
         res.render('myPostingList.html', {
             wantsell_books,

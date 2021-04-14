@@ -65,16 +65,16 @@
                 <h1 class="h4 fw-bold">판매글</h1>
 
                 <!-- 게시물 불러오는 위치 -->
-                {% for book1 in wantsell_books %}
+                {% for book in wantsell_books %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
                         <img src="/img/{{book.img}}" class="" width="150px" height="200px">
                         
                         <div class="d-flex w-75 justify-content-between mt-2">
                             <div class="ms-sm-4 w-100">
-                                <h1 class="postTitle h2 m-1 fw-bold mb-3">{{book1.title}}</h1>
-                                <h4 class="h5 m-1 mb-2">가격: {{book1.price}} 원</h4>
-                                <h4 class="h5 m-1 mb-2">카테고리: {{book1.category}}</h4>
-                                <h4 class="h5 m-1 mb-2">거래 방법: {{book1.tradingmethod}}</h4>
+                                <h1 class="postTitle h2 m-1 fw-bold mb-3">{{book.title}}</h1>
+                                <h4 class="h5 m-1 mb-2">가격: {{book.price}} 원</h4>
+                                <h4 class="h5 m-1 mb-2">카테고리: {{book.category}}</h4>
+                                <h4 class="h5 m-1 mb-2">거래 방법: {{book.tradingmethod}}</h4>
                             </div>
                             <div>
                                 <form id="item-ED-form-{{book.id}}">
@@ -105,41 +105,41 @@
                 <h1 class="h4 fw-bold">구매글</h1>
 
                     <!-- 게시물 불러오는 위치 -->
-                    <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
-                        <div class="pb-3 border-bottom w-100">
-                            <div class="d-flex justify-content-between align-items-center w-100">
-                                
-                                <div class="w-50">
-                                    <h1 class="postTitle h3 fw-bold">게시물제목asdasdasdasdasd{{book.postmessage}}</h1>
-                                    <!-- <a class="text-decoration-none text-dark">{{createdAt}}</a> -->
-                                </div>
+                    {% for book in wantsell_books %}
+                        <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
+                            <div class="pb-3 border-bottom w-100">
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    
+                                    <div class="w-50">
+                                        <h1 class="postTitle h3 fw-bold">{{book.postmessage}}</h1>
+                                        <!-- <a class="text-decoration-none text-dark">{{createdAt}}</a> -->
+                                    </div>
 
-                                <div>
-                                    <form id="item-ED-form-{{book.id}}">
-                                        <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{book.id}}">
-                                        <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
-                                        <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
-                                        <div class="dropdown">
-                                            <a class="btn" href="#" data-bs-toggle="dropdown"
-                                                aria-expanded="true">⁝</a>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                                <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
-                                                        role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                        onclick="item_edit('{{book.id}}')">수정</button></li>
-                                                <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
-                                                        role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                        onclick="item_delete('{{book.id}}')">삭제</button></li>
-                                            </ul>
-                                        </div>
-                                    </form>
+                                    <div>
+                                        <form id="item-ED-form-{{book.id}}">
+                                            <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{book.id}}">
+                                            <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
+                                            <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
+                                            <div class="dropdown">
+                                                <a class="btn" href="#" data-bs-toggle="dropdown"
+                                                    aria-expanded="true">⁝</a>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                                    <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
+                                                            role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                            onclick="item_edit('{{book.id}}')">수정</button></li>
+                                                    <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
+                                                            role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                            onclick="item_delete('{{book.id}}')">삭제</button></li>
+                                                </ul>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                                
+                                <p class="mt-3">게시물 작성일</p>
                             </div>
-                            
-                            <p class="mt-3">게시물 작성일</p>
+                            <p class="postingBody pt-3">{{book.about}}</p>
                         </div>
-                        <p class="postingBody pt-3">내용ㅁㄴㅇㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ{{book.about}}</p>
-                    </div>
+                    {% endfor %}
             </div>
 
             <!-- 나눔글 목록 -->
@@ -178,7 +178,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <!-- 커뮤니티 -->
