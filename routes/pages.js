@@ -116,7 +116,21 @@ router.get('/bookRequest', async (req, res, next) => {
 
 // 0414 작성한 글 목록
 router.get('/myPostingList', isLoggedIn, (req,res) => {
-    res.render('myPostingList.html');
+    try {
+        const [wantsell_books] = await Promise.all([
+            Book.findAll({ where: { isSelling: null } }),
+        ]);
+        const [wantbuy_books] = await Promise.all([
+            Book.findAll({ where: { isSelling: null } }),
+        ]);
+        res.render('myPostingList.html', {
+            wantsell_books,
+            wantbuy_books,
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
 });
 
 // 0414 무료나눔
