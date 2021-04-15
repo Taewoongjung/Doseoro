@@ -40,14 +40,14 @@
     <!-- 책 등록 -->
     <main class="registerForm border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
       <form id="register_book-form" class="regiRequest p-5">
-        <input type="text" class="form-control p-3" id="postTitle" name="postmessage" placeholder="제목" required autofocus>
+        <input type="text" class="form-control p-3" id="postTitle" name="postTitle" placeholder="제목" required autofocus>
 
         <div class="input-group">
           <label for="book-about">게시판 내용</label>
-          <input type="text" class="form-control p-3" id="book-about" name="about" placeholder="내용">
+          <input type="text" class="form-control p-3" id="book-about" name="postAbout" placeholder="내용">
         </div>
 
-        <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">상품 등록</button>
+        <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">게시물 등록</button>
       </form>
     </main>
 
@@ -59,7 +59,7 @@
   <script>
     function one() {
       const request = document.getElementById('register_book-form');
-      request.setAttribute('action', '/wannabuy/thisbook');
+      request.setAttribute('action', '/free_community/community');
       request.setAttribute('method', 'POST');
     }
   </script>

@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const sequelize = require("sequelize");
 
-const { User, Book, Who, Post } = require('../models');
+const { User, Book, Who, Post, Community } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -28,6 +28,7 @@ const upload = multer({  // multer 설정
     limits: { fileSize: 5 * 1024 * 1024 },
 });
 
+// 0415 무료나눔
 router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
     try {
         const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
@@ -45,7 +46,7 @@ router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) =>
             about: about,
             usernick: req.user.nick,
         });
-        res.send(`<script type="text/javascript">alert("책 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+        res.send(`<script type="text/javascript">alert("무료나눔 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
         next(error);
@@ -104,5 +105,39 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
+
+// 0415 커뮤니티 등록
+router.post('/community', isLoggedIn, async (req, res, next) => {
+    try {
+        const { postTitle, postAbout } = req.body;
+        const commu = await Community.create({
+            title: postTitle,
+            content: postAbout,
+        });
+        res.send(`<script type="text/javascript">alert("게시물 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 커뮤니티 댓글 달기
+router.post('/community/:id/comment', isLoggedIn, async (req, res, next) => {
+    try {
+        const { comment } = req.body;
+        console.log("comment = ", comment);
+        const post = await Post.create({
+            content: comment,
+            commentingNick: req.user.nick,
+            UserId: req.user.id,
+            BookId: req.params.id,
+        });
+        return res.send(`<script type="text/javascript">location.href="/wannabuy/buybook/${post.BookId}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 
 module.exports = router;

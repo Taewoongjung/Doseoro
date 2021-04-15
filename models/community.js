@@ -3,9 +3,17 @@ const Sequelize = require('sequelize');
 module.exports = class Community extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
-        content: {
+        title:{
             type: Sequelize.STRING(140),
             allowNull: true,
+        },
+        content: {
+            type: Sequelize.STRING(1000),
+            allowNull: true,
+        },
+        postingId: {
+          type: Sequelize.STRING(100),
+          allowNull: true,
         },
         commentingNick: {
             type: Sequelize.STRING(100),
