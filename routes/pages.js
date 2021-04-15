@@ -134,8 +134,20 @@ router.get('/myPostingList', isLoggedIn, async (req,res) => {
 });
 
 // 0414 무료나눔
-router.get('/donationBoard', (req,res) => {
-    res.render('donationBoard.html');
+router.get('/donationBoard', async(req,res) => {
+    try {
+        const [free_books] = await Promise.all([
+            Book.findAll({
+                where: { SoldId: null, isSelling: null, price: -1 },
+            })
+        ]);
+        res.render('donationBoard.html', {
+            free_books,
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
 });
 
 // 0414 커뮤니티

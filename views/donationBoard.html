@@ -73,13 +73,13 @@
             <div class="saleList pt-5 mt-5 border-top">
                 <h1 class="h2 fw-bold">나눔 목록</h1><br>
                 <form id="book-form"><a href="/pages/registDonation"class="addBook text-decoration-none btn-primary p-2">나눔 등록</a></form>
-                {% for book in books %}
+                {% for book in free_books %}
                 <div class="d-flex justify-content-center flex-wrap mt-5">
                   <div class="saleCard card m-sm-5 mt-4 m-2" style="min-width: 210px; max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
                     <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="280px">
                     <div class="card-body text-center">
                       <p class="postTitle card-title fw-bold mb-3">게시물 제목</p>
-                      <p>000 원</p>
+                      <p>무료나눔</p>
                       <!-- <a href="/book/{{book.id}}" class="enter btn-primary ms-5 p-2 text-decoration-none">자세히</a> -->
                     </div>
                   </div>
