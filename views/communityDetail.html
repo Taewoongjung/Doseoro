@@ -148,24 +148,18 @@
         }
 
         // 밑에는 수정 해야함
-        function like() {
-            const request = document.getElementById('book_like-form');
-            request.setAttribute('action', '/like');
-            request.setAttribute('method', 'POST');
-        }
-
         function comment_edit(id) {
             var Com = prompt('수정 할 문구를 적어주세요');
             document.getElementById(`edit_it-${id}`).value = `${Com}`;
 
             const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', `/comment/commentEdit?Com`);
+            request.setAttribute('action', `/comment/commentEdit_commu?Com`);
             request.setAttribute('method', 'GET');
         }
 
         function comment_delete(id) {
             const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', '/comment/commentDelete');
+            request.setAttribute('action', '/comment/commentDelete_commu');
             request.setAttribute('method', 'GET');
         }
 
