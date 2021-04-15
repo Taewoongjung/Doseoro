@@ -15,6 +15,10 @@ module.exports = class Community extends Sequelize.Model {
           type: Sequelize.STRING(100),
           allowNull: true,
         },
+        postingNick: {
+          type: Sequelize.STRING(100),
+          allowNull: true,
+        },
         commentingNick: {
             type: Sequelize.STRING(100),
             allowNull: true,

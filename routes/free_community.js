@@ -113,8 +113,62 @@ router.post('/community', isLoggedIn, async (req, res, next) => {
         const commu = await Community.create({
             title: postTitle,
             content: postAbout,
+            postingId: req.user.id,
+            postingNick: req.user.nick,
         });
-        res.send(`<script type="text/javascript">alert("게시물 등록 완료"); location.href="/book/${book.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+        res.send(`<script type="text/javascript">alert("게시물 등록 완료"); location.href="/free_community/community/${commu.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 0415 커뮤니티 들어가기
+router.get('/community/:id', async (req, res, next) => {
+    try {
+        const [community] = await Promise.all([
+            Community.findOne({
+                where: { id: req.params.id },
+                // include: {
+                //     model: User,
+                //     as: 'Owner',
+                // },
+            }),
+        ]);
+        // const [comments] = await Promise.all([
+        //     Post.findAll({
+        //         where: {
+        //             BookId: req.params.id
+        //         },
+        //         include: {
+        //             model: User,
+        //             as: 'Commenting',
+        //         },
+        //         order: [['createdAt', 'DESC']],
+        //     }),
+        // ]);
+        if (res.locals.user) {
+            console.log("login");
+            res.render('communityDetail.html', {
+                community,
+                createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                // users: res.locals.user,
+                // user: book.OwnerId,
+                // img: book.img,
+                // bookId: req.params.id,
+                // comments: comments,
+                // comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+            });
+        } else if (isNotLoggedIn) {
+            console.log("not login");
+            res.render('communityDetail.html', {
+                title: `책 구경`,
+                community,
+                createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                // user: book.OwnerId,
+                // comments: comments,
+            });
+        }
     } catch (error) {
         console.error(error);
         next(error);

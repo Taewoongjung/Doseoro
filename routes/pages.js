@@ -3,7 +3,7 @@ const moment = require('moment-timezone');
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
-const { User, Book, Who, Post } = require('../models');
+const { User, Book, Who, Post, Community } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -174,8 +174,20 @@ router.get('/registDonation', isLoggedIn, (req,res) => {
 });
 
 // 0414 커뮤니티
-router.get('/community', (req,res) => {
-    res.render('community.html');
+router.get('/community', async (req,res) => {
+    try {
+        const [communities] = await Promise.all([
+            Community.findAll({
+                where: { postingId: req.user.id, postingNick: req.user.nick },
+            })
+        ]);
+        res.render('community.html', {
+            communities,
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
 });
 
 // 0414 커뮤니티 등록

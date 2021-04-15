@@ -45,29 +45,23 @@
                 <!-- 제목 -->
                 <div class="w-100 pb-2 mb-4 border-bottom">
                     <div class="d-lg-flex align-items-center">
-                        <h1 class="h2 text-decoration-none w-100 fw-bold" id="getPostingTitle">{{book
-                            .postmessage}}</h1>
+                        <h1 class="h2 text-decoration-none w-100 fw-bold" id="getPostingTitle">{{community.title}}</h1>
                         <!-- 등록 시간을 DB에서 받아와 YMD 형식으로 바꿀 JS코드 필요 => 해결 -->
                         <a class="text-decoration-none w-100 text-dark text-end" id="getPostingDate">{{createdAt}}</a>
                     </div>
-                    <p class="mt-3 fw-bold">{{book.usernick}}</p>
+                    <!-- <p class="mt-3 fw-bold">{{book.usernick}}</p> -->
                 </div>
 
                 <!-- 게시물 정보 -->
                 <div class="wrapBookInfo d-lg-flex align-items-center ">
                     <div class="bookInfo w-75 me-0 ms-sm-5 align-content-between">
-                        </div>
-                        <div class="category d-flex align-items-center mt-2 mb-2">
-                            <h4 class="h4 fw-bold w-50">글 제목</h4>
-                            <a class="text-body text-decoration-none" id="getCategory">ㅁㅁㄴㅁㄴㅁㄴㅁㄴㄴㅁ</a>
-                        </div>
                         <div class="category d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">글쓴이</h4>
-                            <a class="text-body text-decoration-none" id="getAppearanceInfo">ㅁㅁㅁㅁㅁㅁㄴㅁㄴㅁㄴ</a>
+                            <a class="text-body text-decoration-none" id="getAppearanceInfo">{{community.postingNick}}</a>
                         </div>
                         <div class="category d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">세부 내용</h4>
-                            <a class="text-body text-decoration-none" id="getAppearanceInfo">ㅁㄴㅁㄴㅁㅁㄴㅁㄴㅁㅁㅁㅁ</a>
+                            <a class="text-body text-decoration-none" id="getAppearanceInfo">{{community.content}}</a>
                         </div>
                     </div>
                 </div>
@@ -152,7 +146,7 @@
             request.setAttribute('action', '/free_community/{{bookId}}/comment');
             request.setAttribute('method', 'POST');
         }
-        
+
         // 밑에는 수정 해야함
         function like() {
             const request = document.getElementById('book_like-form');
