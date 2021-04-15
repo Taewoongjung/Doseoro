@@ -136,9 +136,13 @@ router.get('/myPostingList', isLoggedIn, async (req,res) => {
         const [wantbuy_books] = await Promise.all([
             Book.findAll({ where: { OwnerId: req.user.id, isSelling: '1'}}),
         ]);
+        const [free_books] = await Promise.all([
+            Book.findAll({where: { OwnerId: req.user.id, SoldId: null, isSelling: null, price: -1 }}),
+        ]);
         res.render('myPostingList.html', {
             wantsell_books,
             wantbuy_books,
+            free_books
         });
     } catch (error) {
         console.error(error);
@@ -163,14 +167,15 @@ router.get('/donationBoard', async (req,res) => {
     }
 });
 
-// 0414 커뮤니티
-router.get('/community', (req,res) => {
-    res.render('community.html');
-});
 
 // 0414 나눔 등록
 router.get('/registDonation', isLoggedIn, (req,res) => {
     res.render('registDonation.html');
+});
+
+// 0414 커뮤니티
+router.get('/community', (req,res) => {
+    res.render('community.html');
 });
 
 // 0414 커뮤니티 등록

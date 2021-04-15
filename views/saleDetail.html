@@ -152,7 +152,7 @@
 
             <!-- 댓글 달기 -->
             {% if users and users.id %}
-            <form id="comment-form" enctype="multipart/form-data" class="mt-5 w-75 ms-auto me-auto">
+            <form id="comment-form" class="mt-5 w-75 ms-auto me-auto">
                 <div class="input-group">
                     <input id="comment" class="form-control p-2" name="comment">
                     <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
@@ -236,8 +236,6 @@
         <!-- footer -->
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
-
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         function postComment() {
             const request = document.getElementById('comment-form');
