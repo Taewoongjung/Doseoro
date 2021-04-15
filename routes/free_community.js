@@ -135,29 +135,28 @@ router.get('/community/:id', async (req, res, next) => {
                 // },
             }),
         ]);
-        // const [comments] = await Promise.all([
-        //     Post.findAll({
-        //         where: {
-        //             BookId: req.params.id
-        //         },
-        //         include: {
-        //             model: User,
-        //             as: 'Commenting',
-        //         },
-        //         order: [['createdAt', 'DESC']],
-        //     }),
-        // ]);
+        const [comments] = await Promise.all([
+            Post.findAll({
+                where: {
+                    CommunityId: req.params.id
+                },
+                // include: {
+                //     model: User,
+                //     as: 'Commenting',
+                // },
+                order: [['createdAt', 'DESC']],
+            }),
+        ]);
         if (res.locals.user) {
             console.log("login");
             res.render('communityDetail.html', {
                 community,
                 createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
-                // users: res.locals.user,
-                // user: book.OwnerId,
-                // img: book.img,
-                // bookId: req.params.id,
-                // comments: comments,
-                // comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                users: res.locals.user,
+                user: community.postingId,
+                communityId: community.id,
+                comments: comments,
+                comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
@@ -165,8 +164,8 @@ router.get('/community/:id', async (req, res, next) => {
                 title: `책 구경`,
                 community,
                 createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
-                // user: book.OwnerId,
-                // comments: comments,
+                user: community.postingId,
+                comments: comments,
             });
         }
     } catch (error) {
@@ -184,9 +183,9 @@ router.post('/community/:id/comment', isLoggedIn, async (req, res, next) => {
             content: comment,
             commentingNick: req.user.nick,
             UserId: req.user.id,
-            BookId: req.params.id,
+            CommunityId: req.params.id,
         });
-        return res.send(`<script type="text/javascript">location.href="/wannabuy/buybook/${post.BookId}";</script>`);
+        return res.send(`<script type="text/javascript">location.href="/free_community/community/${post.CommunityId}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
