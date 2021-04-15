@@ -1,5 +1,7 @@
 const express = require('express');
 const moment = require('moment-timezone');
+const sequelize = require("sequelize");
+const Op = sequelize.Op;
 
 const { User, Book, Who, Post } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -47,11 +49,22 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
         console.log("user id = ", String(req.user.id));
         const [books] = await Promise.all([
             Who.findAll({ 
-                where: { liked: String(req.user.id) }, 
+                where: { liked: String(req.user.id),
+                    price: {
+                        [Op.ne]: -1
+                    },
+                }, 
             }),
         ]);
+        const [free_books] = await Promise.all([
+            Who.findAll({
+                where: { liked: String(req.user.id), price: -1, },
+            })
+        ]);
+        console.log("free = ", free_books);
         res.render('likedProduct.html', {
             books,
+            free_books,
         });
     } catch (error) {
         console.error(error);
@@ -134,7 +147,7 @@ router.get('/myPostingList', isLoggedIn, async (req,res) => {
 });
 
 // 0414 무료나눔
-router.get('/donationBoard', async(req,res) => {
+router.get('/donationBoard', async (req,res) => {
     try {
         const [free_books] = await Promise.all([
             Book.findAll({
