@@ -186,13 +186,13 @@
             <div id="communityPosting" class="mb-3 mt-3" style="display: none;">
                 <h1 class="h4 fw-bold">커뮤니티</h1>
                     <!-- 게시물 불러오는 위치 -->
-                    {% for book in free_books %}
+                    {% for community in communities %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
                         <div class="pb-3 border-bottom w-100">
                             <div class="d-flex justify-content-between align-items-center w-100">
                                 
                                 <div class="w-50">
-                                    <h1 class="postTitle h3 fw-bold">커뮤니티게시물제목{{book.postmessage}}</h1>
+                                    <h1 class="postTitle h3 fw-bold">{{community.title}}</h1>
                                     <!-- <a class="text-decoration-none text-dark">{{createdAt}}</a> -->
                                 </div>
 
@@ -218,9 +218,9 @@
                                 
                             </div>
                             
-                            <p class="mt-3">게시물 작성일</p>
+                            <p class="mt-3">{{community.createdAt}}</p>
                         </div>
-                        <p class="postingBody pt-3">내용ㅁㄴㅇ{{book.about}}</p>
+                        <p class="postingBody pt-3">{{community.about}}</p>
                     </div>
                     {% endfor %}
             </div>

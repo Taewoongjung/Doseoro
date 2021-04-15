@@ -128,7 +128,7 @@ router.get('/bookRequest', async (req, res, next) => {
 })
 
 // 0414 작성한 글 목록
-router.get('/myPostingList', isLoggedIn, async (req,res) => {
+router.get('/myPostingList', isLoggedIn, async (req,res, next) => {
     try {
         const [wantsell_books] = await Promise.all([
             Book.findAll({ where: { OwnerId: req.user.id, isSelling: null } }),
@@ -139,14 +139,14 @@ router.get('/myPostingList', isLoggedIn, async (req,res) => {
         const [free_books] = await Promise.all([
             Book.findAll({where: { OwnerId: req.user.id, SoldId: null, isSelling: null, price: -1 }}),
         ]);
-        const [community] = await Promise.all([
+        const [communities] = await Promise.all([
             Community.findAll({where: { postingId: req.user.id, postingNick: req.user.nick }}),
         ]);
         res.render('myPostingList.html', {
             wantsell_books,
             wantbuy_books,
             free_books,
-            community,
+            communities,
         });
     } catch (error) {
         console.error(error);
@@ -178,11 +178,10 @@ router.get('/registDonation', isLoggedIn, (req,res) => {
 });
 
 // 0414 커뮤니티
-router.get('/community', async (req,res) => {
+router.get('/community', async (req,res, next) => {
     try {
         const [communities] = await Promise.all([
             Community.findAll({
-                where: { postingId: req.user.id, postingNick: req.user.nick },
             })
         ]);
         res.render('community.html', {
