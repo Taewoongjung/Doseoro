@@ -110,7 +110,7 @@
                         <div class="bookTitle d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">가격</h4>
                             <!-- free_books로 무료나눔으로 분류되는 책들을 프론트로 보내줬음. 무료나눔이 맞으면 무료나눔으로 표시되게 해야합니다 -->
-                            {% if free_books %}
+                            {% if free_books | length %}
                                 <a class="text-body text-decoration-none" id="getBookPrice">무료나눔</a>
                             {% else %}
                                 <a class="text-body text-decoration-none" id="getBookPrice">{{book.price}}원</a>

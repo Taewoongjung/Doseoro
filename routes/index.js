@@ -164,9 +164,11 @@ router.get('/book/:id', async (req, res, next) => {
         ]);
         const [free_books] = await Promise.all([
             Book.findAll({
-                where: { SoldId: null, isSelling: null, price: -1 }
+                where: { id: req.params.id, SoldId: null, isSelling: null, price: -1 }
             })
         ]);
+        console.log(book);
+        console.log(free_books);
         if (res.locals.user) {
             console.log("login");
             res.render('saleDetail.html', {

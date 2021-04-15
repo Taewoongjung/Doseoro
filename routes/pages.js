@@ -78,7 +78,6 @@ router.get('/buying', isLoggedIn, async (req, res, next) => {
         const books = await Book.findAll({ where: { OwnerId: req.user.id, isSelling: '1'} });
         res.render('buyingList.html', {
             books,
-            // createdAt: moment(books.createdAt).format('YYYY-MM-DD HH:mm:ss'),
         });
     } catch (error) {
         console.error(error);
@@ -119,7 +118,6 @@ router.get('/bookRequest', async (req, res, next) => {
         ]);
         res.render('bookRequest.html', {
             books,
-            // createdAt: moment(books.createdAt).format('YYYY-MM-DD HH:mm:ss'),
         });
     } catch (error) {
         console.error(error);
@@ -153,11 +151,22 @@ router.get('/myPostingList', isLoggedIn, async (req,res, next) => {
         const [communities] = await Promise.all([
             Community.findAll({where: { postingId: req.user.id, postingNick: req.user.nick }}),
         ]);
+        const responseCommunities = [];
+        for (const community of communities) {
+            const { createdAt, title, id, OwnerId, content } = community;
+            responseCommunities.push({
+                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                title,
+                OwnerId,
+                content,
+                id,
+            });
+        }
         res.render('myPostingList.html', {
             wantsell_books,
             wantbuy_books: responseWantbuy,
             free_books,
-            communities,
+            communities: responseCommunities,
         });
     } catch (error) {
         console.error(error);
