@@ -78,7 +78,8 @@
                   <div class="saleCard card m-sm-5 mt-4 m-2" style="min-width: 210px; max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
                     <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="280px">
                     <div class="card-body text-center">
-                      <p class="postTitle card-title fw-bold mb-3">게시물 제목</p>
+                      <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
+                      <p class="postTitle card-title fw-bold mb-3">{{book.usernick}}</p>
                       <p>무료나눔</p>
                       <!-- <a href="/book/{{book.id}}" class="enter btn-primary ms-5 p-2 text-decoration-none">자세히</a> -->
                     </div>
