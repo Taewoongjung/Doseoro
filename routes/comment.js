@@ -94,7 +94,6 @@ router.get('/commentDelete_buy', isLoggedIn, async (req, res, next) => {
       }
 });
 
-
 // 0415 댓글 수정(커뮤니티)
 router.get('/commentEdit_commu', isLoggedIn, async (req, res, next) => {
     try {
@@ -110,10 +109,10 @@ router.get('/commentEdit_commu', isLoggedIn, async (req, res, next) => {
                 where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } 
             });
             
-            return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/free_community/community/${thisCommunity.postingId}";</script>`);   
+            return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);   
 
         } else {
-            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/wannabuy/buybook/${thisCommunity.postingId}";</script>`);  
+            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);  
         }} catch (err) {
         console.error(err);
         next(err);
@@ -128,9 +127,9 @@ router.get('/commentDelete_commu', isLoggedIn, async (req, res, next) => {
         if (UserId === String(res.locals.user.id)){
             await Post.destroy({ where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } });
 
-            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/wannabuy/buybook/${thisCommunity.postingId}";</script>`);        
+            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);        
         } else {
-            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/wannabuy/buybook/${thisCommunity.postingId}";</script>`);  
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);  
         }} catch (err) {
         console.error(err);
         next(err);
