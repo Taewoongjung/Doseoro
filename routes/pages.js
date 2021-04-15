@@ -139,10 +139,14 @@ router.get('/myPostingList', isLoggedIn, async (req,res) => {
         const [free_books] = await Promise.all([
             Book.findAll({where: { OwnerId: req.user.id, SoldId: null, isSelling: null, price: -1 }}),
         ]);
+        const [community] = await Promise.all([
+            Community.findAll({where: { postingId: req.user.id, postingNick: req.user.nick }}),
+        ]);
         res.render('myPostingList.html', {
             wantsell_books,
             wantbuy_books,
-            free_books
+            free_books,
+            community,
         });
     } catch (error) {
         console.error(error);
