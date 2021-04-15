@@ -45,7 +45,8 @@
                 <!-- 제목 -->
                 <div class="w-100 pb-2 mb-4 border-bottom">
                     <div class="d-lg-flex align-items-center">
-                        <h1 class="h2 text-decoration-none w-100 fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
+                        <h1 class="h2 text-decoration-none w-100 fw-bold" id="getPostingTitle">{{book
+                            .postmessage}}</h1>
                         <!-- 등록 시간을 DB에서 받아와 YMD 형식으로 바꿀 JS코드 필요 => 해결 -->
                         <a class="text-decoration-none w-100 text-dark text-end" id="getPostingDate">{{createdAt}}</a>
                     </div>
@@ -73,7 +74,7 @@
                                             <input type="hidden" name="bookId" value="{{bookId}}">
                                             <input type="hidden" name="postmessage" value="{{book.postmessage}}">
                                             <input type="hidden" name="title" value="{{book.title}}">
-                                            <input type="hidden" name="price" value="{{book.price}}">
+                                                <input type="hidden" name="price" value="{{book.price}}">
                                             <button class="btn  btn-outline-primary" class="btn" type="submit"
                                                 onclick="like()" style="border: 0px">❤️</button>
     
@@ -108,7 +109,11 @@
                         </div>
                         <div class="bookTitle d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">가격</h4>
-                            <a class="text-body text-decoration-none" id="getBookPrice">{{book.price}}원</a>
+                            {% if free_books %}
+                                <a class="text-body text-decoration-none" id="getBookPrice">무료나눔</a>
+                            {% else %}
+                                <a class="text-body text-decoration-none" id="getBookPrice">{{book.price}}원</a>
+                            {% endif %}
                         </div>
                         <div class="auther d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">저자</h4>

@@ -49,10 +49,10 @@
           <input type="text" class="form-control p-3" id="book-name" name="title" placeholder="책 이름" required>
         </div>
 
-        <div class="input-group">
+        <!-- <div class="input-group">
           <label for="book-price">가격</label>
           <input type="number" class="form-control p-3" id="book-price" name="price" placeholder="가격" required>
-        </div>
+        </div> -->
 
         <div class="input-group">
           <label for="book-author">저자</label>
@@ -148,7 +148,7 @@
   <script>
     function one() {
       const request = document.getElementById('register_book-form');
-      request.setAttribute('action', '/book');
+      request.setAttribute('action', '/free_community/book');
       request.setAttribute('method', 'POST');
     }
   </script>

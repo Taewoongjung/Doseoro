@@ -73,7 +73,7 @@
             <div class="saleList pt-5 mt-5 border-top">
                 <h1 class="h2 fw-bold">나눔 목록</h1><br>
                 <form id="book-form"><a href="/pages/registDonation"class="addBook text-decoration-none btn-primary p-2">나눔 등록</a></form>
-        
+                {% for book in books %}
                 <div class="d-flex justify-content-center flex-wrap mt-5">
                   <div class="saleCard card m-sm-5 mt-4 m-2" style="min-width: 210px; max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
                     <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="280px">
@@ -84,6 +84,7 @@
                     </div>
                   </div>
                 </div>
+                {% endfor %}
         </main>
 
         <!-- footer -->

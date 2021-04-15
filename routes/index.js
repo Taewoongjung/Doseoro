@@ -42,7 +42,13 @@ router.get('/', async (req, res, next) => {
 
         const [books] = await Promise.all([
             Book.findAll({
-                where: { SoldId: null, isSelling: null }
+                where: { 
+                    SoldId: null, 
+                    isSelling: null,
+                    price: {
+                        [Op.ne]: -1
+                    },
+                }
             })
         ]);
         res.render('index.html', {
@@ -156,6 +162,11 @@ router.get('/book/:id', async (req, res, next) => {
                 order: [['createdAt', 'DESC']],
             }),
         ]);
+        const [free_books] = await Promise.all([
+            Book.findAll({
+                where: { SoldId: null, isSelling: null, price: -1 }
+            })
+        ]);
         if (res.locals.user) {
             console.log("login");
             res.render('saleDetail.html', {
@@ -168,6 +179,7 @@ router.get('/book/:id', async (req, res, next) => {
                 bookId: req.params.id,
                 comments: comments,
                 comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                free_books,
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
@@ -177,6 +189,7 @@ router.get('/book/:id', async (req, res, next) => {
                 createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
                 comments: comments,
+                free_books,
             });
         }
     } catch (error) {
