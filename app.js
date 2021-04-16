@@ -9,14 +9,14 @@ const favicon = require('serve-favicon');
 const passport = require('passport');
 const helmet = require('helmet');
 const hpp = require('hpp'); 
-// const redis = require('redis');
-// const RedisStore = require('connect-redis')(session);
+const redis = require('redis');
+const RedisStore = require('connect-redis')(session);
 
 dotenv.config();
-// const redisClient = redis.createClient({
-//   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
-//   password: process.env.REDIS_PASSWORD,
-// });
+const redisClient = redis.createClient({
+  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+  password: process.env.REDIS_PASSWORD,
+});
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 const indexRouter = require('./routes/index');
@@ -65,9 +65,9 @@ const sessionOption = {
     httpOnly: true,
     secure: false,
   },
-  name: 'sessionCookie',
+  // name: 'sessionCookie',
   // 배포 시 주석 풀기
-  // store: new RedisStore({ client: redisClient }),
+  store: new RedisStore({ client: redisClient }),
 };
 if (process.env.NODE_ENV === 'production') {  //배포 할 때
   sessionOption.proxy = true;
@@ -97,6 +97,8 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-const server = app.listen(app.get('port'), () => {
-  console.log(app.get('port'), '번 포트에서 대기중');
-});
+// const server = app.listen(app.get('port'), () => {
+//   console.log(app.get('port'), '번 포트에서 대기중');
+// });
+
+module.exports = app;
