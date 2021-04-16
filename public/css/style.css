@@ -166,6 +166,7 @@ table {
 /* myPostingList.html */
 .selectPosting a {
 	padding: 10px;
+	font-weight: bold;
 }
 .selectPosting a:hover {
 	border-radius: 10px;
