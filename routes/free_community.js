@@ -147,6 +147,16 @@ router.get('/community/:id', async (req, res, next) => {
                 order: [['createdAt', 'DESC']],
             }),
         ]);
+        const time = [];
+        for (const new_time of comments) {
+            const { createdAt, commentingNick, id, content } = new_time;
+            time.push({
+                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                commentingNick,
+                content,
+                id,
+            });
+        }
         if (res.locals.user) {
             console.log("login");
             res.render('communityDetail.html', {
@@ -155,7 +165,7 @@ router.get('/community/:id', async (req, res, next) => {
                 users: res.locals.user,
                 user: community.postingId,
                 communityId: community.id,
-                comments: comments,
+                comments: time,
                 comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
             });
         } else if (isNotLoggedIn) {
@@ -165,7 +175,7 @@ router.get('/community/:id', async (req, res, next) => {
                 community,
                 createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: community.postingId,
-                comments: comments,
+                comments: time,
             });
         }
     } catch (error) {

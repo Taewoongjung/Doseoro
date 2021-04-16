@@ -100,7 +100,7 @@
                                 <div class="comment-content me-3">{{comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
                             </td>
                             <td>
-                                <div class="comment-content me-3">{{comment_createdAt}}</div>
+                                <div class="comment-content me-3">{{comment.createdAt}}</div>
                             </td>
 
                             <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment"
@@ -127,6 +127,9 @@
                             </td>
                             <td>
                                 <div class="comment-content me-3">{{comment.content}}</div>
+                            </td>
+                            <td>
+                                <div class="comment-content me-3">{{comment.createdAt}}</div>
                             </td>
                             {% endif %}
                         </form>
