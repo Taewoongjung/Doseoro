@@ -23,7 +23,7 @@ router.get('/commentEdit', isLoggedIn, async (req, res, next) => {
             await Post.update({ 
                 content: edited_comment,
             }, {
-                where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } 
+                where: { id: commentId, UserId: req.user.id } 
             });
             
             return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/book/${thisBook.id}";</script>`);   
@@ -64,7 +64,7 @@ router.get('/commentEdit_buy', isLoggedIn, async (req, res, next) => {
             await Post.update({ 
                 content: edited_comment,
             }, {
-                where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } 
+                where: { id: commentId, UserId: req.user.id } 
             });
             
             return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/wannabuy/buybook/${thisBook.id}";</script>`);   
@@ -83,7 +83,7 @@ router.get('/commentDelete_buy', isLoggedIn, async (req, res, next) => {
         const { UserId, commentId, comment_createdAt, bookId } = req.query;
         const thisBook = await Book.findOne({ where: { id: bookId } });
         if (UserId === String(res.locals.user.id)){
-            await Post.destroy({ where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } });
+            await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
 
             return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/wannabuy/buybook/${thisBook.id}";</script>`);        
         } else {
@@ -106,7 +106,7 @@ router.get('/commentEdit_commu', isLoggedIn, async (req, res, next) => {
             await Post.update({ 
                 content: edited_comment,
             }, {
-                where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } 
+                where: { id: commentId, UserId: req.user.id } 
             });
             
             return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);   
@@ -125,7 +125,7 @@ router.get('/commentDelete_commu', isLoggedIn, async (req, res, next) => {
         const { UserId, commentId, comment_createdAt, communityId } = req.query;
         const thisCommunity = await Community.findOne({ where: { id: communityId } });
         if (UserId === String(res.locals.user.id)){
-            await Post.destroy({ where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } });
+            await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
 
             return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);        
         } else {
