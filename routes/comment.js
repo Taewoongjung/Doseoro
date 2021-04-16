@@ -42,7 +42,7 @@ router.get('/commentDelete', isLoggedIn, async (req, res, next) => {
         const { UserId, commentId, comment_createdAt, bookId } = req.query;
         const thisBook = await Book.findOne({ where: { id: bookId } });
         if (UserId === String(res.locals.user.id)){
-            await Post.destroy({ where: { id: commentId, UserId: req.user.id, createdAt: comment_createdAt } });
+            await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
 
             return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/book/${thisBook.id}";</script>`);        
         } else {

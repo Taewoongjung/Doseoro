@@ -11,6 +11,8 @@ const helmet = require('helmet');
 const hpp = require('hpp'); 
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
+const moment = require('moment-timezone');
+moment.tz.setDefault('Asia/Seoul');
 
 dotenv.config();
 const redisClient = redis.createClient({

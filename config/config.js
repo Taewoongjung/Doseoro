@@ -7,7 +7,7 @@ module.exports = {
     "database": "Teamproject",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "timezone": '+09:00',
+    "timezone": '+00:00',
     'pool': {
       max: 20,   // 최대 유지 connection 수
       min: 5,    // 최소 유지 connection 수
@@ -20,7 +20,7 @@ module.exports = {
     "database": "Teamproject",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "timezone": '+09:00',
+    "timezone": '+00:00',
     'pool': {
       max: 20,  
       min: 5,  
@@ -33,7 +33,7 @@ module.exports = {
     "database": "Teamproject",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "timezone": '+09:00',
+    "timezone": '+00:00',
     'pool': {
       max: 20, 
       min: 5,  

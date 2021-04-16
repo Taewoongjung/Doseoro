@@ -149,12 +149,13 @@ router.get('/community/:id', async (req, res, next) => {
         ]);
         const time = [];
         for (const new_time of comments) {
-            const { createdAt, commentingNick, id, content } = new_time;
+            const { createdAt, commentingNick, id, content, UserId } = new_time;
             time.push({
                 createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 commentingNick,
                 content,
                 id,
+                UserId
             });
         }
         if (res.locals.user) {
