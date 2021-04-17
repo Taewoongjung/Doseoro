@@ -97,7 +97,7 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
             where: { id: this_item_id, price: -1 }
         });
 
-        res.send(`<script type="text/javascript">alert("구매하기 정보 수정 완료"); location.href="/book/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+        res.send(`<script type="text/javascript">alert("무료나눔 정보 수정 완료"); location.href="/book/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
         next(error);
@@ -164,7 +164,7 @@ router.post('/community', isLoggedIn, async (req, res, next) => {
             postingId: req.user.id,
             postingNick: req.user.nick,
         });
-        res.send(`<script type="text/javascript">alert("게시물 등록 완료"); location.href="/free_community/community/${commu.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+        res.send(`<script type="text/javascript">alert("커뮤니티 등록 완료"); location.href="/free_community/community/${commu.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
         next(error);
@@ -177,10 +177,6 @@ router.get('/community/:id', async (req, res, next) => {
         const [community] = await Promise.all([
             Community.findOne({
                 where: { id: req.params.id },
-                // include: {
-                //     model: User,
-                //     as: 'Owner',
-                // },
             }),
         ]);
         const [comments] = await Promise.all([
@@ -188,10 +184,6 @@ router.get('/community/:id', async (req, res, next) => {
                 where: {
                     CommunityId: req.params.id
                 },
-                // include: {
-                //     model: User,
-                //     as: 'Commenting',
-                // },
                 order: [['createdAt', 'DESC']],
             }),
         ]);

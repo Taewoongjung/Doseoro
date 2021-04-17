@@ -32,7 +32,12 @@ router.get('/changePW', isNotLoggedIn, (req, res) => {
 router.get('/saleBoard', async (req, res) => {
     try {
         const [books] = await Promise.all([
-            Book.findAll({ where: { isSelling: null } }),
+            Book.findAll({ where: { 
+                isSelling: null,
+                price: {
+                    [Op.ne]: -1
+                }} 
+            }),
         ]);
         res.render('saleBoard.html', {
             books,
