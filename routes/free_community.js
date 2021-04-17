@@ -121,11 +121,10 @@ router.get('/delete_community', isLoggedIn, async (req, res, next) => {
 // 0417 커뮤니티 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt_community', isLoggedIn, async (req, res, next) => {
     try {
-        const { this_item_id } = req.body;
-        const books = await Book.findOne({ where: { id: this_item_id, price: -1 } });
-        console.log("books = ", books);
+        const { this_item_id, this_item_content } = req.body;
+        const community = await Community.findOne({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
         res.render('edit_commuDetail.html', {
-            books,
+            community,
         });
     } catch (error) {
         console.error(error);
@@ -136,23 +135,18 @@ router.post('/editIt_community', isLoggedIn, async (req, res, next) => {
 // 0417 커뮤니티요청 게시물 수정하기
 router.post('/edit_community', isLoggedIn, async (req, res, next) => {
     try {
-        const { this_item_id, postmessage, title, author, publisher, checkCategory, dealRoot, about } = req.body;
+        const { this_item_id, communityTitle, communityContent } = req.body;
         console.log("body = ", req.body);
-        const a = await Book.update({
-            postmessage: postmessage,
-            title: title,
-            author: author,
-            publisher: publisher,
-            category: checkCategory,
-            tradingmethod: dealRoot,
-            about: about,
+        const a = await Community.update({
+            title: communityTitle,
+            content: communityContent,
         }, {
-            where: { id: this_item_id, price: -1 }
+            where: { id: this_item_id }
         });
         console.log("body = ", req.body);
         console.log("aa = ", a);
 
-        res.send(`<script type="text/javascript">alert("구매하기 정보 수정 완료"); location.href="/book/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+        res.send(`<script type="text/javascript">alert("구매하기 정보 수정 완료"); location.href="/free_community/community/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
         console.error(error);
         next(error);
