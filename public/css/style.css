@@ -60,6 +60,9 @@ table {
 		font-size : 18px;
 	}
 }
+textarea {
+	resize: none;
+}
 
 /* index style */
 .searchForm {
@@ -166,6 +169,7 @@ table {
 /* myPostingList.html */
 .selectPosting a {
 	padding: 10px;
+	font-weight: bold;
 }
 .selectPosting a:hover {
 	border-radius: 10px;
@@ -213,3 +217,5 @@ table {
 	max-width: 800px;
 	margin: 0 auto;
 }
+
+/* communityDetail.html */

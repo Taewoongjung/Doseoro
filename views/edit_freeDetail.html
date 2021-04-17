@@ -132,7 +132,8 @@
 
         <div class="input-group">
           <label for="book-about">상품설명</label>
-          <input type="text" class="form-control p-3" id="book-about" name="about" value="{{books.about}}">
+          <!-- <input type="text" class="form-control p-3" id="book-about" name="about" value="{{books.about}}"> -->
+          <textarea type="text" class="form-control p-3 mb-4" id="book-about" name="about" placeholder="내용" rows="10">{{books.about}}</textarea>
         </div>
         <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{books.id}}">
         <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{books.createdAt}}">
