@@ -60,6 +60,9 @@ table {
 		font-size : 18px;
 	}
 }
+textarea {
+	resize: none;
+}
 
 /* index style */
 .searchForm {
