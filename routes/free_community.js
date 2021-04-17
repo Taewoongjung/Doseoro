@@ -107,11 +107,13 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
 // 0417 커뮤니티내역 삭제
 router.get('/delete_community', isLoggedIn, async (req, res, next) => {
     try {
-        const { this_item_id, this_item_content } = req.query;
-        const aa = await Community.destroy({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
-        console.log("body = ", req.query);
-        console.log("aaa = ", aa);
-        res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/myPostingList";</script>`);
+        const { this_item_id, this_item_content, this_item_postingId } = req.query;
+        if (this_item_postingId === String(req.user.id)) {
+            const aa = await Community.destroy({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
+            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/community";</script>`);    
+        } else {
+            res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다."); location.href="/free_community/community/${this_item_id}";</script>`);
+        }
     } catch (error) {
         console.error(error);
         next(error);
@@ -121,11 +123,15 @@ router.get('/delete_community', isLoggedIn, async (req, res, next) => {
 // 0417 커뮤니티 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt_community', isLoggedIn, async (req, res, next) => {
     try {
-        const { this_item_id, this_item_content } = req.body;
-        const community = await Community.findOne({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
-        res.render('edit_commuDetail.html', {
-            community,
-        });
+        const { this_item_id, this_item_content, this_item_postingId } = req.body;
+        if (this_item_postingId === String(req.user.id)) {
+            const community = await Community.findOne({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
+            res.render('edit_commuDetail.html', {
+                community,
+            });
+        } else {
+            res.send(`<script type="text/javascript">alert("수정 권한이 없습니다."); location.href="/free_community/community/${this_item_id}";</script>`);
+        }
     } catch (error) {
         console.error(error);
         next(error);

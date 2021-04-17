@@ -39,8 +39,12 @@ router.post('/thisbook', isLoggedIn, async (req, res, next) => {
 router.get('/delete', isLoggedIn, async (req, res, next) => {
     try {
         const { this_item_id, this_item_createdAt, this_item_OwnerId } = req.query;
-        await Book.destroy({ where: { id: this_item_id, createdAt: this_item_createdAt, OwnerId: this_item_OwnerId, isSelling: '1' }, });
-        res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/myPostingList";</script>`);
+        if (this_item_OwnerId === String(req.user.id)) {
+            await Book.destroy({ where: { id: this_item_id, createdAt: this_item_createdAt, OwnerId: this_item_OwnerId, isSelling: '1' }, });
+            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/bookRequest";</script>`);    
+        } else {
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다."); location.href="/wannabuy/buybook/${this_item_id}";</script>`);
+        }
     } catch (error) {
         console.error(error);
         next(error);
@@ -50,12 +54,16 @@ router.get('/delete', isLoggedIn, async (req, res, next) => {
 // 0410 구매내역 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt', isLoggedIn, async (req, res, next) => {
     try {
-        const { this_item_id } = req.body;
-        const books = await Book.findOne({ where: { id: this_item_id, isSelling: '1' } });
-        console.log("books = ", books);
-        res.render('edit_buyDetail.html', {
-            books,
-        });
+        const { this_item_OwnerId, this_item_id } = req.body;
+        if (this_item_OwnerId === String(req.user.id)) {
+            const books = await Book.findOne({ where: { id: this_item_id, isSelling: '1' } });
+            console.log("books = ", books);
+            res.render('edit_buyDetail.html', {
+                books,
+            });
+        } else {
+            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다."); location.href="/wannabuy/buybook/${this_item_id}";</script>`);
+        }
     } catch (error) {
         console.error(error);
         next(error);
@@ -79,8 +87,6 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
         }, {
             where: { id: this_item_id, isSelling: '1' }
         });
-        console.log("body = ", req.body);
-        console.log("aa = ", a);
 
         res.send(`<script type="text/javascript">alert("구매하기 정보 수정 완료"); location.href="/wannabuy/buybook/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
