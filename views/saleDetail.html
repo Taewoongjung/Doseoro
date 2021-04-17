@@ -45,8 +45,7 @@
                 <!-- 제목 -->
                 <div class="w-100 pb-2 mb-4 border-bottom">
                     <div class="d-lg-flex align-items-center">
-                        <h1 class="h2 text-decoration-none w-100 fw-bold" id="getPostingTitle">{{book
-                            .postmessage}}</h1>
+                        <h1 class="h2 text-decoration-none w-100 fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
                         <!-- 등록 시간을 DB에서 받아와 YMD 형식으로 바꿀 JS코드 필요 => 해결 -->
                         <a class="text-decoration-none w-100 text-dark text-end" id="getPostingDate">{{createdAt}}</a>
                     </div>
@@ -74,7 +73,7 @@
                                             <input type="hidden" name="bookId" value="{{bookId}}">
                                             <input type="hidden" name="postmessage" value="{{book.postmessage}}">
                                             <input type="hidden" name="title" value="{{book.title}}">
-                                                <input type="hidden" name="price" value="{{book.price}}">
+                                            <input type="hidden" name="price" value="{{book.price}}">
                                             <button class="btn  btn-outline-primary" class="btn" type="submit"
                                                 onclick="like()" style="border: 0px">❤️</button>
     
@@ -165,20 +164,6 @@
                     <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()"
                         value="Click">댓글달기</button>
                 </div>
-
-                <!-- <div class="img-preview">
-                        <img id="img-preview" src="" style="display: none;" width="250" alt="미리보기">
-                        <input id="img-url" type="hidden" name="url">
-                    </div> -->
-                <div>
-                    <!-- <label id="img-label" for="img">사진 업로드</label>
-                        <input id="img" type="file" accept="image/*"> -->
-                    <!-- <button id="comment-btn" type="submit" class="btn" onclick="comment()">댓글달기</button> -->
-
-                    <!-- <input type="hidden" name="bookId" value="{{bookId}}">
-                    <button id="comment-btn" type="submit" class="btn" onclick="postComment()"
-                        value="Click">댓글달기</button> -->
-                </div>
             </form>
             {% endif %}
             <div id="comments-collection" class="w-75 ms-auto me-auto">
@@ -252,7 +237,7 @@
         }
         function sell_item_delete(id) {
             const request = document.getElementById(`sell_item-ED-form-${id}`);
-            request.setAttribute('action', '/mpfunc/delete');
+            request.setAttribute('action', '/mpfunc/deleteInDetail');
             request.setAttribute('method', 'GET');
         }
 

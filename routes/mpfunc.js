@@ -26,14 +26,35 @@ router.get('/delete', isLoggedIn, async (req, res, next) => {
     }
 });
 
+// 0407 판매내역 삭제
+router.get('/deleteInDetail', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_OwnerId, this_item_id } = req.query;
+        if (this_item_OwnerId === String(req.user.id)) {
+            await Book.destroy({ where: { id: this_item_id, OwnerId: this_item_OwnerId }, });
+            await Who.destroy({ where: { thisbook: this_item_id } });
+            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/";</script>`);
+        } else {
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다."); location.href="/book/${this_item_id}";</script>`);
+        }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 // 0407 판매내역 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt', isLoggedIn, async (req, res, next) => {
     try {
-        const { this_item_id } = req.body;
-        const books = await Book.findOne({ where: { id: this_item_id } });
-        res.render('edit_saleDetail.html', {
-            books,
-        });
+        const { this_item_OwnerId, this_item_id } = req.body;
+        if (this_item_OwnerId === String(req.user.id)) {
+            const books = await Book.findOne({ where: { id: this_item_id } });
+            res.render('edit_saleDetail.html', {
+                books,
+            });
+        } else {
+            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다."); location.href="/book/${this_item_id}";</script>`);
+        }
     } catch (error) {
         console.error(error);
         next(error);

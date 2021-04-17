@@ -141,6 +141,7 @@ router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) =>
 
 router.get('/book/:id', async (req, res, next) => {
     try {
+        console.log(req.params.id);
         const [book] = await Promise.all([
             Book.findOne({
                 where: { id: req.params.id },
