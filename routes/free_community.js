@@ -85,7 +85,7 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
     try {
         const { this_item_id, postmessage, title, author, publisher, checkCategory, dealRoot, about } = req.body;
         console.log("body = ", req.body);
-        const a = await Book.update({
+        await Book.update({
             postmessage: postmessage,
             title: title,
             author: author,
@@ -96,8 +96,6 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
         }, {
             where: { id: this_item_id, price: -1 }
         });
-        console.log("body = ", req.body);
-        console.log("aa = ", a);
 
         res.send(`<script type="text/javascript">alert("구매하기 정보 수정 완료"); location.href="/book/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
@@ -105,6 +103,56 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
+
+// 0417 커뮤니티내역 삭제
+router.get('/delete_community', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, this_item_content } = req.query;
+        const aa = await Community.destroy({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
+        console.log("body = ", req.query);
+        console.log("aaa = ", aa);
+        res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/myPostingList";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 0417 커뮤니티 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
+router.post('/editIt_community', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, this_item_content } = req.body;
+        const community = await Community.findOne({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
+        res.render('edit_commuDetail.html', {
+            community,
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 0417 커뮤니티요청 게시물 수정하기
+router.post('/edit_community', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, communityTitle, communityContent } = req.body;
+        console.log("body = ", req.body);
+        const a = await Community.update({
+            title: communityTitle,
+            content: communityContent,
+        }, {
+            where: { id: this_item_id }
+        });
+        console.log("body = ", req.body);
+        console.log("aa = ", a);
+
+        res.send(`<script type="text/javascript">alert("구매하기 정보 수정 완료"); location.href="/free_community/community/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 
 // 0415 커뮤니티 등록
 router.post('/community', isLoggedIn, async (req, res, next) => {
