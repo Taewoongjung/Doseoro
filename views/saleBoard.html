@@ -72,6 +72,7 @@
 
         <div class="d-flex justify-content-center flex-wrap mt-5">
           {% for book in books %}
+          {% if book.price > 0 %}
           <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
             <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="280px">
             <div class="card-body text-center">
@@ -80,6 +81,7 @@
               <!-- <a href="/book/{{book.id}}" class="enter btn-primary ms-5 p-2 text-decoration-none">자세히</a> -->
             </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
 
