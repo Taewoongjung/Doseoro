@@ -167,8 +167,17 @@ router.get('/book/:id', async (req, res, next) => {
                 where: { id: req.params.id, SoldId: null, isSelling: null, price: -1 }
             })
         ]);
-        console.log(book);
-        console.log(free_books);
+        const time = [];
+        for (const new_time of comments) {
+            const { createdAt, commentingNick, id, content, UserId } = new_time;
+            time.push({
+                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                commentingNick,
+                content,
+                id,
+                UserId,
+            });
+        }
         if (res.locals.user) {
             console.log("login");
             res.render('saleDetail.html', {
@@ -179,8 +188,7 @@ router.get('/book/:id', async (req, res, next) => {
                 user: book.OwnerId,
                 img: book.img,
                 bookId: req.params.id,
-                comments: comments,
-                comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                comments: time,
                 free_books,
             });
         } else if (isNotLoggedIn) {
@@ -190,7 +198,7 @@ router.get('/book/:id', async (req, res, next) => {
                 book,
                 createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
-                comments: comments,
+                comments: time,
                 free_books,
             });
         }

@@ -113,6 +113,17 @@ router.get('/buybook/:id', async (req, res, next) => {
                 order: [['createdAt', 'DESC']],
             }),
         ]);
+        const time = [];
+        for (const new_time of comments) {
+            const { createdAt, commentingNick, id, content, UserId } = new_time;
+            time.push({
+                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                commentingNick,
+                content,
+                id,
+                UserId
+            });
+        }
         if (res.locals.user) {
             console.log("login");
             res.render('buyDetail.html', {
@@ -122,7 +133,7 @@ router.get('/buybook/:id', async (req, res, next) => {
                 users: res.locals.user,
                 user: book.OwnerId,
                 bookId: req.params.id,
-                comments: comments,
+                comments: time,
                 comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
             });
         } else if (isNotLoggedIn) {
@@ -132,7 +143,7 @@ router.get('/buybook/:id', async (req, res, next) => {
                 book,
                 createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
-                comments: comments,
+                comments: time,
             });
         }
     } catch (error) {

@@ -11,6 +11,8 @@ const helmet = require('helmet');
 const hpp = require('hpp'); 
 // const redis = require('redis');
 // const RedisStore = require('connect-redis')(session);
+const moment = require('moment-timezone');
+moment.tz.setDefault('Asia/Seoul');
 
 dotenv.config();
 // const redisClient = redis.createClient({
@@ -100,3 +102,5 @@ app.use((err, req, res, next) => {
 const server = app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
 });
+
+// module.exports = app;

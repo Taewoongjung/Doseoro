@@ -4,7 +4,8 @@
   "description": "책판매 사이트",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app"
+    "start": "nodemon start",
+    "dev": "nodemon server"
   },
   "author": "TaeWoongJung",
   "license": "MIT",
