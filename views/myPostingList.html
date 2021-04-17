@@ -195,22 +195,22 @@
                                     <h1 class="postTitle h3 fw-bold">{{community.title}}</h1>
                                     <!-- <a class="text-decoration-none text-dark">{{createdAt}}</a> -->
                                 </div>
-
                                 <div>
-                                    <form id="community_item-ED-form-{{book.id}}">
-                                        <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{book.id}}">
-                                        <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
-                                        <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
+                                    <form id="community_item-ED-form-{{community.id}}">
+                                        <input type="hidden" id="delete_it-{{community.id}}" name="this_item_id" value="{{community.id}}">
+                                        <input type="hidden" id="delete_it-{{community.id}}" name="this_item_postingId" value="{{community.postingId}}">
+                                        <input type="hidden" id="delete_it-{{community.id}}" name="this_item_content" value="{{community.content}}">
+                                        <input type="hidden" id="delete_it-{{community.id}}" name="this_item_createdAt" value="{{community.createdAt}}">
                                         <div class="dropdown">
                                             <a class="btn" href="#" data-bs-toggle="dropdown"
                                                 aria-expanded="true">⁝</a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                                <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
+                                                <li><button id="item-edit-btn-{{community.id}}" class="dropdown-item"
                                                         role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                        onclick="community_item_edit('{{book.id}}')">수정</button></li>
-                                                <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
+                                                        onclick="community_item_edit('{{community.id}}')">수정</button></li>
+                                                <li><button id="item-delete-btn-{{community.id}}" class="dropdown-item"
                                                         role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                        onclick="community_item_delete('{{book.id}}')">삭제</button></li>
+                                                        onclick="community_item_delete('{{community.id}}')">삭제</button></li>
                                             </ul>
                                         </div>
                                     </form>
@@ -270,13 +270,13 @@
         // 커뮤니티 스크립트
         function community_item_edit(id) {
             const request = document.getElementById(`free_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/editIt');
+            request.setAttribute('action', '/free_community/editIt_community');
             request.setAttribute('method', 'POST');
         }
 
         function community_item_delete(id) {
             const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/delete');
+            request.setAttribute('action', '/free_community/delete_community');
             request.setAttribute('method', 'GET');
         }
     </script>
