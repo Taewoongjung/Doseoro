@@ -44,12 +44,30 @@ router.get('/deleteInDetail', isLoggedIn, async (req, res, next) => {
 });
 
 // 0407 판매내역 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
-router.post('/editIt', isLoggedIn, async (req, res, next) => {
+router.post('/editIt_A', isLoggedIn, async (req, res, next) => {
     try {
         const { this_item_OwnerId, this_item_id } = req.body;
         if (this_item_OwnerId === String(req.user.id)) {
             const books = await Book.findOne({ where: { id: this_item_id } });
             res.render('edit_saleDetail.html', {
+                books,
+            });
+        } else {
+            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다."); location.href="/book/${this_item_id}";</script>`);
+        }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 0418 무료나눔 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
+router.post('/editIt_B', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_OwnerId, this_item_id } = req.body;
+        if (this_item_OwnerId === String(req.user.id)) {
+            const books = await Book.findOne({ where: { id: this_item_id } });
+            res.render('edit_freeDetail.html', {
                 books,
             });
         } else {

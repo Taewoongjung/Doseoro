@@ -61,7 +61,11 @@
                     <div class="bookInfo w-75 me-0 ms-sm-5 align-content-between">
                         <div class="d-flex mb-3 align-items-center w-100 justify-content-between">
                             <div class="saleCheck d-flex border-0 p-2 me-2 align-items-center" style="border-radius: 10px">
-                                <a class="h5 mb-0 text-decoration-none fw-bold">판매</a>
+                                {% if free_books | length %}
+                                    <a class="h5 mb-0 text-decoration-none fw-bold">무료나눔</a>
+                                {% else %}
+                                    <a class="h5 mb-0 text-decoration-none fw-bold">판매</a>
+                                {% endif %}
                                 <div class="">
                                     <form id="book_like-form">
                                         <div class="saleCheck border-0 p-2 d-flex" style="border-radius: 10px">
@@ -95,9 +99,15 @@
                                         <a class="btn" href="#" data-bs-toggle="dropdown"
                                             aria-expanded="true">⁝</a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                            {% if free_books | length %}
+                                            <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
+                                                role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                onclick="sell_item_edit2('{{book.id}}')">수정</button></li>
+                                            {% else %}
                                             <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
                                                     onclick="sell_item_edit('{{book.id}}')">수정</button></li>
+                                            {% endif %}
                                             <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
                                                     onclick="sell_item_delete('{{book.id}}')">삭제</button></li>
@@ -232,7 +242,12 @@
 
         function sell_item_edit(id) {
             const request = document.getElementById(`sell_item-ED-form-${id}`);
-            request.setAttribute('action', '/mpfunc/editIt');
+            request.setAttribute('action', '/mpfunc/editIt_A');
+            request.setAttribute('method', 'POST');
+        }
+        function sell_item_edit2(id) {
+            const request = document.getElementById(`sell_item-ED-form-${id}`);
+            request.setAttribute('action', '/mpfunc/editIt_B');
             request.setAttribute('method', 'POST');
         }
         function sell_item_delete(id) {
