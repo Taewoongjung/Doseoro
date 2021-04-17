@@ -75,19 +75,25 @@
                                 </div>
                             </div>
                             
-
                             <!-- 수정/삭제 -->
-                            <div class="dropdown">
-                                <a class="btn" href="#" data-bs-toggle="dropdown"
-                                    aria-expanded="true">⁝</a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                    <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="">수정</button></li>
-                                    <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="">삭제</button></li>
-                                </ul>
+                            <div>
+                                <form id="buy_item-ED-form-{{book.id}}">
+                                    <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{book.id}}">
+                                    <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
+                                    <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
+                                    <div class="dropdown">
+                                        <a class="btn" href="#" data-bs-toggle="dropdown"
+                                            aria-expanded="true">⁝</a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                            <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
+                                                    role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                    onclick="buy_item_edit('{{book.id}}')">수정</button></li>
+                                            <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
+                                                    role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                    onclick="buy_item_delete('{{book.id}}')">삭제</button></li>
+                                        </ul>
+                                    </div>
+                                </form>
                             </div>
 
                         </div>
@@ -126,7 +132,7 @@
             <!-- 게시물 내용 -->
             <div class="mt-3 border-top w-75 ms-auto me-auto mb-5 pt-4">
                 <div class="mt-3"><a id="getPostingContents">{{book.tags}}</a></div>
-                <div class="mt-3"><a id="getPostingContents">{{book.about}}</a></div>
+                <div class="mt-3"><a id="getPostingContents" style="white-space: pre-line;">{{book.about}}</a></div>
             </div>
 
             <!-- 댓글 달기 -->
@@ -206,6 +212,17 @@
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script>
+        function buy_item_edit(id) {
+            const request = document.getElementById(`buy_item-ED-form-${id}`);
+            request.setAttribute('action', '/wannabuy/editIt');
+            request.setAttribute('method', 'POST');
+        }
+        function buy_item_delete(id) {
+            const request = document.getElementById(`buy_item-ED-form-${id}`);
+            request.setAttribute('action', '/wannabuy/delete');
+            request.setAttribute('method', 'GET');
+        }
+
         function postComment() {
             const request = document.getElementById('comment-form');
             request.setAttribute('action', '/wannabuy/buybook/{{bookId}}/comment');

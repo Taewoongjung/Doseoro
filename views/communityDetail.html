@@ -53,17 +53,37 @@
                 </div>
 
                 <!-- 게시물 정보 -->
-                <div class="wrapBookInfo d-lg-flex align-items-center ">
-                    <div class="bookInfo w-75 me-0 ms-sm-5 align-content-between">
+                <div class="wrapBookInfo d-flex">
+                    <div class="bookInfo w-100 me-0 align-content-between">
                         <div class="category d-flex align-items-center mt-2 mb-2">
-                            <h4 class="h4 fw-bold w-50">글쓴이</h4>
-                            <a class="text-body text-decoration-none" id="getAppearanceInfo">{{community.postingNick}}</a>
-                        </div>
-                        <div class="category d-flex align-items-center mt-2 mb-2">
-                            <h4 class="h4 fw-bold w-50">세부 내용</h4>
-                            <a class="text-body text-decoration-none" id="getAppearanceInfo">{{community.content}}</a>
+                            <a class="text-body text-decoration-none fw-bold" id="getAppearanceInfo">{{community.postingNick}}</a>
                         </div>
                     </div>
+
+                    <div>
+                        <form id="community_item-ED-form-{{community.id}}">
+                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_id" value="{{community.id}}">
+                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_postingId" value="{{community.postingId}}">
+                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_content" value="{{community.content}}">
+                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_createdAt" value="{{community.createdAt}}">
+                            <div class="dropdown">
+                                <a class="btn" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="true">⁝</a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                    <li><button id="item-edit-btn-{{community.id}}" class="dropdown-item"
+                                            role="menuitem" tabindex="-1" type="submit" class="btn"
+                                            onclick="community_item_edit('{{community.id}}')">수정</button></li>
+                                    <li><button id="item-delete-btn-{{community.id}}" class="dropdown-item"
+                                            role="menuitem" tabindex="-1" type="submit" class="btn"
+                                            onclick="community_item_delete('{{community.id}}')">삭제</button></li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="commuAbout align-items-center mt-2 mb-2 pt-4 pb-4">
+                    <a class="text-body text-decoration-none" id="getAppearanceInfo" onload="replaceLine()" style="white-space: pre-line;">{{community.content}}</a>
                 </div>
             </div>
 
@@ -143,6 +163,19 @@
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script>
+        // 커뮤니티 스크립트
+        function community_item_edit(id) {
+            const request = document.getElementById(`community_item-ED-form-${id}`);
+            request.setAttribute('action', '/free_community/editIt_community');
+            request.setAttribute('method', 'POST');
+        }
+
+        function community_item_delete(id) {
+            const request = document.getElementById(`community_item-ED-form-${id}`);
+            request.setAttribute('action', '/free_community/delete_community');
+            request.setAttribute('method', 'GET');
+        }
+
         // 여기만 수정
         function postComment() {
             const request = document.getElementById('comment-form');
@@ -169,7 +202,7 @@
     </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/topNav.js"></script>
-
+    <script src="/js/changeLine.js"></script>
 </body>
 
 </html>
