@@ -12,13 +12,15 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
     next();
 });
 
-// 0403 댓글 수정(판매)
+// 댓글 수정(판매)
 router.get('/commentEdit', isLoggedIn, async (req, res, next) => {
     try {
         const { UserId, commentId, bookId, edited_comment } = req.query;
         console.log("Com = ", edited_comment);
         const thisBook = await Book.findOne({ where: { id: bookId } });
-        if (UserId === String(res.locals.user.id)){
+        if (UserId !== String(res.locals.user.id)){
+            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/book/${thisBook.id}";</script>`);  
+        } else {
             if ( edited_comment === String(null)){
                 return res.send(`<script type="text/javascript">alert("댓글이 수정이 취소 되었습니다!"); location.href="/book/${thisBook.id}";</script>`);   
             }
@@ -27,11 +29,9 @@ router.get('/commentEdit', isLoggedIn, async (req, res, next) => {
             }, {
                 where: { id: commentId, UserId: req.user.id } 
             });
-            
-            return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/book/${thisBook.id}";</script>`);   
-        } else {
-            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/book/${thisBook.id}";</script>`);  
-        }} catch (err) {
+            return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/book/${thisBook.id}";</script>`);
+        }
+    } catch (err) {
         console.error(err);
         next(err);
       }
