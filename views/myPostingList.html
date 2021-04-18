@@ -60,7 +60,7 @@
                 <h1 class="h4 fw-bold">판매글</h1>
 
                 <!-- 게시물 불러오는 위치 -->
-                {% for book in wantsell_books %}
+                {% for book in wantsell_books | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
                         <img src="/img/{{book.img}}" class="" width="150px" height="200px">
                         
@@ -100,7 +100,7 @@
                 <h1 class="h4 fw-bold">구매글</h1>
 
                     <!-- 게시물 불러오는 위치 -->
-                    {% for book in wantbuy_books %}
+                    {% for book in wantbuy_books | reverse %}
                         <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
                             <div class="pb-3 border-bottom w-100">
                                 <div class="d-flex justify-content-between align-items-center w-100">
@@ -142,7 +142,7 @@
                 <h1 class="h4 fw-bold">나눔글</h1>
 
                 <!-- 게시물 불러오는 위치 -->
-                {% for book in free_books %}
+                {% for book in free_books | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
                         <img src="/img/{{book.img}}" class="" width="150px" height="200px">
                         
@@ -181,7 +181,7 @@
             <div id="communityPosting" class="mb-3 mt-3" style="display: none;">
                 <h1 class="h4 fw-bold">커뮤니티</h1>
                     <!-- 게시물 불러오는 위치 -->
-                    {% for community in communities %}
+                    {% for community in communities | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/free_community/community/{{community.id}}'">
                         <div class="pb-3 border-bottom w-100">
                             <div class="d-flex justify-content-between align-items-center w-100">
