@@ -239,6 +239,12 @@
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script>
+        
+        function like() {
+            const request = document.getElementById('book_like-form');
+            request.setAttribute('action', '/like');
+            request.setAttribute('method', 'POST');
+        }
 
         function sell_item_edit(id) {
             const request = document.getElementById(`sell_item-ED-form-${id}`);
@@ -259,12 +265,6 @@
         function postComment() {
             const request = document.getElementById('comment-form');
             request.setAttribute('action', '/book/{{bookId}}/comment');
-            request.setAttribute('method', 'POST');
-        }
-
-        function like() {
-            const request = document.getElementById('book_like-form');
-            request.setAttribute('action', '/like');
             request.setAttribute('method', 'POST');
         }
 
