@@ -179,8 +179,17 @@
         // 여기만 수정
         function postComment() {
             const request = document.getElementById('comment-form');
-            request.setAttribute('action', '/free_community/community/{{communityId}}/comment');
-            request.setAttribute('method', 'POST');
+
+            let comment = document.getElementById('comment').value.replace(/\s|　/gi, '');
+
+            if(comment == '') {
+                alert("내용을 입력하세요");
+            } else {
+                request.setAttribute('action', '/free_community/community/{{communityId}}/comment');
+                request.setAttribute('method', 'POST');
+            }
+            // request.setAttribute('action', '/free_community/community/{{communityId}}/comment');
+            // request.setAttribute('method', 'POST');
         }
 
         // 밑에는 수정 해야함
@@ -189,8 +198,14 @@
             document.getElementById(`edit_it-${id}`).value = `${Com}`;
 
             const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', `/comment/commentEdit_commu?Com`);
-            request.setAttribute('method', 'GET');
+
+            let ckCom = Com.replace(/\s|　/gi, '');
+            if(ckCom == '') {
+                alert("내용을 입력하세요");
+            } else {
+                request.setAttribute('action', `/comment/commentEdit_commu?Com`);
+                request.setAttribute('method', 'GET');
+            }
         }
 
         function comment_delete(id) {
@@ -202,7 +217,6 @@
     </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/topNav.js"></script>
-    <script src="/js/changeLine.js"></script>
 </body>
 
 </html>

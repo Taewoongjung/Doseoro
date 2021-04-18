@@ -121,14 +121,16 @@
                             <h4 class="h4 fw-bold w-50">책 제목</h4>
                             <a class="text-body text-decoration-none" id="getBookTitle">{{book.title}}</a>
                         </div>
+
+                        {% if free_books | length %}
+                        <div></div>
+                        {% else %}
                         <div class="bookTitle d-flex align-items-center mt-2 mb-2">
-                            <h4 class="h4 fw-bold w-50">가격</h4>
-                            {% if free_books | length %}
-                                <a class="text-body text-decoration-none" id="getBookPrice">무료나눔</a>
-                            {% else %}
+                                <h4 class="h4 fw-bold w-50">가격</h4>
                                 <a class="text-body text-decoration-none" id="getBookPrice">{{book.price}}원</a>
-                            {% endif %}
                         </div>
+                        {% endif %}
+
                         <div class="auther d-flex align-items-center mt-2 mb-2">
                             <h4 class="h4 fw-bold w-50">저자</h4>
                             <a class="text-body text-decoration-none" id="getAuther">{{book.author}}</a>
@@ -168,8 +170,6 @@
             <form id="comment-form" class="mt-5 w-75 ms-auto me-auto">
                 <div class="input-group">
                     <input id="comment" class="form-control p-2" name="comment">
-                    <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
-
                     <input type="hidden" name="bookId" value="{{bookId}}">
                     <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()"
                         value="Click">댓글달기</button>
@@ -264,8 +264,17 @@
 
         function postComment() {
             const request = document.getElementById('comment-form');
-            request.setAttribute('action', '/book/{{bookId}}/comment');
-            request.setAttribute('method', 'POST');
+
+            let comment = document.getElementById('comment').value.replace(/\s|　/gi, '');
+
+            if(comment == '') {
+                alert("내용을 입력하세요!");
+            } else {
+                request.setAttribute('action', '/book/{{bookId}}/comment');
+                request.setAttribute('method', 'POST');
+            }
+            // request.setAttribute('action', '/book/{{bookId}}/comment');
+            // request.setAttribute('method', 'POST');
         }
 
         function comment_edit(id) {
@@ -273,8 +282,14 @@
             document.getElementById(`edit_it-${id}`).value = `${Com}`;
 
             const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', `/comment/commentEdit?Com`);
-            request.setAttribute('method', 'GET');
+
+            let ckCom = Com.replace(/\s|  /gi, '');
+            if(ckCom == '') {
+                alert("내용을 입력하세요");
+            } else {
+                request.setAttribute('action', `/comment/commentEdit?Com`);
+                request.setAttribute('method', 'GET');
+            }
         }
 
         function comment_delete(id) {

@@ -225,8 +225,17 @@
 
         function postComment() {
             const request = document.getElementById('comment-form');
-            request.setAttribute('action', '/wannabuy/buybook/{{bookId}}/comment');
-            request.setAttribute('method', 'POST');
+
+            let comment = document.getElementById('comment').value.replace(/\s|　/gi, '');
+
+            if(comment == '') {
+                alert("내용을 입력하세요");
+            } else {
+                request.setAttribute('action', '/wannabuy/buybook/{{bookId}}/comment');
+                request.setAttribute('method', 'POST');
+            }
+            // request.setAttribute('action', '/wannabuy/buybook/{{bookId}}/comment');
+            // request.setAttribute('method', 'POST');
         }
 
         function comment_edit(id) {
@@ -234,8 +243,15 @@
             document.getElementById(`edit_it-${id}`).value = `${Com}`;
 
             const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', `/comment/commentEdit_buy?Com`);
-            request.setAttribute('method', 'GET');
+
+            let ckCom = Com.replace(/\s|　/gi, '');
+            if(ckCom == '') {
+                alert("내용을 입력하세요");
+            } else {
+                request.setAttribute('action', `/comment/commentEdit_buy?Com`);
+                request.setAttribute('method', 'GET');
+            }
+            
         }
 
         function comment_delete(id) {
