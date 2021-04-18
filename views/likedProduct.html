@@ -1,8 +1,5 @@
 <!doctype html>
 <html lang="en">
-<!-- 
-  footer는 현재 fixed-bottom 이지만 구현이 완료된 후 static으로 바꿔야함
- -->
 
 <head>
     <meta charset="utf-8">
@@ -37,8 +34,10 @@
         <!-- main -->
         <main class="container-sm mt-0 mb-0 min-vh-100 border">
             <div class="p-5">
-                <h1 class="h4 fw-bold">찜 목록</h1>
-                {% for book in books %}
+                <h1 class="h4 fw-bold mb-5">관심상품</h1>
+                <div class="mb-5">
+                    <h1 class="h4 fw-bold">판매</h1>
+                    {% for book in books | reverse%}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.thisbook}}'">
                         <img src="/img/{{book.img}}" class="" width="150px" height="200px">
                         <div class="ms-4">
@@ -47,15 +46,19 @@
                         </div>
                     </div>
                 {% endfor %}
-                {% for book in free_books %}
+                </div>
+                <div>
+                    <h1 class="h4 fw-bold">무료나눔</h1>
+                    {% for book in free_books %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.thisbook}}'">
                         <img src="/img/{{book.img}}" class="" width="150px" height="200px">
                         <div class="ms-4">
                             <h1 class="h2 m-1 mb-3  fw-bold">{{book.posttitle}}</h1>
-                                <h4 class="h5 m-1">무료나눔</h4>
+                                <!-- <h4 class="h5 m-1">{{book.createdAt}}</h4> -->
                         </div>
                     </div>
                 {% endfor %}
+                </div>
             </div>
         </main>
 
