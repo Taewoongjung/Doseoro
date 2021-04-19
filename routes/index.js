@@ -206,6 +206,7 @@ router.get('/book/:id', async (req, res, next) => {
                 user: book.OwnerId,
                 comments: time,
                 free_books,
+                this_book_location: user.location,
             });
         }
     } catch (error) {
