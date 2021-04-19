@@ -12,6 +12,7 @@
             - 일단은 saleDetail에다가 책의 오너의 아이디를 찾아서 그 아이디로 User를 찾고 그 User의 아이디를 saleDetail에 표시되게 해 놓았는데요
               책이 등록 될 때 등록이 되면 좋겠지만 이렇게 하면 만약 User가 이사가면 그 책의 위치는 바뀌지 않음을 고려하여 그렇게 안했습니다.
             - 회원이 위치 등록이 안되었으면 "위치 등록이 안되었습니다 표시해주기"를 각 ~~Detail.html 파일(community 제외)에 모두 적용하였습니다.
+            - 찜하기 누르면 이상한곳으로 redirect되는 것을 고침 { 원인: routes/index.js에 like 라우터에 location.href=document.referrer; }
 
         < 추가한 것 >
 

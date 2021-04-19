@@ -230,7 +230,7 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
         const { user: owner, bookId, createdat, postmessage, title, price } = req.body;
         const isheliked = await Who.findOne({ where: { thisbook: bookId, liked: req.user.id } });
         if ( String(req.user.id) === String(owner) ) {
-            return res.send(`<script type="text/javascript">alert("자신의 물건에는 할 수 없습니다."); location.href = document.referrer;</script>`);
+            return res.send(`<script type="text/javascript">alert("자신의 물건에는 할 수 없습니다."); location.href="/book/${bookId}";</script>`);
         }
         else if (isheliked) {
             const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: owner } });
@@ -241,7 +241,7 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
             }, {
                 where: { id: bookId }
             });
-            return res.send(`<script type="text/javascript">alert("찜 해제됐습니다!"); location.href = document.referrer;</script>`);
+            return res.send(`<script type="text/javascript">alert("찜 해제됐습니다!"); location.href="/book/${bookId}";</script>`);
         }
         else {
             const FindBook = await Book.findOne({ where: { id: bookId, OwnerId: owner } });
@@ -259,7 +259,7 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
             }, {
                 where: { id: bookId }
             });
-            return res.send(`<script type="text/javascript">alert("찜 했습니다!"); location.href = document.referrer; </script>`);
+            return res.send(`<script type="text/javascript">alert("찜 했습니다!"); location.href = "/book/${bookId}"; </script>`);
         }
     } catch (error) {
         console.error(error);

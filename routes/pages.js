@@ -66,7 +66,6 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
                 where: { liked: String(req.user.id), price: -1, },
             })
         ]);
-        console.log("free = ", free_books);
         res.render('likedProduct.html', {
             books,
             free_books,
