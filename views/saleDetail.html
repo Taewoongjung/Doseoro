@@ -66,7 +66,11 @@
                         <a class="text-decoration-none w-100 text-dark text-end" id="getPostingDate">{{createdAt}}</a>
                     </div>
                     <p class="mt-3 mb-3 fw-bold">{{book.usernick}}</p>
-                    <p><a><img src="/img/marker.png" width="25px" height="25px"></a>등록자의 위치를 표시합니다{{this_book_location}}</p>
+                    {% if this_book_location %}
+                        <p><a><img src="/img/marker.png" width="25px" height="25px"></a>{{this_book_location}}</p>
+                    {% else %}
+                        <p><a><img src="/img/marker.png" width="25px" height="25px"></a>위치 등록이 안되었습니다.</p>
+                    {% endif %}
                 </div>
 
                 <!-- 책 정보 -->

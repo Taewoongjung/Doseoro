@@ -107,6 +107,11 @@ router.get('/buybook/:id', async (req, res, next) => {
                 },
             }),
         ]);
+        const [user] = await Promise.all([
+            User.findOne({
+                where: { id: book.OwnerId }
+            }),
+        ]);
         const [comments] = await Promise.all([
             Post.findAll({
                 where: {
@@ -141,6 +146,7 @@ router.get('/buybook/:id', async (req, res, next) => {
                 bookId: req.params.id,
                 comments: time,
                 comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                this_book_location: user.location,
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
@@ -150,6 +156,7 @@ router.get('/buybook/:id', async (req, res, next) => {
                 createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
                 comments: time,
+                this_book_location: user.location,
             });
         }
     } catch (error) {
