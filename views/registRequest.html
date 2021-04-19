@@ -40,26 +40,28 @@
     <!-- 책 등록 -->
     <main class="registerForm border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
       <form id="register_book-form" class="regiRequest p-5">
-        <input type="text" class="form-control p-3" id="postTitle" name="postmessage" placeholder="제목" required autofocus>
+        <div class="input-group">
+          <input type="text" class="inputForm form-control p-3" id="postTitle" name="postmessage" placeholder="제목" required autofocus>
+        </div>
 
         <div class="input-group">
           <label for="book-name">책 이름</label>
-          <input type="text" class="form-control p-3" id="book-name" name="title" placeholder="책 이름" required>
+          <input type="text" class="inputForm form-control p-3" id="book-name" name="title" placeholder="책 이름" required>
         </div>
 
         <div class="input-group">
           <label for="book-price">가격</label>
-          <input type="number" class="form-control p-3" id="book-price" name="price" placeholder="구매 희망 가격" required>
+          <input type="number" class="inputForm form-control p-3" id="book-price" name="price" placeholder="구매 희망 가격" required>
         </div>
 
         <div class="input-group">
           <label for="book-author">저자</label>
-          <input type="text" class="form-control p-3" id="book-author" name="author" placeholder="저자">
+          <input type="text" class="inputForm form-control p-3" id="book-author" name="author" placeholder="저자">
         </div>
 
         <div class="input-group">
           <label for="book-publisher">출판사</label>
-          <input type="text" class="form-control p-3" id="book-publisher" name="publisher" placeholder="출판사">
+          <input type="text" class="inputForm form-control p-3" id="book-publisher" name="publisher" placeholder="출판사">
         </div>
 
         <!-- 체크박스, 텍스트기입 논의 필요 / id를 꼭 확인해주세요 -->
@@ -107,6 +109,12 @@
             <option name="dealRoot" value="직거래">직거래</option>
             <option name="dealRoot" value="택배">택배</option>
           </select>
+        </div>
+
+        <!-- 여기에 사용자 위치를 표시합니다 -->
+        <div class="usreLocation">
+          <a><img src="/img/marker.png" width="25px" height="25px"></a>
+          <a class="fw-bold h5 text-black-50 text-decoration-none" id="postLocation">{{ user.location }}</a>
         </div>
 
         <div class="input-group">
