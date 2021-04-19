@@ -131,6 +131,10 @@ textarea {
 .categoryBox label, .stateBox label {
 	padding-top : 5px;
 }
+.inputForm {
+	border: 0;
+	/* border-bottom: solid  rgb(230, 230, 230) 1px; */
+}
 
 /* myPage.html */
 .profile img {

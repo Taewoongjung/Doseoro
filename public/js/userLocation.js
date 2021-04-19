@@ -5,7 +5,8 @@
 function getLocation() {
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error, {
-            enableHighAccuracy: false,
+            // enableHighAccuracy 정확성 향상, 핸드폰 이용시 배터리소모량 커짐
+            enableHighAccuracy: true,
             maximumAge: 0,
             timeout: Infinity
         });
@@ -25,9 +26,14 @@ function success(position) {
     mapContainer.style.display = 'block';
     mapOption = { 
         center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-        level: 5
+        level: 4
     }
     const map = new kakao.maps.Map(mapContainer, mapOption); 
+
+    // 마커표시
+    let markerPosition = new kakao.maps.LatLng(latitude, longitude);
+    let marker = new kakao.maps.Marker({position:markerPosition});
+    marker.setMap(map);
 
     searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 }
