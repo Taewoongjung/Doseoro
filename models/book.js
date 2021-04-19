@@ -61,6 +61,10 @@ module.exports = class Book extends Sequelize.Model {
                 type: Sequelize.BOOLEAN,
                 allowNull: true,
             },
+            bookLocation: {
+                type: Sequelize.STRING(150),
+                allowNull: true,
+            }
         }, {
             sequelize,
             timestamps: true,

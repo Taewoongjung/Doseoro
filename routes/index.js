@@ -141,7 +141,6 @@ router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) =>
 
 router.get('/book/:id', async (req, res, next) => {
     try {
-        console.log(req.params.id);
         const [book] = await Promise.all([
             Book.findOne({
                 where: { id: req.params.id },
@@ -149,6 +148,11 @@ router.get('/book/:id', async (req, res, next) => {
                     model: User,
                     as: 'Owner',
                 },
+            }),
+        ]);
+        const [user] = await Promise.all([
+            User.findOne({
+                where: { id: book.OwnerId }
             }),
         ]);
         const [comments] = await Promise.all([
@@ -191,6 +195,7 @@ router.get('/book/:id', async (req, res, next) => {
                 bookId: req.params.id,
                 comments: time,
                 free_books,
+                this_book_location: user.location,
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
