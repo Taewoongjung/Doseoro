@@ -114,12 +114,12 @@ router.post('/book/:id/comment', isLoggedIn, async (req, res, next) => {
 });
 
 // 0421 대댓글 기능 test
-router.post('/recomment/:Com', isLoggedIn, async (req, res, next) => {
+router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
-        console.log("@!@!", req.params.Com);
-        const { UserId, bookId, commentId, commentNick } = req.body;
+        console.log("@!@!@@");
+        const { comment, UserId, bookId, commentId, commentNick } = req.body;
         const post = await Post.create({
-            content: req.params.Com,
+            content: comment,
             commentingNick: commentNick,
             UserId: UserId,
             BookId: bookId,
