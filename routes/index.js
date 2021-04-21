@@ -114,8 +114,23 @@ router.post('/book/:id/comment', isLoggedIn, async (req, res, next) => {
 });
 
 // 0421 대댓글 기능 test
-router.post('/comment/:id', isLoggedIn, async (req, res, next) => {
-
+router.post('/recomment', isLoggedIn, async (req, res, next) => {
+    try {
+        console.log("@!@!");
+        const { UserId, bookId, commentId, commentNick } = req.body;
+        const post = await Post.create({
+            content: req.params.Com,
+            commentingNick: commentNick,
+            UserId: UserId,
+            BookId: bookId,
+            reCommentId: req.user.id,
+            reCommentNick: req.user.nick,
+        });
+        return res.send(`<script type="text/javascript">location.href="/book/${post.BookId}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
 });
 
 // 0330 책 등록

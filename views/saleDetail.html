@@ -210,6 +210,9 @@
                             <input type="hidden" name="UserId" value="{{comment.UserId}}">
                             <input type="hidden" name="commentId" value="{{comment.id}}">
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
+                            <!-- 추가 -->
+                            <input type="hidden" name="commentNick" value="{{comment.commentingNick}}">
+
                             <td>
                                 <div class="comment-nick me-3">{{comment.commentingNick}}</div>
                             </td>
@@ -227,9 +230,11 @@
                                     <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
                                         aria-expanded="true"></a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                        <!-- 추가 -->
                                         <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
                                             onclick="re_comment('{{comment.id}}')">댓글</button></li>
+                                        <!-- 까지 -->
                                         <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
                                                 role="menuitem" tabindex="-1" type="submit" class="btn"
                                                 onclick="comment_edit('{{comment.id}}')">수정</button></li>
@@ -303,15 +308,12 @@
 
         function re_comment(id) {
             var Com = prompt('댓글 내용을 적어주세요');
-            document.getElementById(`edit_it-${id}`).value = `${Com}`;
 
-            const request = document.getElementById(`comment-ED-form-${id}`);
-            
             let ckCom = Com.replace(/\s|  /gi, '');
             if(ckCom == '') {
                 alert("내용을 입력하세요");
             } else {
-                request.setAttribute('action', `/comment/commentEdit?Com`);
+                request.setAttribute('action', `/recomment?Com`);
                 request.setAttribute('method', 'GET');
             }
         }
