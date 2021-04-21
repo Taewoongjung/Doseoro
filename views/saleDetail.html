@@ -308,13 +308,13 @@
 
         function re_comment(id) {
             var Com = prompt('댓글 내용을 적어주세요');
-
+            const request = document.getElementById(`comment-ED-form-${id}`);
             let ckCom = Com.replace(/\s|  /gi, '');
             if(ckCom == '') {
                 alert("내용을 입력하세요");
             } else {
-                request.setAttribute('action', `/recomment?Com`);
-                request.setAttribute('method', 'GET');
+                request.setAttribute('action', '/recomment?Com');
+                request.setAttribute('method', 'POST');
             }
         }
 
