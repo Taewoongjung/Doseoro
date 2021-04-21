@@ -15,6 +15,14 @@ module.exports = class Post extends Sequelize.Model {
         type: Sequelize.STRING(200),
         allowNull: true,
       },
+      reCommentId: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
+      },
+      reCommentNick: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
+      }
     }, {
       sequelize,
       timestamps: true,

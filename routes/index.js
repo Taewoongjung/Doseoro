@@ -113,6 +113,11 @@ router.post('/book/:id/comment', isLoggedIn, async (req, res, next) => {
     }
 });
 
+// 0421 대댓글 기능 test
+router.post('/comment/:id', isLoggedIn, async (req, res, next) => {
+
+});
+
 // 0330 책 등록
 // 0331 이미지 등록
 router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
@@ -218,15 +223,6 @@ router.get('/book/:id', async (req, res, next) => {
 // 0403 찜 하기 기능
 router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
-        /*
-            1. 자신의 물건인 경우
-                자신의 물건에는 할 수 없습니다
-            2. 자신의 물건이 아닌 경우
-                2-1. 좋아요가 이미 눌러진 상태인 경우
-                    찜 해제됐습니다
-                2-2. 아닌 경우
-                    찜 했습니다
-        */
         const { user: owner, bookId, createdat, postmessage, title, price } = req.body;
         const isheliked = await Who.findOne({ where: { thisbook: bookId, liked: req.user.id } });
         if ( String(req.user.id) === String(owner) ) {
