@@ -118,6 +118,7 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
         console.log("@!@!@@");
         const { comment, UserId, bookId, commentId, commentNick } = req.body;
+        console.log("@!@!@@ = ", UserId);
         const post = await Post.create({
             content: comment,
             commentingNick: commentNick,
@@ -175,10 +176,28 @@ router.get('/book/:id', async (req, res, next) => {
                 where: { id: book.OwnerId }
             }),
         ]);
+        // 그냥 댓글들
         const [comments] = await Promise.all([
             Post.findAll({
                 where: {
-                    BookId: req.params.id
+                    BookId: req.params.id,
+                    reCommentId: null,
+                },
+                include: {
+                    model: User,
+                    as: 'Commenting',
+                },
+                order: [['createdAt', 'DESC']],
+            }),
+        ]);
+        // 대댓글들
+        const [re_comments] = await Promise.all([
+            Post.findAll({
+                where: {
+                    BookId: req.params.id,
+                    reCommentId: {
+                        [Op.ne]: null
+                    },
                 },
                 include: {
                     model: User,

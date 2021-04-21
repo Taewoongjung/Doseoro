@@ -212,7 +212,7 @@
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
                             <!-- 추가 -->
                             <input type="hidden" name="commentNick" value="{{comment.commentingNick}}">
-                            
+
                             <div class="">
                                 <td>
                                     <div class="comment-nick me-3">{{comment.commentingNick}}</div>
@@ -247,7 +247,6 @@
                                 </div>
                             </td>
 
-                            <td></td>
                             {% else %}
                             <td>
                                 <div class="comment-nick me-3">{{comment.commentingNick}}</div>
@@ -259,13 +258,11 @@
                                 <div class="comment-content me-3">{{comment.createdAt}}</div>
                             </td>
                             {% endif %}
+                            <!-- 대댓글표시위치 -->
+                            <td id="inputReComment-{{comment.id}}">asd</td>
                         </form>
-
-                        <!-- 대댓글표시위치 -->
-                        <td id="inputReComment-{{comment.id}}">asd</td>
                     </tr>
-                    
-                    
+
                 </table>
                 {% endfor %}
             </div>
