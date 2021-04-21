@@ -212,16 +212,18 @@
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
                             <!-- 추가 -->
                             <input type="hidden" name="commentNick" value="{{comment.commentingNick}}">
-
-                            <td>
-                                <div class="comment-nick me-3">{{comment.commentingNick}}</div>
-                            </td>
-                            <td>
-                                <div class="comment-content me-3">{{comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
-                            </td>
-                            <td>
-                                <div class="comment-content me-3">{{comment.createdAt}}</div>
-                            </td>
+                            
+                            <div class="">
+                                <td>
+                                    <div class="comment-nick me-3">{{comment.commentingNick}}</div>
+                                </td>
+                                <td>
+                                    <div class="comment-content me-3">{{comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+                                </td>
+                                <td>
+                                    <div class="comment-content me-3">{{comment.createdAt}}</div>
+                                </td>
+                            </div>
 
                             <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment"
                                 value="{{comment.id}}">
@@ -231,9 +233,9 @@
                                         aria-expanded="true"></a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                         <!-- 추가 -->
-                                        <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
+                                        <li><a id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="re_comment('{{comment.id}}')">댓글</button></li>
+                                            onclick="re_comment('{{comment.id}}')">댓글</a></li>
                                         <!-- 까지 -->
                                         <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
                                                 role="menuitem" tabindex="-1" type="submit" class="btn"
@@ -258,7 +260,12 @@
                             </td>
                             {% endif %}
                         </form>
+
+                        <!-- 대댓글표시위치 -->
+                        <td id="inputReComment-{{comment.id}}">asd</td>
                     </tr>
+                     
+                    
                 </table>
                 {% endfor %}
             </div>
@@ -306,16 +313,29 @@
             // request.setAttribute('method', 'POST');
         }
 
+        // 대댓글
         function re_comment(id) {
-            var Com = prompt('댓글 내용을 적어주세요');
+            // var Com = prompt('댓글 내용을 적어주세요');
+            // let ckCom = Com.replace(/\s|  /gi, '');
+            // if(ckCom == '') {
+            //     alert("내용을 입력하세요");
+            // } else {
+            //     request.setAttribute('action', '/recomment?Com');
+            //     request.setAttribute('method', 'POST');
+            // }
+            console.log("대댓글 클릭됨");
             const request = document.getElementById(`comment-ED-form-${id}`);
-            let ckCom = Com.replace(/\s|  /gi, '');
-            if(ckCom == '') {
-                alert("내용을 입력하세요");
-            } else {
-                request.setAttribute('action', '/recomment?Com');
-                request.setAttribute('method', 'POST');
-            }
+
+            const inputRe = document.getElementById(`inputReComment-${id}`);
+            inputRe.innerHTML = '<div class="input-group"><input id="comment" class="w-25 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div>';
+        }
+        
+        // 대댓글 등록클릭 이벤트
+        function postReComment() {
+            alert("대댓글 등록");
+            // request.setAttribute('action', '/recomment?Com');
+            // request.setAttribute('method', 'POST');
+            window.location.reload();
         }
 
         function comment_edit(id) {
