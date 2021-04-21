@@ -118,7 +118,7 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
         console.log("@!@!@@");
         const { comment, UserId, bookId, commentId, commentNick } = req.body;
-        console.log("@!@!@@ = ", UserId);
+        console.log("@!@!@@ = ", commentId);
         const post = await Post.create({
             content: comment,
             commentingNick: commentNick,

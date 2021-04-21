@@ -212,6 +212,7 @@
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
                             <!-- 추가 -->
                             <input type="hidden" name="commentNick" value="{{comment.commentingNick}}">
+                            <input type="hidden" name="content" value="{{comment.content}}">
 
                             <div class="">
                                 <td>
@@ -227,6 +228,8 @@
 
                             <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment"
                                 value="{{comment.id}}">
+                                <input type="hidden" id="userid_it-{{comment.id}}" name="UserId_comment"
+                                value="{{comment.UserId}}">
                             <td>
                                 <div class="dropdown">
                                     <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
@@ -313,8 +316,11 @@
             console.log("대댓글 클릭됨");
             const request = document.getElementById(`comment-ED-form-${id}`);
 
+            const userId = document.getElementById(`userid_it-${id}`).value;
+            console.log("!! = ", userId);
+            
             const inputRe = document.getElementById(`inputReComment-${id}`);
-            inputRe.innerHTML = '<form action="/recomment" method="POST"><div class="input-group"><input id="comment" class="w-25 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div></form>';
+            inputRe.innerHTML = '<form action="/recomment" method="POST"><div class="input-group"><input id="comment" class="w-25 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><input type="hidden" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div></form>';
         }
         
         // 대댓글 등록클릭 이벤트

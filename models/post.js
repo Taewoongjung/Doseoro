@@ -15,7 +15,11 @@ module.exports = class Post extends Sequelize.Model {
         type: Sequelize.STRING(200),
         allowNull: true,
       },
-      reCommentId: {
+      reCommentingId: {  // 이 아이디에 코멘트 달았다. 
+        type: Sequelize.STRING(100),
+        allowNull: true,
+      },
+      reCommentedId: {  // 코멘트를 단 아이디
         type: Sequelize.STRING(100),
         allowNull: true,
       },
