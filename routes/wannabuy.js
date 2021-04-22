@@ -41,7 +41,7 @@ router.get('/delete', isLoggedIn, async (req, res, next) => {
         const { this_item_id, this_item_createdAt, this_item_OwnerId } = req.query;
         if (this_item_OwnerId === String(req.user.id)) {
             await Book.destroy({ where: { id: this_item_id, createdAt: this_item_createdAt, OwnerId: this_item_OwnerId, isSelling: '1' }, });
-            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/bookRequest";</script>`);    
+            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/bookRequest";</script>`);
         } else {
             return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다."); location.href="/wannabuy/buybook/${this_item_id}";</script>`);
         }
@@ -124,6 +124,27 @@ router.get('/buybook/:id', async (req, res, next) => {
                 order: [['createdAt', 'DESC']],
             }),
         ]);
+        const findcommentId = [];
+        for (const find_commentId of comments) {
+            // const { createdAt, commentingNick, id, content, UserId, BookId, reCommentedId, reCommentingId, reCommentNick } = find_commentId;
+            const { id, createdAt } = find_commentId;
+            findcommentId.push(id);
+        }
+        // 대댓글들
+        const [re_comments] = await Promise.all([
+            Post.findAll({
+                where: {
+                    BookId: req.params.id,
+                    reCommentingId: {
+                        [Op.in]: findcommentId,
+                    },
+                },
+                order: [['createdAt', 'DESC']],
+            }),
+        ]);
+        console.log("대댓글 = ", re_comments);
+        console.log("대댓글 테스트 = ", String(findcommentId));
+
         const time = [];
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;
@@ -145,6 +166,7 @@ router.get('/buybook/:id', async (req, res, next) => {
                 user: book.OwnerId,
                 bookId: req.params.id,
                 comments: time,
+                re_comments,
                 comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 this_book_location: user.location,
             });
@@ -156,6 +178,7 @@ router.get('/buybook/:id', async (req, res, next) => {
                 createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
                 comments: time,
+                re_comments,
                 this_book_location: user.location,
             });
         }
