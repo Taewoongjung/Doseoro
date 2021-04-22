@@ -278,7 +278,7 @@
                                             onclick="re_comment_edit('{{comment.id}}','{{re_comment.id}}')">수정</button></li>
                                     <li><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="re_comment_delete('{{re_comment.id}}')">삭제</button></li>
+                                            onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">삭제</button></li>
                                 </ul>
                             </div>
                         </div>
@@ -410,18 +410,13 @@
                 alert("내용을 입력하세요");
             } else {
                 request.setAttribute('action', `/comment/reCommentEdit`);
-                /*/
-                book/16?reCom_edited_comment=aasas&recomment_reCommentedId=2&recomment_UserId=3&re_bookId=16&re_commentId=9&re_comment_createdAt=Thu+Apr+22+2021+14%3A12%3A22+GMT%2B0900+%28%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD+%ED%91%9C%EC%A4%80%EC%8B%9C%29
-
-                comment/reCommentEdit?reCom_edited_comment=zxcv&recomment_reCommentedId=2&recomment_UserId=2&re_bookId=16&re_commentId=14&re_comment_createdAt=Thu+Apr+22+2021+19%3A40%3A23+GMT%2B0900+%28%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD+%ED%91%9C%EC%A4%80%EC%8B%9C%29 200 7.476 ms - 109
-                */
                 request.setAttribute('method', 'GET');
             }
         }
 
-        function re_comment_delete(id) {
-            const request = document.getElementById(`reCom_comment-ED-form-${id}`);
-            request.setAttribute('action', '/comment/commentDelete');
+        function re_comment_delete(cid, id) {
+            const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
+            request.setAttribute('action', '/comment/reCommentDelete');
             request.setAttribute('method', 'GET');
         }
 

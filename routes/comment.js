@@ -86,6 +86,24 @@ router.get('/reCommentEdit', isLoggedIn, async (req, res, next) => {
       }
 });
 
+// 대댓글 삭제 (판매)
+router.get('/reCommentDelete', isLoggedIn, async (req, res, next) => {
+    try {
+        const { recomment_UserId, re_commentId, re_bookId, recomment_reCommentedId } = req.query;
+        console.log("@@@@@@@ = ", req.query);
+        const thisBook = await Book.findOne({ where: { id: re_bookId } });
+        if (recomment_UserId === String(recomment_reCommentedId)){
+            await Post.destroy({ where: { id: re_commentId, UserId: req.user.id } });
+
+            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/book/${thisBook.id}";</script>`);        
+        } else {
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/book/${thisBook.id}";</script>`);  
+        }} catch (err) {
+        console.error(err);
+        next(err);
+      }
+});
+
 // 0403 댓글 수정(구매)
 router.get('/commentEdit_buy', isLoggedIn, async (req, res, next) => {
     try {
