@@ -206,11 +206,11 @@ router.get('/book/:id', async (req, res, next) => {
                         [Op.in]: findcommentId,
                     },
                 },
-                order: [['createdAt', 'DESC']],
+                order: [['createdAt', 'ASC']],
             }),
         ]);
-        // console.log("대댓글 = ", re_comments);
-        // console.log("대댓글 테스트 = ", String(findcommentId));
+        console.log("대댓글 = ", re_comments);
+        console.log("대댓글 테스트 = ", String(findcommentId));
 
         const [free_books] = await Promise.all([
             Book.findAll({
