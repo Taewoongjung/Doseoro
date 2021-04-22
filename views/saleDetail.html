@@ -199,21 +199,69 @@
             {% endif %}
             <div id="comments-collection" class="w-75 ms-auto me-auto">
                 {% for comment in comments %}
-                <table>
-                    <tr>
-                        <!-- OwnerId -->
-                        <input type="hidden" name="OwnerId" value="{{user}}">
-
-                        <form id="comment-ED-form-{{comment.id}}">
-                            {% if users and users.id %}
-                            <input type="hidden" name="bookId" value="{{bookId}}">
-                            <input type="hidden" name="UserId" value="{{comment.UserId}}">
-                            <input type="hidden" name="commentId" value="{{comment.id}}">
-                            <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
-                            <!-- 추가 -->
-                            <input type="hidden" name="commentNick" value="{{comment.commentingNick}}">
-
-                            <div class="">
+                    <table>
+                        <tr>
+                            <!-- OwnerId -->
+                            <input type="hidden" name="OwnerId" value="{{user}}">
+                            <form id="comment-ED-form-{{comment.id}}">
+                                {% if users and users.id %}
+                                <input type="hidden" name="bookId" value="{{bookId}}">
+                                <input type="hidden" name="UserId" value="{{comment.UserId}}">
+                                <input type="hidden" name="commentId" value="{{comment.id}}">
+                                <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
+                                <!-- 추가 -->
+                                <input type="hidden" name="commentNick" value="{{comment.commentingNick}}">
+                                <div class="">
+                                    <td>
+                                        <div class="comment-nick me-3">{{comment.commentingNick}}</div>
+                                    </td>
+                                    <td>
+                                        <div class="comment-content me-3">{{comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+                                    </td>
+                                    <td>
+                                        <div class="comment-content me-3">{{comment.createdAt}}</div>
+                                    </td>
+                                </div>
+                                <!-- 대댓글 -->
+                                <!-- {% if recomments %}
+                                    <div class="">
+                                        <td>
+                                            <div class="comment-nick me-3">{{re_comment.reCommentNick}}</div>
+                                        </td>
+                                        <td>
+                                            <div class="comment-content me-3">{{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+                                        </td>
+                                        <td>
+                                            <div class="comment-content me-3">{{re_comment.createdAt}}</div>
+                                        </td>
+                                    </div>
+                                    {% endif %} -->
+                                    <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment"
+                                    value="{{comment.id}}">
+                                    <input type="hidden" id="userid_it-{{comment.id}}" name="UserId_comment"
+                                    value="{{comment.UserId}}">
+                                    <input type="hidden" id="commentid_it-{{comment.id}}" name="commentId" 
+                                    value="{{comment.id}}">
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
+                                            aria-expanded="true"></a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                            <!-- 추가 -->
+                                            <li><a id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
+                                                role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                onclick="re_comment('{{comment.id}}')">댓글</a></li>
+                                            <!-- 까지 -->
+                                            <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
+                                                    role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                    onclick="comment_edit('{{comment.id}}')">수정</button></li>
+                                            <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
+                                                    role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                    onclick="comment_delete('{{comment.id}}')">삭제</button></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                {% else %}
                                 <td>
                                     <div class="comment-nick me-3">{{comment.commentingNick}}</div>
                                 </td>
@@ -223,51 +271,12 @@
                                 <td>
                                     <div class="comment-content me-3">{{comment.createdAt}}</div>
                                 </td>
-                            </div>
-
-                                <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment"
-                                value="{{comment.id}}">
-                                <input type="hidden" id="userid_it-{{comment.id}}" name="UserId_comment"
-                                value="{{comment.UserId}}">
-                                <input type="hidden" id="commentid_it-{{comment.id}}" name="commentId" 
-                                value="{{comment.id}}">
-                            <td>
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
-                                        aria-expanded="true"></a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                        <!-- 추가 -->
-                                        <li><a id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="re_comment('{{comment.id}}')">댓글</a></li>
-                                        <!-- 까지 -->
-                                        <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
-                                                role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                onclick="comment_edit('{{comment.id}}')">수정</button></li>
-                                        <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
-                                                role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                onclick="comment_delete('{{comment.id}}')">삭제</button></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-                            {% else %}
-                            <td>
-                                <div class="comment-nick me-3">{{comment.commentingNick}}</div>
-                            </td>
-                            <td>
-                                <div class="comment-content me-3">{{comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
-                            </td>
-                            <td>
-                                <div class="comment-content me-3">{{comment.createdAt}}</div>
-                            </td>
-                            {% endif %}
-                            <!-- 대댓글표시위치 -->
-                            <td id="inputReComment-{{comment.id}}">asd</td>
-                        </form>
-                    </tr>
-
-                </table>
+                                {% endif %}
+                                <!-- 대댓글표시위치 -->
+                                <td id="inputReComment-{{comment.id}}">asd</td>
+                            </form>
+                        </tr>
+                    </table>
                 {% endfor %}
             </div>
 
@@ -313,20 +322,20 @@
         }
 
         // 대댓글
-        function re_comment(id) {
-            console.log("대댓글 클릭됨");
-            const request = document.getElementById(`comment-ED-form-${id}`);
+        // function re_comment(id) {
+        //     console.log("대댓글 클릭됨");
+        //     const request = document.getElementById(`comment-ED-form-${id}`);
 
-            const userId = document.getElementById(`userid_it-${id}`).value;
-            const commentId = document.getElementById(`commentid_it-${id}`).value;
-            console.log("!! = ", userId);
-            console.log("@@ = ", commentId);
+        //     const userId = document.getElementById(`userid_it-${id}`).value;
+        //     const commentId = document.getElementById(`commentid_it-${id}`).value;
+        //     console.log("!! = ", userId);
+        //     console.log("@@ = ", commentId);
             
-            const inputRe = document.getElementById(`inputReComment-${id}`);
-            inputRe.innerHTML = '<form action="/recomment" method="POST"><div class="input-group"><input id="comment" class="w-25 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div></form>';
-            document.getElementById(`userId`).value = userId;
-            document.getElementById(`commentId`).value = commentId;
-        }
+        //     const inputRe = document.getElementById(`inputReComment-${id}`);
+        //     inputRe.innerHTML = '<form action="/recomment" method="POST"><div class="input-group"><input id="comment" class="w-25 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div></form>';
+        //     document.getElementById(`userId`).value = userId;
+        //     document.getElementById(`commentId`).value = commentId;
+        // }
 
         // 대댓글 등록클릭 이벤트
         function postReComment() {
@@ -361,5 +370,4 @@
     <script src="/js/topMenu.js"></script>
 
 </body>
-
 </html>

@@ -191,7 +191,7 @@ router.get('/book/:id', async (req, res, next) => {
                 order: [['createdAt', 'DESC']],
             }),
         ]);
-        // 대댓글들
+        // 대댓글들 
         const [re_comments] = await Promise.all([
             Post.findAll({
                 where: {
@@ -234,6 +234,7 @@ router.get('/book/:id', async (req, res, next) => {
                 img: book.img,
                 bookId: req.params.id,
                 comments: time,
+                re_comments,
                 free_books,
                 this_book_location: user.location,
             });
