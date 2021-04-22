@@ -132,7 +132,7 @@ router.get('/buybook/:id', async (req, res, next) => {
             const { id } = find_commentId;
             findcommentId.push(id);
         }
-        // 대댓글들
+        // 대댓글
         const [re_comments] = await Promise.all([
             Post.findAll({
                 where: {
@@ -211,19 +211,18 @@ router.post('/buybook/:id/comment', isLoggedIn, async (req, res, next) => {
 // 0421 대댓글 기능 (구매)
 router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
-        console.log("@!@!@@");
-        const { comment, UserId, bookId, commentId, commentNick } = req.body;
+        console.log("@!@!@@", req.body);
+        const { comment, bookId, commentId } = req.body;
         console.log("@!@!@@ = ", commentId);
         const post = await Post.create({
             content: comment,
-            commentingNick: commentNick,
-            UserId: UserId,
+            UserId: req.user.id,
             BookId: bookId,
             reCommentingId: commentId,
             reCommentedId: req.user.id,
             reCommentNick: req.user.nick,
         });
-        return res.send(`<script type="text/javascript">location.href="/book/${post.BookId}";</script>`);
+        return res.send(`<script type="text/javascript">location.href="/wannabuy/buybook/${post.BookId}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
