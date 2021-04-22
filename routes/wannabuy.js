@@ -1,5 +1,7 @@
 const express = require('express');
 const moment = require('moment-timezone');
+const sequelize = require("sequelize");
+const Op = sequelize.Op;
 
 const { User, Book, Who, Post } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -127,7 +129,7 @@ router.get('/buybook/:id', async (req, res, next) => {
         const findcommentId = [];
         for (const find_commentId of comments) {
             // const { createdAt, commentingNick, id, content, UserId, BookId, reCommentedId, reCommentingId, reCommentNick } = find_commentId;
-            const { id, createdAt } = find_commentId;
+            const { id } = find_commentId;
             findcommentId.push(id);
         }
         // 대댓글들
@@ -205,5 +207,28 @@ router.post('/buybook/:id/comment', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
+
+// 0421 대댓글 기능 (구매)
+router.post('/recomment', isLoggedIn, async (req, res, next) => {
+    try {
+        console.log("@!@!@@");
+        const { comment, UserId, bookId, commentId, commentNick } = req.body;
+        console.log("@!@!@@ = ", commentId);
+        const post = await Post.create({
+            content: comment,
+            commentingNick: commentNick,
+            UserId: UserId,
+            BookId: bookId,
+            reCommentingId: commentId,
+            reCommentedId: req.user.id,
+            reCommentNick: req.user.nick,
+        });
+        return res.send(`<script type="text/javascript">location.href="/book/${post.BookId}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 
 module.exports = router;
