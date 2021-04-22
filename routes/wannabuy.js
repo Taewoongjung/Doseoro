@@ -117,7 +117,8 @@ router.get('/buybook/:id', async (req, res, next) => {
         const [comments] = await Promise.all([
             Post.findAll({
                 where: {
-                    BookId: req.params.id
+                    BookId: req.params.id,
+                    reCommentedId: null,
                 },
                 include: {
                     model: User,
