@@ -264,6 +264,9 @@
                             <div class="comment-content me-3">
                                 {{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                             </div>
+                            <div class="comment-content me-3">
+                                {{re_comment.createdAt}}
+                            </div>
                             <input type="hidden" id="reCom_id-{{re_comment.id}}" name="reCom_edited_comment"
                                 value="{{re_comment.content}}">
                             <div class="dropdown">
@@ -300,6 +303,9 @@
                             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{re_comment.reCommentNick}}</div>
                         <div class="comment-content me-3">
                             {{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        </div>
+                        <div class="comment-content me-3">
+                            {{re_comment.createdAt}}
                         </div>
                     </div>
                     {% endif %}

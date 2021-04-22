@@ -194,7 +194,7 @@ router.get('/book/:id', async (req, res, next) => {
         const findcommentId = [];
         for (const find_commentId of comments) {
             // const { createdAt, commentingNick, id, content, UserId, BookId, reCommentedId, reCommentingId, reCommentNick } = find_commentId;
-            const { id } = find_commentId;
+            const { id, createdAt } = find_commentId;
             findcommentId.push(id);
         }
         // 대댓글들
@@ -228,6 +228,19 @@ router.get('/book/:id', async (req, res, next) => {
                 UserId,
             });
         }
+        const re_time = [];
+        for (const new_time of re_comments) {
+            const { createdAt, id, content, UserId, reCommentNick, reCommentedId, reCommentingId } = new_time;
+            re_time.push({
+                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                reCommentNick,
+                reCommentedId,
+                reCommentingId,
+                content,
+                id,
+                UserId,
+            });
+        }
         if (res.locals.user) {
             console.log("login");
             res.render('saleDetail.html', {
@@ -239,7 +252,7 @@ router.get('/book/:id', async (req, res, next) => {
                 img: book.img,
                 bookId: req.params.id,
                 comments: time,
-                re_comments,
+                re_comments: re_time,
                 free_books,
                 this_book_location: user.location,
             });
@@ -251,7 +264,7 @@ router.get('/book/:id', async (req, res, next) => {
                 createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
                 comments: time,
-                re_comments,
+                re_comments: re_time,
                 free_books,
                 this_book_location: user.location,
             });
