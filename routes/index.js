@@ -191,22 +191,27 @@ router.get('/book/:id', async (req, res, next) => {
                 order: [['createdAt', 'DESC']],
             }),
         ]);
-        // 대댓글들 
+        const findcommentId = [];
+        for (const find_commentId of comments) {
+            // const { createdAt, commentingNick, id, content, UserId, BookId, reCommentedId, reCommentingId, reCommentNick } = find_commentId;
+            const { id } = find_commentId;
+            findcommentId.push(id);
+        }
+        // 대댓글들
         const [re_comments] = await Promise.all([
             Post.findAll({
                 where: {
                     BookId: req.params.id,
-                    reCommentedId: {
-                        [Op.ne]: null
+                    reCommentingId: {
+                        [Op.in]: findcommentId,
                     },
-                },
-                include: {
-                    model: User,
-                    as: 'Commenting',
                 },
                 order: [['createdAt', 'DESC']],
             }),
         ]);
+        console.log("대댓글 = ", re_comments);
+        console.log("대댓글 테스트 = ", String(findcommentId));
+
         const [free_books] = await Promise.all([
             Book.findAll({
                 where: { id: req.params.id, SoldId: null, isSelling: null, price: -1 }
@@ -246,6 +251,7 @@ router.get('/book/:id', async (req, res, next) => {
                 createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
                 comments: time,
+                re_comments,
                 free_books,
                 this_book_location: user.location,
             });
