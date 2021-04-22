@@ -124,7 +124,8 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
             commentingNick: commentNick,
             UserId: UserId,
             BookId: bookId,
-            reCommentId: req.user.id,
+            reCommentingId: commentId,
+            reCommentedId: req.user.id,
             reCommentNick: req.user.nick,
         });
         return res.send(`<script type="text/javascript">location.href="/book/${post.BookId}";</script>`);
@@ -181,7 +182,7 @@ router.get('/book/:id', async (req, res, next) => {
             Post.findAll({
                 where: {
                     BookId: req.params.id,
-                    reCommentId: null,
+                    reCommentedId: null,
                 },
                 include: {
                     model: User,
@@ -195,7 +196,7 @@ router.get('/book/:id', async (req, res, next) => {
             Post.findAll({
                 where: {
                     BookId: req.params.id,
-                    reCommentId: {
+                    reCommentedId: {
                         [Op.ne]: null
                     },
                 },
