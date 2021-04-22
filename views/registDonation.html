@@ -104,15 +104,20 @@
         </div>
 
         <h1 class="h4 mt-3">상품 사진</h1>
-        <div class="input-group mb-3">
+        <div class="input-group mb-4">
           <label for="book-photo">상품 사진</label>
           <input type="file" class="form-control" id="book-photo" name="img" required>
         </div>
 
         <!-- 여기에 사용자 위치를 표시합니다 -->
         <div class="usreLocation">
+          {% if user.location %}
           <a><img src="/img/marker.png" width="25px" height="25px"></a>
           <a class="fw-bold h5 text-black-50 text-decoration-none" id="postLocation">{{ user.location }}</a>
+          {% else %}
+          <p class="h4"><a data-toggle="tooltip" class="locationGuide">❓</a> 위치등록이 안되어있습니다</p>
+          <a class="fw-bold h5 text-black-50 text-decoration-none" id="postLocation">{{ user.location }}</a>
+          {% endif %}
         </div>
 
         <div class="input-group">

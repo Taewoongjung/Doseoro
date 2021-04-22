@@ -135,6 +135,9 @@ textarea {
 	border: 0;
 	/* border-bottom: solid  rgb(230, 230, 230) 1px; */
 }
+.locationGuide:hover{
+	
+}
 
 /* myPage.html */
 .profile img {
