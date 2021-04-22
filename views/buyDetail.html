@@ -220,6 +220,7 @@
                         {% endif %}
                     </form>
                     {% endfor %}
+
                     <!-- 비로그인 댓글 -->
                     {% else %}
                     <div class="d-flex align-items-center">
@@ -228,6 +229,7 @@
                         </div>
                         <div class="comment-content me-3">{{comment.createdAt}}</div>
                     </div>
+                    
                     <!-- 비로그인 대댓글 -->
                     {% for re_comment in re_comments %}
                     {% if re_comment.reCommentingId == comment.id %}
