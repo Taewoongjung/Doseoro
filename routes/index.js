@@ -113,7 +113,7 @@ router.post('/book/:id/comment', isLoggedIn, async (req, res, next) => {
     }
 });
 
-// 0421 대댓글 기능 test
+// 0421 대댓글 기능 
 router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
         console.log("@!@!@@");
@@ -209,8 +209,8 @@ router.get('/book/:id', async (req, res, next) => {
                 order: [['createdAt', 'DESC']],
             }),
         ]);
-        console.log("대댓글 = ", re_comments);
-        console.log("대댓글 테스트 = ", String(findcommentId));
+        // console.log("대댓글 = ", re_comments);
+        // console.log("대댓글 테스트 = ", String(findcommentId));
 
         const [free_books] = await Promise.all([
             Book.findAll({
