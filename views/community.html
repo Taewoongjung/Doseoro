@@ -23,31 +23,8 @@
 
         <!-- main -->
         <main class="border container-sm mt-0 mb-0 min-vh-100 p-5">
-            <!-- 검색 기능 -->
-            <form id="search-form" action="/search/{{searchWord}}" class="searchForm d-flex container pt-2">
-                <select class="form-select w-25" name="searchFilter">
-                    <option value>전체</option>
-                    <option value="postTitle">게시물</option>
-                    <option value="bookTitle">책</option>
-                    <option value="bookAuther">저자</option>
-                    <option value="bookPublisher">출판사</option>
-                </select>
-                <input type="text" class="form-control ps-3" id="book-publisher" name="searchWord" placeholder="검색">
-                <button class="btn btn-primary" type="submit"><img src="/img/pngegg.png" width="35" height="25"
-                        class="mt-1"></button>
-            </form>
-
-            <!-- 메뉴이동 -->
-            <div class="menuForm container mt-2 mb-2 justify-content-center d-flex" role="group">
-                <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
-                        onclick="location.href='/pages/saleBoard'">팝니다</button></div>
-                <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
-                        onclick="location.href='/pages/bookRequest'">삽니다</button></div>
-                <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
-                        onclick="location.href='/pages/donationBoard'">무료나눔</button></div>
-                <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
-                        onclick="location.href='/pages/community'">커뮤니티</button></div>
-            </div>
+            <!-- 검색, 메뉴이동 기능 -->
+            {% include "searchBox.html" %}
 
             <h1 class="h2 fw-bold mb-4">커뮤니티</h1>
             <form id="book-form" class="mb-5"><a href="/pages/registCommunity"
