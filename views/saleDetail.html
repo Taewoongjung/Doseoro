@@ -174,10 +174,9 @@
                 <table>
                     <!-- OwnerId -->
                     <input type="hidden" name="OwnerId" value="{{user}}">
-
+                    {% if users and users.id %}
                     <form id="comment-ED-form-{{comment.id}}">
                         <!-- 댓글 -->
-                        {% if users and users.id %}
                         <div class="d-flex align-items-center">
                             <input type="hidden" name="bookId" value="{{bookId}}">
                             <input type="hidden" name="UserId" value="{{comment.UserId}}">
@@ -220,19 +219,21 @@
                     <div id="inputReComment-{{comment.id}}"></div>
                     <!-- 로그인 대댓글 -->
                     {% for re_comment in re_comments %}
-                    <form id="re_comment-ED-form-{{re_comment.id}}">
+                    <form id="re_comment-ED-form-{{comment.id}}-{{re_comment.id}}">
                         {% if re_comment.reCommentingId == comment.id %}
                         <input type="hidden" name="recomment_reCommentedId" value="{{re_comment.reCommentedId}}">
                         <input type="hidden" name="recomment_UserId" value="{{re_comment.UserId}}">
-                        <input type="hidden" name="bookId" value="{{bookId}}">
-                        <input type="hidden" name="UserId" value="{{re_comment.UserId}}">
-                        <input type="hidden" name="commentId" value="{{re_comment.id}}">
-                        <input type="hidden" name="comment_createdAt" value="{{re_comment.createdAt}}">
+                        <input type="hidden" name="re_bookId" value="{{bookId}}">
+                        <input type="hidden" name="re_commentId" value="{{re_comment.id}}">
+                        <input type="hidden" name="re_comment_createdAt" value="{{re_comment.createdAt}}">
                         <div class="d-flex align-items-center">
                             <div class="comment-nick me-3">
                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{re_comment.reCommentNick}}</div>
                             <div class="comment-content me-3">
                                 {{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                            </div>
+                            <div class="comment-content me-3">
+                                {{re_comment.createdAt}}
                             </div>
                             <input type="hidden" id="reCom_id-{{re_comment.id}}" name="reCom_edited_comment"
                                 value="{{re_comment.content}}">
@@ -242,17 +243,16 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                     <li><button id="re_comment-edit-btn-{{re_comment.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="re_comment_edit('{{re_comment.id}}')">수정</button></li>
+                                            onclick="re_comment_edit('{{comment.id}}','{{re_comment.id}}')">수정</button></li>
                                     <li><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="re_comment_delete('{{re_comment.id}}')">삭제</button></li>
+                                            onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">삭제</button></li>
                                 </ul>
                             </div>
                         </div>
                         {% endif %}
                     </form>
                     {% endfor %}
-
 
                     <!-- 비로그인 댓글 -->
                     {% else %}
@@ -272,6 +272,9 @@
                         <div class="comment-content me-3">
                             {{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                         </div>
+                        <div class="comment-content me-3">
+                            {{re_comment.createdAt}}
+                        </div>
                     </div>
                     {% endif %}
                     {% endfor %}
@@ -279,7 +282,6 @@
                 </table>
                 {% endfor %}
             </div>
-
         </main>
         <!-- footer -->
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
@@ -349,9 +351,7 @@
 
             const userId = document.getElementById(`userid_it-${id}`).value;
             const commentId = document.getElementById(`commentid_it-${id}`).value;
-            console.log("!! = ", userId);
             console.log("@@ = ", commentId);
-
             const inputRe = document.getElementById(`inputReComment-${id}`);
             inputRe.innerHTML = '<form action="/recomment" method="POST"><div class="input-group"><input id="comment" autofocus class="w-25 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div></form>';
             document.getElementById(`userId`).value = userId;
@@ -365,24 +365,26 @@
         }
 
         // 대댓글 수정/삭제
-        function re_comment_edit(id) {
+        function re_comment_edit(cid, id) {
             var Com = prompt('수정 할 문구를 적어주세요');
             document.getElementById(`reCom_id-${id}`).value = `${Com}`;
             console.log("@@ = ", Com);
-            const request = document.getElementById(`re_comment-ED-form-${id}`);
+            console.log("id =", id);
+            console.log("cid = ", cid);
+            const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
 
             let ckCom = Com.replace(/\s|  /gi, '');
             if (ckCom == '') {
                 alert("내용을 입력하세요");
             } else {
-                request.setAttribute('action', `/comment/reCommentEdit?Com`);
+                request.setAttribute('action', `/comment/reCommentEdit`);
                 request.setAttribute('method', 'GET');
             }
         }
 
-        function re_comment_delete(id) {
-            const request = document.getElementById(`reCom_comment-ED-form-${id}`);
-            request.setAttribute('action', '/comment/commentDelete');
+        function re_comment_delete(cid, id) {
+            const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
+            request.setAttribute('action', '/comment/reCommentDelete');
             request.setAttribute('method', 'GET');
         }
 
