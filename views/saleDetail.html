@@ -216,8 +216,10 @@
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
 
                             <div class="d-flex justify-content-between w-100">
-                                <div class="comment-nick me-3">{{comment.commentingNick}}</div>
-                                <div class="comment-content me-3">{{comment.content}}</div>
+                                <div class="d-flex">
+                                    <div class="comment-nick me-5">{{comment.commentingNick}}</div>
+                                    <div class="comment-content">{{comment.content}}</div>
+                                </div>
                                 <div class="comment-content me-3">{{comment.createdAt}}</div>
                             </div>
 
@@ -252,11 +254,8 @@
                         {% for re_comment in re_comments %}
                         {% if re_comment.reCommentingId == comment.id %}
                         <div class="d-flex align-items-center justify-content-between w-50">
-                            <div class="comment-nick me-3">
-                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{re_comment.reCommentNick}}</div>
-                            <div class="comment-content me-3">
-                                {{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                            </div>
+                            <div class="comment-nick me-3">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{re_comment.reCommentNick}}</div>
+                            <div class="comment-content me-3">{{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
                             <div class="dropdown">
                                 <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
                                     aria-expanded="true"></a>
