@@ -193,8 +193,7 @@ router.get('/book/:id', async (req, res, next) => {
         ]);
         const findcommentId = [];
         for (const find_commentId of comments) {
-            // const { createdAt, commentingNick, id, content, UserId, BookId, reCommentedId, reCommentingId, reCommentNick } = find_commentId;
-            const { id, createdAt } = find_commentId;
+            const { id } = find_commentId;
             findcommentId.push(id);
         }
         // 대댓글들

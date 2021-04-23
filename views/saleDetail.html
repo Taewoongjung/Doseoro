@@ -368,9 +368,6 @@
         function re_comment_edit(cid, id) {
             var Com = prompt('수정 할 문구를 적어주세요');
             document.getElementById(`reCom_id-${id}`).value = `${Com}`;
-            console.log("@@ = ", Com);
-            console.log("id =", id);
-            console.log("cid = ", cid);
             const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
 
             let ckCom = Com.replace(/\s|  /gi, '');
