@@ -1,9 +1,10 @@
 const express = require('express');
-const moment = require('moment-timezone');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const sequelize = require("sequelize");
+const moment = require('moment-timezone');
+const Op = sequelize.Op;
 
 const { User, Book, Who, Post, Community } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -188,11 +189,46 @@ router.get('/community/:id', async (req, res, next) => {
         const [comments] = await Promise.all([
             Post.findAll({
                 where: {
-                    CommunityId: req.params.id
+                    CommunityId: req.params.id,
+                    reCommentedId: null,
                 },
                 order: [['createdAt', 'DESC']],
             }),
         ]);
+
+        const findcommentId = [];
+        for (const find_commentId of comments) {
+            const { id } = find_commentId;
+            findcommentId.push(id);
+        }
+        // 대댓글들
+        const [re_comments] = await Promise.all([
+            Post.findAll({
+                where: {
+                    BookId: req.params.id,
+                    reCommentingId: {
+                        [Op.in]: findcommentId,
+                    },
+                },
+                order: [['createdAt', 'ASC']],
+            }),
+        ]);
+        // console.log("대댓글 = ", re_comments);
+        // console.log("대댓글 테스트 = ", String(findcommentId));
+        
+        const re_time = [];
+        for (const new_time of re_comments) {
+            const { createdAt, id, content, UserId, reCommentNick, reCommentedId, reCommentingId } = new_time;
+            re_time.push({
+                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                reCommentNick,
+                reCommentedId,
+                reCommentingId,
+                content,
+                id,
+                UserId,
+            });
+        }
         const time = [];
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;
@@ -213,7 +249,7 @@ router.get('/community/:id', async (req, res, next) => {
                 user: community.postingId,
                 communityId: community.id,
                 comments: time,
-                comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                re_comments: re_time,
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
@@ -223,6 +259,7 @@ router.get('/community/:id', async (req, res, next) => {
                 createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: community.postingId,
                 comments: time,
+                re_comments: re_time,
             });
         }
     } catch (error) {
@@ -248,6 +285,30 @@ router.post('/community/:id/comment', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
+
+// 0421 대댓글 기능 
+router.post('/recomment', isLoggedIn, async (req, res, next) => {
+    try {
+        // console.log("@!@!@@");
+        const { comment, UserId, communityId, commentId } = req.body;
+        // console.log("@!@!@@ = ", commentId);
+        // console.log("@!@!@@ = ", communityId);
+        // console.log("@!@!@@ = ", req.body);
+        const post = await Post.create({
+            content: comment,
+            UserId: req.user.id,
+            CommunityId: communityId,
+            reCommentingId: commentId,
+            reCommentedId: req.user.id,
+            reCommentNick: req.user.nick,
+        });
+        return res.send(`<script type="text/javascript">location.href="/free_community/community/${communityId}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 
 
 module.exports = router;
