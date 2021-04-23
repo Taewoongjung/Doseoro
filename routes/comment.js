@@ -40,7 +40,7 @@ router.get('/commentEdit', isLoggedIn, async (req, res, next) => {
 // 댓글 삭제 (판매)
 router.get('/commentDelete', isLoggedIn, async (req, res, next) => {
     try {
-        const { UserId, commentId, comment_createdAt, bookId } = req.query;
+        const { UserId, commentId, bookId } = req.query;
         const thisBook = await Book.findOne({ where: { id: bookId } });
         if (UserId === String(res.locals.user.id)){
             await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
@@ -133,7 +133,7 @@ router.get('/commentEdit_buy', isLoggedIn, async (req, res, next) => {
 // 댓글 삭제 (구매)
 router.get('/commentDelete_buy', isLoggedIn, async (req, res, next) => {
     try {
-        const { UserId, commentId, comment_createdAt, bookId } = req.query;
+        const { UserId, commentId, bookId } = req.query;
         const thisBook = await Book.findOne({ where: { id: bookId } });
         if (UserId === String(res.locals.user.id)){
             await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
@@ -276,18 +276,18 @@ router.get('/reCommentEdit_commu', isLoggedIn, async (req, res, next) => {
 // 0423 대댓글 삭제 (커뮤니티)
 router.get('/reCommentDelete_commu', isLoggedIn, async (req, res, next) => {
     try {
-        const { UserId, commentId, comment_createdAt, communityId } = req.query;
-        const thisCommunity = await Community.findOne({ where: { id: communityId } });
-        if (UserId === String(res.locals.user.id)){
-            await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
+        const { recomment_UserId, re_commentId, communityId, recomment_reCommentedId } = req.query;
 
-            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);        
+        if (recomment_UserId === String(recomment_reCommentedId)){
+            await Post.destroy({ where: { id: re_commentId, UserId: req.user.id } });
+
+            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/free_community/community/${communityId}";</script>`);        
         } else {
-            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);  
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/free_community/community/${communityId}";</script>`);  
         }} catch (err) {
         console.error(err);
         next(err);
-      }
+    }
 });
 
 module.exports = router;
