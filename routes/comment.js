@@ -92,9 +92,9 @@ router.get('/reCommentDelete', isLoggedIn, async (req, res, next) => {
         const { recomment_UserId, re_commentId, re_bookId, recomment_reCommentedId } = req.query;
 
         const thisBook = await Book.findOne({ where: { id: re_bookId } });
-        if (recomment_UserId === String(recomment_reCommentedId)){
-            await Post.destroy({ where: { id: re_commentId, UserId: req.user.id } });
-
+        if (recomment_reCommentedId === String(res.locals.user.id)){
+            const a = await Post.destroy({ where: { id: re_commentId, UserId: req.user.id } });
+            console.log("@!@! = ", a);
             return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/book/${thisBook.id}";</script>`);        
         } else {
             return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/book/${thisBook.id}";</script>`);  
@@ -135,6 +135,10 @@ router.get('/commentDelete_buy', isLoggedIn, async (req, res, next) => {
     try {
         const { UserId, commentId, bookId } = req.query;
         const thisBook = await Book.findOne({ where: { id: bookId } });
+
+        console.log("user id = ", res.locals.user.id);
+        console.log("recommenid = ", String(recomment_reCommentedId));
+
         if (UserId === String(res.locals.user.id)){
             await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
 
@@ -153,7 +157,7 @@ router.get('/reCommentDelete_buy', isLoggedIn, async (req, res, next) => {
         const { recomment_UserId, re_commentId, re_bookId, recomment_reCommentedId } = req.query;
 
         const thisBook = await Book.findOne({ where: { id: re_bookId } });
-        if (recomment_UserId === String(recomment_reCommentedId)){
+        if (recomment_reCommentedId === String(res.locals.user.id)){
             await Post.destroy({ where: { id: re_commentId, UserId: req.user.id } });
 
             return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/wannabuy/buybook/${re_bookId}";</script>`);        
@@ -277,8 +281,9 @@ router.get('/reCommentEdit_commu', isLoggedIn, async (req, res, next) => {
 router.get('/reCommentDelete_commu', isLoggedIn, async (req, res, next) => {
     try {
         const { recomment_UserId, re_commentId, communityId, recomment_reCommentedId } = req.query;
-
-        if (recomment_UserId === String(recomment_reCommentedId)){
+        console.log("user id = ", res.locals.user.id);
+        console.log("recommenid = ", String(recomment_reCommentedId));
+        if (String(recomment_reCommentedId) === String(res.locals.user.id)){
             await Post.destroy({ where: { id: re_commentId, UserId: req.user.id } });
 
             return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/free_community/community/${communityId}";</script>`);        

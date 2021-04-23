@@ -205,7 +205,7 @@ router.get('/community/:id', async (req, res, next) => {
         const [re_comments] = await Promise.all([
             Post.findAll({
                 where: {
-                    BookId: req.params.id,
+                    CommunityId: req.params.id,
                     reCommentingId: {
                         [Op.in]: findcommentId,
                     },
@@ -291,10 +291,10 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
         // console.log("@!@!@@");
         const { comment, UserId, communityId, commentId } = req.body;
-        // console.log("@!@!@@ = ", commentId);
+        console.log("@!@!@@ = ", commentId);
         // console.log("@!@!@@ = ", communityId);
         // console.log("@!@!@@ = ", req.body);
-        const post = await Post.create({
+        await Post.create({
             content: comment,
             UserId: req.user.id,
             CommunityId: communityId,
@@ -308,7 +308,5 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
-
-
 
 module.exports = router;

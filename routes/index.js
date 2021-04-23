@@ -122,7 +122,7 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
         console.log("@!@!@@ === ", req.body);
         const post = await Post.create({
             content: comment,
-            UserId: UserId,
+            UserId: req.user.id,
             BookId: bookId,
             reCommentingId: commentId,
             reCommentedId: req.user.id,
