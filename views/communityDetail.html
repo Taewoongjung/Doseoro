@@ -18,44 +18,12 @@
 <body>
     <div class="flex w-100">
         <!-- 상단 바 -->
-        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white" id="topNav">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/"><img src="/img/logo3.png" width="160" height="64"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
-                    <ul class="navbar-nav mb-2 mb-md-0">
-                        {% if users and users.id %}
-                        <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{users.nick}}님</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
-                        {% else %}
-                        <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li>
-                        <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        {% include "topNavbar2.html" %}
 
         <!-- 컨텐츠 -->
         <main class="saleDetail border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
-            <!-- 검색 -->
-            <form id="search-form" action="/search/{{searchWord}}" class="searchForm d-flex container pt-2">
-                <select class="form-select w-25" name="searchFilter">
-                  <option value>전체</option>
-                  <option value="postTitle">게시물</option>
-                  <option value="bookTitle">책</option>
-                  <option value="bookAuther">저자</option>
-                  <option value="bookPublisher">출판사</option>
-                </select>
-                <input type="text" class="form-control ps-3" id="book-publisher" name="searchWord" placeholder="검색">
-                <button class="btn btn-primary" type="submit"><img src="/img/pngegg.png" width="35" height="25"
-                    class="mt-1"></button>
-            </form>
-            <!-- 검색창 -->
-            <div id="topMenu"></div>
+            <!-- 검색, 메뉴이동 기능 -->
+            {% include "searchBox.html" %}
 
             <div class="w-75 ms-auto me-auto">
                 <!-- 제목 -->
@@ -72,19 +40,23 @@
                 <div class="wrapBookInfo d-flex">
                     <div class="bookInfo w-100 me-0 align-content-between">
                         <div class="category d-flex align-items-center mt-2 mb-2">
-                            <a class="text-body text-decoration-none fw-bold" id="getAppearanceInfo">{{community.postingNick}}</a>
+                            <a class="text-body text-decoration-none fw-bold"
+                                id="getAppearanceInfo">{{community.postingNick}}</a>
                         </div>
                     </div>
 
                     <div>
                         <form id="community_item-ED-form-{{community.id}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_id" value="{{community.id}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_postingId" value="{{community.postingId}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_content" value="{{community.content}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_createdAt" value="{{community.createdAt}}">
+                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_id"
+                                value="{{community.id}}">
+                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_postingId"
+                                value="{{community.postingId}}">
+                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_content"
+                                value="{{community.content}}">
+                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_createdAt"
+                                value="{{community.createdAt}}">
                             <div class="dropdown">
-                                <a class="btn" href="#" data-bs-toggle="dropdown"
-                                    aria-expanded="true">⁝</a>
+                                <a class="btn" href="#" data-bs-toggle="dropdown" aria-expanded="true">⁝</a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                     <li><button id="item-edit-btn-{{community.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
@@ -99,7 +71,8 @@
                 </div>
 
                 <div class="commuAbout align-items-center mt-2 mb-2 pt-4 pb-4">
-                    <a class="text-body text-decoration-none" id="getAppearanceInfo" onload="replaceLine()" style="white-space: pre-line;">{{community.content}}</a>
+                    <a class="text-body text-decoration-none" id="getAppearanceInfo" onload="replaceLine()"
+                        style="white-space: pre-line;">{{community.content}}</a>
                 </div>
             </div>
 
@@ -119,57 +92,111 @@
             <div id="comments-collection" class="w-75 ms-auto me-auto">
                 {% for comment in comments %}
                 <table>
-                    <tr>
-                        <!-- OwnerId -->
-                        <input type="hidden" name="OwnerId" value="{{user}}">
+                    <!-- OwnerId -->
+                    <input type="hidden" name="OwnerId" value="{{user}}">
 
-                        <form id="comment-ED-form-{{comment.id}}">
-                            {% if users and users.id %}
+                    {% if users and users.id %}
+                    <form id="comment-ED-form-{{comment.id}}">
+                        <div class="d-flex align-items-center">
                             <input type="hidden" name="communityId" value="{{communityId}}">
                             <input type="hidden" name="UserId" value="{{comment.UserId}}">
                             <input type="hidden" name="commentId" value="{{comment.id}}">
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
-                            <td>
-                                <div class="comment-nick me-3">{{comment.commentingNick}}</div>
-                            </td>
-                            <td>
-                                <div class="comment-content me-3">{{comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
-                            </td>
-                            <td>
+                            <div class="d-flex justify-content-between w-100">
+                                <div class="d-flex">
+                                    <div class="comment-nick me-3">{{comment.commentingNick}}</div>
+                                    <div class="comment-content me-3">{{comment.content}}</div>
+                                </div>
                                 <div class="comment-content me-3">{{comment.createdAt}}</div>
-                            </td>
-
+                            </div>
                             <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment"
                                 value="{{comment.id}}">
-                            <td>
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
-                                        aria-expanded="true"></a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                        <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
-                                                role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                onclick="comment_edit('{{comment.id}}')">수정</button></li>
-                                        <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
-                                                role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                onclick="comment_delete('{{comment.id}}')">삭제</button></li>
-                                    </ul>
-                                </div>
-                            </td>
+                            <input type="hidden" id="userid_it-{{comment.id}}" name="UserId_comment"
+                                value="{{comment.id}}">
+                            <input type="hidden" id="commentid_it-{{comment.id}}" name="commentId"
+                                value="{{comment.id}}">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="true"></a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                    <li><a id="comment-edit-btn-{{comment.id}}" class="dropdown-item" role="menuitem"
+                                            tabindex="-1" type="submit" class="btn"
+                                            onclick="re_comment('{{comment.id}}')">댓글</a></li>
+                                    <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
+                                            role="menuitem" tabindex="-1" type="submit" class="btn"
+                                            onclick="comment_edit('{{comment.id}}')">수정</button></li>
+                                    <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
+                                            role="menuitem" tabindex="-1" type="submit" class="btn"
+                                            onclick="comment_delete('{{comment.id}}')">삭제</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- 대댓글표시위치 -->
+                    <div id="inputReComment-{{comment.id}}"></div>
+                    <!-- 로그인 대댓글 -->
+                    {% for re_comment in re_comments %}
+                    <form id="re_comment-ED-form-{{comment.id}}-{{re_comment.id}}">
+                        {% if re_comment.reCommentingId == comment.id %}
+                        <input type="hidden" name="recomment_reCommentedId" value="{{re_comment.reCommentedId}}">
+                        <input type="hidden" name="recomment_UserId" value="{{re_comment.UserId}}">
+                        <input type="hidden" name="re_bookId" value="{{bookId}}">
+                        <input type="hidden" name="re_commentId" value="{{re_comment.id}}">
+                        <input type="hidden" name="re_comment_createdAt" value="{{re_comment.createdAt}}">
+                        <div class="d-flex align-items-center">
+                            <div class="comment-nick me-3">
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{re_comment.reCommentNick}}</div>
+                            <div class="comment-content me-3">
+                                {{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                            </div>
+                            <div class="comment-content me-3">
+                                {{re_comment.createdAt}}
+                            </div>
+                            <input type="hidden" id="reCom_id-{{re_comment.id}}" name="reCom_edited_comment"
+                                value="{{re_comment.content}}">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
+                                    aria-expanded="true"></a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                    <li><button id="re_comment-edit-btn-{{re_comment.id}}" class="dropdown-item"
+                                            role="menuitem" tabindex="-1" type="submit" class="btn"
+                                            onclick="re_comment_edit('{{comment.id}}','{{re_comment.id}}')">수정</button>
+                                    </li>
+                                    <li><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item"
+                                            role="menuitem" tabindex="-1" type="submit" class="btn"
+                                            onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">삭제</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </form>
+                    {% endfor %}
 
-                            <td></td>
-                            {% else %}
-                            <td>
-                                <div class="comment-nick me-3">{{comment.commentingNick}}</div>
-                            </td>
-                            <td>
-                                <div class="comment-content me-3">{{comment.content}}</div>
-                            </td>
-                            <td>
-                                <div class="comment-content me-3">{{comment.createdAt}}</div>
-                            </td>
-                            {% endif %}
-                        </form>
-                    </tr>
+                    {% else %}
+                    <!-- 비로그인 댓글 -->
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex">
+                            <div class="comment-nick me-3">{{comment.commentingNick}}</div>
+                            <div class="comment-content me-3">{{comment.content}}</div>
+                        </div>
+                        <div class="comment-content me-3">{{comment.createdAt}}</div>
+                    </div>
+                    {% for re_comment in re_comments %}
+                    {% if re_comment.reCommentingId == comment.id %}
+                    <div class="d-flex align-items-center">
+                        <div class="comment-nick me-3">
+                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{re_comment.reCommentNick}}</div>
+                        <div class="comment-content me-3">
+                            {{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        </div>
+                        <div class="comment-content me-3">
+                            {{re_comment.createdAt}}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
                 </table>
                 {% endfor %}
             </div>
@@ -198,7 +225,7 @@
 
             let comment = document.getElementById('comment').value.replace(/\s|　/gi, '');
 
-            if(comment == '') {
+            if (comment == '') {
                 alert("내용을 입력하세요");
             } else {
                 request.setAttribute('action', '/free_community/community/{{communityId}}/comment');
@@ -216,7 +243,7 @@
             const request = document.getElementById(`comment-ED-form-${id}`);
 
             let ckCom = Com.replace(/\s|　/gi, '');
-            if(ckCom == '') {
+            if (ckCom == '') {
                 alert("내용을 입력하세요");
             } else {
                 request.setAttribute('action', `/comment/commentEdit_commu?Com`);
@@ -230,10 +257,53 @@
             request.setAttribute('method', 'GET');
         }
 
+        // 대댓글
+        function re_comment(id) {
+            console.log("대댓글 클릭됨");
+            const request = document.getElementById(`comment-ED-form-${id}`);
+
+            const userId = document.getElementById(`userid_it-${id}`).value;
+            const commentId = document.getElementById(`commentid_it-${id}`).value;
+            console.log("@@ = ", commentId);
+            const inputRe = document.getElementById(`inputReComment-${id}`);
+            inputRe.innerHTML = '<form action="/wannabuy/recomment" method="POST"><div class="input-group"><input id="comment" autofocus class="w-25 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div></form>';
+            document.getElementById(`userId`).value = userId;
+            document.getElementById(`commentId`).value = commentId;
+        }
+
+        // 대댓글 등록클릭 이벤트
+        function postReComment() {
+            alert("대댓글 등록");
+            window.location.reload();
+        }
+
+        // 대댓글 수정/삭제
+        function re_comment_edit(cid, id) {
+            var Com = prompt('수정 할 문구를 적어주세요');
+            document.getElementById(`reCom_id-${id}`).value = `${Com}`;
+            console.log("@@ = ", Com);
+            console.log("id =", id);
+            console.log("cid = ", cid);
+            const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
+
+            let ckCom = Com.replace(/\s|  /gi, '');
+            if (ckCom == '') {
+                alert("내용을 입력하세요");
+            } else {
+                request.setAttribute('action', `/comment/reCommentEdit_buy`);
+                request.setAttribute('method', 'GET');
+            }
+        }
+
+        function re_comment_delete(cid, id) {
+            const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
+            request.setAttribute('action', '/comment/reCommentDelete_buy');
+            request.setAttribute('method', 'GET');
+        }
+
     </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/topNav.js"></script>
-    <script src="/js/topMenu.js"></script>
 </body>
 
 </html>
