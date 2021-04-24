@@ -159,6 +159,19 @@ router.get('/buybook/:id', async (req, res, next) => {
                 UserId
             });
         }
+        const re_time = [];
+        for (const new_time of re_comments) {
+            const { createdAt, id, content, UserId, reCommentNick, reCommentedId, reCommentingId } = new_time;
+            re_time.push({
+                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                reCommentNick,
+                reCommentedId,
+                reCommentingId,
+                content,
+                id,
+                UserId,
+            });
+        }
         if (res.locals.user) {
             console.log("login");
             res.render('buyDetail.html', {
@@ -169,7 +182,7 @@ router.get('/buybook/:id', async (req, res, next) => {
                 user: book.OwnerId,
                 bookId: req.params.id,
                 comments: time,
-                re_comments,
+                re_comments: re_time,
                 comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 this_book_location: user.location,
             });
@@ -181,7 +194,7 @@ router.get('/buybook/:id', async (req, res, next) => {
                 createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 user: book.OwnerId,
                 comments: time,
-                re_comments,
+                re_comments: re_time,
                 this_book_location: user.location,
             });
         }

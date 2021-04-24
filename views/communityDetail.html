@@ -140,7 +140,7 @@
                         {% if re_comment.reCommentingId == comment.id %}
                         <input type="hidden" name="recomment_reCommentedId" value="{{re_comment.reCommentedId}}">
                         <input type="hidden" name="recomment_UserId" value="{{re_comment.UserId}}">
-                        <input type="hidden" name="re_bookId" value="{{bookId}}">
+                        <input type="hidden" name="communityId" value="{{communityId}}">
                         <input type="hidden" name="re_commentId" value="{{re_comment.id}}">
                         <input type="hidden" name="re_comment_createdAt" value="{{re_comment.createdAt}}">
                         <div class="d-flex align-items-center">
@@ -231,8 +231,6 @@
                 request.setAttribute('action', '/free_community/community/{{communityId}}/comment');
                 request.setAttribute('method', 'POST');
             }
-            // request.setAttribute('action', '/free_community/community/{{communityId}}/comment');
-            // request.setAttribute('method', 'POST');
         }
 
         // 밑에는 수정 해야함
@@ -266,7 +264,7 @@
             const commentId = document.getElementById(`commentid_it-${id}`).value;
             console.log("@@ = ", commentId);
             const inputRe = document.getElementById(`inputReComment-${id}`);
-            inputRe.innerHTML = '<form action="/wannabuy/recomment" method="POST"><div class="input-group"><input id="comment" autofocus class="w-25 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div></form>';
+            inputRe.innerHTML = '<form action="/free_community/recomment" method="POST"><div class="input-group"><input id="comment" autofocus class="w-25 p-2" name="comment"><input type="hidden" name="communityId" value="{{communityId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div></form>';
             document.getElementById(`userId`).value = userId;
             document.getElementById(`commentId`).value = commentId;
         }
@@ -290,14 +288,14 @@
             if (ckCom == '') {
                 alert("내용을 입력하세요");
             } else {
-                request.setAttribute('action', `/comment/reCommentEdit_buy`);
+                request.setAttribute('action', `/comment/reCommentEdit_commu`);
                 request.setAttribute('method', 'GET');
             }
         }
 
         function re_comment_delete(cid, id) {
             const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
-            request.setAttribute('action', '/comment/reCommentDelete_buy');
+            request.setAttribute('action', '/comment/reCommentDelete_commu');
             request.setAttribute('method', 'GET');
         }
 

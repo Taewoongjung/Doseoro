@@ -117,12 +117,12 @@ router.post('/book/:id/comment', isLoggedIn, async (req, res, next) => {
 router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
         console.log("@!@!@@");
-        const { comment, UserId, bookId, commentId, commentNick } = req.body;
+        const { comment, UserId, bookId, commentId } = req.body;
         console.log("@!@!@@ = ", commentId);
+        console.log("@!@!@@ === ", req.body);
         const post = await Post.create({
             content: comment,
-            commentingNick: commentNick,
-            UserId: UserId,
+            UserId: req.user.id,
             BookId: bookId,
             reCommentingId: commentId,
             reCommentedId: req.user.id,
@@ -208,8 +208,8 @@ router.get('/book/:id', async (req, res, next) => {
                 order: [['createdAt', 'ASC']],
             }),
         ]);
-        console.log("대댓글 = ", re_comments);
-        console.log("대댓글 테스트 = ", String(findcommentId));
+        // console.log("대댓글 = ", re_comments);
+        // console.log("대댓글 테스트 = ", String(findcommentId));
 
         const [free_books] = await Promise.all([
             Book.findAll({
