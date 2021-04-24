@@ -37,7 +37,7 @@
                     {% if this_book_location %}
                     <p><a><img src="/img/marker.png" width="25px" height="25px"></a>{{this_book_location}}</p>
                     {% else %}
-                    <p><a><img src="/img/marker.png" width="25px" height="25px"></a>위치 등록이 안되었습니다.</p>
+                    <p><a><img src="/img/marker.png" width="25px" height="25px"></a>미등록</p>
                     {% endif %}
                 </div>
 
@@ -75,7 +75,7 @@
                                     <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt"
                                         value="{{book.createdAt}}">
                                     <div class="dropdown">
-                                        <a class="btn" href="#" data-bs-toggle="dropdown" aria-expanded="true">⁝</a>
+                                        <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                             <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"

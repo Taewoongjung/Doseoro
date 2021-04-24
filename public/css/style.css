@@ -132,12 +132,45 @@ textarea {
 }
 .inputForm {
 	border: 0;
-	/* border-bottom: solid  rgb(230, 230, 230) 1px; */
 }
-.locationGuide:hover{
-	
+.usreLocation {
+	position: relative;
 }
-
+#popupBox {
+	background-color: rgb(53, 53, 53);
+	/* border: 1px solid rgb(255, 255, 255); */
+	border-radius: 15px;
+	padding: 1.3rem;
+	position: absolute;
+	top: -80px;
+	left: 10px;
+	z-index: 1;
+}
+#popupBox a {
+	color: rgb(255, 255, 255);
+}
+#popupBox:after, #popupBox:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+#popupBox:after {
+	/* border-color: rgb(230, 230, 230); */
+	border-top-color: rgb(53, 53, 53);
+	border-width: 5px;
+	margin-left: -5px;
+}
+#popupBox:before {
+	/* border-color: rgb(230, 230, 230); */
+	border-top-color: rgb(53, 53, 53);
+	border-width: 18px;
+	margin-left: -18px;
+}
 /* myPage.html */
 .profile img {
 	max-width: 200px;
@@ -255,6 +288,10 @@ textarea {
 	margin-bottom: 10px;
 	justify-content: space-between;
 	align-items: center;
+}
+.kebobMenu:hover {
+	background-color: rgb(228, 228, 228);
+	transition: 300ms;
 }
 
 /* communityDetail.html */
