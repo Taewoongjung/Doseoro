@@ -1,5 +1,4 @@
 // geolocation API
-// 받아온 API 주소를 카카오맵 혹은 구글 맵에 마커표시하는 부분 추가해야함
 
 // 기본적으로 윈도우에서 geolocation을 지원한다. 단, 지도에 표시하는건 맵 API를 가져와야한다.
 function getLocation() {
@@ -11,18 +10,24 @@ function getLocation() {
             timeout: Infinity
         });
     } else {
-        alert('GPS 미지원');
+        alert('Geolocation 미지원');
     }
 }
 
 // 카카오 맵
+
+// 좌표를 주소로 변환하는 라이브러리 불러옴
 const geocoder = new kakao.maps.services.Geocoder();
 
+// geolocation 성공 코드
 function success(position) {
     const mapContainer = document.getElementById('kakao_map');
+
+    // 위도, 경도를 getLocation에서 가져옴
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
 
+    // 카카오맵을 block형태로 표시
     mapContainer.style.display = 'block';
     mapOption = { 
         center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
@@ -30,11 +35,12 @@ function success(position) {
     }
     const map = new kakao.maps.Map(mapContainer, mapOption); 
 
-    // 마커표시
+    // 좌표정보를 토대로 마커표시
     let markerPosition = new kakao.maps.LatLng(latitude, longitude);
     let marker = new kakao.maps.Marker({position:markerPosition});
     marker.setMap(map);
 
+    // 주소정보값을 불러옴
     searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 }
 

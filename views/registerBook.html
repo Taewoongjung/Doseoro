@@ -83,7 +83,6 @@
           <!-- <input type="text" class="form-control p-3" id="book-category" name="category" placeholder="카테고리" required> -->
         </div>
 
-        <!-- 체크박스, 텍스트기입 논의 필요 / id를 꼭 확인해주세요 -->
         <h1 class="h4 mt-3">사용흔적</h1>
         <div class="stateBox input-group align-items-center p-3 bg-white border" id="stateCheck">
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state1" name="checkState" value="깨끗함/새책" checked>
@@ -125,8 +124,17 @@
 
         <!-- 여기에 사용자 위치를 표시합니다 -->
         <div class="usreLocation">
+          {% if user.location %}
           <a><img src="/img/marker.png" width="25px" height="25px"></a>
           <a class="fw-bold h5 text-black-50 text-decoration-none" id="postLocation">{{ user.location }}</a>
+          {% else %}
+          <div id="popGuide" onmouseout="popupGuide(false)" onmouseover="popupGuide(true)" class="fw-bold align-items-center d-flex mb-2">
+            <p><img src="/img/locationGuide.png" alt="guide" width="25px"></p>
+            <a>&nbsp&nbsp위치를 등록해주세요</a>
+            <a id="postLocation">{{ user.location }}</a>
+          </div>
+          <div id="popupBox" style="display:none;"><a>마이페이지 → "위치" 클릭</a></div>
+          {% endif %}
         </div>
 
         <div class="input-group">
@@ -153,6 +161,7 @@
   <script src="/js/topNav.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
   <script src="/js/ckboxLimit.js"></script>
+  <script src="/js/popGuide.js"></script>
 </body>
 
 </html>
