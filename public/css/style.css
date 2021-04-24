@@ -40,6 +40,9 @@ body {
 	padding-top: 6rem;
 	min-height: 100%;
 }
+a {
+	word-break: break-all;
+}
 ol, ul {
 	list-style: none;
 }
@@ -90,7 +93,6 @@ textarea {
 }
 .menuForm {
 	max-width: 500px;
-	/* margin: auto 0 auto 0; */
 }
 .menuForm button:hover {
 	background-color: rgb(6, 143, 255);
@@ -107,15 +109,12 @@ textarea {
 }
 .saleCard img {
 	border-radius: 12px;
-	/* border-top-left-radius: 15px;
-	border-top-right-radius: 15px; */
 }
 .saleCard:hover {
 	background-color: rgb(243, 243, 243);
 	cursor: pointer;
 }
 .postTitle {
-	/* width: 200px; */
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -184,7 +183,6 @@ textarea {
 	cursor: pointer;
 }
 .postTitle {
-	/* width: 100%; */
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -223,6 +221,38 @@ textarea {
 .regiRequest {
 	max-width: 800px;
 	margin: 0 auto;
+}
+
+/* detailes */
+.commentList {
+	width: 100%;
+	padding: 10px;
+}
+.commentListInner {
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+.reComment {
+	border: 1px solid rgb(226, 226, 226);
+	border-radius: 5px;
+}
+.reComment:focus{
+	border-color: rgba(158, 220, 255);
+    box-shadow: 0 1px 3px rgba(137, 179, 219) inset, 0 0 8px rgb(137, 179, 219);
+    outline: 0 none;
+}
+.reCommentList {
+	border: 1px solid rgb(226, 226, 226);
+	border-radius: 10px;
+	width: 100%;
+	margin: 5px 0;
+	padding: 10px;
+	align-items: center;
+}
+.reCommentListInner {
+	justify-content: space-between;
+	align-items: center;
 }
 
 /* communityDetail.html */
