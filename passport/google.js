@@ -9,7 +9,7 @@ module.exports = () => {
         clientSecret: process.env.GOOGLE_SECRET,
         tokenURL: process.env.GOOGLE_TOKEN,
         callbackURL: '/auth/google/callback',
-    }, async (accessToken, refreshToken, profile, done) => {  // 이 서비스에서는 구글 profile만 받아옴
+    }, async (accessToken, refreshToken, profile, done) => { 
         console.log('google profile', profile);
         try { // 회원 가입과 로그인이 동시에 일어남
             const exUser = await User.findOne({
@@ -32,3 +32,4 @@ module.exports = () => {
         }
     }));
 };
+
