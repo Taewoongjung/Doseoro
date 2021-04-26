@@ -30,10 +30,8 @@
                 <div class="w-100 pb-2 mb-4 border-bottom">
                     <div class="d-lg-flex align-items-center">
                         <h1 class="h2 text-decoration-none w-100 fw-bold" id="getPostingTitle">{{community.title}}</h1>
-                        <!-- 등록 시간을 DB에서 받아와 YMD 형식으로 바꿀 JS코드 필요 => 해결 -->
                         <a class="text-decoration-none w-100 text-dark text-end" id="getPostingDate">{{createdAt}}</a>
                     </div>
-                    <!-- <p class="mt-3 fw-bold">{{book.usernick}}</p> -->
                 </div>
 
                 <!-- 게시물 정보 -->
@@ -151,7 +149,7 @@
                             <div class="reCommentListInner d-sm-flex">
                                 <div class="d-flex align-items-center">
                                     <div class="p-2"><img src="/img/reply.png" style="opacity: 0.5;" width="15px"></div>
-                                    <div class="comment-nick">{{re_comment.reCommentNick}}</div>
+                                    <div class="comment-nick fw-bold">{{re_comment.reCommentNick}}</div>
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <div class="comment-content">{{re_comment.createdAt}}</div>
@@ -183,7 +181,7 @@
                     <!-- 비로그인 댓글 -->
                     <div class="commentList">
                         <div class="d-sm-flex commentListInner">
-                            <div class="comment-nick">{{comment.commentingNick}}</div>
+                            <div class="comment-nick fw-bold">{{comment.commentingNick}}</div>
                             <div class="comment-content">{{comment.createdAt}}</div>
                         </div>
                         <div class="comment-content"><a>{{comment.content}}</a></div>
@@ -196,11 +194,11 @@
                         <div class="reCommentListInner d-sm-flex">
                             <div class="d-flex align-items-center">
                                 <div class="p-2"><img src="/img/reply.png" style="opacity: 0.5;" width="15px"></div>
-                                <div class="comment-nick me-3">{{re_comment.reCommentNick}}</div>
+                                <div class="comment-nick me-3 fw-bold">{{re_comment.reCommentNick}}</div>
                             </div>
-                            <div class="comment-content me-3"><a>{{re_comment.createdAt}}</a></div>
+                            <div class="comment-content me-3">{{re_comment.createdAt}}</div>
                         </div>
-                        <div class="comment-content me-3">{{re_comment.content}}</div>
+                        <div class="comment-content me-3"><a>{{re_comment.content}}</a></div>
                     </div>
                     {% endif %}
                     {% endfor %}
