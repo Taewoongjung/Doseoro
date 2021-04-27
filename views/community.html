@@ -37,6 +37,9 @@
                     <div class="d-sm-flex justify-content-between align-items-center mb-3">
                         <h1 class="postingTitle h3 fw-bold">{{community.title}}</h1>
                         <a class="text-decoration-none text-dark">{{community.createdAt}}</a>
+
+                        <input type="text" id="postingTime" value="{{community.createdAt}}">
+                        <!-- <input type="text" id="postingIds" value="{{community.id}}"> -->
                     </div>
                     <a>{{user.nick}}</a>
                 </div>
@@ -54,10 +57,11 @@
             request.setAttribute('action', '/search{{searchWord}}');
             request.setAttribute('method', 'GET');
         }
-    </script>
-    <!-- <script src="/js/searchDisplay.js"></script> -->
+    </script>>
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/js/timestamp.js"></script>
 </body>
 
 </html>
