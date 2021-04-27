@@ -5,9 +5,9 @@ function getLocation() {
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error, {
             // enableHighAccuracy 정확성 향상, 핸드폰 이용시 배터리소모량 커짐
-            enableHighAccuracy: true,
+            enableHighAccuracy : true,
             maximumAge: 0,
-            timeout: Infinity
+            timeout: 1000*10
         });
     } else {
         alert('Geolocation 미지원');
