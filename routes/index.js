@@ -59,7 +59,12 @@ router.get('/', async (req, res, next) => {
             const [noticess] = await Promise.all([
                 Post.findAll({
                     where: {
-                        UserId: notices,
+                        [Op.or]: [
+                        {
+                            UserId: notices,
+                        },{
+                            BookId: null,
+                        }],
                         isNotified_posts: {
                             [Op.ne]: '1'
                         },
