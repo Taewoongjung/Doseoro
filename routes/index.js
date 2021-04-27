@@ -61,9 +61,11 @@ router.get('/', async (req, res, next) => {
                     where: {
                         [Op.or]: [
                         {
-                            UserId: notices,
+                            UserId: {[Op.ne]: req.user.id},
+
                         },{
                             BookId: null,
+                            UserId: {[Op.ne]: req.user.id},
                         }],
                         isNotified_posts: {
                             [Op.ne]: '1'

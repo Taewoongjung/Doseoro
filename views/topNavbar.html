@@ -20,11 +20,11 @@
                     {% for notice in noticess %}
                         <ul>
                             {% if notice.commentingNick == null %}
-                                <li class="nav-item"><a class="nav-link p-3" href="#">{{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
+                                <li class="nav-item"><a class="nav-link p-3" href="#">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
                             {% elif notice.BookId == null %}
                                 <li class="nav-item"><a class="nav-link p-3" href="#">[커뮤니티] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                             {% else %}
-                                <li class="nav-item"><a class="nav-link p-3" href="#">{{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
+                                <li class="nav-item"><a class="nav-link p-3" href="#">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                             {% endif %}
                         </ul>
                     {% endfor %}
