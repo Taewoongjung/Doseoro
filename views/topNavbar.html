@@ -17,10 +17,10 @@
                       알림 테스트
                      -->
                     알림 테스트 
-                    {% for notice in noties %}
+                    {% for notice in notice %}
                         <ul>
-                            {% if noties.commentingNick == null %}
-                                <li class="nav-item"><a class="nav-link p-3" href="#">{{notice.reCommentNick}} 님이 댓글을 달았습니다.</a></li>
+                            {% if notice.commentingNick == null %}
+                                <li class="nav-item"><a class="nav-link p-3" href="#">{{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
                             {% else %}
                                 <li class="nav-item"><a class="nav-link p-3" href="#">{{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                             {% endif %}

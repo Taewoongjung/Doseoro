@@ -56,7 +56,7 @@ router.get('/', async (req, res, next) => {
             }
             console.log("WWW = ", notices);
             console.log("book = ", books_for_notice);
-            const [noties] = await Promise.all([
+            const [notice] = await Promise.all([
                 Post.findAll({
                     where: {
                         BookId: notices,
@@ -66,7 +66,7 @@ router.get('/', async (req, res, next) => {
                     }
                 })
             ]);
-            console.log("noties = ", noties);
+            console.log("noties = ", notice);
             const [books] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -81,7 +81,7 @@ router.get('/', async (req, res, next) => {
 
             res.render('index.html', {
                 books,
-                noties,
+                notice,
             });
         } else {
             const [books] = await Promise.all([

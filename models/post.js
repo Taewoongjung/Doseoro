@@ -26,7 +26,11 @@ module.exports = class Post extends Sequelize.Model {
       reCommentNick: {
         type: Sequelize.STRING(100),
         allowNull: true,
-      }
+      },
+      isNotified_posts: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+      },
     }, {
       sequelize,
       timestamps: true,
