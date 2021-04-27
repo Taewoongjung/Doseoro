@@ -51,22 +51,22 @@ router.get('/', async (req, res, next) => {
 
             const notices = [];
             for (const notice of books_for_notice) {
-                const { id } = notice;
-                notices.push(id);
+                const { OwnerId } = notice;
+                notices.push(OwnerId);
             }
             console.log("WWW = ", notices);
             console.log("book = ", books_for_notice);
-            const [notice] = await Promise.all([
+            const [noticess] = await Promise.all([
                 Post.findAll({
                     where: {
-                        BookId: notices,
+                        UserId: notices,
                         isNotified_posts: {
                             [Op.ne]: '1'
                         },
                     }
                 })
             ]);
-            console.log("noties = ", notice);
+            console.log("noties = ", noticess);
             const [books] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -81,7 +81,7 @@ router.get('/', async (req, res, next) => {
 
             res.render('index.html', {
                 books,
-                notice,
+                noticess,
             });
         } else {
             const [books] = await Promise.all([
