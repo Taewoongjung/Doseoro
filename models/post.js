@@ -31,6 +31,10 @@ module.exports = class Post extends Sequelize.Model {
         type: Sequelize.BOOLEAN,
         allowNull: true,
       },
+      // thisURL: { 댓글을 달면 해당 url을 가져오기
+      //   type: Sequelize.STRING(500),
+      //   allowNull: true,
+      // },
     }, {
       sequelize,
       timestamps: true,
