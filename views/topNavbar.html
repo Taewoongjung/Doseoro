@@ -12,6 +12,24 @@
                 <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
+                <div>
+                    <!-- 
+                      알림 테스트
+                     -->
+                    알림 테스트 
+                    {% for notice in noties %}
+                        <ul>
+                            {% if noties.commentingNick == null %}
+                                <li class="nav-item"><a class="nav-link p-3" href="#">{{notice.reCommentNick}} 님이 댓글을 달았습니다.</a></li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link p-3" href="#">{{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
+                            {% endif %}
+                        </ul>
+                    {% endfor %}
+                    <!-- 
+                      알림 테스트
+                     -->
+                  </div>
                 {% else %}
                 <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
             </ul>

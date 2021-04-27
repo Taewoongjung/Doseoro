@@ -39,21 +39,66 @@ router.get('/', async (req, res, next) => {
         //         },
         //     })
         // ]);
+        if (req.user) {
+            console.log("@@! = ", req.user.id);
+            const [books_for_notice] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        OwnerId: req.user.id,
+                    }
+                })
+            ]);
 
-        const [books] = await Promise.all([
-            Book.findAll({
-                where: { 
-                    SoldId: null, 
-                    isSelling: null,
-                    price: {
-                        [Op.ne]: -1
-                    },
-                }
-            })
-        ]);
-        res.render('index.html', {
-            books,
-        });
+            const notices = [];
+            for (const notice of books_for_notice) {
+                const { id } = notice;
+                notices.push(id);
+            }
+            console.log("WWW = ", notices);
+            console.log("book = ", books_for_notice);
+            const [noties] = await Promise.all([
+                Post.findAll({
+                    where: {
+                        BookId: notices,
+                        isNotified_posts: {
+                            [Op.ne]: '1'
+                        },
+                    }
+                })
+            ]);
+            console.log("noties = ", noties);
+            const [books] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        SoldId: null,
+                        isSelling: null,
+                        price: {
+                            [Op.ne]: -1
+                        },
+                    }
+                })
+            ]);
+
+            res.render('index.html', {
+                books,
+                noties,
+            });
+        } else {
+            const [books] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        SoldId: null,
+                        isSelling: null,
+                        price: {
+                            [Op.ne]: -1
+                        },
+                    }
+                })
+            ]);
+            res.render('index.html', {
+                books,
+            });
+        }
     } catch (error) {
         console.error(error);
         next(error);
