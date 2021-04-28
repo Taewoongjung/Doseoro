@@ -210,12 +210,13 @@ router.get('/community', async (req,res, next) => {
         ]);
         const responseCommunities = [];
         for (const community of communities) {
-            const { createdAt, content, id, title } = community;
+            const { createdAt, content, id, title, postingNick } = community;
             responseCommunities.push({
                 createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 content,
                 id,
                 title,
+                postingNick,
             });
         }
         res.render('community.html', {

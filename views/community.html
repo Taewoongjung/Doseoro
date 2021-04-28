@@ -41,7 +41,7 @@
                         <input type="text" id="postingTime" value="{{community.createdAt}}">
                         <!-- <input type="text" id="postingIds" value="{{community.id}}"> -->
                     </div>
-                    <a>{{user.nick}}</a>
+                    <a>{{community.postingNick}}</a>
                 </div>
                 <p class="postingBody pt-3">{{community.content}}</p>
             </div>
@@ -57,7 +57,7 @@
             request.setAttribute('action', '/search{{searchWord}}');
             request.setAttribute('method', 'GET');
         }
-    </script>>
+    </script>
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
 
