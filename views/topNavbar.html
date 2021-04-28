@@ -5,19 +5,14 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
-            <ul class="navbar-nav mb-2 mb-md-0">
-                <!-- <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li> -->
+            <ul class="navbar-nav mb-2 mb-md-0 notionBox">
                 {% if user and user.id %}
-                <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
-                <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
-                <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
-                <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
-                <div>
-                    <!-- 
-                      알림 테스트
-                     -->
-                    알림 테스트 
-                    {% for notice in noticess %}
+                <li class="nav-item">
+                    <a onclick="notionClick(true)" class="nav-link btn notionBtn"><img src="/img/notionF.png" width="23px" alt="notionImg"></a>
+                    <div id="notionList" class="notionInner p-2">
+                        <!-- 알림 테스트 -->
+                        <ul class="m-2"><a class="notionBtn pt-1 pb-1 ps-2 pe-2" onclick="notionClick(false)">x</a></ul>
+                        {% for notice in noticess %}
                         <ul>
                             {% if notice.commentingNick == null %}
                                 <li class="nav-item"><a class="nav-link p-3" href="localhost:1000{{notice.thisURL}}">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
@@ -27,14 +22,20 @@
                                 <li class="nav-item"><a class="nav-link p-3" href="localhost:1000{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                             {% endif %}
                         </ul>
-                    {% endfor %}
-                    <!-- 
-                      알림 테스트
-                     -->
-                  </div>
+                        {% endfor %}
+                        <!-- 알림 테스트 -->
+                    </div>
+                </li>
+                
+                <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
+                <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
+                <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
+                <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
+                
                 {% else %}
                 <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
             </ul>
         </div>
     </div>
+    <script src="/js/notionEvent.js"></script>
 </nav>
