@@ -271,13 +271,14 @@ router.get('/community/:id', async (req, res, next) => {
 // 커뮤니티 댓글 달기
 router.post('/community/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
-        const { comment } = req.body;
+        const { comment, communityId } = req.body;
         console.log("comment = ", comment);
         const post = await Post.create({
             content: comment,
             commentingNick: req.user.nick,
             UserId: req.user.id,
             CommunityId: req.params.id,
+            thisURL: String(`/free_community/community/${communityId}`),
         });
         return res.send(`<script type="text/javascript">location.href="/free_community/community/${post.CommunityId}";</script>`);
     } catch (error) {
@@ -301,6 +302,7 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
             reCommentingId: commentId,
             reCommentedId: req.user.id,
             reCommentNick: req.user.nick,
+            thisURL: String(`/free_community/community/${communityId}`),
         });
         return res.send(`<script type="text/javascript">location.href="/free_community/community/${communityId}";</script>`);
     } catch (error) {

@@ -207,13 +207,14 @@ router.get('/buybook/:id', async (req, res, next) => {
 // 0411 댓글기능
 router.post('/buybook/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
-        const { comment } = req.body;
+        const { comment, bookId } = req.body;
         console.log("comment = ", comment);
         const post = await Post.create({
             content: comment,
             commentingNick: req.user.nick,
             UserId: req.user.id,
             BookId: req.params.id,
+            thisURL: String(`/wannabuy/buybook/${bookId}`),
         });
         return res.send(`<script type="text/javascript">location.href="/wannabuy/buybook/${post.BookId}";</script>`);
     } catch (error) {
@@ -235,6 +236,7 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
             reCommentingId: commentId,
             reCommentedId: req.user.id,
             reCommentNick: req.user.nick,
+            thisURL: String(`/wannabuy/buybook/${bookId}`),
         });
         return res.send(`<script type="text/javascript">location.href="/wannabuy/buybook/${post.BookId}";</script>`);
     } catch (error) {

@@ -6,7 +6,7 @@ const sequelize = require("sequelize");
 const moment = require('moment-timezone');
 const Op = sequelize.Op;
 
-const { User, Book, Who, Post } = require('../models');
+const { User, Book, Who, Post, Community } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -48,24 +48,36 @@ router.get('/', async (req, res, next) => {
                     }
                 })
             ]);
+            const [books_for_notice_commu] = await Promise.all([
+                Community.findAll({
+                    where: {
+                        postingId: req.user.id,
+                    }
+                })
+            ]);
 
             const notices = [];
             for (const notice of books_for_notice) {
-                const { OwnerId } = notice;
-                notices.push(OwnerId);
+                const { id } = notice;
+                notices.push( id );
+            }
+
+            const notices_commu = [];
+            for (const notice of books_for_notice_commu) {
+                const { id } = notice;
+                notices_commu.push( id );
             }
             console.log("WWW = ", notices);
             console.log("book = ", books_for_notice);
+            console.log("user = ", req.user.id);
             const [noticess] = await Promise.all([
                 Post.findAll({
                     where: {
                         [Op.or]: [
                         {
-                            UserId: {[Op.ne]: req.user.id},
-
-                        },{
-                            BookId: null,
-                            UserId: {[Op.ne]: req.user.id},
+                            BookId: notices,
+                        },{ // 커뮤니티 댓글 구별
+                            CommunityId: notices_commu,
                         }],
                         isNotified_posts: {
                             [Op.ne]: '1'
@@ -73,7 +85,7 @@ router.get('/', async (req, res, next) => {
                     }
                 })
             ]);
-            console.log("noties = ", noticess);
+            console.log("noticess = ", noticess);
             const [books] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -151,12 +163,13 @@ const upload = multer({  // multer 설정
 // 0403 댓글기능
 router.post('/book/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
-        const { comment } = req.body;
+        const { comment, bookId } = req.body;
         const post = await Post.create({
             content: comment,
             commentingNick: req.user.nick,
             UserId: req.user.id,
             BookId: req.params.id,
+            thisURL: String(`/book/${bookId}`),
         });
         return res.send(`<script type="text/javascript">location.href="/book/${post.BookId}";</script>`);
     } catch (error) {
@@ -179,6 +192,7 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
             reCommentingId: commentId,
             reCommentedId: req.user.id,
             reCommentNick: req.user.nick,
+            thisURL: String(`/book/${bookId}`),
         });
         return res.send(`<script type="text/javascript">location.href="/book/${post.BookId}";</script>`);
     } catch (error) {

@@ -30,11 +30,12 @@ module.exports = class Post extends Sequelize.Model {
       isNotified_posts: {
         type: Sequelize.BOOLEAN,
         allowNull: true,
+        defaultValue: 0,
       },
-      // thisURL: { 댓글을 달면 해당 url을 가져오기
-      //   type: Sequelize.STRING(500),
-      //   allowNull: true,
-      // },
+      thisURL: {  // 댓글을 달면 해당 url을 가져오기
+        type: Sequelize.STRING(500),
+        allowNull: true,
+      },
     }, {
       sequelize,
       timestamps: true,
