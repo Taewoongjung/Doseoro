@@ -58,13 +58,40 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-@media (min-width: 768px) {
-	.nav-item a {
-		font-size : 18px;
+.nav-item a {
+	font-size : 18px;
+}
+@media (max-width: 768px) {
+	.notionInner {
+		left: 80px;
 	}
 }
 textarea {
 	resize: none;
+}
+
+/* topNavbar stype */
+.notionBtn {
+	border-radius: 7px;
+	/* text-align: right; */
+	text-decoration: none;
+}
+.notionBtn:hover {
+	background-color: rgba(73, 158, 255, 0.822);
+	cursor: pointer;
+}
+.notionBox {
+	position: relative;
+}
+.notionInner {
+	width: 70%;
+	border: 1px solid rgb(238, 238, 238);
+	border-radius: 10px;
+	background-color: rgb(248, 248, 248);
+	position: absolute;
+	top: 50px;
+	/* left: 50px; */
+	display: none;
 }
 
 /* index style */
