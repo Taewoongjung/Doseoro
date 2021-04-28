@@ -12,7 +12,7 @@
                     <div id="notionList" class="notionInner p-2">
                         <!-- 알림 테스트 -->
                         <ul class="m-2"><a class="notionBtn pt-1 pb-1 ps-2 pe-2" onclick="notionClick(false)">x</a></ul>
-                        {% for notice in noticess %}
+                        <!-- {% for notice in noticess %}
                         <ul>
                             {% if notice.commentingNick == null %}
                                 <li class="nav-item"><a class="nav-link p-3" href="localhost:1000{{notice.thisURL}}">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
@@ -22,10 +22,10 @@
                                 <li class="nav-item"><a class="nav-link p-3" href="localhost:1000{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                             {% endif %}
                         </ul>
-                        {% endfor %}
+                        {% endfor %} -->
 
                         <!-- 알림 테스트 (배포용) -->
-                        <!-- {% for notice in noticess %}
+                        {% for notice in noticess %}
                         <ul>
                             {% if notice.commentingNick == null %}
                                 <li class="nav-item"><a class="nav-link p-3" href="dosero.taewoongjung.xyz{{notice.thisURL}}">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
@@ -35,7 +35,7 @@
                                 <li class="nav-item"><a class="nav-link p-3" href="dosero.taewoongjung.xyz{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                             {% endif %}
                         </ul>
-                        {% endfor %} -->
+                        {% endfor %}
 
                         <!-- 알림 테스트 -->
                     </div>
