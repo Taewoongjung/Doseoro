@@ -8,7 +8,7 @@ const dotenv = require('dotenv');
 const favicon = require('serve-favicon');
 const passport = require('passport');
 const helmet = require('helmet');
-const hpp = require('hpp'); 
+const hpp = require('hpp');
 // const redis = require('redis');
 // const RedisStore = require('connect-redis')(session);
 const moment = require('moment-timezone');
@@ -89,7 +89,7 @@ app.use('/free_community', free_communityRouter);
 app.use('/notify', notificationRouter);
 
 app.use((req, res, next) => {
-  const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+  const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
   error.status = 404;
   next(error);
 });
