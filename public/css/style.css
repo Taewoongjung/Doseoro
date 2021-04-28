@@ -58,13 +58,10 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-a {
+.nav-item a {
 	font-size : 18px;
 }
 @media (max-width: 768px) {
-	.nav-item a {
-		
-	}
 	.notionInner {
 		left: 80px;
 	}
@@ -81,12 +78,13 @@ textarea {
 }
 .notionBtn:hover {
 	background-color: rgba(73, 158, 255, 0.822);
+	cursor: pointer;
 }
 .notionBox {
 	position: relative;
 }
 .notionInner {
-	width: 60%;
+	width: 70%;
 	border: 1px solid rgb(238, 238, 238);
 	border-radius: 10px;
 	background-color: rgb(248, 248, 248);
