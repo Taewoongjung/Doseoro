@@ -270,7 +270,7 @@
             const commentId = document.getElementById(`commentid_it-${id}`).value;
             console.log("@@ = ", commentId);
             const inputRe = document.getElementById(`inputReComment-${id}`);
-            inputRe.innerHTML = '<form action="/free_community/recomment" method="POST"><div class="input-group"><input id="comment" class="reComment inputForm w-50 p-2" name="comment"><input type="hidden" name="communityId" value="{{communityId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div></form>';
+            inputRe.innerHTML = '<form action="/free_community/recomment" method="POST"><div class="input-group"><input id="comment" class="reComment inputForm w-50 p-2" name="comment"><input type="hidden" name="communityId" value="{{communityId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">답글등록</button></div></form>';
             document.getElementById(`userId`).value = userId;
             document.getElementById(`commentId`).value = commentId;
         }

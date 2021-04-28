@@ -29,7 +29,7 @@ function changeTimeStamp() {
 }
 
 // 테스트
-function changeTimeStamp2() {
+function test() {
     // 포스트 한 시간을 받아와 Date형식으로 변환
     // const postTime = document.getElementById(`postingTime${id}`).value;
     const nowDate = new Date();
