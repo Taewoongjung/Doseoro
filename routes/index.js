@@ -67,6 +67,7 @@ router.get('/', async (req, res, next) => {
                 const { id } = notice;
                 notices_commu.push( id );
             }
+
             console.log("WWW = ", notices);
             console.log("book = ", books_for_notice);
             console.log("user = ", req.user.id);
@@ -76,8 +77,10 @@ router.get('/', async (req, res, next) => {
                         [Op.or]: [
                         {
                             BookId: notices,
+                            UserId:{[Op.ne]: String(req.user.id)}
                         },{ // 커뮤니티 댓글 구별
                             CommunityId: notices_commu,
+                            UserId:{[Op.ne]: String(req.user.id)}
                         }],
                         isNotified_posts: {
                             [Op.ne]: '1'
