@@ -14,7 +14,6 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 
 router.get('/witoutCommu', isLoggedIn, async(req, res, next) => {
     try{
-        console.log("@!!!!");
         const { notCommunity_Id } = req.query;
         const a = await Post.update({
             isNotified_posts: '1',
@@ -23,6 +22,7 @@ router.get('/witoutCommu', isLoggedIn, async(req, res, next) => {
                 id: notCommunity_Id,
             },
         });
+        res.send(`<script type="text/javascript">location.href="/";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -31,7 +31,6 @@ router.get('/witoutCommu', isLoggedIn, async(req, res, next) => {
 
 router.get('/onlyCommu', isLoggedIn, async(req, res, next) => {
     try{
-        console.log("@!!!!");
         const { community_Id } = req.query;
         const a = await Post.update({
             isNotified_posts: '1',
@@ -40,7 +39,7 @@ router.get('/onlyCommu', isLoggedIn, async(req, res, next) => {
                 id: community_Id,
             },
         });
-        console.log("asaaa = ", a);
+        res.send(`<script type="text/javascript">location.href="/";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
