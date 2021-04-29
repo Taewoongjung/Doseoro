@@ -40,25 +40,33 @@
                         {% endfor %} -->
 
                         {% for notice in noticess %}
-                        <ul>
+                        <ul class="mb-3">
                             {% if notice.BookId == null %}
                                 <form id="Commu-form-{{notice.id}}">
                                     <input type="hidden" name="community_Id" value="{{notice.id}}">
-
-                                    <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[커뮤니티] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
-                                    <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button></ul>
+                                    <li class="nav-item">
+                                        <p class="nav-link p-2" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}"><a class="fw-bold text-decoration-none me-1">[커뮤니티]</a>{{notice.commentingNick}} 님이 댓글을 달았습니다.</p>
+                                        <button id="cancel" class="delBtn" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button>
+                                    </li>
+                                    <!-- <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button></ul> -->
                                 </form>
                             {% elif notice.commentingNick == null %}
                                 <form id="Without-Commu-form-{{notice.id}}">
                                     <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
-                                    <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
-                                    <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty_delete('{{notice.id}}')">x</button></ul>
+                                    <li class="nav-item d-flex align-items-center">
+                                        <p class="nav-link p-2" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}"><a class="fw-bold text-decoration-none me-1">[답글]</a>{{notice.reCommentNick}} 님이 대댓글을 달았습니다.</p>
+                                        <button id="cancel" class="delBtn" type="submit" onclick="noty_delete('{{notice.id}}')">x</button>
+                                    </li>
+                                    <!-- <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty_delete('{{notice.id}}')">x</button></ul> -->
                                 </form>
                             {% else %}
                                 <form id="Without2-Commu-form-{{notice.id}}">
                                     <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
-                                    <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
-                                    <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty2_delete('{{notice.id}}')">x</button></ul>
+                                    <li class="nav-item d-flex align-items-center">
+                                        <p class="nav-link p-2" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}"><p class="fw-bold text-decoration-none me-1">[댓글] </p>{{notice.commentingNick}} 님이 댓글을 달았습니다.</p>
+                                        <button id="cancel" class="delBtn" type="submit" onclick="noty2_delete('{{notice.id}}')">x</button>
+                                    </li>
+                                    <!-- <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty2_delete('{{notice.id}}')">x</button></ul> -->
                                 </form>
                             {% endif %}
                         </ul>
