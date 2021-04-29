@@ -48,6 +48,7 @@ router.get('/', async (req, res, next) => {
                     }
                 })
             ]);
+
             const [books_for_notice_commu] = await Promise.all([
                 Community.findAll({
                     where: {
@@ -55,6 +56,15 @@ router.get('/', async (req, res, next) => {
                     }
                 })
             ]);
+
+            const [likesfornotice] = await Promise.all([
+                Who.findAll({
+                    where: {
+                        thisbook: req.user.id,
+                    }
+                })
+            ]);
+            console.log("noticesㅁㅁ = ", likesfornotice);
 
             const notices = [];
             for (const notice of books_for_notice) {
@@ -104,6 +114,7 @@ router.get('/', async (req, res, next) => {
             res.render('index.html', {
                 books,
                 noticess,
+                likesfornotice,
             });
         } else {
             const [books] = await Promise.all([
@@ -346,7 +357,7 @@ router.get('/book/:id', async (req, res, next) => {
 // 0403 찜 하기 기능
 router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
-        const { user: owner, bookId, createdat, postmessage, title, price } = req.body;
+        const { user: owner, bookId, postmessage, title, price, registeredUserNick } = req.body;
         const isheliked = await Who.findOne({ where: { thisbook: bookId, liked: req.user.id } });
         if ( String(req.user.id) === String(owner) ) {
             return res.send(`<script type="text/javascript">alert("자신의 물건에는 할 수 없습니다."); location.href="/book/${bookId}";</script>`);
@@ -372,6 +383,8 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
                 img: FindBook.img,
                 price: price,
                 liked: req.user.id,
+                likedNick: registeredUserNick,
+                thisURL: String(`/book/${bookId}`),
             });
             await Book.update({
                 likecount: add,

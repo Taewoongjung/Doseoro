@@ -63,7 +63,12 @@
                             {% endif %}
                         </ul>
                         {% endfor %}
-
+                        {% for likenotice in likesfornotice %}
+                            <form id="like-notice-form-{{likenotice.id}}">
+                                <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xy{likenotice.thisURL}}">[좋아요] {{likenotice.likedNick}} 님이 회원님의 게시물을 찜 했습니다.<a></li>
+                                    <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2"type="submit"onclick="noty2_delete('{{notice.id}}, {{likenotice.id}}')">x<button></ul>
+                            </form>
+                        {% endfor %}
                         <!-- 알림 테스트 -->
                     </div>
                 </li>
