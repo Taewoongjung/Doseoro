@@ -86,7 +86,7 @@ app.use('/comment', commentRouter);
 app.use('/mpfunc', mpfuncRouter);
 app.use('/wannabuy', wannabuyRouter);
 app.use('/free_community', free_communityRouter);
-app.use('/notify', notificationRouter);
+app.use('/notification', notificationRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

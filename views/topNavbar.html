@@ -27,7 +27,7 @@
                         <!-- form을 적용시키고 각각의 코멘트에 이벤트리스너 추가해서 notification 라우터로 갈 수 있게 해야한다. -->
 
                         <!-- 알림 테스트 (배포용) -->
-                        {% for notice in noticess %}
+                        <!-- {% for notice in noticess %}
                         <ul>
                             {% if notice.commentingNick == null %}
                                 <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
@@ -37,12 +37,37 @@
                                 <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                             {% endif %}
                         </ul>
+                        {% endfor %} -->
+
+                        {% for notice in noticess %}
+                        <ul>
+                            {% if notice.BookId == null %}
+                                <form id="Commu-form-{{notice.id}}">
+                                    <input type="hidden" name="community_Id" value="{{notice.id}}">
+
+                                    <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[커뮤니티] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
+                                    <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button></ul>
+                                </form>
+                            {% elif notice.commentingNick == null %}
+                                <form id="Without-Commu-form-{{notice.id}}">
+                                    <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
+                                    <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
+                                    <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty_delete('{{notice.id}}')">x</button></ul>
+                                </form>
+                            {% else %}
+                                <form id="Without2-Commu-form-{{notice.id}}">
+                                    <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
+                                    <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
+                                    <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty2_delete('{{notice.id}}')">x</button></ul>
+                                </form>
+                            {% endif %}
+                        </ul>
                         {% endfor %}
 
                         <!-- 알림 테스트 -->
                     </div>
                 </li>
-                
+
                 <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
@@ -54,4 +79,26 @@
         </div>
     </div>
     <script src="/js/notionEvent.js"></script>
+    <script>
+        function commu_noty_delete(id) {
+            const request = document.getElementById(`Commu-form-${id}`);
+            request.setAttribute('action', '/notification/onlyCommu');
+            request.setAttribute('method', 'GET');
+            window.reload;
+        }
+
+        function noty_delete(id) {
+            const request = document.getElementById(`Without-Commu-form-${id}`);
+            request.setAttribute('action', '/notification/witoutCommu');
+            request.setAttribute('method', 'GET');
+            window.reload;
+        }
+
+        function noty2_delete(id) {
+            const request = document.getElementById(`Without2-Commu-form-${id}`);
+            request.setAttribute('action', '/notification/witoutCommu');
+            request.setAttribute('method', 'GET');
+            window.reload;
+        }
+    </script>
 </nav>
