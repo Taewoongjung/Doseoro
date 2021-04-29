@@ -57,20 +57,21 @@ router.get('/', async (req, res, next) => {
                 })
             ]);
 
-            const [likesfornotice] = await Promise.all([
-                Who.findAll({
-                    where: {
-                        thisbook: req.user.id,
-                    }
-                })
-            ]);
-            console.log("noticesㅁㅁ = ", likesfornotice);
 
             const notices = [];
             for (const notice of books_for_notice) {
                 const { id } = notice;
                 notices.push( id );
             }
+
+            const [likesfornotice] = await Promise.all([
+                Who.findAll({
+                    where: {
+                        thisbook: notices,
+                    }
+                })
+            ]);
+            console.log("notices 좋아요 = ", likesfornotice);
 
             const notices_commu = [];
             for (const notice of books_for_notice_commu) {
@@ -383,7 +384,7 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
                 img: FindBook.img,
                 price: price,
                 liked: req.user.id,
-                likedNick: registeredUserNick,
+                likedNick: req.user.nick,
                 thisURL: String(`/book/${bookId}`),
             });
             await Book.update({

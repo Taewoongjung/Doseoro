@@ -40,6 +40,7 @@
                         {% endfor %} -->
 
                         {% for notice in noticess %}
+                        {% for likenotice in likesfornotice %}
                         <ul>
                             {% if notice.BookId == null %}
                                 <form id="Commu-form-{{notice.id}}">
@@ -54,20 +55,21 @@
                                     <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
                                     <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty_delete('{{notice.id}}')">x</button></ul>
                                 </form>
-                            {% else %}
+                            {% elif notice.commentingNick %}
                                 <form id="Without2-Commu-form-{{notice.id}}">
                                     <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
                                     <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                                     <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty2_delete('{{notice.id}}')">x</button></ul>
                                 </form>
+                            {% else %}
+                                <form id="like-notice-form-{{notice.id}}-{{likenotice.id}}">
+                                    <input type="hidden" name="registeredUserNick" value="{{likenotice.id}}">
+                                    <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xy{likenotice.thisURL}}">[좋아요] {{likenotice.likedNick}} 님이 회원님의 게시물을 찜 했습니다.<a></li>
+                                        <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2"type="submit"onclick="like_noty_delete('{{notice.id}}, {{likenotice.id}}')">x<button></ul>
+                                </form>
                             {% endif %}
                         </ul>
                         {% endfor %}
-                        {% for likenotice in likesfornotice %}
-                            <form id="like-notice-form-{{likenotice.id}}">
-                                <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xy{likenotice.thisURL}}">[좋아요] {{likenotice.likedNick}} 님이 회원님의 게시물을 찜 했습니다.<a></li>
-                                    <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2"type="submit"onclick="noty2_delete('{{notice.id}}, {{likenotice.id}}')">x<button></ul>
-                            </form>
                         {% endfor %}
                         <!-- 알림 테스트 -->
                     </div>
@@ -101,7 +103,11 @@
             const request = document.getElementById(`Without2-Commu-form-${id}`);
             request.setAttribute('action', '/notification/witoutCommu');
             request.setAttribute('method', 'GET');
-            notionClick(true);
+        }
+        function like_noty_delete(cid, id) {
+            const request = document.getElementById(`like-notice-form-${cid}-${id}`);
+            request.setAttribute('action', '/notification/notyLike');
+            request.setAttribute('method', 'GET');
         }
     </script>
 </nav>
