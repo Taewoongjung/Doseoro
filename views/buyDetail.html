@@ -40,7 +40,9 @@
                             <p><a><img src="/img/marker.png" width="20px"></a>미등록</p>
                             {% endif %}
                         </div>
-                        <a class="text-decoration-none text-dark text-end" id="getPostingDate">{{createdAt}}</a>
+                        <!-- <a class="text-decoration-none text-dark text-end" id="getPostingDate">{{createdAt}}</a> -->
+                        <a class="text-decoration-none text-dark text-end" id="getPostingDate"></a>
+                        <input id="postingTime" type="hidden" value="{{createdAt}}">
                     </div>
                 </div>
 
@@ -362,6 +364,7 @@
     </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/topNav.js"></script>
+    <script src="/js/timestamp.js"></script>
 
 </body>
 
