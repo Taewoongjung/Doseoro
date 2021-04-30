@@ -68,10 +68,12 @@ router.get('/', async (req, res, next) => {
                 Who.findAll({
                     where: {
                         thisbook: notices,
+                        isNotified_like: {
+                            [Op.ne]: '1'
+                        },
                     }
                 })
             ]);
-            console.log("notices 좋아요 = ", likesfornotice);
 
             const notices_commu = [];
             for (const notice of books_for_notice_commu) {

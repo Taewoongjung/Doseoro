@@ -49,13 +49,14 @@ router.get('/onlyCommu', isLoggedIn, async(req, res, next) => {
 router.get('/notyLike', isLoggedIn, async(req, res, next) => {
     try{
         const { Like_Id } = req.query;
-        await Who.update({
+        const a = await Who.update({
             isNotified_like: '1',
         }, {
             where:{
                 id: Like_Id,
             },
         });
+        console.log("aaaa = ", a);
         res.send(`<script src="/js/notionEvent.js"></script><script type="text/javascript"> location.href="/";</script>`);
     } catch (error) {
         console.error(error);

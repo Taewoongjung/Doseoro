@@ -12,35 +12,8 @@
                     <div id="notionList" class="notionInner p-2">
                         <!-- 알림 테스트 -->
                         <ul class="m-2"><a class="notionBtn pt-1 pb-1 ps-2 pe-2" onclick="notionClick(false)">x</a></ul>
-                        <!-- {% for notice in noticess %}
-                        <ul>
-                            {% if notice.commentingNick == null %}
-                                <li class="nav-item"><a class="nav-link p-3" href="localhost:1000{{notice.thisURL}}">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
-                            {% elif notice.BookId == null %}
-                                <li class="nav-item"><a class="nav-link p-3" href="localhost:1000{{notice.thisURL}}">[커뮤니티] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
-                            {% else %}
-                                <li class="nav-item"><a class="nav-link p-3" href="localhost:1000{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
-                            {% endif %}
-                        </ul>
-                        {% endfor %} -->
-
-                        <!-- form을 적용시키고 각각의 코멘트에 이벤트리스너 추가해서 notification 라우터로 갈 수 있게 해야한다. -->
-
-                        <!-- 알림 테스트 (배포용) -->
-                        <!-- {% for notice in noticess %}
-                        <ul>
-                            {% if notice.commentingNick == null %}
-                                <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
-                            {% elif notice.BookId == null %}
-                                <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[커뮤니티] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
-                            {% else %}
-                                <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
-                            {% endif %}
-                        </ul>
-                        {% endfor %} -->
-
+                        
                         {% for notice in noticess %}
-                        {% for likenotice in likesfornotice %}
                         <ul>
                             {% if notice.BookId == null %}
                                 <form id="Commu-form-{{notice.id}}">
@@ -61,15 +34,17 @@
                                     <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                                     <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty2_delete('{{notice.id}}')">x</button></ul>
                                 </form>
-                            {% else %}
-                                <form id="like-notice-form-{{notice.id}}-{{likenotice.id}}">
-                                    <input type="hidden" name="registeredUserNick" value="{{likenotice.id}}">
-                                    <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xy{likenotice.thisURL}}">[좋아요] {{likenotice.likedNick}} 님이 회원님의 게시물을 찜 했습니다.<a></li>
-                                        <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2"type="submit"onclick="like_noty_delete('{{notice.id}}, {{likenotice.id}}')">x<button></ul>
-                                </form>
                             {% endif %}
                         </ul>
                         {% endfor %}
+                        {% for likenotice in likesfornotice %}
+                        <ul>
+                            <form id="like-notice-form-{{likenotice.id}}">
+                                <input type="hidden" name="Like_Id" value="{{likenotice.id}}">
+                                <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xy{likenotice.thisURL}}">[좋아요] {{likenotice.likedNick}} 님이 회원님의 게시물을 찜 했습니다.<a></li>
+                                    <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2"type="submit"onclick="like_noty_delete('{{likenotice.id}}')">x</button></ul>
+                            </form>
+                        </ul>
                         {% endfor %}
                         <!-- 알림 테스트 -->
                     </div>
@@ -104,8 +79,8 @@
             request.setAttribute('action', '/notification/witoutCommu');
             request.setAttribute('method', 'GET');
         }
-        function like_noty_delete(cid, id) {
-            const request = document.getElementById(`like-notice-form-${cid}-${id}`);
+        function like_noty_delete(id) {
+            const request = document.getElementById(`like-notice-form-${id}`);
             request.setAttribute('action', '/notification/notyLike');
             request.setAttribute('method', 'GET');
         }
