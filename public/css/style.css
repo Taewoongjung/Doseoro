@@ -74,11 +74,13 @@ textarea {
 .notionBtn {
 	border-radius: 7px;
 	text-decoration: none;
+	font-weight: bold;
 }
 .delBtn{
 	border-radius: 7px;
-	padding: 5px 10px 5px 10px;
-	margin-left: 10px;
+	border: 0;
+	font-weight: bold;
+	background-color: inherit;
 }
 .notionBtn:hover, .delBtn:hover {
 	background-color: rgba(73, 158, 255, 0.822);
