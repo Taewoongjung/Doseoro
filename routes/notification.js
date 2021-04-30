@@ -1,6 +1,6 @@
 const express = require('express');
-const multer = require('multer');
-const path = require('path');
+const sequelize = require("sequelize");
+const Op = sequelize.Op;
 
 const { User, Book, Who, Post, Community } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -23,7 +23,6 @@ router.get('/witoutCommu', isLoggedIn, async(req, res, next) => {
                 id: notCommunity_Id,
             },
         });
-        // res.send(`<script type="text/javascript">location.href=link;</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -40,7 +39,6 @@ router.get('/onlyCommu', isLoggedIn, async(req, res, next) => {
                 id: community_Id,
             },
         });
-        // res.send(`<script type="text/javascript">location.href="/";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -50,15 +48,128 @@ router.get('/onlyCommu', isLoggedIn, async(req, res, next) => {
 router.get('/notyLike', isLoggedIn, async(req, res, next) => {
     try{
         const { Like_Id } = req.query;
-        const a = await Who.update({
+        await Who.update({
             isNotified_like: '1',
         }, {
             where:{
                 id: Like_Id,
             },
         });
-        console.log("aaaa = ", a);
-        // res.send(`<script type="text/javascript"> location.href="/";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
+    try{
+        console.log("deleteAll 진입");
+        const [books_for_notice] = await Promise.all([ // 내가 올린 책 다 찾기
+            Book.findAll({
+                where: {
+                    OwnerId: req.user.id,
+                }
+            })
+        ]);
+
+        const [books_for_notice_commu] = await Promise.all([ // 내가 올린 커뮤니티 글 다 찾기
+            Community.findAll({
+                where: {
+                    postingId: req.user.id,
+                }
+            })
+        ]);
+
+        const notices = [];  // 다 찾은 내가 올린 책의 아이디만 따로 빼오기
+        for (const notice of books_for_notice) {
+            const { id } = notice;
+            notices.push(id);
+        }
+
+        const [likesfornotice] = await Promise.all([
+            Who.findAll({
+                where: {
+                    thisbook: notices,
+                    isNotified_like: {
+                        [Op.ne]: '1'
+                    },
+                }
+            })
+        ]);
+
+        const notices_commu = []; // 다 찾은 내가 올린 커뮤니티 글의 아이디만 따로 빼오기
+        for (const notice of books_for_notice_commu) {
+            const { id } = notice;
+            notices_commu.push(id);
+        }
+
+        // console.log("WWW = ", notices);
+        // console.log("book = ", books_for_notice);
+        // console.log("user = ", req.user.id);
+        const [noticess] = await Promise.all([
+            Post.findAll({
+                where: {
+                    [Op.or]: [
+                        {// 댓글
+                            BookId: notices,
+                            UserId: { [Op.ne]: String(req.user.id) } // 내 자신이 단 댓글은 표시하면 안되니깐
+                        }, { // 커뮤니티 댓글 구별
+                            CommunityId: notices_commu,
+                            UserId: { [Op.ne]: String(req.user.id) } // 내 자신이 커뮤니티에 단 댓글은 표시하면 안되니깐
+                        }],
+                    isNotified_posts: {
+                        [Op.ne]: '1'
+                    },
+                }
+            })
+        ]);
+        console.log("noticess = ", noticess);
+
+        const notices_like = []; // 좋아요 누른 사람들에 대한 Who 테이블의 모든 아이디
+        for (const likeNoty of likesfornotice) {
+            const { id } = likeNoty;
+            notices_like.push(id);
+        }
+        const notices_comments = []; // 좋아요 누른 사람들에 대한 Post 테이블의 모든 아이디
+        for (const commentNoty of noticess) {
+            const { id } = commentNoty;
+            notices_comments.push(id);
+        }
+        const [aa] = await Promise.all([
+            Who.update({
+                isNotified_like: '1',
+            }, {
+                where:{
+                    id: notices_like,
+                },
+            })
+        ]);
+        // const a = await Who.update({
+        //     isNotified_like: '1',
+        // }, {
+        //     where:{
+        //         id: notices_like,
+        //     },
+        // });
+        console.log("a = ", aa);
+
+        const [bb] = await Promise.all([
+            Post.update({
+                isNotified_like: '1',
+            }, {
+                where:{
+                    id: notices_comments,
+                },
+            })
+        ]);
+        // const b = await Post.update({
+        //     isNotified_like: '1',
+        // }, {
+        //     where:{
+        //         id: notices_comments,
+        //     },
+        // });
+        console.log("b = ", bb);
     } catch (error) {
         console.error(error);
         next(error);
