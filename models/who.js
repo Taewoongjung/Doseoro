@@ -7,6 +7,10 @@ module.exports = class Who extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: true,
             },
+            likedNick: {
+                type: Sequelize.STRING(100),
+                allowNull: true,
+            },
             posttitle:{
                 type: Sequelize.STRING(100),
                 allowNull: true,
@@ -28,10 +32,19 @@ module.exports = class Who extends Sequelize.Model {
                 allowNull: true,
                 defaultValue: 0,
             },
+            thisURL: {  // 댓글을 달면 해당 url을 가져오기
+                type: Sequelize.STRING(500),
+                allowNull: true,
+            },
             bought: {
                 type: Sequelize.STRING(100),
                 allowNull: true,
             },
+            isNotified_like: {
+                type: Sequelize.BOOLEAN,
+                allowNull: true,
+                defaultValue: 0,
+              },
         }, {
             sequelize,
             timestamps: true,

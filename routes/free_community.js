@@ -111,7 +111,7 @@ router.get('/delete_community', isLoggedIn, async (req, res, next) => {
         const { this_item_id, this_item_content, this_item_postingId } = req.query;
         if (this_item_postingId === String(req.user.id)) {
             const aa = await Community.destroy({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
-            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/community";</script>`);    
+            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/community";</script>`);
         } else {
             res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다."); location.href="/free_community/community/${this_item_id}";</script>`);
         }
@@ -215,7 +215,7 @@ router.get('/community/:id', async (req, res, next) => {
         ]);
         // console.log("대댓글 = ", re_comments);
         // console.log("대댓글 테스트 = ", String(findcommentId));
-        
+
         const re_time = [];
         for (const new_time of re_comments) {
             const { createdAt, id, content, UserId, reCommentNick, reCommentedId, reCommentingId } = new_time;
@@ -242,6 +242,72 @@ router.get('/community/:id', async (req, res, next) => {
         }
         if (res.locals.user) {
             console.log("login");
+            /////////////
+
+            console.log("@@! = ", req.user.id);
+            const [books_for_notice] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        OwnerId: req.user.id,
+                    }
+                })
+            ]);
+
+            const [books_for_notice_commu] = await Promise.all([
+                Community.findAll({
+                    where: {
+                        postingId: req.user.id,
+                    }
+                })
+            ]);
+
+
+            const notices = [];
+            for (const notice of books_for_notice) {
+                const { id } = notice;
+                notices.push(id);
+            }
+
+            const [likesfornotice] = await Promise.all([
+                Who.findAll({
+                    where: {
+                        thisbook: notices,
+                        isNotified_like: {
+                            [Op.ne]: '1'
+                        },
+                    }
+                })
+            ]);
+
+            const notices_commu = [];
+            for (const notice of books_for_notice_commu) {
+                const { id } = notice;
+                notices_commu.push(id);
+            }
+
+            console.log("WWW = ", notices);
+            console.log("book = ", books_for_notice);
+            console.log("user = ", req.user.id);
+            const [noticess] = await Promise.all([
+                Post.findAll({
+                    where: {
+                        [Op.or]: [
+                            {
+                                BookId: notices,
+                                UserId: { [Op.ne]: String(req.user.id) }
+                            }, { // 커뮤니티 댓글 구별
+                                CommunityId: notices_commu,
+                                UserId: { [Op.ne]: String(req.user.id) }
+                            }],
+                        isNotified_posts: {
+                            [Op.ne]: '1'
+                        },
+                    }
+                })
+            ]);
+            console.log("noticess = ", noticess);
+
+            ////////////
             res.render('communityDetail.html', {
                 community,
                 createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
@@ -250,6 +316,8 @@ router.get('/community/:id', async (req, res, next) => {
                 communityId: community.id,
                 comments: time,
                 re_comments: re_time,
+                noticess,
+                likesfornotice,
             });
         } else if (isNotLoggedIn) {
             console.log("not login");

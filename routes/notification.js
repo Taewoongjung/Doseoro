@@ -14,15 +14,16 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 
 router.get('/witoutCommu', isLoggedIn, async(req, res, next) => {
     try{
-        const { notCommunity_Id } = req.query;
-        const a = await Post.update({
+        const { notCommunity_Id, to } = req.query;
+        console.log("@!@!@!@!@@ ", req.path);
+        await Post.update({
             isNotified_posts: '1',
         }, {
             where:{
                 id: notCommunity_Id,
             },
         });
-        res.send(`<script src="/js/notionEvent.js"></script><script type="text/javascript"> location.href="/"; notionClick(true)</script>`);
+        res.send(`<script type="text/javascript"> location.href="/";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -32,14 +33,32 @@ router.get('/witoutCommu', isLoggedIn, async(req, res, next) => {
 router.get('/onlyCommu', isLoggedIn, async(req, res, next) => {
     try{
         const { community_Id } = req.query;
-        const a = await Post.update({
+        await Post.update({
             isNotified_posts: '1',
         }, {
             where:{
                 id: community_Id,
             },
         });
-        res.send(`<script src="/js/notionEvent.js"></script><script type="text/javascript"> location.href="/"; notionClick(true)</script>`);
+        res.send(`<script type="text/javascript"> location.href="/";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+router.get('/notyLike', isLoggedIn, async(req, res, next) => {
+    try{
+        const { Like_Id } = req.query;
+        const a = await Who.update({
+            isNotified_like: '1',
+        }, {
+            where:{
+                id: Like_Id,
+            },
+        });
+        console.log("aaaa = ", a);
+        res.send(`<script type="text/javascript"> location.href="/";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
