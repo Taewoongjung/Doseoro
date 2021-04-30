@@ -22,7 +22,7 @@ router.get('/witoutCommu', isLoggedIn, async(req, res, next) => {
                 id: notCommunity_Id,
             },
         });
-        res.send(`<script src="/js/notionEvent.js"></script><script type="text/javascript"> location.href="/";</script>`);
+        res.send(`<script type="text/javascript"> location.href="/";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -39,7 +39,7 @@ router.get('/onlyCommu', isLoggedIn, async(req, res, next) => {
                 id: community_Id,
             },
         });
-        res.send(`<script src="/js/notionEvent.js"></script><script type="text/javascript"> location.href="/";</script>`);
+        res.send(`<script type="text/javascript"> location.href="/";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -57,7 +57,7 @@ router.get('/notyLike', isLoggedIn, async(req, res, next) => {
             },
         });
         console.log("aaaa = ", a);
-        res.send(`<script src="/js/notionEvent.js"></script><script type="text/javascript"> location.href="/";</script>`);
+        res.send(`<script type="text/javascript"> location.href="/";</script>`);
     } catch (error) {
         console.error(error);
         next(error);

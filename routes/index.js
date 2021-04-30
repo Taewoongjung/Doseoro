@@ -61,7 +61,7 @@ router.get('/', async (req, res, next) => {
             const notices = [];
             for (const notice of books_for_notice) {
                 const { id } = notice;
-                notices.push( id );
+                notices.push(id);
             }
 
             const [likesfornotice] = await Promise.all([
@@ -78,7 +78,7 @@ router.get('/', async (req, res, next) => {
             const notices_commu = [];
             for (const notice of books_for_notice_commu) {
                 const { id } = notice;
-                notices_commu.push( id );
+                notices_commu.push(id);
             }
 
             console.log("WWW = ", notices);
@@ -88,13 +88,13 @@ router.get('/', async (req, res, next) => {
                 Post.findAll({
                     where: {
                         [Op.or]: [
-                        {
-                            BookId: notices,
-                            UserId:{[Op.ne]: String(req.user.id)}
-                        },{ // 커뮤니티 댓글 구별
-                            CommunityId: notices_commu,
-                            UserId:{[Op.ne]: String(req.user.id)}
-                        }],
+                            {
+                                BookId: notices,
+                                UserId: { [Op.ne]: String(req.user.id) }
+                            }, { // 커뮤니티 댓글 구별
+                                CommunityId: notices_commu,
+                                UserId: { [Op.ne]: String(req.user.id) }
+                            }],
                         isNotified_posts: {
                             [Op.ne]: '1'
                         },
@@ -323,7 +323,74 @@ router.get('/book/:id', async (req, res, next) => {
                 UserId,
             });
         }
+
         if (res.locals.user) {
+            /////////////
+
+            console.log("@@! = ", req.user.id);
+            const [books_for_notice] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        OwnerId: req.user.id,
+                    }
+                })
+            ]);
+
+            const [books_for_notice_commu] = await Promise.all([
+                Community.findAll({
+                    where: {
+                        postingId: req.user.id,
+                    }
+                })
+            ]);
+
+
+            const notices = [];
+            for (const notice of books_for_notice) {
+                const { id } = notice;
+                notices.push(id);
+            }
+
+            const [likesfornotice] = await Promise.all([
+                Who.findAll({
+                    where: {
+                        thisbook: notices,
+                        isNotified_like: {
+                            [Op.ne]: '1'
+                        },
+                    }
+                })
+            ]);
+
+            const notices_commu = [];
+            for (const notice of books_for_notice_commu) {
+                const { id } = notice;
+                notices_commu.push(id);
+            }
+
+            console.log("WWW = ", notices);
+            console.log("book = ", books_for_notice);
+            console.log("user = ", req.user.id);
+            const [noticess] = await Promise.all([
+                Post.findAll({
+                    where: {
+                        [Op.or]: [
+                            {
+                                BookId: notices,
+                                UserId: { [Op.ne]: String(req.user.id) }
+                            }, { // 커뮤니티 댓글 구별
+                                CommunityId: notices_commu,
+                                UserId: { [Op.ne]: String(req.user.id) }
+                            }],
+                        isNotified_posts: {
+                            [Op.ne]: '1'
+                        },
+                    }
+                })
+            ]);
+            console.log("noticess = ", noticess);
+
+            ////////////
             console.log("login");
             res.render('saleDetail.html', {
                 title: `책 구경`,
@@ -337,6 +404,8 @@ router.get('/book/:id', async (req, res, next) => {
                 re_comments: re_time,
                 free_books,
                 this_book_location: user.location,
+                noticess,
+                likesfornotice,
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
@@ -362,7 +431,7 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
     try {
         const { user: owner, bookId, postmessage, title, price, registeredUserNick } = req.body;
         const isheliked = await Who.findOne({ where: { thisbook: bookId, liked: req.user.id } });
-        if ( String(req.user.id) === String(owner) ) {
+        if (String(req.user.id) === String(owner)) {
             return res.send(`<script type="text/javascript">alert("자신의 물건에는 할 수 없습니다."); location.href="/book/${bookId}";</script>`);
         }
         else if (isheliked) {
@@ -429,12 +498,89 @@ router.get('/search', async (req, res, next) => {
                     },
                 }),
             ]);
-            res.render('index.html', {
-                title: `책 구경`,
-                foundBooks,
-                user: res.locals.user,
-                bookId: req.params.id,
-            });
+            if (res.locals.user) {
+                /////////////
+
+                console.log("@@! = ", req.user.id);
+                const [books_for_notice] = await Promise.all([
+                    Book.findAll({
+                        where: {
+                            OwnerId: req.user.id,
+                        }
+                    })
+                ]);
+
+                const [books_for_notice_commu] = await Promise.all([
+                    Community.findAll({
+                        where: {
+                            postingId: req.user.id,
+                        }
+                    })
+                ]);
+
+
+                const notices = [];
+                for (const notice of books_for_notice) {
+                    const { id } = notice;
+                    notices.push(id);
+                }
+
+                const [likesfornotice] = await Promise.all([
+                    Who.findAll({
+                        where: {
+                            thisbook: notices,
+                            isNotified_like: {
+                                [Op.ne]: '1'
+                            },
+                        }
+                    })
+                ]);
+
+                const notices_commu = [];
+                for (const notice of books_for_notice_commu) {
+                    const { id } = notice;
+                    notices_commu.push(id);
+                }
+
+                console.log("WWW = ", notices);
+                console.log("book = ", books_for_notice);
+                console.log("user = ", req.user.id);
+                const [noticess] = await Promise.all([
+                    Post.findAll({
+                        where: {
+                            [Op.or]: [
+                                {
+                                    BookId: notices,
+                                    UserId: { [Op.ne]: String(req.user.id) }
+                                }, { // 커뮤니티 댓글 구별
+                                    CommunityId: notices_commu,
+                                    UserId: { [Op.ne]: String(req.user.id) }
+                                }],
+                            isNotified_posts: {
+                                [Op.ne]: '1'
+                            },
+                        }
+                    })
+                ]);
+                console.log("noticess = ", noticess);
+
+                ////////////
+                res.render('index.html', {
+                    title: `책 구경`,
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                    noticess,
+                    likesfornotice,
+                });
+            } else if (isNotLoggedIn) {
+                res.render('index.html', {
+                    title: `책 구경`,
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                });
+            }
         } else if (req.query.searchFilter === 'bookTitle') {  // 책 이름으로 찾기
             const [foundBooks] = await Promise.all([
                 Book.findAll({
@@ -445,12 +591,89 @@ router.get('/search', async (req, res, next) => {
                     },
                 }),
             ]);
-            res.render('index.html', {
-                title: `책 구경`,
-                foundBooks,
-                user: res.locals.user,
-                bookId: req.params.id,
-            });
+            if (res.locals.user) {
+                /////////////
+
+                console.log("@@! = ", req.user.id);
+                const [books_for_notice] = await Promise.all([
+                    Book.findAll({
+                        where: {
+                            OwnerId: req.user.id,
+                        }
+                    })
+                ]);
+
+                const [books_for_notice_commu] = await Promise.all([
+                    Community.findAll({
+                        where: {
+                            postingId: req.user.id,
+                        }
+                    })
+                ]);
+
+
+                const notices = [];
+                for (const notice of books_for_notice) {
+                    const { id } = notice;
+                    notices.push(id);
+                }
+
+                const [likesfornotice] = await Promise.all([
+                    Who.findAll({
+                        where: {
+                            thisbook: notices,
+                            isNotified_like: {
+                                [Op.ne]: '1'
+                            },
+                        }
+                    })
+                ]);
+
+                const notices_commu = [];
+                for (const notice of books_for_notice_commu) {
+                    const { id } = notice;
+                    notices_commu.push(id);
+                }
+
+                console.log("WWW = ", notices);
+                console.log("book = ", books_for_notice);
+                console.log("user = ", req.user.id);
+                const [noticess] = await Promise.all([
+                    Post.findAll({
+                        where: {
+                            [Op.or]: [
+                                {
+                                    BookId: notices,
+                                    UserId: { [Op.ne]: String(req.user.id) }
+                                }, { // 커뮤니티 댓글 구별
+                                    CommunityId: notices_commu,
+                                    UserId: { [Op.ne]: String(req.user.id) }
+                                }],
+                            isNotified_posts: {
+                                [Op.ne]: '1'
+                            },
+                        }
+                    })
+                ]);
+                console.log("noticess = ", noticess);
+
+                ////////////
+                res.render('index.html', {
+                    title: `책 구경`,
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                    noticess,
+                    likesfornotice,
+                });
+            } else if (isNotLoggedIn) {
+                res.render('index.html', {
+                    title: `책 구경`,
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                });
+            }
         } else if (req.query.searchFilter === 'bookAuther') {  // 책 저자명 으로 찾기
             const [foundBooks] = await Promise.all([
                 Book.findAll({
@@ -461,12 +684,89 @@ router.get('/search', async (req, res, next) => {
                     },
                 }),
             ]);
-            res.render('index.html', {
-                title: `책 구경`,
-                foundBooks,
-                user: res.locals.user,
-                bookId: req.params.id,
-            });
+            if (res.locals.user) {
+                /////////////
+
+                console.log("@@! = ", req.user.id);
+                const [books_for_notice] = await Promise.all([
+                    Book.findAll({
+                        where: {
+                            OwnerId: req.user.id,
+                        }
+                    })
+                ]);
+
+                const [books_for_notice_commu] = await Promise.all([
+                    Community.findAll({
+                        where: {
+                            postingId: req.user.id,
+                        }
+                    })
+                ]);
+
+
+                const notices = [];
+                for (const notice of books_for_notice) {
+                    const { id } = notice;
+                    notices.push(id);
+                }
+
+                const [likesfornotice] = await Promise.all([
+                    Who.findAll({
+                        where: {
+                            thisbook: notices,
+                            isNotified_like: {
+                                [Op.ne]: '1'
+                            },
+                        }
+                    })
+                ]);
+
+                const notices_commu = [];
+                for (const notice of books_for_notice_commu) {
+                    const { id } = notice;
+                    notices_commu.push(id);
+                }
+
+                console.log("WWW = ", notices);
+                console.log("book = ", books_for_notice);
+                console.log("user = ", req.user.id);
+                const [noticess] = await Promise.all([
+                    Post.findAll({
+                        where: {
+                            [Op.or]: [
+                                {
+                                    BookId: notices,
+                                    UserId: { [Op.ne]: String(req.user.id) }
+                                }, { // 커뮤니티 댓글 구별
+                                    CommunityId: notices_commu,
+                                    UserId: { [Op.ne]: String(req.user.id) }
+                                }],
+                            isNotified_posts: {
+                                [Op.ne]: '1'
+                            },
+                        }
+                    })
+                ]);
+                console.log("noticess = ", noticess);
+
+                ////////////
+                res.render('index.html', {
+                    title: `책 구경`,
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                    noticess,
+                    likesfornotice,
+                });
+            } else if (isNotLoggedIn) {
+                res.render('index.html', {
+                    title: `책 구경`,
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                });
+            }
         } else if (req.query.searchFilter === 'bookPublisher') {  // 출판사명 으로 찾기
             const [foundBooks] = await Promise.all([
                 Book.findAll({
@@ -477,12 +777,89 @@ router.get('/search', async (req, res, next) => {
                     },
                 }),
             ]);
-            res.render('index.html', {
-                title: `책 구경`,
-                foundBooks,
-                user: res.locals.user,
-                bookId: req.params.id,
-            });
+            if (res.locals.user) {
+                /////////////
+
+                console.log("@@! = ", req.user.id);
+                const [books_for_notice] = await Promise.all([
+                    Book.findAll({
+                        where: {
+                            OwnerId: req.user.id,
+                        }
+                    })
+                ]);
+
+                const [books_for_notice_commu] = await Promise.all([
+                    Community.findAll({
+                        where: {
+                            postingId: req.user.id,
+                        }
+                    })
+                ]);
+
+
+                const notices = [];
+                for (const notice of books_for_notice) {
+                    const { id } = notice;
+                    notices.push(id);
+                }
+
+                const [likesfornotice] = await Promise.all([
+                    Who.findAll({
+                        where: {
+                            thisbook: notices,
+                            isNotified_like: {
+                                [Op.ne]: '1'
+                            },
+                        }
+                    })
+                ]);
+
+                const notices_commu = [];
+                for (const notice of books_for_notice_commu) {
+                    const { id } = notice;
+                    notices_commu.push(id);
+                }
+
+                console.log("WWW = ", notices);
+                console.log("book = ", books_for_notice);
+                console.log("user = ", req.user.id);
+                const [noticess] = await Promise.all([
+                    Post.findAll({
+                        where: {
+                            [Op.or]: [
+                                {
+                                    BookId: notices,
+                                    UserId: { [Op.ne]: String(req.user.id) }
+                                }, { // 커뮤니티 댓글 구별
+                                    CommunityId: notices_commu,
+                                    UserId: { [Op.ne]: String(req.user.id) }
+                                }],
+                            isNotified_posts: {
+                                [Op.ne]: '1'
+                            },
+                        }
+                    })
+                ]);
+                console.log("noticess = ", noticess);
+
+                ////////////
+                res.render('index.html', {
+                    title: `책 구경`,
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                    noticess,
+                    likesfornotice,
+                });
+            } else if (isNotLoggedIn) {
+                res.render('index.html', {
+                    title: `책 구경`,
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                });
+            }
         } else {  // 전체
             const [foundBooks] = await Promise.all([
                 Book.findAll({
@@ -508,12 +885,89 @@ router.get('/search', async (req, res, next) => {
                     },
                 }),
             ]);
-            res.render('index.html', {
-                title: `책 구경`,
-                foundBooks,
-                user: res.locals.user,
-                bookId: req.params.id,
-            });
+            if (res.locals.user) {
+                /////////////
+
+                console.log("@@! = ", req.user.id);
+                const [books_for_notice] = await Promise.all([
+                    Book.findAll({
+                        where: {
+                            OwnerId: req.user.id,
+                        }
+                    })
+                ]);
+
+                const [books_for_notice_commu] = await Promise.all([
+                    Community.findAll({
+                        where: {
+                            postingId: req.user.id,
+                        }
+                    })
+                ]);
+
+
+                const notices = [];
+                for (const notice of books_for_notice) {
+                    const { id } = notice;
+                    notices.push(id);
+                }
+
+                const [likesfornotice] = await Promise.all([
+                    Who.findAll({
+                        where: {
+                            thisbook: notices,
+                            isNotified_like: {
+                                [Op.ne]: '1'
+                            },
+                        }
+                    })
+                ]);
+
+                const notices_commu = [];
+                for (const notice of books_for_notice_commu) {
+                    const { id } = notice;
+                    notices_commu.push(id);
+                }
+
+                console.log("WWW = ", notices);
+                console.log("book = ", books_for_notice);
+                console.log("user = ", req.user.id);
+                const [noticess] = await Promise.all([
+                    Post.findAll({
+                        where: {
+                            [Op.or]: [
+                                {
+                                    BookId: notices,
+                                    UserId: { [Op.ne]: String(req.user.id) }
+                                }, { // 커뮤니티 댓글 구별
+                                    CommunityId: notices_commu,
+                                    UserId: { [Op.ne]: String(req.user.id) }
+                                }],
+                            isNotified_posts: {
+                                [Op.ne]: '1'
+                            },
+                        }
+                    })
+                ]);
+                console.log("noticess = ", noticess);
+
+                ////////////
+                res.render('index.html', {
+                    title: `책 구경`,
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                    noticess,
+                    likesfornotice,
+                });
+            } else if (isNotLoggedIn) {
+                res.render('index.html', {
+                    title: `책 구경`,
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                });
+            }
         }
     } catch (error) {
         console.error(error);
