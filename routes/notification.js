@@ -130,20 +130,22 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
             const { id } = likeNoty;
             notices_like.push(id);
         }
+
         const notices_comments = []; // 좋아요 누른 사람들에 대한 Post 테이블의 모든 아이디
         for (const commentNoty of noticess) {
             const { id } = commentNoty;
             notices_comments.push(id);
         }
-        const [aa] = await Promise.all([
-            Who.update({
-                isNotified_like: '1',
-            }, {
-                where:{
-                    id: notices_like,
-                },
-            })
-        ]);
+
+        // const [aa] = await Promise.all([
+        //     Who.update({
+        //         isNotified_like: '1',
+        //     }, {
+        //         where:{
+        //             id: String(notices_like),
+        //         },
+        //     })
+        // ]);
         // const a = await Who.update({
         //     isNotified_like: '1',
         // }, {
@@ -151,11 +153,11 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
         //         id: notices_like,
         //     },
         // });
-        console.log("a = ", aa);
+        // console.log("a = ", aa);
 
         const [bb] = await Promise.all([
             Post.update({
-                isNotified_like: '1',
+                isNotified_posts: '1',
             }, {
                 where:{
                     id: notices_comments,
