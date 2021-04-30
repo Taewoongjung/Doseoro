@@ -18,19 +18,20 @@
                             {% if notice.BookId == null %}
                                 <form id="Commu-form-{{notice.id}}">
                                     <input type="hidden" name="community_Id" value="{{notice.id}}">
-
                                     <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[커뮤니티] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                                     <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button></ul>
                                 </form>
                             {% elif notice.commentingNick == null %}
                                 <form id="Without-Commu-form-{{notice.id}}">
                                     <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
+                                    <input type="hidden" name="to" value="{{window.location.pathname}}">
                                     <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[대댓글] {{notice.reCommentNick}} 님이 대댓글을 달았습니다.</a></li>
                                     <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty_delete('{{notice.id}}')">x</button></ul>
                                 </form>
                             {% elif notice.commentingNick %}
                                 <form id="Without2-Commu-form-{{notice.id}}">
                                     <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
+                                    <input type="hidden" name="to" value="{{window.location.pathname}}">
                                     <li class="nav-item"><a class="nav-link p-3" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">[댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.</a></li>
                                     <ul class="m-2"><button id="cancel" class="notionBtn pt-1 pb-1 ps-2 pe-2" type="submit" onclick="noty2_delete('{{notice.id}}')">x</button></ul>
                                 </form>

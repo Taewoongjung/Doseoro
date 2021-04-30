@@ -149,12 +149,77 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('signup.html');
 });
 
-router.get('/mypage', isLoggedIn, (req, res, next) => {
-    res.render('myPage.html');
-    // if (req.query) {
-    //     console.log("@@!!!!");
-    //     res.render('myPage.html');
-    // }
+router.get('/mypage', isLoggedIn, async (req, res, next) => {
+    /////////////
+
+    console.log("@@! = ", req.user.id);
+    const [books_for_notice] = await Promise.all([
+        Book.findAll({
+            where: {
+                OwnerId: req.user.id,
+            }
+        })
+    ]);
+
+    const [books_for_notice_commu] = await Promise.all([
+        Community.findAll({
+            where: {
+                postingId: req.user.id,
+            }
+        })
+    ]);
+
+
+    const notices = [];
+    for (const notice of books_for_notice) {
+        const { id } = notice;
+        notices.push(id);
+    }
+
+    const [likesfornotice] = await Promise.all([
+        Who.findAll({
+            where: {
+                thisbook: notices,
+                isNotified_like: {
+                    [Op.ne]: '1'
+                },
+            }
+        })
+    ]);
+
+    const notices_commu = [];
+    for (const notice of books_for_notice_commu) {
+        const { id } = notice;
+        notices_commu.push(id);
+    }
+
+    console.log("WWW = ", notices);
+    console.log("book = ", books_for_notice);
+    console.log("user = ", req.user.id);
+    const [noticess] = await Promise.all([
+        Post.findAll({
+            where: {
+                [Op.or]: [
+                    {
+                        BookId: notices,
+                        UserId: { [Op.ne]: String(req.user.id) }
+                    }, { // 커뮤니티 댓글 구별
+                        CommunityId: notices_commu,
+                        UserId: { [Op.ne]: String(req.user.id) }
+                    }],
+                isNotified_posts: {
+                    [Op.ne]: '1'
+                },
+            }
+        })
+    ]);
+    console.log("noticess = ", noticess);
+
+    ////////////
+    res.render('myPage.html',{
+        noticess,
+        likesfornotice,
+    });
 });
 
 // 0331 파일 올리기 

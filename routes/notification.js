@@ -14,7 +14,8 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 
 router.get('/witoutCommu', isLoggedIn, async(req, res, next) => {
     try{
-        const { notCommunity_Id } = req.query;
+        const { notCommunity_Id, to } = req.query;
+        console.log("@!@!@!@!@@ ", req.path);
         await Post.update({
             isNotified_posts: '1',
         }, {
