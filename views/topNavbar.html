@@ -5,8 +5,9 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse justify-content-sm-end" id="navbarCollapse">
-            <ul class="navbar-nav mb-2 mb-md-0 notionBox">
-                {% if user and user.id %}
+            <ul class="navbar-nav mb-2 mb-md-0">
+                <!-- <li class="nav-item"><a class="nav-link p-3" href="#">관심상품</a></li> -->
+                {% if users and users.id %}
                 <li class="nav-item">
                     <a onclick="notionClick(true)" class="nav-link btn notionBtn"><img src="/img/notionF.png" width="23px" alt="notionImg"></a>
                     <div id="notionList" class="notionInner p-2">
@@ -24,15 +25,6 @@
                                             [커뮤니티] {{notice.commentingNick}} 님이 댓글을 달았습니다.
                                         </a>
                                     </form>
-                                    {% if notice.BookId == null and notice.commentingNick == null %}
-                                        <form id="Commu-form-{{notice.id}}" class="d-flex">
-                                            <input type="hidden" name="community_Id" value="{{notice.id}}">
-                                            <a class="nav-link" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">
-                                                <button id="cancel" class="delBtn" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button>
-                                                [커뮤니티] {{notice.reCommentNick}} 님이 답글을 달았습니다.
-                                            </a>
-                                        </form>
-                                    {% endif %}
                                 {% elif notice.commentingNick == null %}
                                     <form id="Without-Commu-form-{{notice.id}}" class="d-flex">
                                         <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
@@ -55,7 +47,6 @@
                             </ul>
                             {% endfor %}
                             {% for likenotice in likesfornotice %}
-                            </form>
                             <ul id="listLike-{{likenotice.id}}">
                                 <form id="like-notice-form-{{likenotice.id}}">
                                     <input type="hidden" name="Like_Id" value="{{likenotice.id}}">
@@ -67,7 +58,6 @@
                             </ul>
                             {% endfor %}
                         </div>
-                        
                         <!-- 모두삭제 /  -->
                         <form id="deleteAll">
                             <ul class="ms-1" id="delAll">
@@ -78,11 +68,10 @@
                     </div>
                 </li>
 
-                <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{user.nick}}님</a></li>
+                <li class="nav-item"><a class="nav-link p-3">안녕하세요 {{users.nick}}님</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
-                
                 {% else %}
                 <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
             </ul>
@@ -127,5 +116,9 @@
             request.setAttribute('action', '/notification/deleteAll');
             request.setAttribute('method', 'GET');
         }
+        // function delAll() {
+        //     const listAll = document.getElementById('listAll');
+        //     listAll.style.display = 'none';
+        // }
     </script>
 </nav>

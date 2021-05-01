@@ -25,7 +25,7 @@
                                             [커뮤니티] {{notice.commentingNick}} 님이 댓글을 달았습니다.
                                         </a>
                                     </form>
-                                {% elif notice.commentingNick == null and notice.commentingNick == null %}
+                                {% elif notice.commentingNick == null %}
                                     <form id="Without-Commu-form-{{notice.id}}" class="d-flex">
                                         <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
                                         <input type="hidden" name="to" value="{{window.location.pathname}}">
@@ -34,7 +34,7 @@
                                             [답글] {{notice.reCommentNick}} 님이 답글을 달았습니다.
                                         </a>
                                     </form>
-                                {% elif notice.commentingNick == null %}
+                                {% elif notice.commentingNick %}
                                     <form id="Without2-Commu-form-{{notice.id}}" class="d-flex">
                                         <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
                                         <input type="hidden" name="to" value="{{window.location.pathname}}">
