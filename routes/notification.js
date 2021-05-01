@@ -103,9 +103,6 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
             notices_commu.push(id);
         }
 
-        // console.log("WWW = ", notices);
-        // console.log("book = ", books_for_notice);
-        // console.log("user = ", req.user.id);
         const [noticess] = await Promise.all([
             Post.findAll({
                 where: {
@@ -138,23 +135,14 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
         }
         const [aa] = await Promise.all([
             Who.update({
-                isNotified_like: '1',
+                isNotified_like: 1,
             }, {
                 where:{
                     id: String(notices_like),
                 },
             })
         ]);
-        
-        // const a = await Who.update({
-        //     isNotified_like: '1',
-        // }, {
-        //     where:{
-        //         id: notices_like,
-        //     },
-        // });
-        // console.log("a = ", aa);
-
+        console.log("a = ", aa);
         const [bb] = await Promise.all([
             Post.update({
                 isNotified_posts: '1',
