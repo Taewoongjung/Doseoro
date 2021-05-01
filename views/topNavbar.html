@@ -69,7 +69,7 @@
                         </div>
                         
                         <!-- 모두삭제 /  -->
-                        <form id="aa">
+                        <form id="deleteAll">
                             <ul class="ms-1" id="delAll">
                                 <button id="cancel" class="delBtn p-2" type="submit" onclick="delAll()">모두 삭제</button>
                             </ul>
@@ -124,8 +124,7 @@
         // 모두 삭제 기능
         function delAll() {
             console.log("@!@@@@");
-            const request = document.getElementById('aa');
-            // listAll.style.display = 'none';
+            const request = document.getElementById('deleteAll');
             request.setAttribute('action', '/notification/deleteAll');
             request.setAttribute('method', 'GET');
             // const request = document.getElementById('hi');

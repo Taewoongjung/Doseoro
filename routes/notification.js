@@ -136,16 +136,16 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
             const { id } = commentNoty;
             notices_comments.push(id);
         }
-
-        // const [aa] = await Promise.all([
-        //     Who.update({
-        //         isNotified_like: '1',
-        //     }, {
-        //         where:{
-        //             id: String(notices_like),
-        //         },
-        //     })
-        // ]);
+        const [aa] = await Promise.all([
+            Who.update({
+                isNotified_like: '1',
+            }, {
+                where:{
+                    id: String(notices_like),
+                },
+            })
+        ]);
+        
         // const a = await Who.update({
         //     isNotified_like: '1',
         // }, {
@@ -164,13 +164,7 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
                 },
             })
         ]);
-        // const b = await Post.update({
-        //     isNotified_like: '1',
-        // }, {
-        //     where:{
-        //         id: notices_comments,
-        //     },
-        // });
+
         console.log("b = ", bb);
     } catch (error) {
         console.error(error);
