@@ -64,7 +64,7 @@ router.get('/notyLike', isLoggedIn, async(req, res, next) => {
 router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
     try{
         console.log("deleteAll 진입");
-        const [books_for_notice] = await Promise.all([ // 내가 올린 책 다 찾기
+        const [books_for_notice] = await Promise.all([ // 내가 올린 책 모두 찾기
             Book.findAll({
                 where: {
                     OwnerId: req.user.id,
@@ -72,7 +72,7 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
             })
         ]);
 
-        const [books_for_notice_commu] = await Promise.all([ // 내가 올린 커뮤니티 글 다 찾기
+        const [books_for_notice_commu] = await Promise.all([ // 내가 올린 커뮤니티 글 모두 찾기
             Community.findAll({
                 where: {
                     postingId: req.user.id,
@@ -86,7 +86,7 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
             notices.push(id);
         }
 
-        const [likesfornotice] = await Promise.all([
+        const [likesfornotice] = await Promise.all([ // 나의 게시물에 좋아요 누른 사람들 모두 찾기
             Who.findAll({
                 where: {
                     thisbook: notices,

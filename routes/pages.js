@@ -763,13 +763,14 @@ router.get('/community', async (req, res, next) => {
         ]);
         const responseCommunities = [];
         for (const community of communities) {
-            const { createdAt, content, id, title, postingNick } = community;
+            const { createdAt, content, id, title, postingNick, category } = community;
             responseCommunities.push({
                 createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
                 content,
                 id,
                 title,
                 postingNick,
+                category,
             });
         }
         if (req.user) {
