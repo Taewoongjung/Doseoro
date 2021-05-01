@@ -23,6 +23,10 @@ module.exports = class Community extends Sequelize.Model {
             type: Sequelize.STRING(100),
             allowNull: true,
         },
+        category: {
+          type: Sequelize.STRING(70),
+          allowNull: true,
+      },
     }, {
       sequelize,
       timestamps: true,
