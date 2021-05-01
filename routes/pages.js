@@ -872,7 +872,6 @@ router.get('/registCommunity', isLoggedIn, async (req, res) => {
         })
     ]);
 
-
     const notices = [];
     for (const notice of books_for_notice) {
         const { id } = notice;

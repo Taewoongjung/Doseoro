@@ -135,10 +135,10 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
         }
         const [aa] = await Promise.all([
             Who.update({
-                isNotified_like: 1,
+                isNotified_like: '1',
             }, {
                 where:{
-                    id: String(notices_like),
+                    id: notices_like,
                 },
             })
         ]);
