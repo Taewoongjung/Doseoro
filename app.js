@@ -9,16 +9,16 @@ const favicon = require('serve-favicon');
 const passport = require('passport');
 const helmet = require('helmet');
 const hpp = require('hpp');
-// const redis = require('redis');
-// const RedisStore = require('connect-redis')(session);
+const redis = require('redis');
+const RedisStore = require('connect-redis')(session);
 const moment = require('moment-timezone');
 moment.tz.setDefault('Asia/Seoul');
 
 dotenv.config();
-// const redisClient = redis.createClient({
-//   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
-//   password: process.env.REDIS_PASSWORD,
-// });
+const redisClient = redis.createClient({
+  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+  password: process.env.REDIS_PASSWORD,
+});
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 const indexRouter = require('./routes/index');
