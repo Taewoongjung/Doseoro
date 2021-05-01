@@ -59,9 +59,11 @@
                             {% endfor %}
                         </div>
                         <!-- 모두삭제 /  -->
-                        <ul class="ms-1" id="delAll">
-                            <button id="cancel" class="delBtn p-2" type="submit" onclick="delAll()">모두 삭제</button>
-                        </ul>
+                        <form id="deleteAll">
+                            <ul class="ms-1" id="delAll">
+                                <button id="cancel" class="delBtn p-2" type="submit" onclick="delAll()">모두 삭제</button>
+                            </ul>
+                        </form>
                         <!-- 알림 테스트 -->
                     </div>
                 </li>
@@ -110,8 +112,13 @@
 
         // 모두 삭제 기능
         function delAll() {
-            const listAll = document.getElementById('listAll');
-            listAll.style.display = 'none';
+            const request = document.getElementById('deleteAll');
+            request.setAttribute('action', '/notification/deleteAll');
+            request.setAttribute('method', 'GET');
         }
+        // function delAll() {
+        //     const listAll = document.getElementById('listAll');
+        //     listAll.style.display = 'none';
+        // }
     </script>
 </nav>

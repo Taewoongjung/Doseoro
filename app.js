@@ -68,9 +68,9 @@ const sessionOption = {
     httpOnly: true,
     secure: false,
   },
-  name: 'sessionCookie',
+  // name: 'sessionCookie',
   // 배포 시 주석 풀기
-  // store: new RedisStore({ client: redisClient }),
+  store: new RedisStore({ client: redisClient }),
 };
 if (process.env.NODE_ENV === 'production') {  //배포 할 때
   sessionOption.proxy = true;
@@ -101,8 +101,8 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-const server = app.listen(app.get('port'), () => {
-  console.log(app.get('port'), '번 포트에서 대기중');
-});
+// const server = app.listen(app.get('port'), () => {
+//   console.log(app.get('port'), '번 포트에서 대기중');
+// });
 
-// module.exports = app;
+module.exports = app;
