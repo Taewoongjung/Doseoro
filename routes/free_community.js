@@ -160,16 +160,16 @@ router.post('/edit_community', isLoggedIn, async (req, res, next) => {
     }
 });
 
-
 // 0415 커뮤니티 등록
 router.post('/community', isLoggedIn, async (req, res, next) => {
     try {
-        const { postTitle, postAbout } = req.body;
+        const { postTitle, postAbout, commu_category } = req.body;
         const commu = await Community.create({
             title: postTitle,
             content: postAbout,
             postingId: req.user.id,
             postingNick: req.user.nick,
+            category: commu_category,
         });
         res.send(`<script type="text/javascript">alert("커뮤니티 등록 완료"); location.href="/free_community/community/${commu.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
@@ -358,11 +358,11 @@ router.post('/community/:id/comment', isLoggedIn, async (req, res, next) => {
 // 0421 대댓글 기능 
 router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
-        // console.log("@!@!@@");
+        // console.log("/free_community/recomment 진입");
         const { comment, UserId, communityId, commentId } = req.body;
-        console.log("@!@!@@ = ", commentId);
-        // console.log("@!@!@@ = ", communityId);
-        // console.log("@!@!@@ = ", req.body);
+        console.log("community에 commentId = ", commentId);
+        // console.log("communityId = ", communityId);
+        // console.log("req.body = ", req.body);
         await Post.create({
             content: comment,
             UserId: req.user.id,
