@@ -150,8 +150,6 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
 });
 
 router.get('/mypage', isLoggedIn, async (req, res, next) => {
-    /////////////
-
     console.log("@@! = ", req.user.id);
     const [books_for_notice] = await Promise.all([
         Book.findAll({
@@ -169,7 +167,6 @@ router.get('/mypage', isLoggedIn, async (req, res, next) => {
         })
     ]);
 
-
     const notices = [];
     for (const notice of books_for_notice) {
         const { id } = notice;
@@ -182,9 +179,7 @@ router.get('/mypage', isLoggedIn, async (req, res, next) => {
                 thisbook: notices,
                 isNotified_like: {
                     [Op.ne]: '1'
-                },
-            }
-        })
+                },}})
     ]);
 
     const notices_commu = [];
@@ -213,9 +208,7 @@ router.get('/mypage', isLoggedIn, async (req, res, next) => {
             }
         })
     ]);
-    console.log("noticess = ", noticess);
 
-    ////////////
     res.render('myPage.html',{
         noticess,
         likesfornotice,
@@ -263,10 +256,9 @@ router.post('/book/:id/comment', isLoggedIn, async (req, res, next) => {
 // 0421 대댓글 기능 
 router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
-        console.log("@!@!@@");
+        console.log("------ /index/recomment ------");
         const { comment, UserId, bookId, commentId } = req.body;
-        console.log("@!@!@@ = ", commentId);
-        console.log("@!@!@@ === ", req.body);
+        console.log("(recomment) req.body === ", req.body);
         const post = await Post.create({
             content: comment,
             UserId: req.user.id,
@@ -390,9 +382,6 @@ router.get('/book/:id', async (req, res, next) => {
         }
 
         if (res.locals.user) {
-            /////////////
-
-            console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -433,9 +422,9 @@ router.get('/book/:id', async (req, res, next) => {
                 notices_commu.push(id);
             }
 
-            console.log("WWW = ", notices);
+            console.log("notices = ", notices);
             console.log("book = ", books_for_notice);
-            console.log("user = ", req.user.id);
+            console.log("user id = ", req.user.id);
             const [noticess] = await Promise.all([
                 Post.findAll({
                     where: {
@@ -455,7 +444,6 @@ router.get('/book/:id', async (req, res, next) => {
             ]);
             console.log("noticess = ", noticess);
 
-            ////////////
             console.log("login");
             res.render('saleDetail.html', {
                 title: `책 구경`,
@@ -722,7 +710,6 @@ router.get('/search', async (req, res, next) => {
                 ]);
                 console.log("noticess = ", noticess);
 
-                ////////////
                 res.render('index.html', {
                     title: `책 구경`,
                     foundBooks,
