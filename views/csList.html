@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>고객문의</title>
+</head>
+
+<body>
+    <div class="flex w-100">
+        <!-- top -->
+        {% include "topNavbar.html" %}
+
+        <!-- main -->
+        <main class="border container-sm mt-0 mb-0 min-vh-100 pt-5">
+            <h1 class="h2 fw-bold mb-4">고객문의</h1>
+            <form id="book-form" class="mb-5"><a href="/pages/registCommunity"
+                    class="addBook text-decoration-none btn-primary p-2">글 등록</a></form>
+
+            <!-- 게시물 표시 -->
+            <div class="postingList border p-5" onclick="">
+
+                <a href="/pages/csDetail">테스트용 이동 백엔드 구현 시 삭제</a>
+
+                <div class="pb-3 border-bottom">
+                    <!-- <h1 class="h5 fw-bold text-primary"></h1> -->
+                    <div class="d-sm-flex justify-content-between align-items-center mb-3">
+                        <h1 class="postingTitle h3 fw-bold">제목입니다</h1>
+                        <a class="text-decoration-none text-dark">작성일입니다</a>
+                    </div>
+                    <a>유저닉네임</a>
+                </div>
+                <p class="postingBody pt-3">문의 내용</p>
+            </div>
+
+        </main>
+
+
+        <!-- footer -->
+        <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+    </div>
+
+    <script src="/js/topNav.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
