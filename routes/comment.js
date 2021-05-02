@@ -129,9 +129,6 @@ router.get('/commentDelete_buy', isLoggedIn, async (req, res, next) => {
         const { UserId, commentId, bookId } = req.query;
         const thisBook = await Book.findOne({ where: { id: bookId } });
 
-        console.log("user id = ", res.locals.user.id);
-        console.log("recommenid = ", String(recomment_reCommentedId));
-
         if (UserId === String(res.locals.user.id)){
             await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
 
