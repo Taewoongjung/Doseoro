@@ -57,15 +57,8 @@ router.get('/commentDelete', isLoggedIn, async (req, res, next) => {
 // 대댓글 수정(판매)
 router.get('/reCommentEdit', isLoggedIn, async (req, res, next) => {
     try {
-        // console.log(req.query);
-        // console.log(' ');
         const { recomment_UserId, re_bookId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
-        // console.log("Com = ", reCom_edited_comment);
-        // console.log("ID = ", re_commentId);
-        // console.log("recomment_reCommentedId = ", recomment_reCommentedId);
-        // console.log("UserId = ", String(recomment_UserId));
-        // console.log("req.user.id = ", req.user.id);
-        // console.log("req.locals.user.id = ", res.locals.user.id);
+        
         const thisBook = await Book.findOne({ where: { id: re_bookId } });
         if (recomment_reCommentedId !== String(req.user.id)){
             return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/book/${thisBook.id}";</script>`);  
@@ -90,10 +83,6 @@ router.get('/reCommentEdit', isLoggedIn, async (req, res, next) => {
 router.get('/reCommentDelete', isLoggedIn, async (req, res, next) => {
     try {
         const { recomment_UserId, re_commentId, re_bookId, recomment_reCommentedId } = req.query;
-
-        console.log('@@@@@@@@@@@@@@@@@@@@@@');   /// <-ㅏㅇdㅔdddd ㅋㅋdazz dsorry. kkakotalk rrd
-        console.log(req.query);
-        console.log('@@@@@@@@@@@@@@@@@@@@@@');
 
         const thisBook = await Book.findOne({ where: { id: re_bookId } });
         if (recomment_reCommentedId === String(res.locals.user.id)){
