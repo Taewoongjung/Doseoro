@@ -154,6 +154,7 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
         ]);
 
         console.log("b = ", bb);
+        return res.send(`<script type="text/javascript">location.href="/";</script>`);
     } catch (error) {
         console.error(error);
         next(error);

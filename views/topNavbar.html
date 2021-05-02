@@ -55,7 +55,6 @@
                             </ul>
                             {% endfor %}
                             {% for likenotice in likesfornotice %}
-                            </form>
                             <ul id="listLike-{{likenotice.id}}">
                                 <form id="like-notice-form-{{likenotice.id}}">
                                     <input type="hidden" name="Like_Id" value="{{likenotice.id}}">
@@ -71,7 +70,8 @@
                         <!-- 모두삭제 /  -->
                         <form id="deleteAll">
                             <ul class="ms-1" id="delAll">
-                                <button id="cancel" class="delBtn p-2" type="submit" onclick="delAll()">모두 삭제</button>
+                                <button id="cancel" class="delBtn p-2" type="submit" 
+                                onclick="delAll()">모두 삭제</button>
                             </ul>
                         </form>
                         <!-- 알림 테스트 -->
