@@ -19,300 +19,45 @@
 <body>
     <div class="flex w-100">
         <!-- 상단 바 -->
-        {% include "topNavbar2.html" %}
+        {% include "topNavbar.html" %}
 
-        <!-- 컨텐츠 -->
-        <main class="saleDetail border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
+        <!-- main -->
+        <main class="border container-sm mt-0 mb-0 min-vh-100 pt-5">
             <!-- 검색, 메뉴이동 기능 -->
             {% include "searchBox.html" %}
 
-            <div class="w-75 ms-auto me-auto">
-                <!-- 제목 -->
-                <div class="w-100 pb-2 mb-4 border-bottom">
+            <h1 class="h2 fw-bold mb-4">커뮤니티</h1>
+            <form id="book-form" class="mb-5"><a href="/pages/registCommunity"
+                    class="addBook text-decoration-none btn-primary p-2">글 등록</a></form>
+
+            <!-- 각 게시물 -->
+            {% for community in communities | reverse %}
+            <div class="postingList border p-5" onclick="location.href='/free_community/community/{{community.id}}'">
+                <div class="pb-3 border-bottom">
                     <h1 class="h5 fw-bold text-primary">{{community.category}}</h1>
-                    <div class="d-lg-flex align-items-center justify-content-between">
-                        <h1 class="h2 text-decoration-none fw-bold" id="getPostingTitle">{{community.title}}</h1>
-                        <!-- <a class="text-decoration-none w-100 text-dark text-end" id="getPostingDate">{{createdAt}}</a> -->
-                        <a class="text-decoration-none text-dark" id="getPostingDate"></a>
-                        <input id="postingTime" type="hidden" value="{{createdAt}}">
+                    <div class="d-sm-flex justify-content-between align-items-center mb-3">
+                        <h1 class="postingTitle h3 fw-bold">{{community.title}}</h1>
+                        <a class="text-decoration-none text-dark">{{community.createdAt}}</a>
                     </div>
+                    <a>{{community.postingNick}}</a>
                 </div>
-
-                <!-- 게시물 정보 -->
-                <div class="wrapBookInfo d-flex">
-                    <div class="bookInfo w-100 me-0 align-content-between">
-                        <div class="category d-flex align-items-center mt-2 mb-2">
-                            <a class="text-body text-decoration-none fw-bold"
-                                id="getAppearanceInfo">{{community.postingNick}}</a>
-                        </div>
-                    </div>
-
-                    <div>
-                        <form id="community_item-ED-form-{{community.id}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_id"
-                                value="{{community.id}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_postingId"
-                                value="{{community.postingId}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_content"
-                                value="{{community.content}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_createdAt"
-                                value="{{community.createdAt}}">
-                            <div class="dropdown">
-                                <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                    <li><button id="item-edit-btn-{{community.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="community_item_edit('{{community.id}}')">수정</button></li>
-                                    <li><button id="item-delete-btn-{{community.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="community_item_delete('{{community.id}}')">삭제</button></li>
-                                </ul>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="commuAbout align-items-center mt-2 mb-2 pt-4 pb-4">
-                    <a class="text-body text-decoration-none" id="getAppearanceInfo" onload="replaceLine()"
-                        style="white-space: pre-line;">{{community.content}}</a>
-                </div>
+                <p class="postingBody pt-3">{{community.content}}</p>
             </div>
-
-            <!-- 댓글 달기 -->
-            {% if users and users.id %}
-            <form id="comment-form" class="mt-5 w-75 ms-auto me-auto">
-                <div class="input-group">
-                    <input id="comment" class="form-control p-2" name="comment">
-                    <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
-
-                    <input type="hidden" name="communityId" value="{{communityId}}">
-                    <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()"
-                        value="Click">댓글달기</button>
-                </div>
-            </form>
-            {% endif %}
-            <div id="comments-collection" class="w-75 ms-auto me-auto">
-                {% for comment in comments %}
-                <table>
-                    <!-- OwnerId -->
-                    <input type="hidden" name="OwnerId" value="{{user}}">
-                    {% if users and users.id %}
-                    <form id="comment-ED-form-{{comment.id}}">
-                        <div>
-                            <input type="hidden" name="communityId" value="{{communityId}}">
-                            <input type="hidden" name="UserId" value="{{comment.UserId}}">
-                            <input type="hidden" name="commentId" value="{{comment.id}}">
-                            <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
-                            
-                            <!-- 댓글 본문 -->
-                            <div class="commentList">
-                                <div class="d-sm-flex commentListInner">
-                                    <div class="comment-nick fw-bold">{{comment.commentingNick}}</div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="comment-content me-3">{{comment.createdAt}}</div>
-                                        <div class="dropdown">
-                                            <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
-                                                aria-expanded="true"></a>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                                <li><a id="comment-edit-btn-{{comment.id}}" class="dropdown-item" role="menuitem"
-                                                        tabindex="-1" type="submit" class="btn"
-                                                        onclick="re_comment('{{comment.id}}')">댓글</a></li>
-                                                <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
-                                                        role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                        onclick="comment_edit('{{comment.id}}')">수정</button></li>
-                                                <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
-                                                        role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                        onclick="comment_delete('{{comment.id}}')">삭제</button></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="comment-content"><a>{{comment.content}}</a></div>
-                            </div>
-                            <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment"
-                                value="{{comment.id}}">
-                            <input type="hidden" id="userid_it-{{comment.id}}" name="UserId_comment"
-                                value="{{comment.id}}">
-                            <input type="hidden" id="commentid_it-{{comment.id}}" name="commentId"
-                                value="{{comment.id}}">
-                        </div>
-                    </form>
-                    <!-- 답글입력 -->
-                    <div id="inputReComment-{{comment.id}}" class="w-100"></div>
-                    <!-- 로그인 대댓글 -->
-                    {% for re_comment in re_comments %}
-                    <form id="re_comment-ED-form-{{comment.id}}-{{re_comment.id}}">
-                        {% if re_comment.reCommentingId == comment.id %}
-                        <input type="hidden" name="recomment_reCommentedId" value="{{re_comment.reCommentedId}}">
-                        <input type="hidden" name="recomment_UserId" value="{{re_comment.UserId}}">
-                        <input type="hidden" name="communityId" value="{{communityId}}">
-                        <input type="hidden" name="re_commentId" value="{{re_comment.id}}">
-                        <input type="hidden" name="re_comment_createdAt" value="{{re_comment.createdAt}}">
-                        
-                        <div class="reCommentList">
-                            <div class="reCommentListInner d-sm-flex">
-                                <div class="d-flex align-items-center">
-                                    <div class="p-2"><img src="/img/reply.png" style="opacity: 0.5;" width="15px"></div>
-                                    <div class="comment-nick fw-bold">{{re_comment.reCommentNick}}</div>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <div class="comment-content">{{re_comment.createdAt}}</div>
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
-                                            aria-expanded="true"></a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                            <li><button id="re_comment-edit-btn-{{re_comment.id}}" class="dropdown-item"
-                                                    role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                    onclick="re_comment_edit('{{comment.id}}','{{re_comment.id}}')">수정</button>
-                                            </li>
-                                            <li><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item"
-                                                    role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                    onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">삭제</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment-content ms-sm-2"><a>{{re_comment.content}}</a></div>
-                            <input type="hidden" id="reCom_id-{{re_comment.id}}" name="reCom_edited_comment"
-                                value="{{re_comment.content}}">
-                        </div>
-                        {% endif %}
-                    </form>
-                    {% endfor %}
-
-                    {% else %}
-                    <!-- 비로그인 댓글 -->
-                    <div class="commentList">
-                        <div class="d-sm-flex commentListInner">
-                            <div class="comment-nick fw-bold">{{comment.commentingNick}}</div>
-                            <div class="comment-content">{{comment.createdAt}}</div>
-                        </div>
-                        <div class="comment-content"><a>{{comment.content}}</a></div>
-                    </div>
-
-                    <!-- 비로그인 답글 -->
-                    {% for re_comment in re_comments %}
-                    {% if re_comment.reCommentingId == comment.id %}
-                    <div class="reCommentList">
-                        <div class="reCommentListInner d-sm-flex">
-                            <div class="d-flex align-items-center">
-                                <div class="p-2"><img src="/img/reply.png" style="opacity: 0.5;" width="15px"></div>
-                                <div class="comment-nick me-3 fw-bold">{{re_comment.reCommentNick}}</div>
-                            </div>
-                            <div class="comment-content me-3">{{re_comment.createdAt}}</div>
-                        </div>
-                        <div class="comment-content me-3"><a>{{re_comment.content}}</a></div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                    {% endif %}
-                </table>
-                {% endfor %}
-            </div>
-
+            {% endfor %}
         </main>
+
         <!-- footer -->
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script>
-        // 커뮤니티 스크립트
-        function community_item_edit(id) {
-            const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/editIt_community');
-            request.setAttribute('method', 'POST');
-        }
-
-        function community_item_delete(id) {
-            const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/delete_community');
+        function one() {
+            const request = document.getElementById('search-form');
+            request.setAttribute('action', '/search{{searchWord}}');
             request.setAttribute('method', 'GET');
         }
-
-        // 여기만 수정
-        function postComment() {
-            const request = document.getElementById('comment-form');
-
-            let comment = document.getElementById('comment').value.replace(/\s|　/gi, '');
-
-            if (comment == '') {
-                alert("내용을 입력하세요");
-            } else {
-                request.setAttribute('action', '/free_community/community/{{communityId}}/comment');
-                request.setAttribute('method', 'POST');
-            }
-        }
-
-        // 밑에는 수정 해야함
-        function comment_edit(id) {
-            var Com = prompt('수정 할 문구를 적어주세요');
-            document.getElementById(`edit_it-${id}`).value = `${Com}`;
-
-            const request = document.getElementById(`comment-ED-form-${id}`);
-
-            let ckCom = Com.replace(/\s|　/gi, '');
-            if (ckCom == '') {
-                alert("내용을 입력하세요");
-            } else {
-                request.setAttribute('action', `/comment/commentEdit_commu?Com`);
-                request.setAttribute('method', 'GET');
-            }
-        }
-
-        function comment_delete(id) {
-            const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', '/comment/commentDelete_commu');
-            request.setAttribute('method', 'GET');
-        }
-
-        // 대댓글
-        function re_comment(id) {
-            console.log("대댓글 클릭됨");
-            const request = document.getElementById(`comment-ED-form-${id}`);
-
-            const userId = document.getElementById(`userid_it-${id}`).value;
-            const commentId = document.getElementById(`commentid_it-${id}`).value;
-            console.log("@@ = ", commentId);
-            const inputRe = document.getElementById(`inputReComment-${id}`);
-            inputRe.innerHTML = '<form action="/free_community/recomment" method="POST"><div class="input-group"><input id="comment" class="reComment inputForm w-50 p-2" name="comment"><input type="hidden" name="communityId" value="{{communityId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">답글등록</button></div></form>';
-            document.getElementById(`userId`).value = userId;
-            document.getElementById(`commentId`).value = commentId;
-        }
-
-        // 대댓글 등록클릭 이벤트
-        function postReComment() {
-            alert("대댓글 등록");
-            window.location.reload();
-        }
-
-        // 대댓글 수정/삭제
-        function re_comment_edit(cid, id) {
-            var Com = prompt('수정 할 문구를 적어주세요');
-            document.getElementById(`reCom_id-${id}`).value = `${Com}`;
-            console.log("@@ = ", Com);
-            console.log("id =", id);
-            console.log("cid = ", cid);
-            const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
-
-            let ckCom = Com.replace(/\s|  /gi, '');
-            if (ckCom == '') {
-                alert("내용을 입력하세요");
-            } else {
-                request.setAttribute('action', `/comment/reCommentEdit_commu`);
-                request.setAttribute('method', 'GET');
-            }
-        }
-
-        function re_comment_delete(cid, id) {
-            const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
-            request.setAttribute('action', '/comment/reCommentDelete_commu');
-            request.setAttribute('method', 'GET');
-        }
-
     </script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/topNav.js"></script>
-    <script src="/js/timestamp.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
