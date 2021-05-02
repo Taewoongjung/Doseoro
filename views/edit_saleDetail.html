@@ -117,10 +117,15 @@
           <p>파일명:&nbsp&nbsp&nbsp&nbsp&nbsp{{books.img}}</p>
         </div>
 
+        <!-- 새로운 사진 -->
+        <div id="newPhoto">
+          <a class="btn" id="previewBook">미리보기</a>
+        </div>
+
         <h1 class="h4 mt-3">상품 사진</h1>
         <div class="input-group mb-3">
           <label for="book-photo">상품 사진</label>
-          <input type="file" class="form-control" id="book-photo" name="img" required>
+          <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" required>
         </div>
 
         <div class="input-group">
