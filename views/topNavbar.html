@@ -16,7 +16,7 @@
                         <div id="listAll">
                             {% for notice in noticess %}
                             <ul id="list-{{notice.id}}" class="mb-3">
-                                {% if notice.BookId == null %}
+                                {% if (notice.BookId) == null and (notice.recommentNick == null) %}
                                     <form id="Commu-form-{{notice.id}}" class="d-flex">
                                         <input type="hidden" name="community_Id" value="{{notice.id}}">
                                         <a class="nav-link" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">

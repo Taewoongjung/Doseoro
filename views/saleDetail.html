@@ -244,12 +244,13 @@
                                         <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                             <li><button id="re_comment-edit-btn-{{re_comment.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                    onclick="re_comment_edit('{{comment.id}}','{{re_comment.id}}')">수정</button>
+                                                    onclick="re_comment_edit('{{comment.id}}','{{re_comment.id}}')">
+                                                    수정</button>
                                             </li>
-                                            <li><button id="re_comment-delete-btn-{{re_comment.id}}"
-                                                    class="dropdown-item" role="menuitem" tabindex="-1" type="submit"
-                                                    class="btn"
-                                                    onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">삭제</button>
+                                            <li><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item" 
+                                                role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">
+                                                삭제</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -259,8 +260,8 @@
                             <input type="hidden" id="reCom_id-{{re_comment.id}}" name="reCom_edited_comment"
                                 value="{{re_comment.content}}">
                         </div>
+                        {% endif %}
                     </form>
-                    {% endif %}
                     {% endfor %}
             </div>
 

@@ -422,9 +422,9 @@ router.get('/book/:id', async (req, res, next) => {
                 notices_commu.push(id);
             }
 
-            console.log("notices = ", notices);
-            console.log("book = ", books_for_notice);
-            console.log("user id = ", req.user.id);
+            // console.log("notices = ", notices);
+            // console.log("book = ", books_for_notice);
+            // console.log("user id = ", req.user.id);
             const [noticess] = await Promise.all([
                 Post.findAll({
                     where: {
@@ -442,7 +442,7 @@ router.get('/book/:id', async (req, res, next) => {
                     }
                 })
             ]);
-            console.log("noticess = ", noticess);
+            // console.log("noticess = ", noticess);
 
             console.log("login");
             res.render('saleDetail.html', {
