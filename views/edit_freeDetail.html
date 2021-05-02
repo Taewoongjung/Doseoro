@@ -84,7 +84,7 @@
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state2" name="checkState" value="필기있음">
             <label for="book-state2" class="me-3 ms-2" style="display: block;">필기있음</label></div>
 
-          <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state3" name="checkState" value="접힌저국">
+          <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state3" name="checkState" value="접힌자국">
             <label for="book-state3" class="me-3 ms-2" style="display: block;">접힌자국</label></div>
 
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state4" name="checkState" value="찢김">
@@ -92,8 +92,6 @@
 
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state5" name="checkState" value="기타">
            <label for="book-state5" class="me-3 ms-2" style="display: block;">기타</label></div>
-
-          <!-- <input type="text" class="form-control p-3" id="book-demaged" name="demaged" placeholder="외관손상" required> -->
         </div>
 
         <h1 class="h4 mt-3">거래방법</h1>
@@ -105,22 +103,19 @@
           <option name="dealRoot" value="택배">택배</option>
         </select>
 
-        <h1 class="h4 mt-3">이전 상품 사진</h1>
-        <div class="bookImg mb-3">
-          <a href="#" class=""><img class="" src="/img/{{books.img}}" style="border-radius:21px"
-                  width="320px" height="400px"></a>
+        <!-- 글 수정 시에는 non required -->
+        <h1 class="h4 mt-3">상품 사진</h1>
+        <div class="imgPreview mb-3 text-center">
+          <a><img id="nowimage" src="/img/{{books.img}}"></a>
           <p>파일명:&nbsp&nbsp&nbsp&nbsp&nbsp{{books.img}}</p>
         </div>
-
-        <h1 class="h4 mt-3">상품 사진</h1>
         <div class="input-group mb-3">
           <label for="book-photo">상품 사진</label>
-          <input type="file" class="form-control" id="book-photo" name="img" required>
+          <input type="file" class="form-control" id="book-photo" name="img" accept="image/*">
         </div>
 
         <div class="input-group">
           <label for="book-about">상품설명</label>
-          <!-- <input type="text" class="form-control p-3" id="book-about" name="about" value="{{books.about}}"> -->
           <textarea type="text" class="form-control p-3 mb-4" id="book-about" name="about" placeholder="내용" rows="10">{{books.about}}</textarea>
         </div>
         <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{books.id}}">
@@ -143,6 +138,7 @@
   </script>
   <script src="/js/ckboxLimit.js"></script>
   <script src="/js/topNav.js"></script>
+  <script src="/js/previewPost.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 

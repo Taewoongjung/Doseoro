@@ -396,6 +396,20 @@ router.get('/bookRequest', async (req, res, next) => {
                 where: { SoldId: null, isSelling: '1' }
             })
         ]);
+
+        const responseBooks = [];
+        for (const book of books) {
+            const { createdAt, id, postmessage, usernick, title, about } = book;
+            responseBooks.push({
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
+                id,
+                postmessage,
+                usernick,
+                title,
+                about,
+            });
+        }
+
         /////////////
         if (req.user) {
             console.log("@@! = ", req.user.id);
@@ -462,13 +476,13 @@ router.get('/bookRequest', async (req, res, next) => {
             console.log("noticess = ", noticess);
             ////////////
             res.render('bookRequest.html', {
-                books,
+                books:responseBooks,
                 noticess,
                 likesfornotice,
             });
         } else {
             res.render('bookRequest.html', {
-                books,
+                books:responseBooks,
             });
         }
     } catch (error) {
