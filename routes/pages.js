@@ -109,6 +109,7 @@ router.get('/saleBoard', async (req, res, next) => {
         const [books] = await Promise.all([
             Book.findAll({
                 where: {
+                    SoldId: null,
                     isSelling: null,
                     price: {
                         [Op.ne]: -1
