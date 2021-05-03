@@ -149,8 +149,38 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('signup.html');
 });
 
+router.get('/tradeHistory', isLoggedIn, async (req, res) => {
+    const [boughtBooks] = await Promise.all([
+        Book.findAll({
+            where: {
+                SoldId: {
+                    [Op.eq]: req.user.id,
+                }
+            }
+        })
+    ]);
+
+    const [soldBooks] = await Promise.all([
+        Book.findAll({
+            where: {
+                OwnerId: {
+                    [Op.eq]: req.user.id,
+                },
+                sold: {
+                    [Op.eq]: 1
+                }
+            }
+        })
+    ]);
+
+    res.render('tradeHistory.html',{
+        boughtBooks,
+        soldBooks,
+    });
+});
+
 router.get('/mypage', isLoggedIn, async (req, res, next) => {
-    console.log("@@! = ", req.user.id);
+    console.log("/index/mypage 진입 시 아이디 확인 = ", req.user.id);
     const [books_for_notice] = await Promise.all([
         Book.findAll({
             where: {
