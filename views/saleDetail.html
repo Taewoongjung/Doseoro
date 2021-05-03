@@ -414,10 +414,12 @@
         function comment_trade_complete(id){
             const name = document.getElementById(`comment-nick-${id}`).value
             console.log(name);
-
+            const request = document.getElementById(`comment-ED-form-${id}`);
             // confirm에서 선택에 따라 이벤트 발생
             if(confirm('"' + name + '"' + "님과 거래를 마쳤습니까?")) {
                 // 성공
+                request.setAttribute('action', '/comment/reCommentDelete');
+                request.setAttribute('method', 'GET');
                 alert("거래 완료!");
             } else
                 // 취소
