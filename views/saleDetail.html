@@ -418,8 +418,8 @@
             // confirm에서 선택에 따라 이벤트 발생
             if(confirm('"' + name + '"' + "님과 거래를 마쳤습니까?")) {
                 // 성공
-                request.setAttribute('action', '/comment/reCommentDelete');
-                request.setAttribute('method', 'GET');
+                request.setAttribute('action', '/trade/commentTrade');
+                request.setAttribute('method', 'POST');
                 alert("거래 완료!");
             } else
                 // 취소
