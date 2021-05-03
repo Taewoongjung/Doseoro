@@ -187,7 +187,10 @@
                             <!-- 댓글본문 -->
                             <div class="commentList">
                                 <div class="d-sm-flex commentListInner">
+                                    <!-- 유저닉네임 받아오기 -->
                                     <div class="comment-nick fw-bold">{{comment.commentingNick}}</div>
+                                    <input hidden id="comment-nick-{{comment.id}}" value="{{comment.commentingNick}}">
+
                                     <div class="d-flex align-items-center">
                                         <div class="comment-content">{{comment.createdAt}}</div>
                                         <div class="dropdown">
@@ -237,7 +240,10 @@
                             <div class="reCommentListInner d-sm-flex">
                                 <div class="d-flex align-items-center">
                                     <div class="p-2"><img src="/img/reply.png" style="opacity: 0.5;" width="15px"></div>
+
+                                    <!-- 유저닉네임 받아오기 -->
                                     <div class="comment-nick fw-bold">{{re_comment.reCommentNick}}</div>
+                                    <input hidden id="reCom_nick-{{comment.id}}-{{re_comment.id}}" value="{{re_comment.reCommentNick}}">
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <div class="comment-content">{{re_comment.createdAt}}</div>
@@ -406,12 +412,30 @@
 
         // 댓글 거래 완료
         function comment_trade_complete(id){
-            
+            const name = document.getElementById(`comment-nick-${id}`).value
+            console.log(name);
+
+            // confirm에서 선택에 따라 이벤트 발생
+            if(confirm('"' + name + '"' + "님과 거래를 마쳤습니까?")) {
+                // 성공
+                alert("거래 완료!");
+            } else
+                // 취소
+                alert("거래 취소");
         }
 
         // 대댓글 거래 완료
-        function re_comment_trade_complete(id){
-
+        function re_comment_trade_complete(cid, id){
+            const reName = document.getElementById(`reCom_nick-${cid}-${id}`).value
+            console.log(reName);
+            
+            // confirm에서 선택에 따라 이벤트 발생
+            if(confirm(reName + "님과 거래를 마쳤습니까?")) {
+                // 성공
+                alert("거래 완료!");
+            } else
+                // 취소
+                alert("거래 취소");
         }
 
     </script>
