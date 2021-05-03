@@ -96,6 +96,14 @@ router.get('/changePW', isNotLoggedIn, (req, res) => {
     res.render('changePW.html');
 })
 
+// 0503 고객문의
+router.get('/csList', isLoggedIn, (req, res) => {
+    res.render('csList.html');
+})
+// router.get('/csDetail', isLoggedIn, (req, res) => {
+//     res.render('csDetail.html');
+// })
+
 router.get('/saleBoard', async (req, res, next) => {
     try {
         const [books] = await Promise.all([

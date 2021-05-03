@@ -202,17 +202,16 @@ textarea {
 	border-width: 18px;
 	margin-left: -18px;
 }
-/* #nowimage {
+#nowimage {
 	width: 200px;
 	height: 250px;
 	border-radius: 12px;
-} */
-#nowimage {
+}
+/* #nowimage {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	/* overflow: hidden; */
-}
-.image {
+} */
+/* .image {
 	display: block;
 	width: 100%;
 }
@@ -222,7 +221,7 @@ textarea {
 	left: 5px;
 	color: white;
 	text-shadow: 2px 2px 2px black;
-}
+} */
 
 /* myPage.html */
 .profile img {
