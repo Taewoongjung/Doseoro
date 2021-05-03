@@ -429,10 +429,12 @@
         function re_comment_trade_complete(cid, id){
             const reName = document.getElementById(`reCom_nick-${cid}-${id}`).value
             console.log(reName);
-            
+            const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
             // confirm에서 선택에 따라 이벤트 발생
             if(confirm(reName + "님과 거래를 마쳤습니까?")) {
                 // 성공
+                request.setAttribute('action', '/trade/reCommentTrade_sale');
+                request.setAttribute('method', 'POST');
                 alert("거래 완료!");
             } else
                 // 취소
