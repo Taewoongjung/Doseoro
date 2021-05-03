@@ -22,7 +22,12 @@ router.post('/commentTrade', isLoggedIn, async (req, res, next) => {
     console.log("책 아이디 = ", bookId);
 
     if (req.user.id === theBook.OwnerId) {
-        console.log("aaa");
+        console.log("통과");
+        await Book.update({
+            sold: 1,
+        }, {
+            where: { id: theBook.id},
+        })
     }
 
 });
