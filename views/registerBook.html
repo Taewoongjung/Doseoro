@@ -148,7 +148,7 @@
         <h1 class="h4 mt-3">상품 사진</h1>
         <div class="imgPreview mb-3 text-center">
           <a><img id="nowimage" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image"></a>
-          <input id="img-url" type="hidden" name="url">
+          <input id="img-url" type="hidden" name="imgurl">
         </div>
         <!-- <div id="nowimage"></div> -->
 
@@ -189,42 +189,11 @@
 
   <!-- footer -->
   <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
-
-  <script src="/js/topNav.js"></script>
-  <script src="/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/ckboxLimit.js"></script>
-  <script src="/js/popGuide.js"></script>
-  
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
     function one() {
       const request = document.getElementById('register_book-form');
       request.setAttribute('action', '/book');
       request.setAttribute('method', 'POST');
-    }
-
-    if (document.getElementById('img')) {
-      document.getElementById('img').addEventListener('change', function (e) {
-        const formData = new FormData();
-        console.log(this, this.files);
-        // const config = { header: { 'content-type': 'multipart/form-data' } }
-        formData.append('img', this.files[0]);
-        axios(formData,{
-          method: 'post',
-          url: '/index/img',
-          validateStatus: (status) => { return true; },
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
-        }).then((res) => {
-          document.getElementById('img-url').value = res.data.url;
-          document.getElementById('nowimage').src = res.data.url;
-          document.getElementById('nowimage').style.display = 'inline';
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      });
     }
   </script>
   <script src="/js/topNav.js"></script>
