@@ -157,6 +157,7 @@
                             <div class="commentList">
                                 <div class="d-sm-flex commentListInner">
                                     <div class="comment-nick fw-bold">{{comment.commentingNick}}</div>
+                                    <input hidden id="comment-nick-{{comment.id}}" value="{{comment.commentingNick}}">
                                     <div class="d-flex align-items-center">
                                         <div class="comment-content">{{comment.createdAt}}</div>
                                         <div class="dropdown">
@@ -172,9 +173,9 @@
                                                 <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
                                                         role="menuitem" tabindex="-1" type="submit" class="btn"
                                                         onclick="comment_delete('{{comment.id}}')">삭제</button></li>
-                                                <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
+                                                <li><button id="item-delete-btn-{{comment.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                    onclick="comment_treade_complete('{{comment.id}}')">거래완료</button></li>
+                                                    onclick="comment_trade_complete('{{comment.id}}')">거래완료</button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -368,8 +369,18 @@
             request.setAttribute('method', 'GET');
         }
 
-        function comment_treade_complete(id) {
-            
+        function comment_trade_complete(id) {
+            const name = document.getElementById(`comment-nick-${id}`).value
+            console.log(name);
+            const request = document.getElementById(`comment-ED-form-${id}`);
+            // confirm에서 선택에 따라 이벤트 발생
+            if(confirm('"' + name + '"' + "님과 거래를 마쳤습니까?")) {
+                // 성공
+                request.setAttribute('action', '/trade/commentTrade_buy');
+                request.setAttribute('method', 'POST');
+            } else
+                // 취소
+                alert("거래 취소");
         }
 
         function re_comment_trade_complete(id) {

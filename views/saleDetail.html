@@ -418,7 +418,7 @@
             // confirm에서 선택에 따라 이벤트 발생
             if(confirm('"' + name + '"' + "님과 거래를 마쳤습니까?")) {
                 // 성공
-                request.setAttribute('action', '/trade/commentTrade');
+                request.setAttribute('action', '/trade/commentTrade_sale');
                 request.setAttribute('method', 'POST');
             } else
                 // 취소
