@@ -92,7 +92,7 @@
           {% for book in books | reverse %}
           <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;"
             onclick="location.href='/book/{{book.id}}'">
-            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="280px">
+            <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
             <div class="card-body text-center">
               <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
               <!-- <p>{{book.createdAt}}</p> -->

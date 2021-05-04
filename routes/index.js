@@ -328,17 +328,24 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
 
 // 0330 책 등록
 // 0331 이미지 등록
-router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
+router.post('/book', isLoggedIn, upload.array('img', 3), async (req, res, next) => {
     try {
         const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
-
+        console.log("files = ", req.files);
+        
+        const notices = [];
+        for (const imgs of req.files) {
+            const { filename } = imgs;
+            notices.push(filename);
+        }
+        
         const book = await Book.create({
             OwnerId: req.user.id,
             postmessage: postmessage,
             title: title,
             author: author,
             publisher: publisher,
-            img: req.file.filename,
+            img: notices,
             category: checkCategory,
             state: checkState,
             price: price,
