@@ -105,10 +105,12 @@
 
         <!-- 검색결과 -->
         <div class="searchResult mt-5">
-          <p class="h4 fw-bold">검색 결과</p>
           <div class="justify-content-center flex-wrap">
+            {% if foundBooks >= 1 %}
+            <p class="h4 fw-bold">검색 결과</p>
+            {% endif %}
+            
             {% for foundBook in foundBooks %}
-
             <!-- 무료나눔 -->
             {% if foundBook.price <= 0 %}
             <div class="saleCard card mt-4 m-2 border p-4" onclick="location.href='/book/{{foundBook.id}}'">
