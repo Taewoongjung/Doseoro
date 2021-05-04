@@ -504,10 +504,10 @@ router.get('/bookRequest', async (req, res, next) => {
 router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
     try {
         const [wantsell_books] = await Promise.all([
-            Book.findAll({ where: { OwnerId: req.user.id, isSelling: null, price: { [Op.ne]: -1 } } }),
+            Book.findAll({ where: { OwnerId: req.user.id, sold:null, isSelling: null, price: { [Op.ne]: -1 } } }),
         ]);
         const [wantbuy_books] = await Promise.all([
-            Book.findAll({ where: { OwnerId: req.user.id, isSelling: '1' } }),
+            Book.findAll({ where: { OwnerId: req.user.id, sold:null, isSelling: '1' } }),
         ]);
         const responseWantbuy = [];
         for (const buy of wantbuy_books) {

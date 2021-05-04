@@ -173,9 +173,30 @@ router.get('/tradeHistory', isLoggedIn, async (req, res) => {
         })
     ]);
 
+    const [boughtBooks_buy] = await Promise.all([
+        Book.findAll({
+            where: {
+                SoldId: { [Op.eq]: req.user.id },
+                state: null,
+            }
+        })
+    ]);
+
+    const [soldBooks_buy] = await Promise.all([
+        Book.findAll({
+            where: {
+                OwnerId: { [Op.eq]: req.user.id },
+                sold: { [Op.eq]: 1 },
+                state: null,
+            }
+        })
+    ]);
+
     res.render('tradeHistory.html',{
         boughtBooks,
         soldBooks,
+        boughtBooks_buy,
+        soldBooks_buy
     });
 });
 
