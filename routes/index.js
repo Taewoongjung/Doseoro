@@ -192,11 +192,80 @@ router.get('/tradeHistory', isLoggedIn, async (req, res) => {
         })
     ]);
 
-    res.render('tradeHistory.html',{
+    /////////////
+
+    console.log("@@! = ", req.user.id);
+    const [books_for_notice] = await Promise.all([
+        Book.findAll({
+            where: {
+                OwnerId: req.user.id,
+            }
+        })
+    ]);
+
+    const [books_for_notice_commu] = await Promise.all([
+        Community.findAll({
+            where: {
+                postingId: req.user.id,
+            }
+        })
+    ]);
+
+
+    const notices = [];
+    for (const notice of books_for_notice) {
+        const { id } = notice;
+        notices.push(id);
+    }
+
+    const [likesfornotice] = await Promise.all([
+        Who.findAll({
+            where: {
+                thisbook: notices,
+                isNotified_like: {
+                    [Op.ne]: '1'
+                },
+            }
+        })
+    ]);
+
+    const notices_commu = [];
+    for (const notice of books_for_notice_commu) {
+        const { id } = notice;
+        notices_commu.push(id);
+    }
+
+    console.log("WWW = ", notices);
+    console.log("book = ", books_for_notice);
+    console.log("user = ", req.user.id);
+    const [noticess] = await Promise.all([
+        Post.findAll({
+            where: {
+                [Op.or]: [
+                    {
+                        BookId: notices,
+                        UserId: { [Op.ne]: String(req.user.id) }
+                    }, { // 커뮤니티 댓글 구별
+                        CommunityId: notices_commu,
+                        UserId: { [Op.ne]: String(req.user.id) }
+                    }],
+                isNotified_posts: {
+                    [Op.ne]: '1'
+                },
+            }
+        })
+    ]);
+    console.log("noticess = ", noticess);
+
+    ////////////
+
+    res.render('tradeHistory.html', {
         boughtBooks,
         soldBooks,
         boughtBooks_buy,
-        soldBooks_buy
+        soldBooks_buy,
+        noticess,
+        likesfornotice,
     });
 });
 
@@ -230,7 +299,9 @@ router.get('/mypage', isLoggedIn, async (req, res, next) => {
                 thisbook: notices,
                 isNotified_like: {
                     [Op.ne]: '1'
-                },}})
+                },
+            }
+        })
     ]);
 
     const notices_commu = [];
@@ -260,7 +331,7 @@ router.get('/mypage', isLoggedIn, async (req, res, next) => {
         })
     ]);
 
-    res.render('myPage.html',{
+    res.render('myPage.html', {
         noticess,
         likesfornotice,
     });
@@ -332,13 +403,13 @@ router.post('/book', isLoggedIn, upload.array('img', 3), async (req, res, next) 
     try {
         const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
         console.log("files = ", req.files);
-        
+
         const notices = [];
         for (const imgs of req.files) {
             const { filename } = imgs;
             notices.push(filename);
         }
-        
+
         const book = await Book.create({
             OwnerId: req.user.id,
             postmessage: postmessage,
