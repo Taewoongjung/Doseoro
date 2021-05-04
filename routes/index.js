@@ -57,7 +57,6 @@ router.get('/', async (req, res, next) => {
                 })
             ]);
 
-
             const notices = [];
             for (const notice of books_for_notice) {
                 const { id } = notice;
@@ -399,7 +398,7 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
 
 // 0330 책 등록
 // 0331 이미지 등록
-router.post('/book', isLoggedIn, upload.array('img', 3), async (req, res, next) => {
+router.post('/book', isLoggedIn, upload.array('img', 5), async (req, res, next) => {
     try {
         const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
         console.log("files = ", req.files);
