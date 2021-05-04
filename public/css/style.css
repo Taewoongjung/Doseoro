@@ -347,3 +347,27 @@ textarea {
 }
 
 /* communityDetail.html */
+
+/* tradeHistory.html */
+.tradeBoxInner {
+	border-bottom: 1px solid rgb(228, 228, 228);
+}
+.tadeBtn {
+	font-weight: bold;
+}
+.tadeBtn:hover {
+	background-color: rgb(70, 131, 245);
+	color: rgb(243, 243, 243)
+}
+#boughtBooksBox {
+	display: block;
+}
+#soldBooksBox {
+	display: none;
+}
+#soldBooks_buy_Box {
+	display: none;
+}
+#boughtBooks_buy_Box {
+	display: none;
+}
