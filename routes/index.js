@@ -163,12 +163,9 @@ router.get('/tradeHistory', isLoggedIn, async (req, res) => {
     const [soldBooks] = await Promise.all([
         Book.findAll({
             where: {
-                OwnerId: {
-                    [Op.eq]: req.user.id,
-                },
-                sold: {
-                    [Op.eq]: 1
-                }
+                OwnerId: { [Op.eq]: req.user.id },
+                sold: { [Op.eq]: 1 },
+                state: { [Op.ne]: null }
             }
         })
     ]);
