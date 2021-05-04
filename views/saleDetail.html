@@ -49,8 +49,12 @@
                 <!-- 책 정보 -->
                 <div class="wrapBookInfo d-lg-flex align-items-center ">
                     <div class="bookImg mb-3">
-                        <a href="#" class=""><img class="" src="/img/{{book.img}}" style="border-radius:21px"
-                                width="320px" height="400px"></a>
+                        <a href="#" class=""><img class="" src="/img/{{book.img[0]}}" style="border-radius:21px"
+                                width="320px" height="400px">첫 번째 사진</a>
+                        <a href="#" class=""><img class="" src="/img/{{book.img[1]}}" style="border-radius:21px"
+                            width="320px" height="400px">두 번째 사진</a>
+                        <a href="#" class=""><img class="" src="/img/{{book.img[2]}}" style="border-radius:21px"
+                            width="320px" height="400px">세 번째 사진</a>        
                     </div>
                     <div class="bookInfo w-75 me-0 ms-sm-5 align-content-between">
                         <div class="d-flex mb-3 align-items-center w-100 justify-content-between">
