@@ -206,9 +206,11 @@
                                                 <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
                                                         role="menuitem" tabindex="-1" type="submit" class="btn"
                                                         onclick="comment_delete('{{comment.id}}')">삭제</button></li>
+                                                {% if users.nick == book.usernick %}
                                                 <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
                                                     onclick="comment_trade_complete('{{comment.id}}')">거래완료</button></li>
+                                                {% endif %}
                                             </ul>
                                         </div>
                                     </div>
@@ -261,11 +263,13 @@
                                                 onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">
                                                 삭제</button>
                                             </li>
-                                            <li><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item" 
+                                            {% if users.nick == book.usernick %}
+                                            <li id="finTrade"><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item" 
                                                 role="menuitem" tabindex="-1" type="submit" class="btn"
                                                 onclick="re_comment_trade_complete('{{comment.id}}','{{re_comment.id}}')">
                                                 거래완료</button>
                                             </li>
+                                            {% endif %}
                                         </ul>
                                     </div>
                                 </div>
