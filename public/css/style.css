@@ -345,5 +345,39 @@ textarea {
 	background-color: rgb(228, 228, 228);
 	transition: 300ms;
 }
+.slideBox {
+	width: 320px;
+	height: 400px;
+}
 
 /* communityDetail.html */
+
+/* tradeHistory.html */
+.tradeBoxInner {
+	border-bottom: 1px solid rgb(228, 228, 228);
+}
+.tadeBtn {
+	font-weight: bold;
+}
+.tadeBtn:hover {
+	background-color: rgb(70, 131, 245);
+	color: rgb(243, 243, 243)
+}
+#boughtBooksBox {
+	display: block;
+}
+#soldBooksBox {
+	display: none;
+}
+#soldBooks_buy_Box {
+	display: none;
+}
+#boughtBooks_buy_Box {
+	display: none;
+}
+.btnInner {
+	padding: 15px 0px 15px 0px;
+	background-color: rgb(235, 235, 235);
+	border-radius: 15px;
+	margin-bottom: 25px;
+}

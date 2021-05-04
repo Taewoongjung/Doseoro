@@ -48,14 +48,40 @@
 
                 <!-- 책 정보 -->
                 <div class="wrapBookInfo d-lg-flex align-items-center ">
-                    <div class="bookImg mb-3">
-                        <a href="#" class=""><img class="" src="/img/{{book.img[0]}}" style="border-radius:21px"
-                                width="320px" height="400px">첫 번째 사진</a>
-                        <a href="#" class=""><img class="" src="/img/{{book.img[1]}}" style="border-radius:21px"
-                            width="320px" height="400px">두 번째 사진</a>
-                        <a href="#" class=""><img class="" src="/img/{{book.img[2]}}" style="border-radius:21px"
-                            width="320px" height="400px">세 번째 사진</a>        
+                    <!-- 이미지 슬라이드 -->
+                    <div id="carouselExampleControls" class="carousel slide slideBox" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% if book.img[0] != NULL %}
+                            <div class="carousel-item active">
+                                <img class="" src="/img/{{book.img[0]}}" style="border-radius:21px" width="320px"
+                                    height="400px" alt="bookImg">
+                            </div>
+                            {% endif %}
+                            {% if book.img[1] != NULL %}
+                            <div class="carousel-item">
+                                <img class="" src="/img/{{book.img[1]}}" style="border-radius:21px" width="320px"
+                                    height="400px" alt="bookImg">
+                            </div>
+                            {% endif %}
+                            {% if book.img[2] != NULL %}
+                            <div class="carousel-item">
+                                <img class="" src="/img/{{book.img[2]}}" style="border-radius:21px" width="320px"
+                                    height="400px" alt="bookImg">
+                            </div>
+                            {% endif %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
                     </div>
+
                     <div class="bookInfo w-75 me-0 ms-sm-5 align-content-between">
                         <div class="d-flex mb-3 align-items-center w-100 justify-content-between">
                             <div class="saleCheck d-flex border-0 p-2 me-2 align-items-center"
@@ -99,7 +125,9 @@
                                     <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt"
                                         value="{{book.createdAt}}">
                                     <div class="dropdown">
-                                        <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
+                                        <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown"
+                                            aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu"
+                                                width="15px"></a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                             <!-- 무료나눔 or 판매 -->
                                             {% if free_books | length %}
@@ -113,7 +141,7 @@
                                             {% endif %}
                                             <li><button id="item-delete-btn-{{book.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                    onclick="sell_item_delete('{{book.id}}')">삭제</button></li>      
+                                                    onclick="sell_item_delete('{{book.id}}')">삭제</button></li>
                                         </ul>
                                     </div>
                                 </form>
@@ -212,8 +240,9 @@
                                                         onclick="comment_delete('{{comment.id}}')">삭제</button></li>
                                                 {% if users.nick == book.usernick %}
                                                 <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
-                                                    role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                    onclick="comment_trade_complete('{{comment.id}}')">거래완료</button></li>
+                                                        role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                        onclick="comment_trade_complete('{{comment.id}}')">거래완료</button>
+                                                </li>
                                                 {% endif %}
                                             </ul>
                                         </div>
@@ -249,7 +278,8 @@
 
                                     <!-- 유저닉네임 받아오기 -->
                                     <div class="comment-nick fw-bold">{{re_comment.reCommentNick}}</div>
-                                    <input hidden id="reCom_nick-{{comment.id}}-{{re_comment.id}}" value="{{re_comment.reCommentNick}}">
+                                    <input hidden id="reCom_nick-{{comment.id}}-{{re_comment.id}}"
+                                        value="{{re_comment.reCommentNick}}">
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <div class="comment-content">{{re_comment.createdAt}}</div>
@@ -262,16 +292,18 @@
                                                     onclick="re_comment_edit('{{comment.id}}','{{re_comment.id}}')">
                                                     수정</button>
                                             </li>
-                                            <li><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item" 
-                                                role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">
-                                                삭제</button>
+                                            <li><button id="re_comment-delete-btn-{{re_comment.id}}"
+                                                    class="dropdown-item" role="menuitem" tabindex="-1" type="submit"
+                                                    class="btn"
+                                                    onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">
+                                                    삭제</button>
                                             </li>
                                             {% if users.nick == book.usernick %}
-                                            <li id="finTrade"><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item" 
-                                                role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                onclick="re_comment_trade_complete('{{comment.id}}','{{re_comment.id}}')">
-                                                거래완료</button>
+                                            <li id="finTrade"><button id="re_comment-delete-btn-{{re_comment.id}}"
+                                                    class="dropdown-item" role="menuitem" tabindex="-1" type="submit"
+                                                    class="btn"
+                                                    onclick="re_comment_trade_complete('{{comment.id}}','{{re_comment.id}}')">
+                                                    거래완료</button>
                                             </li>
                                             {% endif %}
                                         </ul>
@@ -419,12 +451,12 @@
         }
 
         // 댓글 거래 완료
-        function comment_trade_complete(id){
+        function comment_trade_complete(id) {
             const name = document.getElementById(`comment-nick-${id}`).value
             console.log(name);
             const request = document.getElementById(`comment-ED-form-${id}`);
             // confirm에서 선택에 따라 이벤트 발생
-            if(confirm('"' + name + '"' + "님과 거래를 마쳤습니까?")) {
+            if (confirm('"' + name + '"' + "님과 거래를 마쳤습니까?")) {
                 // 성공
                 request.setAttribute('action', '/trade/commentTrade_sale');
                 request.setAttribute('method', 'POST');
@@ -434,12 +466,12 @@
         }
 
         // 대댓글 거래 완료
-        function re_comment_trade_complete(cid, id){
+        function re_comment_trade_complete(cid, id) {
             const reName = document.getElementById(`reCom_nick-${cid}-${id}`).value
             console.log(reName);
             const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
             // confirm에서 선택에 따라 이벤트 발생
-            if(confirm(reName + "님과 거래를 마쳤습니까?")) {
+            if (confirm(reName + "님과 거래를 마쳤습니까?")) {
                 // 성공
                 request.setAttribute('action', '/trade/reCommentTrade_sale');
                 request.setAttribute('method', 'POST');

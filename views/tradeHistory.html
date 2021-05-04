@@ -21,13 +21,19 @@
         <!-- main -->
         <main class="container-sm mt-0 mb-0 min-vh-100 border">
             <div class="p-5">
-                <div class="mb-5">
+                <div class="btnInner text-center">
+                    <p class="tadeBtn btn" onclick="showSoldBox()">판매 한 상품</p>
+                    <p class="tadeBtn btn" onclick="showBoughtBox()">구매 한 상품</p>
+                    <p class="tadeBtn btn" onclick="showSoldBuyBox()">[삽니다] 판매 한 상품</p>
+                    <p class="tadeBtn btn" onclick="showBoughtBuyBox()">[삽니다] 구매 한 상품</p>
+                </div>
+                <div id="boughtBooksBox" class="tradeBoxInner mb-5">
                     <h1 class="h4 fw-bold">판매 한 상품</h1>
                     {% for book in boughtBooks | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
                         <img src="/img/{{book.img}}" class="" width="150px" height="200px">
                         <div class="ms-4">
-                            <h1 class="h2 m-1 mb-3  fw-bold">{{book.postmessage}}</h1>
+                            <h1 class="h3 m-1 mb-3  fw-bold">{{book.postmessage}}</h1>
                             {% if book.price == -1 %}    
                                 <h4 class="h5 m-1">무료나눔</h4>
                             {% else %}
@@ -37,7 +43,7 @@
                     </div>
                     {% endfor %}
                 </div>
-                <div class="mb-5">
+                <div id="soldBooksBox" class="mb-5">
                     <h1 class="h4 fw-bold">구매 한 상품</h1>
                     {% for book in soldBooks | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
@@ -53,7 +59,7 @@
                     </div>
                     {% endfor %}
                 </div>
-                <div class="mb-5">
+                <div id="soldBooks_buy_Box" class="mb-5">
                     <h1 class="h4 fw-bold">[삽니다]판매 한 상품</h1>
                     {% for book in soldBooks_buy | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
@@ -64,7 +70,7 @@
                     </div>
                     {% endfor %}
                 </div>
-                <div class="mb-5">
+                <div id="boughtBooks_buy_Box" class="mb-5">
                     <h1 class="h4 fw-bold">[삽니다]구매 한 상품</h1>
                     {% for book in boughtBooks_buy | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
@@ -84,5 +90,6 @@
 
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/showTradeList.js"></script>
 </body>
 </html>

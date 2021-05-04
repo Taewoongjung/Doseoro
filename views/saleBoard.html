@@ -32,7 +32,7 @@
           {% for book in books | reverse %}
           {% if book.price > 0 %}
           <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
-            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="280px">
+            <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
             <div class="card-body text-center">
               <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
               <p>{{book.price}} 원</p>
@@ -40,22 +40,6 @@
           </div>
           {% endif %}
           {% endfor %}
-        </div>
-
-        <!-- 검색결과 -->
-        <div class="searchResult mt-5">
-          <p class="h4 fw-bold">검색 결과</p>
-          <div class="d-flex justify-content-center flex-wrap">
-            {% for foundBook in foundBooks %}
-            <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
-              <img src="/img/{{foundBook.img}}" class="card-img-top" width="100%" height="280px">
-              <div class="card-body">
-                <p class="postTitle card-title fw-bold mb-3">{{foundBook.postmessage}}</p>
-                <a>{{foundBook.price}} 원</a>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
         </div>
 
       </div>
