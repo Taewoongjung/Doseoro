@@ -153,9 +153,7 @@ router.get('/tradeHistory', isLoggedIn, async (req, res) => {
     const [boughtBooks] = await Promise.all([
         Book.findAll({
             where: {
-                SoldId: {
-                    [Op.eq]: req.user.id,
-                }
+                SoldId: { [Op.eq]: req.user.id }
             }
         })
     ]);
@@ -163,6 +161,7 @@ router.get('/tradeHistory', isLoggedIn, async (req, res) => {
     const [soldBooks] = await Promise.all([
         Book.findAll({
             where: {
+                SoldId: { [Op.eq]: req.user.id },
                 OwnerId: { [Op.eq]: req.user.id },
                 sold: { [Op.eq]: 1 },
                 state: { [Op.ne]: null }
@@ -174,7 +173,7 @@ router.get('/tradeHistory', isLoggedIn, async (req, res) => {
         Book.findAll({
             where: {
                 SoldId: { [Op.eq]: req.user.id },
-                state: null,
+                state: null
             }
         })
     ]);
@@ -182,9 +181,10 @@ router.get('/tradeHistory', isLoggedIn, async (req, res) => {
     const [soldBooks_buy] = await Promise.all([
         Book.findAll({
             where: {
+                SoldId: { [Op.eq]: req.user.id },
                 OwnerId: { [Op.eq]: req.user.id },
                 sold: { [Op.eq]: 1 },
-                state: null,
+                state: null
             }
         })
     ]);
