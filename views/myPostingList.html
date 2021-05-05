@@ -43,7 +43,7 @@
                 <!-- 게시물 불러오는 위치 -->
                 {% for book in wantsell_books | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
-                        <img src="/img/{{book.img}}" class="" width="150px" height="200px">
+                        <img src="/img/{{book.img[0]}}" class="" width="150px" height="200px">
                         
                         <div class="d-flex w-75 justify-content-between mt-2">
                             <div class="ms-sm-4 w-100">
@@ -123,7 +123,7 @@
                 <!-- 게시물 불러오는 위치 -->
                 {% for book in free_books | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
-                        <img src="/img/{{book.img}}" class="" width="150px" height="200px">
+                        <img src="/img/{{book.img[0]}}" class="" width="150px" height="200px">
                         
                         <div class="d-flex w-75 justify-content-between mt-2">
                             <div class="ms-sm-4">

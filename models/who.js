@@ -20,7 +20,7 @@ module.exports = class Who extends Sequelize.Model {
                 allowNull: true,
             },
             img: {
-                type: Sequelize.STRING(200),
+                type: Sequelize.JSON,
                 allowNull: true,
             },
             liked: {
