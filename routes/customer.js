@@ -159,7 +159,7 @@ router.get('/complain/:id', async (req, res, next) => {
         ]);
         console.log("noticess = ", noticess);
         ////////////
-        
+
         res.render('csDetail.html', {
             title: `고객문의`,
             complain,
