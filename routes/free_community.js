@@ -29,7 +29,7 @@ const upload = multer({  // multer 설정
     limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-// 0415 무료나눔
+// 0415 무료나눔 등록
 router.post('/book', isLoggedIn, upload.array('img', 5), async (req, res, next) => {
     try {
         const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;

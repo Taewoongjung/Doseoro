@@ -6,6 +6,7 @@ const Book = require('./book');
 const Who = require('./who');
 const Post = require('./post');
 const Community = require('./community');
+const Complain = require('./complain');
 
 const db = {};
 const sequelize = new Sequelize(
@@ -18,12 +19,14 @@ db.Book = Book;
 db.Who = Who;
 db.Post = Post;
 db.Community = Community;
+db.Complain = Complain;
 
 User.init(sequelize);
 Book.init(sequelize);
 Who.init(sequelize);
 Post.init(sequelize);
 Community.init(sequelize);
+Complain.init(sequelize);
 
 User.associate(db);
 Book.associate(db);

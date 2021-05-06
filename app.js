@@ -9,16 +9,16 @@ const favicon = require('serve-favicon');
 const passport = require('passport');
 const helmet = require('helmet');
 const hpp = require('hpp');
-const redis = require('redis');
-const RedisStore = require('connect-redis')(session);
+// const redis = require('redis');
+// const RedisStore = require('connect-redis')(session);
 const moment = require('moment-timezone');
 moment.tz.setDefault('Asia/Seoul');
 
 dotenv.config();
-const redisClient = redis.createClient({
-  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
-  password: process.env.REDIS_PASSWORD,
-});
+// const redisClient = redis.createClient({
+//   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+//   password: process.env.REDIS_PASSWORD,
+// });
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 const indexRouter = require('./routes/index');
@@ -30,6 +30,7 @@ const wannabuyRouter = require('./routes/wannabuy');
 const free_communityRouter = require('./routes/free_community');
 const notificationRouter = require('./routes/notification');
 const tradeRouter = require('./routes/trade');
+const customerRouter = require('./routes/customer');
 
 const app = express();
 passportConfig();
@@ -69,9 +70,9 @@ const sessionOption = {
     httpOnly: true,
     secure: false,
   },
-  // name: 'sessionCookie',
+  name: 'sessionCookie',
   // 배포 시 주석 풀기
-  store: new RedisStore({ client: redisClient }),
+  // store: new RedisStore({ client: redisClient }),
 };
 if (process.env.NODE_ENV === 'production') {  //배포 할 때
   sessionOption.proxy = true;
@@ -89,6 +90,7 @@ app.use('/wannabuy', wannabuyRouter);
 app.use('/free_community', free_communityRouter);
 app.use('/notification', notificationRouter);
 app.use('/trade', tradeRouter);
+app.use('/customer', customerRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
@@ -103,8 +105,8 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-// const server = app.listen(app.get('port'), () => {
-//   console.log(app.get('port'), '번 포트에서 대기중');
-// });
+const server = app.listen(app.get('port'), () => {
+  console.log(app.get('port'), '번 포트에서 대기중');
+});
 
-module.exports = app;
+// module.exports = app;

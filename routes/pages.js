@@ -3,7 +3,7 @@ const moment = require('moment-timezone');
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
-const { User, Book, Who, Post, Community } = require('../models');
+const { User, Book, Who, Post, Community, Complain } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -97,15 +97,22 @@ router.get('/changePW', isNotLoggedIn, (req, res) => {
 })
 
 // 0503 고객문의
-router.get('/csList', isLoggedIn, (req, res) => {
-    res.render('csList.html');
-})
-router.get('/csDetail', async (req, res, next) => {
-    res.render('csDetail.html');
+router.get('/csList', isLoggedIn, async (req, res) => {
+    const [complains] = await Promise.all([
+        Complain.findAll({
+            where: {
+                isSettled: { [Op.ne]: 1 },
+            }
+        }),
+    ]);
+
+    res.render('csList.html',{
+        complains,
+    });
 })
 
 // 0506 고객문의 등록
-router.get('/csRegist',async (req, res, next) => {
+router.get('/csRegist', isLoggedIn, async (req, res, next) => {
     console.log("@@! = ", req.user.id);
     res.render('csRegist.html');
 })
