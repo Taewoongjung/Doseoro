@@ -105,7 +105,6 @@ router.get('/csList', isLoggedIn, async (req, res) => {
             }
         }),
     ]);
-
     res.render('csList.html',{
         complains,
     });
