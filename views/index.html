@@ -116,7 +116,7 @@
             <div class="saleCard card mt-4 m-2 border p-4" onclick="location.href='/book/{{foundBook.id}}'">
               <p class="fw-bold text-primary mb-2">무료나눔</p>
               <div class="card-body d-sm-flex flex-wrap align-items-center">
-                <img src="/img/{{foundBook.img}}" class="card-img-top" style="max-width: 180px;" height="250px">
+                <img src="/img/{{foundBook.img[0]}}" class="card-img-top" style="max-width: 180px;" height="250px">
                 <div class="ms-4 w-75">
                   <p class="postTitle h3 card-title fw-bold mb-1">{{foundBook.postmessage}}</p>
                   <p class="mb-3">{{foundBook.usernick}}</p>
@@ -132,7 +132,7 @@
             <div class="saleCard card mt-4 m-2 border p-4" onclick="location.href='/book/{{foundBook.id}}'">
               <p class="fw-bold text-primary mb-2">판매</p>
               <div class="card-body d-sm-flex flex-wrap align-items-center">
-                <img src="/img/{{foundBook.img}}" class="card-img-top" style="max-width: 180px;" height="250px">
+                <img src="/img/{{foundBook.img[0]}}" class="card-img-top" style="max-width: 180px;" height="250px">
                 <div class="ms-4 w-75">
                   <p class="postTitle h3 card-title fw-bold mb-1">{{foundBook.postmessage}}</p>
                   <p class="mb-3">{{foundBook.usernick}}</p>
