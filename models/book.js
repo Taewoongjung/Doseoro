@@ -57,6 +57,11 @@ module.exports = class Book extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: true,
             },
+            hits: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+                defaultValue: 0,
+            },
             isSelling: {
                 type: Sequelize.BOOLEAN,
                 allowNull: true,

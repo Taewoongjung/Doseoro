@@ -109,6 +109,16 @@ router.get('/buybook/:id', async (req, res, next) => {
                 },
             }),
         ]);
+
+        const plus_hits = book.hits + 1; // 조회수 +1
+        console.log("@@ = ", plus_hits);
+
+        await Book.update({
+            hits: plus_hits,
+        }, {
+            where: { id: req.params.id }
+        });
+
         const [user] = await Promise.all([
             User.findOne({
                 where: { id: book.OwnerId }

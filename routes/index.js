@@ -28,13 +28,13 @@ router.get('/', async (req, res, next) => {
         //             SoldId: null 
         //         },
         //     })
-        // ]);
+        // ]);  
         // // 좋아요 5개 이하
         // console.log("@@@@@@@@@", hit_books);
         // const [reg_books] = await Promise.all([
         //     Book.findAll({
         //         where: { 
-        //             likecount: { [Op.lte]: 5 }, 
+        //             likecount: { [Op.lte]: 3 }, 
         //             SoldId: null 
         //         },
         //     })
@@ -441,11 +441,22 @@ router.get('/book/:id', async (req, res, next) => {
                 },
             }),
         ]);
+
+        const plus_hits = book.hits + 1; // 조회수 +1
+        console.log("@@ = ", plus_hits);
+
+        await Book.update({
+            hits: plus_hits,
+        }, {
+            where: { id: req.params.id }
+        });
+
         const [user] = await Promise.all([
             User.findOne({
                 where: { id: book.OwnerId }
             }),
         ]);
+
         // 그냥 댓글들
         const [comments] = await Promise.all([
             Post.findAll({
@@ -485,6 +496,7 @@ router.get('/book/:id', async (req, res, next) => {
                 where: { id: req.params.id, SoldId: null, isSelling: null, price: -1 }
             })
         ]);
+
         const time = [];
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;

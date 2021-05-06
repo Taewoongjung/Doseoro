@@ -186,6 +186,16 @@ router.get('/community/:id', async (req, res, next) => {
                 where: { id: req.params.id },
             }),
         ]);
+
+        const plus_hits = community.hits + 1; // 조회수 +1
+        console.log("@@ = ", plus_hits);
+
+        await Community.update({
+            hits: plus_hits,
+        }, {
+            where: { id: req.params.id }
+        });
+
         const [comments] = await Promise.all([
             Post.findAll({
                 where: {

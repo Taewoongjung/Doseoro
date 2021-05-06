@@ -788,6 +788,8 @@ router.get('/community', async (req, res, next) => {
     try {
         const [communities] = await Promise.all([
             Community.findAll({
+            },{
+                order: [['createdAt', 'ASC']],
             })
         ]);
         const responseCommunities = [];
@@ -803,7 +805,6 @@ router.get('/community', async (req, res, next) => {
             });
         }
         if (req.user) {
-            console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -844,9 +845,6 @@ router.get('/community', async (req, res, next) => {
                 notices_commu.push(id);
             }
 
-            console.log("WWW = ", notices);
-            console.log("book = ", books_for_notice);
-            console.log("user = ", req.user.id);
             const [noticess] = await Promise.all([
                 Post.findAll({
                     where: {
@@ -864,7 +862,6 @@ router.get('/community', async (req, res, next) => {
                     }
                 })
             ]);
-            console.log("noticess = ", noticess);
             ////////////
             res.render('community.html', {
                 communities: responseCommunities,
