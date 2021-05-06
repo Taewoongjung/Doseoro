@@ -329,4 +329,36 @@ router.get('/commentDelete_customer', isLoggedIn, async (req, res, next) => {
       }
 });
 
+// 0507 대댓글 수정(고객문의)
+router.get('/reCommentEdit_customer', isLoggedIn, async (req, res, next) => {
+    try {
+        console.log(req.query);
+        console.log('@@@@@ 커뮤니티 대댓글 수정 @@@@@');
+        const { recomment_UserId, re_bookId, complainId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
+        console.log("Com = ", reCom_edited_comment);
+        console.log("complainId = ", complainId);
+        console.log("ID = ", re_commentId);
+        console.log("recomment_reCommentedId = ", recomment_reCommentedId);
+        console.log("UserId = ", String(recomment_UserId));
+        console.log("req.user.id = ", req.user.id);
+        console.log("req.locals.user.id = ", res.locals.user.id);
+        if (recomment_reCommentedId !== String(req.user.id)){
+            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/customer/complain/${complainId}";</script>`);  
+        } else {
+            if ( reCom_edited_comment === String(null)){
+                return res.send(`<script type="text/javascript">alert("댓글이 수정이 취소 되었습니다!"); location.href="/customer/complain/${complainId}";</script>`);   
+            }
+            await Post.update({
+                content: reCom_edited_comment,
+            }, {
+                where: { id: re_commentId } 
+            });
+            return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/customer/complain/${complainId}";</script>`);
+        }
+    } catch (err) {
+        console.error(err);
+        next(err);
+      }
+});
+
 module.exports = router;
