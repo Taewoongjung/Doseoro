@@ -100,9 +100,15 @@ router.get('/changePW', isNotLoggedIn, (req, res) => {
 router.get('/csList', isLoggedIn, (req, res) => {
     res.render('csList.html');
 })
-// router.get('/csDetail', isLoggedIn, (req, res) => {
-//     res.render('csDetail.html');
-// })
+router.get('/csDetail', async (req, res, next) => {
+    res.render('csDetail.html');
+})
+
+// 0506 고객문의 등록
+router.get('/csRegist',async (req, res, next) => {
+    console.log("@@! = ", req.user.id);
+    res.render('csRegist.html');
+})
 
 router.get('/saleBoard', async (req, res, next) => {
     try {
@@ -513,7 +519,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         for (const buy of wantbuy_books) {
             const { createdAt, postmessage, id, OwnerId, about } = buy;
             responseWantbuy.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 OwnerId,
                 postmessage,
                 about,
@@ -530,7 +536,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         for (const community of communities) {
             const { createdAt, title, id, OwnerId, content } = community;
             responseCommunities.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 title,
                 OwnerId,
                 content,
@@ -790,7 +796,7 @@ router.get('/community', async (req, res, next) => {
         for (const community of communities) {
             const { createdAt, content, id, title, postingNick, category } = community;
             responseCommunities.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 content,
                 id,
                 title,
