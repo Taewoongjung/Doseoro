@@ -519,7 +519,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         for (const buy of wantbuy_books) {
             const { createdAt, postmessage, id, OwnerId, about } = buy;
             responseWantbuy.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 OwnerId,
                 postmessage,
                 about,
@@ -536,7 +536,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         for (const community of communities) {
             const { createdAt, title, id, OwnerId, content } = community;
             responseCommunities.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 title,
                 OwnerId,
                 content,
@@ -794,7 +794,7 @@ router.get('/community', async (req, res, next) => {
         for (const community of communities) {
             const { createdAt, content, id, title, postingNick, category } = community;
             responseCommunities.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 content,
                 id,
                 title,

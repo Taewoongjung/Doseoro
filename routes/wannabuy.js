@@ -152,7 +152,7 @@ router.get('/buybook/:id', async (req, res, next) => {
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;
             time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 commentingNick,
                 content,
                 id,
@@ -163,7 +163,7 @@ router.get('/buybook/:id', async (req, res, next) => {
         for (const new_time of re_comments) {
             const { createdAt, id, content, UserId, reCommentNick, reCommentedId, reCommentingId } = new_time;
             re_time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 reCommentNick,
                 reCommentedId,
                 reCommentingId,
@@ -243,13 +243,13 @@ router.get('/buybook/:id', async (req, res, next) => {
             res.render('buyDetail.html', {
                 title: `책 구매`,
                 book,
-                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(book.createdAt).format('YYYY.MM.DD HH:mm'),
                 users: res.locals.user,
                 user: book.OwnerId,
                 bookId: req.params.id,
                 comments: time,
                 re_comments: re_time,
-                comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                comment_createdAt: moment(comments.createdAt).format('YYYY.MM.DD HH:mm'),
                 this_book_location: user.location,
                 noticess,
                 likesfornotice,
@@ -259,7 +259,7 @@ router.get('/buybook/:id', async (req, res, next) => {
             res.render('buyDetail.html', {
                 title: `책 구매`,
                 book,
-                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(book.createdAt).format('YYYY.MM.DD HH:mm'),
                 user: book.OwnerId,
                 comments: time,
                 re_comments: re_time,
