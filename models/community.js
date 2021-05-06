@@ -26,12 +26,12 @@ module.exports = class Community extends Sequelize.Model {
         category: {
           type: Sequelize.STRING(70),
           allowNull: true,
-      },
-      hits: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        defaultValue: 0,
-      }
+        },
+        hits: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          defaultValue: 0,
+        }
     }, {
       sequelize,
       timestamps: true,

@@ -30,16 +30,24 @@ const upload = multer({  // multer 설정
 });
 
 // 0415 무료나눔
-router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
+router.post('/book', isLoggedIn, upload.array('img', 5), async (req, res, next) => {
     try {
         const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
+        console.log("files = ", req.files);
+
+        const notices = [];
+        for (const imgs of req.files) {
+            const { filename } = imgs;
+            notices.push(filename);
+        }
+        
         const book = await Book.create({
             OwnerId: req.user.id,
             postmessage: postmessage,
             title: title,
             author: author,
             publisher: publisher,
-            img: req.file.filename,
+            img: notices,
             category: checkCategory,
             state: checkState,
             price: -1,

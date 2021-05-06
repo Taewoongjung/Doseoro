@@ -32,6 +32,9 @@
                         <h1 class="h2 fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
                         <p class="mt-1 mb-3 fw-bold">{{book.usernick}}</p>
                     </div>
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        <p class="mt-1 mb-3 fw-bold">조회수: {{book.hits}}</p>
+                    </div>
                     <div class="d-lg-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center mb-2">
                             {% if this_book_location %}
