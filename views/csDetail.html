@@ -37,6 +37,7 @@
                         <div class="category d-flex align-items-center mt-2 mb-2">
                             <a class="text-body text-decoration-none fw-bold"
                                 id="getAppearanceInfo">{{complain.complainedNick}}</a>
+                            <p class="ms-1">| 조회수 : {{complain.hits}}</p>
                         </div>
                     </div>
 
@@ -73,25 +74,22 @@
             </div>
 
             <!-- 댓글 달기 -->
-            {% if users and users.id %}
             <form id="comment-form" class="mt-5 w-75 ms-auto me-auto">
                 <div class="input-group">
                     <input id="comment" class="form-control p-2" name="comment">
                     <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
 
                     <input type="hidden" name="complainId" value="{{complainId}}">
-                    <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()"
+                    <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment('{{complain}}')"
                         value="Click">댓글달기</button>
                 </div>
             </form>
-            {% endif %}
-            
+
             <div id="comments-collection" class="w-75 ms-auto me-auto">
                 {% for comment in comments %}
                 <table>
                     <!-- OwnerId -->
                     <input type="hidden" name="OwnerId" value="{{user}}">
-                    {% if users and users.id %}
                     <form id="comment-ED-form-{{comment.id}}">
                         <div>
                             <input type="hidden" name="complainId" value="{{complainId}}">
@@ -175,33 +173,6 @@
                         {% endif %}
                     </form>
                     {% endfor %}
-
-                    {% else %}
-                    <!-- 비로그인 댓글 -->
-                    <div class="commentList">
-                        <div class="d-sm-flex commentListInner">
-                            <div class="comment-nick fw-bold">{{comment.commentingNick}}</div>
-                            <div class="comment-content">{{comment.createdAt}}</div>
-                        </div>
-                        <div class="comment-content"><a>{{comment.content}}</a></div>
-                    </div>
-
-                    <!-- 비로그인 답글 -->
-                    {% for re_comment in re_comments %}
-                    {% if re_comment.reCommentingId == comment.id %}
-                    <div class="reCommentList">
-                        <div class="reCommentListInner d-sm-flex">
-                            <div class="d-flex align-items-center">
-                                <div class="p-2"><img src="/img/reply.png" style="opacity: 0.5;" width="15px"></div>
-                                <div class="comment-nick me-3 fw-bold">{{re_comment.reCommentNick}}</div>
-                            </div>
-                            <div class="comment-content me-3">{{re_comment.createdAt}}</div>
-                        </div>
-                        <div class="comment-content me-3"><a>{{re_comment.content}}</a></div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                    {% endif %}
                 </table>
                 {% endfor %}
             </div>
@@ -214,18 +185,18 @@
         // 커뮤니티 스크립트
         function complain_item_edit(id) {
             const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/editIt_community');
+            request.setAttribute('action', '/customer/complain');
             request.setAttribute('method', 'POST');
         }
 
         function complain_item_delete(id) {
             const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/delete_community');
+            request.setAttribute('action', '/customer/complain');
             request.setAttribute('method', 'GET');
         }
 
         // 여기만 수정
-        function postComment() {
+        function postComment(complainId) {
             const request = document.getElementById('comment-form');
 
             let comment = document.getElementById('comment').value.replace(/\s|　/gi, '');
@@ -233,7 +204,7 @@
             if (comment == '') {
                 alert("내용을 입력하세요");
             } else {
-                request.setAttribute('action', '/free_community/community/{{communityId}}/comment');
+                request.setAttribute('action', '/customer/complain/{{complainId}}/comment');
                 request.setAttribute('method', 'POST');
             }
         }
@@ -269,7 +240,7 @@
             const commentId = document.getElementById(`commentid_it-${id}`).value;
             console.log("@@ = ", commentId);
             const inputRe = document.getElementById(`inputReComment-${id}`);
-            inputRe.innerHTML = '<form action="/free_community/recomment" method="POST"><div class="input-group"><input id="comment" class="reComment inputForm w-50 p-2" name="comment"><input type="hidden" name="communityId" value="{{communityId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">답글등록</button></div></form>';
+            inputRe.innerHTML = '<form action="/customer/recomment" method="POST"><div class="input-group"><input id="comment" class="reComment inputForm w-50 p-2" name="comment"><input type="hidden" name="communityId" value="{{communityId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">답글등록</button></div></form>';
             document.getElementById(`userId`).value = userId;
             document.getElementById(`commentId`).value = commentId;
         }

@@ -23,7 +23,12 @@ module.exports = class Complain extends Sequelize.Model {
                 type: Sequelize.BOOLEAN,
                 allowNull: true,
                 defaultValue: 0,
-              },
+            },
+            hits: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+                defaultValue: 0,
+            },
         }, {
             sequelize,
             timestamps: true,

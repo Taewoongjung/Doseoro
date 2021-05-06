@@ -50,7 +50,7 @@ router.get('/complain/:id', async (req, res, next) => {
         const [comments] = await Promise.all([
             Post.findAll({
                 where: {
-                    CommunityId: req.params.id, // complainId로 바꿔야함
+                    ComplainId: req.params.id, // complainId로 바꿔야함
                     reCommentedId: null,
                 },
                 order: [['createdAt', 'DESC']],
@@ -66,7 +66,7 @@ router.get('/complain/:id', async (req, res, next) => {
         const [re_comments] = await Promise.all([ 
             Post.findAll({
                 where: {
-                    CommunityId: req.params.id, // complainId로 바꿔야함
+                    ComplainId: req.params.id, // complainId로 바꿔야함
                     reCommentingId: {
                         [Op.in]: findcommentId,
                     },
@@ -101,97 +101,76 @@ router.get('/complain/:id', async (req, res, next) => {
                 UserId
             });
         }
-        if (res.locals.user) {
-            console.log("login");
-            /////////////
-
-            console.log("@@! = ", req.user.id);
-            const [books_for_notice] = await Promise.all([
-                Book.findAll({
-                    where: {
-                        OwnerId: req.user.id,
-                    }
-                })
-            ]);
-
-            const [books_for_notice_commu] = await Promise.all([
-                Community.findAll({
-                    where: {
-                        postingId: req.user.id,
-                    }
-                })
-            ]);
-
-
-            const notices = [];
-            for (const notice of books_for_notice) {
-                const { id } = notice;
-                notices.push(id);
-            }
-
-            const [likesfornotice] = await Promise.all([
-                Who.findAll({
-                    where: {
-                        thisbook: notices,
-                        isNotified_like: {
-                            [Op.ne]: '1'
-                        },
-                    }
-                })
-            ]);
-
-            const notices_commu = [];
-            for (const notice of books_for_notice_commu) {
-                const { id } = notice;
-                notices_commu.push(id);
-            }
-
-            console.log("WWW = ", notices);
-            console.log("book = ", books_for_notice);
-            console.log("user = ", req.user.id);
-            const [noticess] = await Promise.all([
-                Post.findAll({
-                    where: {
-                        [Op.or]: [
-                            {
-                                BookId: notices,
-                                UserId: { [Op.ne]: String(req.user.id) }
-                            }, { // 커뮤니티 댓글 구별
-                                CommunityId: notices_commu,
-                                UserId: { [Op.ne]: String(req.user.id) }
-                            }],
-                        isNotified_posts: {
-                            [Op.ne]: '1'
-                        },
-                    }
-                })
-            ]);
-            console.log("noticess = ", noticess);
-
-            ////////////
-            res.render('csDetail.html', {
-                title: `고객문의`,
-                complain,
-                createdAt: moment(complain.createdAt).format('YYYY-MM-DD HH:mm:ss'),
-                users: res.locals.user,
-                user: complain.complainedId,
-                complainId: complain.id,
-                comments: time,
-                re_comments: re_time,
-                noticess,
-                likesfornotice,
-            });
-        } else if (isNotLoggedIn) {
-            console.log("not login");
-            res.render('communityDetail.html', {
-                title: `고객문의`,
-                complain,
-                createdAt: moment(complain.createdAt).format('YYYY-MM-DD HH:mm:ss'),
-                user: complain.complainedId,
-                comments: time,
-                re_comments: re_time,
-            });
+        /////////////
+        console.log("@@! = ", req.user.id);
+        const [books_for_notice] = await Promise.all([
+            Book.findAll({
+                where: {
+                    OwnerId: req.user.id,
+                }
+            })
+        ]);
+        const [books_for_notice_commu] = await Promise.all([
+            Community.findAll({
+                where: {
+                    postingId: req.user.id,
+                }
+            })
+        ]);
+        const notices = [];
+        for (const notice of books_for_notice) {
+            const { id } = notice;
+            notices.push(id);
         }
+        const [likesfornotice] = await Promise.all([
+            Who.findAll({
+                where: {
+                    thisbook: notices,
+                    isNotified_like: {
+                        [Op.ne]: '1'
+                    },
+                }
+            })
+        ]);
+        const notices_commu = [];
+        for (const notice of books_for_notice_commu) {
+            const { id } = notice;
+            notices_commu.push(id);
+        }
+        console.log("WWW = ", notices);
+        console.log("book = ", books_for_notice);
+        console.log("user = ", req.user.id);
+        const [noticess] = await Promise.all([
+            Post.findAll({
+                where: {
+                    [Op.or]: [
+                        {
+                            BookId: notices,
+                            UserId: { [Op.ne]: String(req.user.id) }
+                        }, { // 커뮤니티 댓글 구별
+                            CommunityId: notices_commu,
+                            UserId: { [Op.ne]: String(req.user.id) }
+                        }],
+                    isNotified_posts: {
+                        [Op.ne]: '1'
+                    },
+                }
+            })
+        ]);
+        console.log("noticess = ", noticess);
+        ////////////
+        
+        res.render('csDetail.html', {
+            title: `고객문의`,
+            complain,
+            createdAt: moment(complain.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+            user: res.locals.user,
+            complainId: complain.id,
+            comments: time,
+            re_comments: re_time,
+            noticess,
+            likesfornotice,
+        });
     } catch (error) {
         console.error(error);
         next(error);
@@ -203,6 +182,7 @@ router.post('/complain/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
         const { comment, complainId } = req.body;
         console.log("comment = ", comment);
+        console.log("complainId = ", complainId);
         const post = await Post.create({
             content: comment,
             commentingNick: req.user.nick,
@@ -210,7 +190,8 @@ router.post('/complain/:id/comment', isLoggedIn, async (req, res, next) => {
             ComplainId: req.params.id,
             thisURL: String(`/customer/complain/${complainId}`),
         });
-        return res.send(`<script type="text/javascript">location.href="/customer/complain/${post.complainId}";</script>`);
+        console.log("req.params.id=", req.params.id);
+        return res.send(`<script type="text/javascript">location.href="/customer/complain/${complainId}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
