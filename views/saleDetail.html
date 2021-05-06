@@ -30,10 +30,11 @@
                 <div class="w-100 pb-2 mb-4 border-bottom">
                     <div class="d-sm-flex align-items-center justify-content-between">
                         <h1 class="h2 fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
-                        <p class="mt-1 mb-3 fw-bold">{{book.usernick}}</p>
+                        <p class="">조회수 : {{book.hits}}</p>
                     </div>
                     <div class="d-lg-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center mb-2">
+                            <p class="me-2 mt-2 fw-bold">{{book.usernick}}</p>
                             {% if this_book_location %}
                             <p><a><img src="/img/marker.png" width="20px"></a>{{this_book_location}}</p>
                             {% else %}
