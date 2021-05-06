@@ -369,4 +369,25 @@ router.get('/reCommentDelete_customer', isLoggedIn, async (req, res, next) => {
     }
 });
 
+// 0507 고객문의 게시물내용 수정하기
+router.post('/edit_community', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, communityTitle, communityContent } = req.body;
+        console.log("body = ", req.body);
+        const a = await Community.update({
+            title: communityTitle,
+            content: communityContent,
+        }, {
+            where: { id: this_item_id }
+        });
+        console.log("body = ", req.body);
+        console.log("aa = ", a);
+
+        res.send(`<script type="text/javascript">alert("커뮤니티 정보 수정 완료"); location.href="/free_community/community/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 module.exports = router;

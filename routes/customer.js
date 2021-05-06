@@ -238,4 +238,41 @@ router.get('/delete_customer', isLoggedIn, async (req, res, next) => {
     }
 });
 
+// 0507 고객문의 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
+router.post('/editIt_complain', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, this_item_content, this_item_complainedId } = req.body;
+        if (this_item_complainedId === String(req.user.id)) {
+            const complain = await Complain.findOne({ where: { id: this_item_id, complainedId: req.user.id, content: this_item_content }, });
+            res.render('edit_cs.html', {
+                complain,
+            });
+        } else {
+            res.send(`<script type="text/javascript">alert("수정 권한이 없습니다."); location.href="/customer/complain/${this_item_id}";</script>`);
+        }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 0507 고객문의 게시물 내용 수정하기
+router.post('/edit_complain', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, complainTitle, complainAbout } = req.body;
+        await Complain.update({
+            title: complainTitle,
+            content: complainAbout,
+        }, {
+            where: { id: this_item_id }
+        });
+
+        res.send(`<script type="text/javascript">alert("커뮤니티 정보 수정 완료"); location.href="/customer/complain/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+
 module.exports = router;

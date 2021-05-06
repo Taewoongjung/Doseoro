@@ -20,16 +20,17 @@
 
     <!-- 커뮤니티 등록 -->
     <main class="registerForm border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
-      <form id="register_book-form" class="regiRequest p-5">
+      <form id="register_complain-form" class="regiRequest p-5">
 
         <div class="mb-1">
           <h1 class="h3">고객문의</h1>
-          <input type="text" class="form-control p-3" id="postTitle" name="postTitle" placeholder="제목" required autofocus>
+          <input type="hidden" name="this_item_id" value="{{complain.id}}">
+          <input type="text" class="form-control p-3" id="complainTitle" name="complainTitle" value="{{complain.title}}" required autofocus>
         </div>
 
         <div class="input-group">
           <label for="book-about">문의 내용</label>
-          <textarea type="text" class="textInput form-control p-3 mb-4" id="book-about" name="postAbout" placeholder="내용" rows="10"></textarea>
+          <textarea type="text" class="textInput form-control p-3 mb-4" id="complainAbout" name="complainAbout" placeholder="내용" rows="10">{{complain.content}}</textarea>
         </div>
 
         <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">게시물 등록</button>
@@ -43,8 +44,8 @@
 
   <script>
     function one() {
-      const request = document.getElementById('register_book-form');
-      request.setAttribute('action', '/customer/customerComplain');
+      const request = document.getElementById('register_complain-form');
+      request.setAttribute('action', '/customer/edit_complain');
       request.setAttribute('method', 'POST');
     }
   </script>

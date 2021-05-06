@@ -182,10 +182,10 @@
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script>
-        // 커뮤니티 스크립트
+        // 고객문의 게시글 수정
         function complain_item_edit(id) {
             const request = document.getElementById(`complain_item-ED-form-${id}`);
-            request.setAttribute('action', '/customer/complain');
+            request.setAttribute('action', '/customer/editIt_complain');
             request.setAttribute('method', 'POST');
         }
 
