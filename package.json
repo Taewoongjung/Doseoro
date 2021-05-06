@@ -4,7 +4,7 @@
   "description": "책판매 사이트",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=production PORT=2030 pm2 start server.js -i 0",
+    "start": "nodemon start",
     "dev": "nodemon server"
   },
   "author": "TaeWoongJung",
