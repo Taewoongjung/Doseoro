@@ -198,5 +198,49 @@ router.get('/complain/:id', async (req, res, next) => {
     }
 });
 
+// 고객문의 댓글 달기
+router.post('/complain/:id/comment', isLoggedIn, async (req, res, next) => {
+    try {
+        const { comment, complainId } = req.body;
+        console.log("comment = ", comment);
+        const post = await Post.create({
+            content: comment,
+            commentingNick: req.user.nick,
+            UserId: req.user.id,
+            ComplainId: req.params.id,
+            thisURL: String(`/customer/complain/${complainId}`),
+        });
+        return res.send(`<script type="text/javascript">location.href="/customer/complain/${post.complainId}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 고객문의 대댓글 기능 
+router.post('/recomment', isLoggedIn, async (req, res, next) => {
+    try {
+        // console.log("/complain/recomment 진입");
+        const { comment, UserId, complainId, commentId } = req.body;
+        console.log("complain에 commentId = ", commentId);
+        // console.log("complainId = ", complainId);
+        // console.log("req.body = ", req.body);
+        await Post.create({
+            content: comment,
+            UserId: req.user.id,
+            ComplainId: complainId,
+            reCommentingId: commentId,
+            reCommentedId: req.user.id,
+            reCommentNick: req.user.nick,
+            thisURL: String(`/customer/complain/${complainId}";`),
+        });
+        return res.send(`<script type="text/javascript">location.href="/customer/complain/${complainId}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+
 
 module.exports = router;

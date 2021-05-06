@@ -56,10 +56,10 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                     <li><button id="item-edit-btn-{{community.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="community_item_edit('{{community.id}}')">수정</button></li>
+                                            onclick="complain_item_edit('{{community.id}}')">수정</button></li>
                                     <li><button id="item-delete-btn-{{community.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="community_item_delete('{{community.id}}')">삭제</button></li>
+                                            onclick="complain_item_delete('{{community.id}}')">삭제</button></li>
                                 </ul>
                             </div>
                         </form>
@@ -79,7 +79,7 @@
                     <input id="comment" class="form-control p-2" name="comment">
                     <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
 
-                    <input type="hidden" name="communityId" value="{{communityId}}">
+                    <input type="hidden" name="complainId" value="{{complainId}}">
                     <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()"
                         value="Click">댓글달기</button>
                 </div>
@@ -212,13 +212,13 @@
     </div>
     <script>
         // 커뮤니티 스크립트
-        function community_item_edit(id) {
+        function complain_item_edit(id) {
             const request = document.getElementById(`community_item-ED-form-${id}`);
             request.setAttribute('action', '/free_community/editIt_community');
             request.setAttribute('method', 'POST');
         }
 
-        function community_item_delete(id) {
+        function complain_item_delete(id) {
             const request = document.getElementById(`community_item-ED-form-${id}`);
             request.setAttribute('action', '/free_community/delete_community');
             request.setAttribute('method', 'GET');

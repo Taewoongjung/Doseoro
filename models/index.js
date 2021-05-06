@@ -33,5 +33,6 @@ Book.associate(db);
 Who.associate(db);
 Post.associate(db);
 Community.associate(db);
+Complain.associate(db);
 
 module.exports = db;
