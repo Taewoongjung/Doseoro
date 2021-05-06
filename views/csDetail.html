@@ -138,7 +138,7 @@
                         {% if re_comment.reCommentingId == comment.id %}
                         <input type="hidden" name="recomment_reCommentedId" value="{{re_comment.reCommentedId}}">
                         <input type="hidden" name="recomment_UserId" value="{{re_comment.UserId}}">
-                        <input type="hidden" name="communityId" value="{{communityId}}">
+                        <input type="hidden" name="complainId" value="{{complainId}}">
                         <input type="hidden" name="re_commentId" value="{{re_comment.id}}">
                         <input type="hidden" name="re_comment_createdAt" value="{{re_comment.createdAt}}">
                         
@@ -220,7 +220,7 @@
             if (ckCom == '') {
                 alert("내용을 입력하세요");
             } else {
-                request.setAttribute('action', `/comment/commentEdit_commu?Com`);
+                request.setAttribute('action', `/comment/commentEdit_customer?Com`);
                 request.setAttribute('method', 'GET');
             }
         }

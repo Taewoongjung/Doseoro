@@ -177,6 +177,7 @@ router.get('/complain/:id', async (req, res, next) => {
     }
 });
 
+
 // 고객문의 댓글 달기
 router.post('/complain/:id/comment', isLoggedIn, async (req, res, next) => {
     try {

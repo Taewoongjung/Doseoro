@@ -2,7 +2,7 @@ const express = require('express');
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
-const { User, Book, Who, Post, Community } = require('../models');
+const { User, Book, Who, Post, Community, Complain } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -283,6 +283,50 @@ router.get('/reCommentDelete_commu', isLoggedIn, async (req, res, next) => {
         console.error(err);
         next(err);
     }
+});
+
+// 0507댓글 수정(고객문의)
+router.get('/commentEdit_customer', isLoggedIn, async (req, res, next) => {
+    try {
+        const { UserId, commentId, complainId, edited_comment } = req.query;
+        console.log("Com = ", edited_comment);
+        console.log("thisComplain id = ", complainId);
+        const thisComplain = await Complain.findOne({ where: { id: String(complainId) } });
+        if (UserId === String(res.locals.user.id)){
+            if ( edited_comment === String(null)){
+                return res.send(`<script type="text/javascript">alert("댓글이 수정이 취소 되었습니다!"); location.href="/customer/complain/${thisComplain.id}";</script>`);   
+            }
+            await Post.update({ 
+                content: edited_comment,
+            }, {
+                where: { id: commentId, UserId: req.user.id } 
+            });
+            
+            return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/customer/complain/${thisComplain.id}";</script>`);   
+
+        } else {
+            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/customer/complain/${thisComplain.id}";</script>`);  
+        }} catch (err) {
+        console.error(err);
+        next(err);
+      }
+});
+
+// 0507 댓글 삭제(고객문의)
+router.get('/commentDelete_commu', isLoggedIn, async (req, res, next) => {
+    try {
+        const { UserId, commentId, comment_createdAt, communityId } = req.query;
+        const thisCommunity = await Community.findOne({ where: { id: communityId } });
+        if (UserId === String(res.locals.user.id)){
+            await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
+
+            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);        
+        } else {
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);  
+        }} catch (err) {
+        console.error(err);
+        next(err);
+      }
 });
 
 module.exports = router;
