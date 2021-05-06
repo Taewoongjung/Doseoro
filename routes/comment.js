@@ -332,16 +332,8 @@ router.get('/commentDelete_customer', isLoggedIn, async (req, res, next) => {
 // 0507 대댓글 수정(고객문의)
 router.get('/reCommentEdit_customer', isLoggedIn, async (req, res, next) => {
     try {
-        console.log(req.query);
-        console.log('@@@@@ 커뮤니티 대댓글 수정 @@@@@');
+        console.log('@@@@@ 고객문의 대댓글 수정 @@@@@');
         const { recomment_UserId, re_bookId, complainId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
-        console.log("Com = ", reCom_edited_comment);
-        console.log("complainId = ", complainId);
-        console.log("ID = ", re_commentId);
-        console.log("recomment_reCommentedId = ", recomment_reCommentedId);
-        console.log("UserId = ", String(recomment_UserId));
-        console.log("req.user.id = ", req.user.id);
-        console.log("req.locals.user.id = ", res.locals.user.id);
         if (recomment_reCommentedId !== String(req.user.id)){
             return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/customer/complain/${complainId}";</script>`);  
         } else {
@@ -359,6 +351,22 @@ router.get('/reCommentEdit_customer', isLoggedIn, async (req, res, next) => {
         console.error(err);
         next(err);
       }
+});
+
+// 0507 대댓글 삭제 (고객문의)
+router.get('/reCommentDelete_customer', isLoggedIn, async (req, res, next) => {
+    try {
+        const { recomment_UserId, re_commentId, complainId, recomment_reCommentedId } = req.query;
+        if (String(recomment_reCommentedId) === String(res.locals.user.id)){
+            await Post.destroy({ where: { id: re_commentId, UserId: req.user.id } });
+
+            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/customer/complain/${complainId}";</script>`);        
+        } else {
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/customer/complain/${complainId}";</script>`);  
+        }} catch (err) {
+        console.error(err);
+        next(err);
+    }
 });
 
 module.exports = router;
