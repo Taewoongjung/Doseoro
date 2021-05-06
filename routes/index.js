@@ -28,13 +28,13 @@ router.get('/', async (req, res, next) => {
         //             SoldId: null 
         //         },
         //     })
-        // ]);
+        // ]);  
         // // 좋아요 5개 이하
         // console.log("@@@@@@@@@", hit_books);
         // const [reg_books] = await Promise.all([
         //     Book.findAll({
         //         where: { 
-        //             likecount: { [Op.lte]: 5 }, 
+        //             likecount: { [Op.lte]: 3 }, 
         //             SoldId: null 
         //         },
         //     })
