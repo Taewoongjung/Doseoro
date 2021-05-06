@@ -43,24 +43,24 @@
 
                     <!-- 드롭다운 -->
                     <div>
-                        <form id="community_item-ED-form-{{community.id}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_id"
-                                value="{{community.id}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_postingId"
-                                value="{{community.postingId}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_content"
-                                value="{{community.content}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_createdAt"
-                                value="{{community.createdAt}}">
+                        <form id="complain_item-ED-form-{{complain.id}}">
+                            <input type="hidden" id="delete_it-{{complain.id}}" name="this_item_id"
+                                value="{{complain.id}}">
+                            <input type="hidden" id="delete_it-{{complain.id}}" name="this_item_complainedId"
+                                value="{{complain.complainedId}}">
+                            <input type="hidden" id="delete_it-{{complain.id}}" name="this_item_content"
+                                value="{{complain.content}}">
+                            <input type="hidden" id="delete_it-{{complain.id}}" name="this_item_createdAt"
+                                value="{{complain.createdAt}}">
                             <div class="dropdown">
                                 <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                    <li><button id="item-edit-btn-{{community.id}}" class="dropdown-item"
+                                    <li><button id="item-edit-btn-{{complain.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="complain_item_edit('{{community.id}}')">수정</button></li>
-                                    <li><button id="item-delete-btn-{{community.id}}" class="dropdown-item"
+                                            onclick="complain_item_edit('{{complain.id}}')">수정</button></li>
+                                    <li><button id="item-delete-btn-{{complain.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="complain_item_delete('{{community.id}}')">삭제</button></li>
+                                            onclick="complain_item_delete('{{complain.id}}')">삭제</button></li>
                                 </ul>
                             </div>
                         </form>
@@ -184,14 +184,15 @@
     <script>
         // 커뮤니티 스크립트
         function complain_item_edit(id) {
-            const request = document.getElementById(`community_item-ED-form-${id}`);
+            const request = document.getElementById(`complain_item-ED-form-${id}`);
             request.setAttribute('action', '/customer/complain');
             request.setAttribute('method', 'POST');
         }
 
+        // 고객문의 게시글 삭제
         function complain_item_delete(id) {
-            const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/customer/complain');
+            const request = document.getElementById(`complain_item-ED-form-${id}`);
+            request.setAttribute('action', '/customer/delete_customer');
             request.setAttribute('method', 'GET');
         }
 

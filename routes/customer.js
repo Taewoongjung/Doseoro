@@ -177,7 +177,6 @@ router.get('/complain/:id', async (req, res, next) => {
     }
 });
 
-
 // 고객문의 댓글 달기
 router.post('/complain/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
@@ -223,6 +222,20 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
     }
 });
 
-
+// 0507 고객문의 게시글 삭제
+router.get('/delete_customer', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, this_item_content, this_item_complainedId } = req.query;
+        if (this_item_complainedId === String(req.user.id)) {
+            await Complain.destroy({ where: { id: this_item_id, complainedId: req.user.id, content: this_item_content }, });
+            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/csList";</script>`);
+        } else {
+            res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다."); location.href="/customer/complain/${this_item_id}";</script>`);
+        }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
 
 module.exports = router;
