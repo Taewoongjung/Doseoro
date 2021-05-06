@@ -100,9 +100,15 @@ router.get('/changePW', isNotLoggedIn, (req, res) => {
 router.get('/csList', isLoggedIn, (req, res) => {
     res.render('csList.html');
 })
-// router.get('/csDetail', isLoggedIn, (req, res) => {
-//     res.render('csDetail.html');
-// })
+router.get('/csDetail', async (req, res, next) => {
+    res.render('csDetail.html');
+})
+
+// 0506 고객문의 등록
+router.get('/csRegist',async (req, res, next) => {
+    console.log("@@! = ", req.user.id);
+    res.render('csRegist.html');
+})
 
 router.get('/saleBoard', async (req, res, next) => {
     try {
