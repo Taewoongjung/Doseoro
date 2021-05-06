@@ -313,16 +313,16 @@ router.get('/commentEdit_customer', isLoggedIn, async (req, res, next) => {
 });
 
 // 0507 댓글 삭제(고객문의)
-router.get('/commentDelete_commu', isLoggedIn, async (req, res, next) => {
+router.get('/commentDelete_customer', isLoggedIn, async (req, res, next) => {
     try {
-        const { UserId, commentId, comment_createdAt, communityId } = req.query;
-        const thisCommunity = await Community.findOne({ where: { id: communityId } });
+        const { UserId, commentId, comment_createdAt, complainId } = req.query;
+        const thisComplain = await Complain.findOne({ where: { id: complainId } });
         if (UserId === String(res.locals.user.id)){
             await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
 
-            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);        
+            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/customer/complain/${thisComplain.id}";</script>`);        
         } else {
-            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/free_community/community/${thisCommunity.id}";</script>`);  
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/customer/complain/${thisComplain.id}";</script>`);  
         }} catch (err) {
         console.error(err);
         next(err);
