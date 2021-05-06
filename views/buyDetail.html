@@ -30,25 +30,27 @@
                 <div class="w-100 pb-2 mb-4 border-bottom">
                     <div class="d-sm-flex align-items-center justify-content-between">
                         <h1 class="h2 text-decoration-none fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
-                        <p class="mt-1 mb-3 fw-bold">{{book.usernick}}</p>
+                        <div><p class="">조회수 : {{book.hits}}</p></div>
                     </div>
                     <div class="d-sm-flex align-items-center justify-content-between">
                         <p class="mt-1 mb-3 fw-bold">조회수: {{book.hits}}</p>
                     </div>
                     <div class="d-sm-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center mb-2">
-                            {% if this_book_location %}
-                            <p><a><img src="/img/marker.png" width="20px"></a>{{this_book_location}}</p>
-                            {% else %}
-                            <p><a><img src="/img/marker.png" width="20px"></a>미등록</p>
-                            {% endif %}
+                            <div class="me-2 mt-2"><p class="fw-bold">{{book.usernick}}</p></div>
+                            <div>
+                                {% if this_book_location %}
+                                <p><img src="/img/marker.png" width="20px">{{this_book_location}}</p>
+                                {% else %}
+                                <p><a><img src="/img/marker.png" width="20px"></a>미등록</p>
+                                {% endif %}
+                            </div>
                         </div>
                         <!-- <a class="text-decoration-none text-dark text-end" id="getPostingDate">{{createdAt}}</a> -->
                         <a class="text-decoration-none text-dark text-end" id="getPostingDate"></a>
                         <input id="postingTime" type="hidden" value="{{createdAt}}">
                     </div>
                 </div>
-
                 <!-- 책 정보 -->
                 <div class="wrapBookInfo d-lg-flex align-items-center ">
                     <div class="bookInfo w-75 me-0 ms-sm-5 align-content-between">
