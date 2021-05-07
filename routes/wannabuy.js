@@ -42,8 +42,8 @@ router.get('/delete', isLoggedIn, async (req, res, next) => {
     try {
         const { this_item_id, this_item_createdAt, this_item_OwnerId } = req.query;
         if (this_item_OwnerId === String(req.user.id)) {
-            await Book.destroy({ where: { id: this_item_id, createdAt: this_item_createdAt, OwnerId: this_item_OwnerId, isSelling: '1' }, });
-            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/bookRequest";</script>`);
+            await Book.destroy({ where: { id: this_item_id, OwnerId: this_item_OwnerId, isSelling: '1' }, });
+            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/myPostingList";</script>`);
         } else {
             return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다."); location.href="/wannabuy/buybook/${this_item_id}";</script>`);
         }
