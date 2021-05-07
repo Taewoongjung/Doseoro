@@ -221,7 +221,7 @@
 
         function buy_item_delete(id) {
             const request = document.getElementById(`buy_item-ED-form-${id}`);
-            request.setAttribute('action', '/wannabuy/delete');
+            request.setAttribute('action', '/wannabuy/delete_myPage');
             request.setAttribute('method', 'GET');
         }
 
@@ -241,13 +241,13 @@
         // 커뮤니티 스크립트
         function community_item_edit(id) {
             const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/editIt_community');
+            request.setAttribute('action', '/free_community/editIt_community_mypage');
             request.setAttribute('method', 'POST');
         }
 
         function community_item_delete(id) {
             const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/delete_community');
+            request.setAttribute('action', '/free_community/delete_community_mypage');
             request.setAttribute('method', 'GET');
         }
     </script>
