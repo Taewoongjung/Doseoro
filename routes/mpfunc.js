@@ -94,16 +94,22 @@ const upload = multer({  // multer 설정
 
 // 0407 수정내용을 저장하는 라우터
 // 0408 오류 수정
-router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) => {
+router.post('/edit', isLoggedIn, upload.array('img', 5 ), async (req, res, next) => {
     try {
         const { this_item_id, postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
+
+        const notices = [];
+        for (const imgs of req.files) {
+            const { filename } = imgs;
+            notices.push(filename);
+        }
 
         await Book.update({
             postmessage: postmessage,
             title: title,
             author: author,
             publisher: publisher,
-            img: req.file.filename,
+            img: notices,
             category: checkCategory,
             state: checkState,
             price: price,
@@ -117,7 +123,7 @@ router.post('/edit', isLoggedIn, upload.single('img'), async (req, res, next) =>
             thisbook: this_item_id,
             posttitle: postmessage,
             title: title,
-            img: req.file.filename,
+            img: notices,
             price: price,
         }, {
             where: { thisbook: this_item_id }
