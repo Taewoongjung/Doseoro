@@ -27,15 +27,15 @@
                                                 [커뮤니티] {{notice.commentingNick}} 님이 댓글을 달았습니다.
                                             </a>
                                         </form>
-                                        {% if notice.BookId == null and notice.commentingNick == null %}
-                                            <form id="Commu-form-{{notice.id}}" class="d-flex">
-                                                <input type="hidden" name="community_Id" value="{{notice.id}}">
-                                                <a class="nav-link" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">
-                                                    <button id="cancel" class="delBtn" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button>
-                                                    [커뮤니티] {{notice.reCommentNick}} 님이 답글을 달았습니다.
-                                                </a>
-                                            </form>
-                                        {% endif %}
+                                    {% if notice.BookId == null and notice.commentingNick == null %}
+                                        <form id="Commu-form-{{notice.id}}" class="d-flex">
+                                            <input type="hidden" name="community_Id" value="{{notice.id}}">
+                                            <a class="nav-link" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">
+                                                <button id="cancel" class="delBtn" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button>
+                                                [커뮤니티] {{notice.reCommentNick}} 님이 답글을 달았습니다.
+                                            </a>
+                                        </form>
+                                    {% endif %}
                                     {% elif notice.commentingNick == null %}
                                         <form id="Without-Commu-form-{{notice.id}}" class="d-flex">
                                             <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
@@ -61,10 +61,10 @@
                                 <ul id="listLike-{{likenotice.id}}">
                                     <form id="like-notice-form-{{likenotice.id}}">
                                         <input type="hidden" name="Like_Id" value="{{likenotice.id}}">
-                                            <a class="nav-link" href="https://doseoro.taewoongjung.xyz{likenotice.thisURL}}">
-                                                <button id="cancel" class="delBtn"type="submit"onclick="like_noty_delete('{{likenotice.id}}')">x</button>
-                                                [좋아요] {{likenotice.likedNick}} 님이 회원님의 게시물을 찜 했습니다.
-                                            <a>
+                                        <a class="nav-link" href="https://doseoro.taewoongjung.xyz{{likenotice.thisURL}}">
+                                            <button id="cancel" class="delBtn"type="submit"onclick="like_noty_delete('{{likenotice.id}}')">x</button>
+                                            [좋아요] {{likenotice.likedNick}} 님이 회원님의 게시물을 찜 했습니다.
+                                        <a>
                                     </form>
                                 </ul>
                                 {% endfor %}
