@@ -222,9 +222,9 @@ router.get('/witoutCommu_second_click', isLoggedIn, async(req, res, next) => {
 });
 
 // 해당 알람 클릭하면 그 url로 리다이렉팅 + 알람 사라짐 (좋아요)
-router.get('/notyLike', isLoggedIn, async(req, res, next) => {
+router.get('/notyLike_click', isLoggedIn, async(req, res, next) => {
     try{
-        const { Like_Id } = req.query;
+        const { Like_Id, theURL_like } = req.query;
         await Who.update({
             isNotified_like: '1',
         }, {
@@ -232,6 +232,7 @@ router.get('/notyLike', isLoggedIn, async(req, res, next) => {
                 id: Like_Id,
             },
         });
+        return res.send(`<script type="text/javascript">location.href="https://doseoro.taewoongjung.xyz${theURL_like}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);

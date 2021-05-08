@@ -64,10 +64,10 @@
                                     <form id="like-notice-form-{{likenotice.id}}">
                                         <input type="hidden" name="Like_Id" value="{{likenotice.id}}">
                                         <input type="hidden" name="theURL_like" value="{{likenotice.thisURL}}">
-                                        <a class="nav-link" href="https://doseoro.taewoongjung.xyz{{likenotice.thisURL}}">
+                                        <button class="nav-link" type="submit" onclick="like_noty_click('{{likenotice.id}}')">
                                             <button id="cancel" class="delBtn"type="submit"onclick="like_noty_delete('{{likenotice.id}}')">x</button>
                                             [좋아요] {{likenotice.likedNick}} 님이 회원님의 게시물을 찜 했습니다.
-                                        <a>
+                                        </button>
                                     </form>
                                 </ul>
                                 {% endfor %}
@@ -88,7 +88,7 @@
                 <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
-                
+
                 {% else %}
                 <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
             </ul>
@@ -154,7 +154,7 @@
 
         function like_noty_click(id) {
             const request = document.getElementById(`like-notice-form-${id}`);
-            request.setAttribute('action', '/notification/notyLike');
+            request.setAttribute('action', '/notification/notyLike_click');
             request.setAttribute('method', 'GET');
         }
 
