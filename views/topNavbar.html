@@ -98,7 +98,7 @@
     <script>
         function commu_noty_delete(id) {
             const request = document.getElementById(`Commu-form-${id}`);
-            const notionId = document.getElementById(`list-${id}`);
+            const notionId = document.getElementById(`list-${id}`);0
             notionId.style.display = 'none';
             request.setAttribute('action', '/notification/onlyCommu');
             request.setAttribute('method', 'GET');
