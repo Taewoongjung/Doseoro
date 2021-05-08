@@ -161,4 +161,25 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
     }
 });
 
+// 해당 알람 클릭하면 그 url로 리다이렉팅 + 알람 사라짐 
+router.get('/witoutCommu_click', isLoggedIn, async(req, res, next) => {
+    try{
+        console.log("@!@! eaa");
+        const { notCommunity_Id, theURL } = req.query;
+        console.log("body = ", req.query);
+        await Post.update({
+            isNotified_posts: '1',
+        }, {
+            where:{
+                id: notCommunity_Id,
+            },
+        });
+        return res.send(`<script type="text/javascript">location.href="https://doseoro.taewoongjung.xyz${theURL}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+
 module.exports = router;
