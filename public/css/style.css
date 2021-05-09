@@ -82,6 +82,17 @@ textarea {
 	font-weight: bold;
 	background-color: inherit;
 }
+.notionMsg {
+	text-align: left;
+	border: none;
+	background-color: inherit;
+	padding: 5px;
+	border-radius: 7px;
+}
+.notionMsg:hover {
+	background-color: rgb(207, 207, 207);
+	cursor: pointer;
+}
 .notionBtn:hover, .delBtn:hover {
 	background-color: rgba(73, 158, 255, 0.822);
 	cursor: pointer;

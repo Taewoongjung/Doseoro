@@ -111,12 +111,12 @@
         <!-- 글 수정 시에는 non required -->
         <h1 class="h4 mt-3">상품 사진</h1>
         <div class="imgPreview mb-3 text-center">
-          <a><img id="nowimage" src="/img/{{books.img}}"></a>
-          <p>파일명:&nbsp&nbsp&nbsp&nbsp&nbsp{{books.img}}</p>
+          <a><img id="nowimage" src="/img/{{books.img[0]}}"></a>
+          <!-- <p>파일명:&nbsp&nbsp&nbsp&nbsp&nbsp{{books.img}}</p> -->
         </div>
         <div class="input-group mb-3">
           <label for="book-photo">상품 사진</label>
-          <input type="file" class="form-control" id="book-photo" name="img" accept="image/*">
+          <input type="file" class="form-control" id="book-photo" name="img" multiple accept="image/*">
         </div>
 
         <div class="input-group">
