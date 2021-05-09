@@ -35,16 +35,21 @@
                         <a class="text-decoration-none text-dark" id="getPostingDate"></a>
                         <input id="postingTime" type="hidden" value="{{createdAt}}">
                     </div>
+                    <div class="d-flex align-items-center mt-2 mb-2">
+                        <a class="text-body text-decoration-none fw-bold"
+                            id="getAppearanceInfo">{{community.postingNick}}</a>
+                        <p class="ms-1">| 조회수 : {{community.hits}}</p>
+                    </div>
                 </div>
 
                 <!-- 게시물 정보 -->
                 <div class="wrapBookInfo d-flex">
                     <div class="bookInfo w-100 me-0 align-content-between">
-                        <div class="d-flex align-items-center mt-2 mb-2">
+                        <!-- <div class="d-flex align-items-center mt-2 mb-2">
                             <a class="text-body text-decoration-none fw-bold"
                                 id="getAppearanceInfo">{{community.postingNick}}</a>
                             <p class="ms-1">| 조회수 : {{community.hits}}</p>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div>
