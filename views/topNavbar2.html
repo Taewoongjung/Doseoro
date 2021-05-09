@@ -19,7 +19,8 @@
                             <div id="listAll">
                                 {% for notice in noticess %}
                                 <ul id="list-{{notice.id}}" class="mb-3">
-                                    {% if (notice.BookId) == null and (notice.recommentNick == null) %}
+                                    {% if notice.BookId == null %}
+                                        {% if notice.reCommentNick == null %}
                                         <form id="Commu-form-{{notice.id}}" class="d-flex">
                                             <input type="hidden" name="community_Id" value="{{notice.id}}">
                                             <div class="d-flex">
@@ -29,16 +30,17 @@
                                                 </button>
                                             </div>
                                         </form>
-                                        {% if notice.BookId == null and notice.commentingNick == null %}
-                                            <form id="Commu-form-{{notice.id}}" class="d-flex">
-                                                <input type="hidden" name="community_Id" value="{{notice.id}}">
-                                                <div class="d-flex">
-                                                    <button id="cancel" class="delBtn" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button>
-                                                    <button type="submit" class="notionMsg" onclick="">
-                                                        [커뮤니티] {{notice.reCommentNick}} 님이 답글을 달았습니다.
-                                                    </button>
-                                                </div>
-                                            </form>
+                                        {% endif %}
+                                        {% if notice.commentingNick == null %}
+                                        <form id="Commu-form-{{notice.id}}" class="d-flex">
+                                            <input type="hidden" name="community_Id" value="{{notice.id}}">
+                                            <div class="d-flex">
+                                                <button id="cancel" class="delBtn" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button>
+                                                <button type="submit" class="notionMsg" onclick="">
+                                                    [커뮤니티] {{notice.reCommentNick}} 님이 답글을 달았습니다.
+                                                </button>
+                                            </div>
+                                        </form>
                                         {% endif %}
                                     {% elif notice.commentingNick == null %}
                                         <form id="Without-Commu-form-{{notice.id}}" class="d-flex">
