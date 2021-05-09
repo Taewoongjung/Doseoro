@@ -81,7 +81,7 @@ router.get('/complain/:id', async (req, res, next) => {
         for (const new_time of re_comments) {
             const { createdAt, id, content, UserId, reCommentNick, reCommentedId, reCommentingId } = new_time;
             re_time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 reCommentNick,
                 reCommentedId,
                 reCommentingId,
@@ -94,7 +94,7 @@ router.get('/complain/:id', async (req, res, next) => {
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;
             time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 commentingNick,
                 content,
                 id,
@@ -163,7 +163,7 @@ router.get('/complain/:id', async (req, res, next) => {
         res.render('csDetail.html', {
             title: `고객문의`,
             complain,
-            createdAt: moment(complain.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+            createdAt: moment(complain.createdAt).format('YYYY.MM.DD HH:mm'),
             user: res.locals.user,
             complainId: complain.id,
             comments: time,

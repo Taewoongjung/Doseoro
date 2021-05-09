@@ -35,49 +35,43 @@
                         <a class="text-decoration-none text-dark" id="getPostingDate"></a>
                         <input id="postingTime" type="hidden" value="{{createdAt}}">
                     </div>
-                    <div class="d-flex align-items-center mt-2 mb-2">
-                        <a class="text-body text-decoration-none fw-bold"
-                            id="getAppearanceInfo">{{community.postingNick}}</a>
-                        <p class="ms-1">| 조회수 : {{community.hits}}</p>
-                    </div>
-                </div>
-
-                <!-- 게시물 정보 -->
-                <div class="wrapBookInfo d-flex">
-                    <div class="bookInfo w-100 me-0 align-content-between">
-                        <!-- <div class="d-flex align-items-center mt-2 mb-2">
-                            <a class="text-body text-decoration-none fw-bold"
-                                id="getAppearanceInfo">{{community.postingNick}}</a>
-                            <p class="ms-1">| 조회수 : {{community.hits}}</p>
-                        </div> -->
-                    </div>
-
-                    <div>
-                        <form id="community_item-ED-form-{{community.id}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_id"
-                                value="{{community.id}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_postingId"
-                                value="{{community.postingId}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_content"
-                                value="{{community.content}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_createdAt"
-                                value="{{community.createdAt}}">
-                            <div class="dropdown">
-                                <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                    <li><button id="item-edit-btn-{{community.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="community_item_edit('{{community.id}}')">수정</button></li>
-                                    <li><button id="item-delete-btn-{{community.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="community_item_delete('{{community.id}}')">삭제</button></li>
-                                </ul>
+                    
+                    <!-- 게시물 정보 -->
+                    <div class="wrapBookInfo d-flex">
+                        <div class="bookInfo w-100 me-0 align-content-between">
+                            <div class="d-flex align-items-center mt-2 mb-2">
+                                <a class="text-body text-decoration-none fw-bold"
+                                    id="getAppearanceInfo">{{community.postingNick}}</a>
+                                <p class="ms-1">| 조회수 : {{community.hits}}</p>
                             </div>
-                        </form>
+                        </div>
+                        <div>
+                            <form id="community_item-ED-form-{{community.id}}">
+                                <input type="hidden" id="delete_it-{{community.id}}" name="this_item_id"
+                                    value="{{community.id}}">
+                                <input type="hidden" id="delete_it-{{community.id}}" name="this_item_postingId"
+                                    value="{{community.postingId}}">
+                                <input type="hidden" id="delete_it-{{community.id}}" name="this_item_content"
+                                    value="{{community.content}}">
+                                <input type="hidden" id="delete_it-{{community.id}}" name="this_item_createdAt"
+                                    value="{{community.createdAt}}">
+                                <div class="dropdown">
+                                    <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                        <li><button id="item-edit-btn-{{community.id}}" class="dropdown-item"
+                                                role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                onclick="community_item_edit('{{community.id}}')">수정</button></li>
+                                        <li><button id="item-delete-btn-{{community.id}}" class="dropdown-item"
+                                                role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                onclick="community_item_delete('{{community.id}}')">삭제</button></li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
-                <div class="commuAbout align-items-center mt-2 mb-2 pt-4 pb-4">
+                <div class="commuAbout align-items-center mt-2 mb-2 pb-4">
                     <a class="text-body text-decoration-none" id="getAppearanceInfo" onload="replaceLine()"
                         style="white-space: pre-line;">{{community.content}}</a>
                 </div>
