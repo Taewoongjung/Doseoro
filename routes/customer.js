@@ -4,7 +4,7 @@ const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
 const { User, Book, Who, Post, Community, Complain } = require('../models');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
