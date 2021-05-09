@@ -3,7 +3,7 @@ const moment = require('moment-timezone');
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
-const { User, Book, Who, Post, Community } = require('../models');
+const { User, Book, Who, Post, Community, Complain } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -97,17 +97,162 @@ router.get('/changePW', isNotLoggedIn, (req, res) => {
 })
 
 // 0503 고객문의
-router.get('/csList', isLoggedIn, (req, res) => {
-    res.render('csList.html');
-})
-router.get('/csDetail', async (req, res, next) => {
-    res.render('csDetail.html');
+router.get('/csList', isLoggedIn, async (req, res) => {
+    const [complains] = await Promise.all([
+        Complain.findAll({
+            where: {
+                isSettled: { [Op.ne]: 1 },
+            }
+        }),
+    ]);
+
+    /////////////
+
+    console.log("@@! = ", req.user.id);
+    const [books_for_notice] = await Promise.all([
+        Book.findAll({
+            where: {
+                OwnerId: req.user.id,
+            }
+        })
+    ]);
+
+    const [books_for_notice_commu] = await Promise.all([
+        Community.findAll({
+            where: {
+                postingId: req.user.id,
+            }
+        })
+    ]);
+
+
+    const notices = [];
+    for (const notice of books_for_notice) {
+        const { id } = notice;
+        notices.push(id);
+    }
+
+    const [likesfornotice] = await Promise.all([
+        Who.findAll({
+            where: {
+                thisbook: notices,
+                isNotified_like: {
+                    [Op.ne]: '1'
+                },
+            }
+        })
+    ]);
+
+    const notices_commu = [];
+    for (const notice of books_for_notice_commu) {
+        const { id } = notice;
+        notices_commu.push(id);
+    }
+
+    console.log("WWW = ", notices);
+    console.log("book = ", books_for_notice);
+    console.log("user = ", req.user.id);
+    const [noticess] = await Promise.all([
+        Post.findAll({
+            where: {
+                [Op.or]: [
+                    {
+                        BookId: notices,
+                        UserId: { [Op.ne]: String(req.user.id) }
+                    }, { // 커뮤니티 댓글 구별
+                        CommunityId: notices_commu,
+                        UserId: { [Op.ne]: String(req.user.id) }
+                    }],
+                isNotified_posts: {
+                    [Op.ne]: '1'
+                },
+            }
+        })
+    ]);
+    console.log("noticess = ", noticess);
+
+    ////////////
+
+    res.render('csList.html',{
+        complains,
+        noticess,
+        likesfornotice,
+    });
 })
 
 // 0506 고객문의 등록
-router.get('/csRegist',async (req, res, next) => {
+router.get('/csRegist', isLoggedIn, async (req, res, next) => {
     console.log("@@! = ", req.user.id);
-    res.render('csRegist.html');
+    /////////////
+
+    console.log("@@! = ", req.user.id);
+    const [books_for_notice] = await Promise.all([
+        Book.findAll({
+            where: {
+                OwnerId: req.user.id,
+            }
+        })
+    ]);
+
+    const [books_for_notice_commu] = await Promise.all([
+        Community.findAll({
+            where: {
+                postingId: req.user.id,
+            }
+        })
+    ]);
+
+
+    const notices = [];
+    for (const notice of books_for_notice) {
+        const { id } = notice;
+        notices.push(id);
+    }
+
+    const [likesfornotice] = await Promise.all([
+        Who.findAll({
+            where: {
+                thisbook: notices,
+                isNotified_like: {
+                    [Op.ne]: '1'
+                },
+            }
+        })
+    ]);
+
+    const notices_commu = [];
+    for (const notice of books_for_notice_commu) {
+        const { id } = notice;
+        notices_commu.push(id);
+    }
+
+    console.log("WWW = ", notices);
+    console.log("book = ", books_for_notice);
+    console.log("user = ", req.user.id);
+    const [noticess] = await Promise.all([
+        Post.findAll({
+            where: {
+                [Op.or]: [
+                    {
+                        BookId: notices,
+                        UserId: { [Op.ne]: String(req.user.id) }
+                    }, { // 커뮤니티 댓글 구별
+                        CommunityId: notices_commu,
+                        UserId: { [Op.ne]: String(req.user.id) }
+                    }],
+                isNotified_posts: {
+                    [Op.ne]: '1'
+                },
+            }
+        })
+    ]);
+    console.log("noticess = ", noticess);
+
+    ////////////
+    res.render('csRegist.html',{
+        noticess,
+        likesfornotice,
+    });
 })
 
 router.get('/saleBoard', async (req, res, next) => {

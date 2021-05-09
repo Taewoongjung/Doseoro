@@ -564,7 +564,7 @@ router.get('/book/:id', async (req, res, next) => {
             }
 
             // console.log("notices = ", notices);
-            // console.log("book = ", books_for_notice);
+            // console.log("likesfornotice = ", likesfornotice);
             // console.log("user id = ", req.user.id);
             const [noticess] = await Promise.all([
                 Post.findAll({

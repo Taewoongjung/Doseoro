@@ -29,7 +29,7 @@ const upload = multer({  // multer 설정
     limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-// 0415 무료나눔
+// 0415 무료나눔 등록
 router.post('/book', isLoggedIn, upload.array('img', 5), async (req, res, next) => {
     try {
         const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
@@ -129,6 +129,18 @@ router.get('/delete_community', isLoggedIn, async (req, res, next) => {
     }
 });
 
+// 0507 커뮤니티내역 삭제(마이페이지에서)
+router.get('/delete_community_mypage', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, this_item_content, this_item_postingId } = req.query;
+        const aa = await Community.destroy({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
+        res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/myPostingList";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 // 0417 커뮤니티 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt_community', isLoggedIn, async (req, res, next) => {
     try {
@@ -141,6 +153,20 @@ router.post('/editIt_community', isLoggedIn, async (req, res, next) => {
         } else {
             res.send(`<script type="text/javascript">alert("수정 권한이 없습니다."); location.href="/free_community/community/${this_item_id}";</script>`);
         }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 0507 커뮤니티 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터(마이페이지에서)
+router.post('/editIt_community_mypage', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, this_item_content } = req.body;
+            const community = await Community.findOne({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
+            res.render('edit_commuDetail.html', {
+                community,
+            });
     } catch (error) {
         console.error(error);
         next(error);

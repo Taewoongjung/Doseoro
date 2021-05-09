@@ -22,37 +22,39 @@
                                     {% if (notice.BookId) == null and (notice.recommentNick == null) %}
                                         <form id="Commu-form-{{notice.id}}" class="d-flex">
                                             <input type="hidden" name="community_Id" value="{{notice.id}}">
-                                            <a class="nav-link" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">
+                                            <input type="hidden" name="theURL" value="{{notice.thisURL}}">
+                                            <button class="nav-link" onclick="commu_noty_click('{{notice.id}}')">
                                                 <button id="cancel" class="delBtn" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button>
                                                 [커뮤니티] {{notice.commentingNick}} 님이 댓글을 달았습니다.
-                                            </a>
+                                            </button>
                                         </form>
-                                        {% if notice.BookId == null and notice.commentingNick == null %}
-                                            <form id="Commu-form-{{notice.id}}" class="d-flex">
-                                                <input type="hidden" name="community_Id" value="{{notice.id}}">
-                                                <a class="nav-link" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">
-                                                    <button id="cancel" class="delBtn" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button>
-                                                    [커뮤니티] {{notice.reCommentNick}} 님이 답글을 달았습니다.
-                                                </a>
-                                            </form>
-                                        {% endif %}
+                                    {% if notice.BookId === null and notice.commentingNick === null %}
+                                        <form id="Commu-form-{{notice.id}}" class="d-flex">
+                                            <input type="hidden" name="community_Id" value="{{notice.id}}">
+                                            <input type="hidden" name="theURL" value="{{notice.thisURL}}">
+                                            <button class="nav-link" onclick="commu_noty2_click('{{notice.id}}')">
+                                                <button id="cancel" class="delBtn" type="submit" onclick="commu_noty_delete('{{notice.id}}')">x</button>
+                                                [커뮤니티] {{notice.reCommentNick}} 님이 답글을 달았습니다.
+                                            </button>
+                                        </form>
+                                    {% endif %}
                                     {% elif notice.commentingNick == null %}
                                         <form id="Without-Commu-form-{{notice.id}}" class="d-flex">
                                             <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
-                                            <input type="hidden" name="to" value="{{window.location.pathname}}">
-                                            <a class="nav-link" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">
+                                            <input type="hidden" name="theURL" value="{{notice.thisURL}}">
+                                            <button class="nav-link" type="submit" onclick="noty_click('{{notice.id}}')">
                                                 <button id="cancel" class="delBtn" type="submit" onclick="noty_delete('{{notice.id}}')">x</button>
                                                 [답글] {{notice.reCommentNick}} 님이 답글을 달았습니다.
-                                            </a>
+                                            </button>
                                         </form>
                                     {% elif notice.commentingNick %}
                                         <form id="Without2-Commu-form-{{notice.id}}" class="d-flex">
                                             <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
-                                            <input type="hidden" name="to" value="{{window.location.pathname}}">
-                                            <a class="nav-link" href="https://doseoro.taewoongjung.xyz{{notice.thisURL}}">
+                                            <input type="hidden" name="theURL" value="{{notice.thisURL}}">
+                                            <button class="nav-link" type="submit" onclick="noty2_click('{{notice.id}}')">
                                             <button id="cancel" class="delBtn" type="submit" onclick="noty2_delete('{{notice.id}}')">x</button>
                                                 [댓글] {{notice.commentingNick}} 님이 댓글을 달았습니다.
-                                            </a>
+                                            </button>
                                         </form>
                                     {% endif %}
                                 </ul>
@@ -61,10 +63,11 @@
                                 <ul id="listLike-{{likenotice.id}}">
                                     <form id="like-notice-form-{{likenotice.id}}">
                                         <input type="hidden" name="Like_Id" value="{{likenotice.id}}">
-                                            <a class="nav-link" href="https://doseoro.taewoongjung.xy{likenotice.thisURL}}">
-                                                <button id="cancel" class="delBtn"type="submit"onclick="like_noty_delete('{{likenotice.id}}')">x</button>
-                                                [좋아요] {{likenotice.likedNick}} 님이 회원님의 게시물을 찜 했습니다.
-                                            <a>
+                                        <input type="hidden" name="theURL_like" value="{{likenotice.thisURL}}">
+                                        <button class="nav-link" type="submit" onclick="like_noty_click('{{likenotice.id}}')">
+                                            <button id="cancel" class="delBtn"type="submit"onclick="like_noty_delete('{{likenotice.id}}')">x</button>
+                                            [좋아요] {{likenotice.likedNick}} 님이 회원님의 게시물을 찜 했습니다.
+                                        </button>
                                     </form>
                                 </ul>
                                 {% endfor %}
@@ -85,7 +88,7 @@
                 <li class="nav-item"><a class="nav-link p-3" href="/pages/like">관심상품</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/mypage">마이페이지</a></li>
                 <li class="nav-item"><a class="nav-link p-3" href="/auth/logout">로그아웃</a></li>
-                
+
                 {% else %}
                 <li class="nav-item"><a class="nav-link p-3" href="/login">로그인</a></li>{% endif %}
             </ul>
@@ -95,7 +98,7 @@
     <script>
         function commu_noty_delete(id) {
             const request = document.getElementById(`Commu-form-${id}`);
-            const notionId = document.getElementById(`list-${id}`);
+            const notionId = document.getElementById(`list-${id}`);0
             notionId.style.display = 'none';
             request.setAttribute('action', '/notification/onlyCommu');
             request.setAttribute('method', 'GET');
@@ -116,6 +119,7 @@
             request.setAttribute('action', '/notification/witoutCommu');
             request.setAttribute('method', 'GET');
         }
+
         function like_noty_delete(id) {
             const request = document.getElementById(`like-notice-form-${id}`);
             const notionId = document.getElementById(`listLike-${id}`);
@@ -123,6 +127,37 @@
             request.setAttribute('action', '/notification/notyLike');
             request.setAttribute('method', 'GET');
         }
+
+        function noty_click(id) {
+            const request = document.getElementById(`Without-Commu-form-${id}`);
+            request.setAttribute('action', '/notification/witoutCommu_first_click');
+            request.setAttribute('method', 'GET');
+        }
+
+        function noty2_click(id) {
+            const request = document.getElementById(`Without2-Commu-form-${id}`);
+            request.setAttribute('action', '/notification/witoutCommu_second_click');
+            request.setAttribute('method', 'GET');
+        }
+
+        function commu_noty_click(id) {
+            const request = document.getElementById(`Commu-form-${id}`);
+            request.setAttribute('action', '/notification/onlyCommu_first_click');
+            request.setAttribute('method', 'GET');
+        }
+
+        function commu_noty2_click(id) {
+            const request = document.getElementById(`Commu-form-${id}`);
+            request.setAttribute('action', '/notification/onlyCommu_second_click');
+            request.setAttribute('method', 'GET');
+        }
+
+        function like_noty_click(id) {
+            const request = document.getElementById(`like-notice-form-${id}`);
+            request.setAttribute('action', '/notification/notyLike_click');
+            request.setAttribute('method', 'GET');
+        }
+
 
         // 모두 삭제 기능
         function delAll() {

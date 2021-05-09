@@ -2,7 +2,7 @@ const express = require('express');
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
-const { User, Book, Who, Post, Community } = require('../models');
+const { User, Book, Who, Post, Community, Complain } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -282,6 +282,111 @@ router.get('/reCommentDelete_commu', isLoggedIn, async (req, res, next) => {
         }} catch (err) {
         console.error(err);
         next(err);
+    }
+});
+
+// 0507댓글 수정(고객문의)
+router.get('/commentEdit_customer', isLoggedIn, async (req, res, next) => {
+    try {
+        const { UserId, commentId, complainId, edited_comment } = req.query;
+        console.log("Com = ", edited_comment);
+        console.log("thisComplain id = ", complainId);
+        const thisComplain = await Complain.findOne({ where: { id: String(complainId) } });
+        if (UserId === String(res.locals.user.id)){
+            if ( edited_comment === String(null)){
+                return res.send(`<script type="text/javascript">alert("댓글이 수정이 취소 되었습니다!"); location.href="/customer/complain/${thisComplain.id}";</script>`);   
+            }
+            await Post.update({ 
+                content: edited_comment,
+            }, {
+                where: { id: commentId, UserId: req.user.id } 
+            });
+            
+            return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/customer/complain/${thisComplain.id}";</script>`);   
+
+        } else {
+            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/customer/complain/${thisComplain.id}";</script>`);  
+        }} catch (err) {
+        console.error(err);
+        next(err);
+      }
+});
+
+// 0507 댓글 삭제(고객문의)
+router.get('/commentDelete_customer', isLoggedIn, async (req, res, next) => {
+    try {
+        const { UserId, commentId, comment_createdAt, complainId } = req.query;
+        const thisComplain = await Complain.findOne({ where: { id: complainId } });
+        if (UserId === String(res.locals.user.id)){
+            await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
+
+            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/customer/complain/${thisComplain.id}";</script>`);        
+        } else {
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/customer/complain/${thisComplain.id}";</script>`);  
+        }} catch (err) {
+        console.error(err);
+        next(err);
+      }
+});
+
+// 0507 대댓글 수정(고객문의)
+router.get('/reCommentEdit_customer', isLoggedIn, async (req, res, next) => {
+    try {
+        console.log('@@@@@ 고객문의 대댓글 수정 @@@@@');
+        const { recomment_UserId, re_bookId, complainId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
+        if (recomment_reCommentedId !== String(req.user.id)){
+            return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/customer/complain/${complainId}";</script>`);  
+        } else {
+            if ( reCom_edited_comment === String(null)){
+                return res.send(`<script type="text/javascript">alert("댓글이 수정이 취소 되었습니다!"); location.href="/customer/complain/${complainId}";</script>`);   
+            }
+            await Post.update({
+                content: reCom_edited_comment,
+            }, {
+                where: { id: re_commentId } 
+            });
+            return res.send(`<script type="text/javascript">alert("댓글이 수정 되었습니다!"); location.href="/customer/complain/${complainId}";</script>`);
+        }
+    } catch (err) {
+        console.error(err);
+        next(err);
+      }
+});
+
+// 0507 대댓글 삭제 (고객문의)
+router.get('/reCommentDelete_customer', isLoggedIn, async (req, res, next) => {
+    try {
+        const { recomment_UserId, re_commentId, complainId, recomment_reCommentedId } = req.query;
+        if (String(recomment_reCommentedId) === String(res.locals.user.id)){
+            await Post.destroy({ where: { id: re_commentId, UserId: req.user.id } });
+
+            return res.send(`<script type="text/javascript">alert("댓글이 삭제 되었습니다!"); location.href="/customer/complain/${complainId}";</script>`);        
+        } else {
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다!"); location.href="/customer/complain/${complainId}";</script>`);  
+        }} catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+
+// 0507 고객문의 게시물내용 수정하기
+router.post('/edit_community', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, communityTitle, communityContent } = req.body;
+        console.log("body = ", req.body);
+        const a = await Community.update({
+            title: communityTitle,
+            content: communityContent,
+        }, {
+            where: { id: this_item_id }
+        });
+        console.log("body = ", req.body);
+        console.log("aa = ", a);
+
+        res.send(`<script type="text/javascript">alert("커뮤니티 정보 수정 완료"); location.href="/free_community/community/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
+    } catch (error) {
+        console.error(error);
+        next(error);
     }
 });
 

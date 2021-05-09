@@ -161,4 +161,82 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
     }
 });
 
+// 해당 알람 클릭하면 그 url로 리다이렉팅 + 알람 사라짐 (답글)
+router.get('/witoutCommu_first_click', isLoggedIn, async(req, res, next) => {
+    try{
+        console.log("@!@! eaa");
+        const { notCommunity_Id, theURL } = req.query;
+        console.log("body = ", req.query);
+        await Post.update({
+            isNotified_posts: '1',
+        }, {
+            where:{
+                id: notCommunity_Id,
+            },
+        });
+        return res.send(`<script type="text/javascript">location.href="https://doseoro.taewoongjung.xyz${theURL}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 해당 알람 클릭하면 그 url로 리다이렉팅 + 알람 사라짐 (커뮤니티, 댓글)
+router.get('/onlyCommu_first_click', isLoggedIn, async(req, res, next) => {
+    try{
+        console.log("@!@! eaa");
+        const { community_Id, theURL } = req.query;
+        console.log("body = ", req.query);
+        await Post.update({
+            isNotified_posts: '1',
+        }, {
+            where:{
+                id: community_Id,
+            },
+        });
+        return res.send(`<script type="text/javascript">location.href="https://doseoro.taewoongjung.xyz${theURL}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 해당 알람 클릭하면 그 url로 리다이렉팅 + 알람 사라짐 (댓글)
+router.get('/witoutCommu_second_click', isLoggedIn, async(req, res, next) => {
+    try{
+        console.log("@!@! eaa");
+        const { notCommunity_Id, theURL } = req.query;
+        console.log("body = ", req.query);
+        await Post.update({
+            isNotified_posts: '1',
+        }, {
+            where:{
+                id: notCommunity_Id,
+            },
+        });
+        return res.send(`<script type="text/javascript">location.href="https://doseoro.taewoongjung.xyz${theURL}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 해당 알람 클릭하면 그 url로 리다이렉팅 + 알람 사라짐 (좋아요)
+router.get('/notyLike_click', isLoggedIn, async(req, res, next) => {
+    try{
+        const { Like_Id, theURL_like } = req.query;
+        await Who.update({
+            isNotified_like: '1',
+        }, {
+            where:{
+                id: Like_Id,
+            },
+        });
+        return res.send(`<script type="text/javascript">location.href="https://doseoro.taewoongjung.xyz${theURL_like}";</script>`);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 module.exports = router;

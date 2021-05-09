@@ -25,8 +25,8 @@
                 <div class="w-100 pb-2 mb-4 border-bottom">
                     <h1 class="h5 fw-bold text-primary">고객문의</h1>
                     <div class="d-lg-flex align-items-center justify-content-between">
-                        <h1 class="h2 text-decoration-none fw-bold" id="getPostingTitle">제목</h1>
-                        <a class="text-decoration-none text-dark" id="getPostingDate">등록날짜</a>
+                        <h1 class="h2 text-decoration-none fw-bold" id="getPostingTitle">{{complain.title}}</h1>
+                        <a class="text-decoration-none text-dark" id="getPostingDate">{{complain.createdAt}}</a>
                         <input id="postingTime" type="hidden" value="{{createdAt}}">
                     </div>
                 </div>
@@ -36,30 +36,31 @@
                     <div class="bookInfo w-100 me-0 align-content-between">
                         <div class="category d-flex align-items-center mt-2 mb-2">
                             <a class="text-body text-decoration-none fw-bold"
-                                id="getAppearanceInfo">포스팅 유저</a>
+                                id="getAppearanceInfo">{{complain.complainedNick}}</a>
+                            <p class="ms-1">| 조회수 : {{complain.hits}}</p>
                         </div>
                     </div>
 
                     <!-- 드롭다운 -->
                     <div>
-                        <form id="community_item-ED-form-{{community.id}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_id"
-                                value="{{community.id}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_postingId"
-                                value="{{community.postingId}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_content"
-                                value="{{community.content}}">
-                            <input type="hidden" id="delete_it-{{community.id}}" name="this_item_createdAt"
-                                value="{{community.createdAt}}">
+                        <form id="complain_item-ED-form-{{complain.id}}">
+                            <input type="hidden" id="delete_it-{{complain.id}}" name="this_item_id"
+                                value="{{complain.id}}">
+                            <input type="hidden" id="delete_it-{{complain.id}}" name="this_item_complainedId"
+                                value="{{complain.complainedId}}">
+                            <input type="hidden" id="delete_it-{{complain.id}}" name="this_item_content"
+                                value="{{complain.content}}">
+                            <input type="hidden" id="delete_it-{{complain.id}}" name="this_item_createdAt"
+                                value="{{complain.createdAt}}">
                             <div class="dropdown">
                                 <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                    <li><button id="item-edit-btn-{{community.id}}" class="dropdown-item"
+                                    <li><button id="item-edit-btn-{{complain.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="community_item_edit('{{community.id}}')">수정</button></li>
-                                    <li><button id="item-delete-btn-{{community.id}}" class="dropdown-item"
+                                            onclick="complain_item_edit('{{complain.id}}')">수정</button></li>
+                                    <li><button id="item-delete-btn-{{complain.id}}" class="dropdown-item"
                                             role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="community_item_delete('{{community.id}}')">삭제</button></li>
+                                            onclick="complain_item_delete('{{complain.id}}')">삭제</button></li>
                                 </ul>
                             </div>
                         </form>
@@ -68,33 +69,30 @@
 
                 <div class="commuAbout align-items-center mt-2 mb-2 pt-4 pb-4">
                     <a class="text-body text-decoration-none" id="getAppearanceInfo" onload="replaceLine()"
-                        style="white-space: pre-line;">작성 내용</a>
+                        style="white-space: pre-line;">{{complain.content}}</a>
                 </div>
             </div>
 
             <!-- 댓글 달기 -->
-            {% if users and users.id %}
             <form id="comment-form" class="mt-5 w-75 ms-auto me-auto">
                 <div class="input-group">
                     <input id="comment" class="form-control p-2" name="comment">
                     <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
 
-                    <input type="hidden" name="communityId" value="{{communityId}}">
-                    <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()"
+                    <input type="hidden" name="complainId" value="{{complainId}}">
+                    <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment('{{complain}}')"
                         value="Click">댓글달기</button>
                 </div>
             </form>
-            {% endif %}
-            
+
             <div id="comments-collection" class="w-75 ms-auto me-auto">
                 {% for comment in comments %}
                 <table>
                     <!-- OwnerId -->
                     <input type="hidden" name="OwnerId" value="{{user}}">
-                    {% if users and users.id %}
                     <form id="comment-ED-form-{{comment.id}}">
                         <div>
-                            <input type="hidden" name="communityId" value="{{communityId}}">
+                            <input type="hidden" name="complainId" value="{{complainId}}">
                             <input type="hidden" name="UserId" value="{{comment.UserId}}">
                             <input type="hidden" name="commentId" value="{{comment.id}}">
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
@@ -140,7 +138,7 @@
                         {% if re_comment.reCommentingId == comment.id %}
                         <input type="hidden" name="recomment_reCommentedId" value="{{re_comment.reCommentedId}}">
                         <input type="hidden" name="recomment_UserId" value="{{re_comment.UserId}}">
-                        <input type="hidden" name="communityId" value="{{communityId}}">
+                        <input type="hidden" name="complainId" value="{{complainId}}">
                         <input type="hidden" name="re_commentId" value="{{re_comment.id}}">
                         <input type="hidden" name="re_comment_createdAt" value="{{re_comment.createdAt}}">
                         
@@ -175,33 +173,6 @@
                         {% endif %}
                     </form>
                     {% endfor %}
-
-                    {% else %}
-                    <!-- 비로그인 댓글 -->
-                    <div class="commentList">
-                        <div class="d-sm-flex commentListInner">
-                            <div class="comment-nick fw-bold">{{comment.commentingNick}}</div>
-                            <div class="comment-content">{{comment.createdAt}}</div>
-                        </div>
-                        <div class="comment-content"><a>{{comment.content}}</a></div>
-                    </div>
-
-                    <!-- 비로그인 답글 -->
-                    {% for re_comment in re_comments %}
-                    {% if re_comment.reCommentingId == comment.id %}
-                    <div class="reCommentList">
-                        <div class="reCommentListInner d-sm-flex">
-                            <div class="d-flex align-items-center">
-                                <div class="p-2"><img src="/img/reply.png" style="opacity: 0.5;" width="15px"></div>
-                                <div class="comment-nick me-3 fw-bold">{{re_comment.reCommentNick}}</div>
-                            </div>
-                            <div class="comment-content me-3">{{re_comment.createdAt}}</div>
-                        </div>
-                        <div class="comment-content me-3"><a>{{re_comment.content}}</a></div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                    {% endif %}
                 </table>
                 {% endfor %}
             </div>
@@ -211,21 +182,22 @@
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script>
-        // 커뮤니티 스크립트
-        function community_item_edit(id) {
-            const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/editIt_community');
+        // 고객문의 게시글 수정
+        function complain_item_edit(id) {
+            const request = document.getElementById(`complain_item-ED-form-${id}`);
+            request.setAttribute('action', '/customer/editIt_complain');
             request.setAttribute('method', 'POST');
         }
 
-        function community_item_delete(id) {
-            const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/delete_community');
+        // 고객문의 게시글 삭제
+        function complain_item_delete(id) {
+            const request = document.getElementById(`complain_item-ED-form-${id}`);
+            request.setAttribute('action', '/customer/delete_customer');
             request.setAttribute('method', 'GET');
         }
 
-        // 여기만 수정
-        function postComment() {
+        // 댓글 달기
+        function postComment(complainId) {
             const request = document.getElementById('comment-form');
 
             let comment = document.getElementById('comment').value.replace(/\s|　/gi, '');
@@ -233,7 +205,7 @@
             if (comment == '') {
                 alert("내용을 입력하세요");
             } else {
-                request.setAttribute('action', '/free_community/community/{{communityId}}/comment');
+                request.setAttribute('action', '/customer/complain/{{complainId}}/comment');
                 request.setAttribute('method', 'POST');
             }
         }
@@ -249,14 +221,14 @@
             if (ckCom == '') {
                 alert("내용을 입력하세요");
             } else {
-                request.setAttribute('action', `/comment/commentEdit_commu?Com`);
+                request.setAttribute('action', `/comment/commentEdit_customer?Com`);
                 request.setAttribute('method', 'GET');
             }
         }
 
         function comment_delete(id) {
             const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', '/comment/commentDelete_commu');
+            request.setAttribute('action', '/comment/commentDelete_customer');
             request.setAttribute('method', 'GET');
         }
 
@@ -269,7 +241,7 @@
             const commentId = document.getElementById(`commentid_it-${id}`).value;
             console.log("@@ = ", commentId);
             const inputRe = document.getElementById(`inputReComment-${id}`);
-            inputRe.innerHTML = '<form action="/free_community/recomment" method="POST"><div class="input-group"><input id="comment" class="reComment inputForm w-50 p-2" name="comment"><input type="hidden" name="communityId" value="{{communityId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">답글등록</button></div></form>';
+            inputRe.innerHTML = '<form action="/customer/recomment" method="POST"><div class="input-group"><input id="comment" class="reComment inputForm w-50 p-2" name="comment"><input type="hidden" name="complainId" value="{{complainId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">답글등록</button></div></form>';
             document.getElementById(`userId`).value = userId;
             document.getElementById(`commentId`).value = commentId;
         }
@@ -293,14 +265,14 @@
             if (ckCom == '') {
                 alert("내용을 입력하세요");
             } else {
-                request.setAttribute('action', `/comment/reCommentEdit_commu`);
+                request.setAttribute('action', `/comment/reCommentEdit_customer`);
                 request.setAttribute('method', 'GET');
             }
         }
 
         function re_comment_delete(cid, id) {
             const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
-            request.setAttribute('action', '/comment/reCommentDelete_commu');
+            request.setAttribute('action', '/comment/reCommentDelete_customer');
             request.setAttribute('method', 'GET');
         }
 

@@ -30,6 +30,7 @@ const wannabuyRouter = require('./routes/wannabuy');
 const free_communityRouter = require('./routes/free_community');
 const notificationRouter = require('./routes/notification');
 const tradeRouter = require('./routes/trade');
+const customerRouter = require('./routes/customer');
 
 const app = express();
 passportConfig();
@@ -89,6 +90,7 @@ app.use('/wannabuy', wannabuyRouter);
 app.use('/free_community', free_communityRouter);
 app.use('/notification', notificationRouter);
 app.use('/trade', tradeRouter);
+app.use('/customer', customerRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
@@ -100,7 +102,7 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error');{{notice.id}}
 });
 
 const server = app.listen(app.get('port'), () => {
