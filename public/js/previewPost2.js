@@ -34,7 +34,7 @@ function checkLimit(num) {
 //     checkLimit(inputImg.files.length);
 // })
 
-// 멀티 프리뷰 (flex, fix 방식 결정필요), fix방식
+// 멀티 프리뷰 (flex, fix 방식 결정필요), flex방식
 function readImg(input) {
     const nowimage = document.getElementById('nowimage');
 
@@ -68,17 +68,17 @@ function readImg(input) {
                 // $imgDiv.style.height = 200 + "px";
             }
 
-            if (index % 2 == 0)
-                $colDiv1.appendChild($imgDiv);
-            else
-                $colDiv2.appendChild($imgDiv);
+            // if (index % 2 == 0)
+            //     $colDiv1.appendChild($imgDiv);
+            // else
+            //     $colDiv2.appendChild($imgDiv);
 
             // 리더 이미지 읽기
             reader.readAsDataURL(file);
-            // nowimage.appendChild($imgDiv);
+            nowimage.appendChild($imgDiv);
         })
-        nowimage.appendChild($colDiv1);
-        nowimage.appendChild($colDiv2);
+        // nowimage.appendChild($colDiv1);
+        // nowimage.appendChild($colDiv2);
     }
 }
 

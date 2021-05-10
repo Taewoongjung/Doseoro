@@ -108,15 +108,19 @@
           <option name="dealRoot" value="택배">택배</option>
         </select>
         
-        <!-- 글 수정 시에는 non required -->
         <h1 class="h4 mt-3">상품 사진</h1>
-        <div class="imgPreview mb-3 text-center">
-          <a><img id="nowimage" src="/img/{{books.img[0]}}"></a>
-          <!-- <p>파일명:&nbsp&nbsp&nbsp&nbsp&nbsp{{books.img}}</p> -->
+        <!-- 멀티 업로드 test -->
+        <div id="nowimage">
+          {% for i in range(0,5) -%}
+            {% if books.img[i] != NULL %}
+              <img src="/img/{{books.img[i]}}" width="180px" style="border-radius: 8px; margin: 10px;">
+            {% endif %}
+          {%- endfor %}
         </div>
+
         <div class="input-group mb-3">
           <label for="book-photo">상품 사진</label>
-          <input type="file" class="form-control" id="book-photo" name="img" multiple accept="image/*">
+          <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" onchange="clearImg()" multiple required>
         </div>
 
         <div class="input-group">
