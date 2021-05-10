@@ -97,7 +97,6 @@ router.get('/it', async (req, res, next) => {
 
                 ////////////
                 res.render('searchList.html', {
-                    title: `책 구경`,
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
@@ -106,7 +105,6 @@ router.get('/it', async (req, res, next) => {
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
-                    title: `책 구경`,
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
@@ -189,7 +187,6 @@ router.get('/it', async (req, res, next) => {
                 console.log("noticess = ", noticess);
 
                 res.render('searchList.html', {
-                    title: `책 구경`,
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
@@ -198,7 +195,6 @@ router.get('/it', async (req, res, next) => {
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
-                    title: `책 구경`,
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
@@ -282,7 +278,6 @@ router.get('/it', async (req, res, next) => {
 
                 ////////////
                 res.render('searchList.html', {
-                    title: `책 구경`,
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
@@ -291,7 +286,6 @@ router.get('/it', async (req, res, next) => {
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
-                    title: `책 구경`,
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
@@ -375,7 +369,6 @@ router.get('/it', async (req, res, next) => {
 
                 ////////////
                 res.render('searchList.html', {
-                    title: `책 구경`,
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
@@ -384,7 +377,6 @@ router.get('/it', async (req, res, next) => {
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
-                    title: `책 구경`,
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
@@ -468,7 +460,6 @@ router.get('/it', async (req, res, next) => {
 
                 ////////////
                 res.render('searchList.html', {
-                    title: `책 구경`,
                     foundCommus,
                     user: res.locals.user,
                     bookId: req.params.id,
@@ -477,12 +468,13 @@ router.get('/it', async (req, res, next) => {
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
-                    title: `책 구경`,
                     foundCommus,
                     user: res.locals.user,
                     bookId: req.params.id,
                 });
-            } else if (req.query.searchFilter === 'All') {  // 전체
+            }
+        } 
+            else if (req.query.searchFilter === 'All') {  // 전체
                 console.log("@@ all");
                 const [foundCommus] = await Promise.all([
                     Community.findAll({
@@ -584,7 +576,6 @@ router.get('/it', async (req, res, next) => {
 
                     ////////////
                     res.render('searchList.html', {
-                        title: `책 구경`,
                         foundBooks,
                         foundCommus,
                         user: res.locals.user,
@@ -594,14 +585,13 @@ router.get('/it', async (req, res, next) => {
                     });
                 } else if (isNotLoggedIn) {
                     res.render('searchList.html', {
-                        title: `책 구경`,
                         foundBooks,
                         foundCommus,
                         user: res.locals.user,
                         bookId: req.params.id,
                 });
             }
-        }}
+        }
     } catch (error) {
         console.error(error);
         next(error);
