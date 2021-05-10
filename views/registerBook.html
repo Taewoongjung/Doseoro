@@ -50,7 +50,6 @@
           <input type="text" class="inputForm form-control p-3" id="book-publisher" name="publisher" placeholder="출판사">
         </div>
 
-        <!-- 체크박스, 텍스트기입 논의 필요 / id를 꼭 확인해주세요 -->
         <h1 class="h4 mt-3">카테고리</h1>
         <div class="categoryBox input-group align-items-center p-3 bg-white border" id="categoryCheck">
           <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input"
@@ -147,20 +146,23 @@
 
         <h1 class="h4 mt-3">상품 사진</h1>
         <div class="imgPreview mb-3 text-center">
-          <a><img id="nowimage" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image"></a>
+          <!-- <a><img id="nowimage" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image"></a> -->
           <input id="img-url" type="hidden" name="imgurl">
         </div>
-        <!-- <div id="nowimage"></div> -->
+
+        <!-- 멀티 업로드 test -->
+        <div id="nowimage"></div>
 
         <div id="ckPhoto"></div>
         <div class="input-group mb-3">
           <label for="img">상품 사진</label>
-          <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" multiple required>
-          <!-- <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" onchange="clearImg()"
-            multiple required> -->
+          <!-- <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" multiple required> -->
+
+          <!-- 멀티 test -->
+          <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" onchange="clearImg()" multiple required>
+
         </div>
 
-        <!-- 여기에 사용자 위치를 표시합니다 -->
         <div class="usreLocation">
           {% if user.location %}
           <a><img src="/img/marker.png" width="25px" height="25px"></a>
@@ -202,64 +204,6 @@
   <script src="/js/ckboxLimit.js"></script>
   <script src="/js/popGuide.js"></script>
   <script src="/js/previewPost.js"></script>
-
-  <!-- 멀티업로드 테스트 -->
-  <!-- <script>
-    function readImg(input) {
-      const nowimage = document.getElementById('nowimage');
-
-      if (input.files && input.files[0]) {
-        const fileArr = Array.from(input.files);
-        const $colDiv1 = document.createElement("div");
-        const $colDiv2 = document.createElement("div");
-        $colDiv1.classList.add("column");
-        $colDiv2.classList.add("column");
-
-        fileArr.forEach((file, index) => {
-          // 파일 리더로 파일 읽는 역할
-          const reader = new FileReader();
-
-          const $imgDiv = document.createElement("div");
-          const $img = document.createElement("img");
-          $img.classList.add("image");
-
-          const $label = document.createElement("label");
-          $label.classList.add("imageLabel");
-          $label.textContent = file.name;
-
-          $imgDiv.appendChild($img);
-          $imgDiv.appendChild($label);
-
-          reader.onload = e => {
-            $img.src = e.target.result;
-            $imgDiv.style.width = 200 + "px";
-            $imgDiv.style.height = 250 + "px";
-          }
-
-          if(index % 2 == 0)
-            $colDiv1.appendChild($imgDiv);
-          else
-            $colDiv2.appendChild($imgDiv);
-
-          // 리더 이미지 읽기
-          reader.readAsDataURL(file)
-
-        })
-        nowimage.appendChild($colDiv1)
-        nowimage.appendChild($colDiv2)
-      }
-    }
-
-    const inputImg = document.getElementById('book-photo');
-    inputImg.addEventListener("change", e => {
-      readImg(e.target)
-    })
-
-    function clearImg() {
-      const nowimage = document.getElementById('nowimage');
-      nowimage.children.remove();
-    }
-  </script> -->
 
 </body>
 
