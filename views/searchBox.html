@@ -1,4 +1,4 @@
-<form id="search-form" action="/search/{{searchWord}}" class="searchForm container pt-2">
+<form id="search-form" action="/search/it/{{searchWord}}" class="searchForm container pt-2">
         <div class="d-flex align-it">
                 <select class="form-select w-25" name="searchFilter">
                         <option value>전체</option>
@@ -6,6 +6,7 @@
                         <option value="bookTitle">책</option>
                         <option value="bookAuther">저자</option>
                         <option value="bookPublisher">출판사</option>
+                        <option value="community">커뮤니티</option>
                 </select>
                 <input type="text" class="form-control ps-3" id="book-publisher" name="searchWord" placeholder="검색">
                 <button class="btn btn-primary" type="submit"><img src="/img/pngegg.png" width="35" height="25"class="mt-1"></button>
