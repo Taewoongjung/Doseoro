@@ -96,6 +96,11 @@ router.get('/changePW', isNotLoggedIn, (req, res) => {
     res.render('changePW.html');
 })
 
+// 0510 검색 결과
+router.get('/searchList', isLoggedIn, async (req, res) => {
+    res.render('searchList.html')
+})
+
 // 0503 고객문의
 router.get('/csList', isLoggedIn, async (req, res) => {
     const [complains] = await Promise.all([
