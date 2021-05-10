@@ -1,24 +1,41 @@
-<form id="search-form" action="/search/{{searchWord}}" class="searchForm d-flex container pt-2">
-    <select class="form-select w-25" name="searchFilter">
-        <option value>전체</option>
-        <option value="postTitle">게시물</option>
-        <option value="bookTitle">책</option>
-        <option value="bookAuther">저자</option>
-        <option value="bookPublisher">출판사</option>
-    </select>
-    <input type="text" class="form-control ps-3" id="book-publisher" name="searchWord" placeholder="검색">
-    <button class="btn btn-primary" type="submit"><img src="/img/pngegg.png" width="35" height="25"
-            class="mt-1"></button>
+<form id="search-form" action="/search/{{searchWord}}" class="searchForm container pt-2">
+        <div class="d-flex align-it">
+                <select class="form-select w-25" name="searchFilter">
+                        <option value>전체</option>
+                        <option value="postTitle">게시물</option>
+                        <option value="bookTitle">책</option>
+                        <option value="bookAuther">저자</option>
+                        <option value="bookPublisher">출판사</option>
+                </select>
+                <input type="text" class="form-control ps-3" id="book-publisher" name="searchWord" placeholder="검색">
+                <button class="btn btn-primary" type="submit"><img src="/img/pngegg.png" width="35" height="25"class="mt-1"></button>
+
+                <!-- 클릭하면 지역 필터 표시/숨김 디자인 미구현 -->
+                <div><a href="#" onclick="showRange('areaFilter')">지역필터</a></div>
+        </div>
+
+        <!-- 지역설정 필터 -->
+        <div class="m-3" id="areaFilter" style="display:none;">
+                <label for="customRange3" class="form-label fw-bold">지역 범위</label>
+                <input type="range" class="form-range" value="3" min="0" max="3" step="1" id="localRange" onchange="rangeIntro()">
+                <a id="getRage">모든 지역</a>
+        </div>
 </form>
 
 <!-- 메뉴이동 -->
 <div class="menuForm container mt-2 mb-2 justify-content-center d-flex" role="group">
-    <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
-            onclick="location.href='/pages/saleBoard'">팝니다</button></div>
-    <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
-            onclick="location.href='/pages/bookRequest'">삽니다</button></div>
-    <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
-            onclick="location.href='/pages/donationBoard'">무료나눔</button></div>
-    <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
-            onclick="location.href='/pages/community'">커뮤니티</button></div>
+        <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
+                        onclick="location.href='/pages/saleBoard'">팝니다</button></div>
+        <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
+                        onclick="location.href='/pages/bookRequest'">삽니다</button></div>
+        <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
+                        onclick="location.href='/pages/donationBoard'">무료나눔</button></div>
+        <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
+                        onclick="location.href='/pages/community'">커뮤니티</button></div>
 </div>
+
+<div>
+        <!-- 검색결과는 아래 위치에 redirect합니다 searchForm의 리다이렉트를 변경해야합니다-->
+        <a href="/pages/searchList">검색결과 이동</a>
+</div>
+<script src="/js/areaRange.js"></script>
