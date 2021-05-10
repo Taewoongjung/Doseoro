@@ -31,6 +31,7 @@ const free_communityRouter = require('./routes/free_community');
 const notificationRouter = require('./routes/notification');
 const tradeRouter = require('./routes/trade');
 const customerRouter = require('./routes/customer');
+const searchRouter = require('./routes/search');
 
 const app = express();
 passportConfig();
@@ -91,6 +92,7 @@ app.use('/free_community', free_communityRouter);
 app.use('/notification', notificationRouter);
 app.use('/trade', tradeRouter);
 app.use('/customer', customerRouter);
+app.use('/search', searchRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

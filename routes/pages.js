@@ -97,7 +97,7 @@ router.get('/changePW', isNotLoggedIn, (req, res) => {
 })
 
 // 0510 검색 결과
-router.get('/searchList', isLoggedIn, async (req, res) => {
+router.get('/searchList', async (req, res) => {
     res.render('searchList.html')
 })
 
