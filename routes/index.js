@@ -501,7 +501,7 @@ router.get('/book/:id', async (req, res, next) => {
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;
             time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 commentingNick,
                 content,
                 id,
@@ -512,7 +512,7 @@ router.get('/book/:id', async (req, res, next) => {
         for (const new_time of re_comments) {
             const { createdAt, id, content, UserId, reCommentNick, reCommentedId, reCommentingId } = new_time;
             re_time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 reCommentNick,
                 reCommentedId,
                 reCommentingId,
@@ -589,7 +589,7 @@ router.get('/book/:id', async (req, res, next) => {
             res.render('saleDetail.html', {
                 title: `책 구경`,
                 book,
-                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(book.createdAt).format('YYYY.MM.DD HH:mm'),
                 users: res.locals.user,
                 user: book.OwnerId,
                 img: book.img,
@@ -606,7 +606,7 @@ router.get('/book/:id', async (req, res, next) => {
             res.render('saleDetail.html', {
                 title: `책 구경`,
                 book,
-                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(book.createdAt).format('YYYY.MM.DD HH:mm'),
                 user: book.OwnerId,
                 comments: time,
                 re_comments: re_time,
