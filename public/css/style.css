@@ -213,18 +213,27 @@ textarea {
 	border-width: 18px;
 	margin-left: -18px;
 }
-#nowimage {
+/* #nowimage {
 	width: 200px;
 	height: 250px;
 	border-radius: 12px;
-}
-/* #nowimage {
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
 } */
-/* .image {
-	display: block;
+#nowimage {
+	display: flex;
+	flex-wrap: wrap;
+	/* grid-template-columns: 1fr 1fr 1fr; */
+	justify-content: center;
+}
+.imageBox {
+	overflow: hidden;
+	width: 160px;
+	height: 210px;
+	margin: 10px;
+	border-radius: 10px;
+}
+.image {
 	width: 100%;
+	height: 100%;
 }
 .imageLabel {
 	position: relative;
@@ -232,7 +241,7 @@ textarea {
 	left: 5px;
 	color: white;
 	text-shadow: 2px 2px 2px black;
-} */
+}
 
 /* myPage.html */
 .profile img {

@@ -105,13 +105,18 @@
 
         <h1 class="h4 mt-3">상품 사진</h1>
         <div class="imgPreview mb-3 text-center">
-          <a><img id="nowimage" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image"></a>
+          <!-- <a><img id="nowimage" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image"></a> -->
         </div>
+
+        <!-- 멀티 업로드 test -->
+        <div id="nowimage"></div>
 
         <div id="ckPhoto"></div>
         <div class="input-group mb-3">
           <label for="book-photo">상품 사진</label>
-          <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" multiple required>
+          <!-- <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" multiple required> -->
+
+          <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" onchange="clearImg()" multiple required>
         </div>
 
         <!-- 여기에 사용자 위치를 표시합니다 -->
@@ -154,7 +159,9 @@
   <script src="/js/bootstrap.bundle.min.js"></script>
   <script src="/js/ckboxLimit.js"></script>
   <script src="/js/popGuide.js"></script>
-  <script src="/js/previewPost.js"></script>
+
+  <!-- 테스트 flex -->
+  <script src="/js/previewPost2.js"></script>
 </body>
 
 </html>

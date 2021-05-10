@@ -264,7 +264,7 @@ router.get('/community/:id', async (req, res, next) => {
         for (const new_time of re_comments) {
             const { createdAt, id, content, UserId, reCommentNick, reCommentedId, reCommentingId } = new_time;
             re_time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 reCommentNick,
                 reCommentedId,
                 reCommentingId,
@@ -277,7 +277,7 @@ router.get('/community/:id', async (req, res, next) => {
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;
             time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 commentingNick,
                 content,
                 id,
@@ -354,7 +354,7 @@ router.get('/community/:id', async (req, res, next) => {
             ////////////
             res.render('communityDetail.html', {
                 community,
-                createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(community.createdAt).format('YYYY.MM.DD HH:mm'),
                 users: res.locals.user,
                 user: community.postingId,
                 communityId: community.id,
@@ -368,7 +368,7 @@ router.get('/community/:id', async (req, res, next) => {
             res.render('communityDetail.html', {
                 title: `책 구경`,
                 community,
-                createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(community.createdAt).format('YYYY.MM.DD HH:mm'),
                 user: community.postingId,
                 comments: time,
                 re_comments: re_time,
