@@ -12,7 +12,6 @@ function rangeIntro() {
             getRage.innerText = '시 / 군';
     else 
             getRage.innerText = '모든 지역';
-
 }
 
 function showRange(id) {

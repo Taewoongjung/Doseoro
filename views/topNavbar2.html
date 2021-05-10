@@ -42,7 +42,7 @@
                                             </div>
                                         </form>
                                         {% endif %}
-                                    {% elif notice.commentingNick == null %}
+                                        {% elif notice.commentingNick == null %}
                                         <form id="Without-Commu-form-{{notice.id}}" class="d-flex">
                                             <input type="hidden" name="notCommunity_Id" value="{{notice.id}}">
                                             <input type="hidden" name="to" value="{{window.location.pathname}}">

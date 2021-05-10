@@ -667,8 +667,12 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 
 router.get('/location', async (req, res, next) => {
     try {
+        var here = req.query.address;
+        for(let i=0; i < here.length; i++) {
+            console.log(here[i].charAt(here[i].length-1));
+        }
         await User.update({
-            location: req.query.address,
+            location: here,
         }, {
             where: { id: res.locals.user.id }
         });
