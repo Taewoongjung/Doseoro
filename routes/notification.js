@@ -174,7 +174,7 @@ router.get('/witoutCommu_first_click', isLoggedIn, async(req, res, next) => {
                 id: notCommunity_Id,
             },
         });
-        return res.send(`<script type="text/javascript">location.href="https://doseoro.taewoongjung.xyz${theURL}";</script>`);
+        return res.send(`<script type="text/javascript">location.href="${theURL}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -194,7 +194,7 @@ router.get('/witoutCommu_second_click', isLoggedIn, async(req, res, next) => {
                 id: notCommunity_Id,
             },
         });
-        return res.send(`<script type="text/javascript">location.href="https://doseoro.taewoongjung.xyz${theURL}";</script>`);
+        return res.send(`<script type="text/javascript">location.href="${theURL}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -234,7 +234,7 @@ router.get('/onlyCommu_second_click', isLoggedIn, async(req, res, next) => {
                 id: community_Id,
             },
         });
-        return res.send(`<script type="text/javascript">location.href="https://doseoro.taewoongjung.xyz${theURL}";</script>`);
+        return res.send(`<script type="text/javascript">location.href="${theURL}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -253,7 +253,7 @@ router.get('/notyLike_click', isLoggedIn, async(req, res, next) => {
                 id: Like_Id,
             },
         });
-        return res.send(`<script type="text/javascript">location.href="https://doseoro.taewoongjung.xyz${theURL_like}";</script>`);
+        return res.send(`<script type="text/javascript">location.href="${theURL_like}";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
