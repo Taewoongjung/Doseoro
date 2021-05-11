@@ -8,6 +8,7 @@ const Op = sequelize.Op;
 
 const { User, Book, Who, Post, Community } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { associate } = require('../models/user');
 
 const router = express.Router();
 
@@ -667,10 +668,12 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 
 router.get('/location', async (req, res, next) => {
     try {
-        var here = req.query.address;
-        for(let i=0; i < here.length; i++) {
-            console.log(here[i].charAt(here[i].length-1));
-        }
+        const here = req.query.address;
+        const splitedLocation = here.split(" ");
+        // for(let i=0; i < here.length; i++) {
+        //     console.log(here[i].charAt(here[i].length-1));
+        // } 
+        
         await User.update({
             location: here,
         }, {

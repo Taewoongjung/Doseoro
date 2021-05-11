@@ -58,14 +58,30 @@ function displayCenterInfo(result, status) {
     if (status === kakao.maps.services.Status.OK) {
         const infoDiv = document.getElementById('myAddr');
         const getInfo = document.getElementById('getMyAddr');
-
+        const getInfo1 = document.getElementById('getFirstAddr');
+        const getInfo2 = document.getElementById('getSecondAddr');
+        const getInfo3 = document.getElementById('getThirdAddr');
         for(var i = 0; i < result.length; i++) {
             // 행정동의 region_type 값은 'H'
             if (result[i].region_type === 'H') {
+                console.log()
                 infoDiv.innerHTML = '<a>나의 위치 : </a>' + result[i].address_name;
                 getInfo.value = result[i].address_name;
+
+                const getInfo_region_1 = result[i].region_1depth_name; // 시 도
+                const getInfo_region_2 = result[i].region_2depth_name; // 구
+                const getInfo_region_3 = result[i].region_3depth_name; // 면
+                getInfo1.value = getInfo_region_1;
+                getInfo2.value = getInfo_region_2;
+                getInfo3.value = getInfo_region_3;
+
+                // - 출력 -
                 console.log("getInfo.value = ", getInfo.value);
-                redirection(getInfo.value);
+                console.log("getInfo1 = ", result[i].region_1depth_name);
+                console.log("getInfo2 = ", result[i].region_2depth_name);
+                console.log("getInfo3 = ", result[i].region_3depth_name);
+
+                redirection(getInfo.value, getInfo_region_1, getInfo_region_2, getInfo_region_3);
                 return
             }
         }
