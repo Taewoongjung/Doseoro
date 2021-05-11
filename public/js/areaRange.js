@@ -10,11 +10,11 @@ function rangeIntro() {
                 checkRangeValue.value = 0;
         }
         else if (checkRange == 1) {
-                getRage.innerText = '구 / 읍';
+                getRage.innerText = '시';
                 checkRangeValue.value = 1;
         }
         else if (checkRange == 2) {
-                getRage.innerText = '시 / 도';
+                getRage.innerText = '도';
                 checkRangeValue.value = 2;
         }
         else {

@@ -126,12 +126,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.localRange === "1") { // 구 / 읍
+            } else if (req.query.localRange === "1") { // 시
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            gu:{
-                                [Op.like]: "%" + res.locals.user.gu+ "%"
+                            si:{
+                                [Op.like]: "%" + res.locals.user.si+ "%"
                             }
                         }
                     })
@@ -163,12 +163,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.range === "2") { // 시 / 도
+            } else if (req.query.range === "2") { // 도
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            do:{
+                                [Op.like]: "%" + res.locals.user.do+ "%"
                             }
                         }
                     })
@@ -300,7 +300,7 @@ router.get('/it', async (req, res, next) => {
             console.log("req.query.localRange = ", req.query.localRange);
             console.log("dong = ", res.locals.user);
 
-            if (req.query.localRange === "0") { // 동 / 리
+            if (req.query.localRange === "0") { // 동
                 console.log("a1a1a1aa");
                 const [people] = await Promise.all([
                     User.findAll({
@@ -338,12 +338,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.localRange === "1") { // 구 / 읍
+            } else if (req.query.localRange === "1") { // 시
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            gu:{
-                                [Op.like]: "%" + res.locals.user.gu+ "%"
+                            si:{
+                                [Op.like]: "%" + res.locals.user.si+ "%"
                             }
                         }
                     })
@@ -375,12 +375,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.range === "2") { // 시 / 도
+            } else if (req.query.range === "2") { // 도
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            do:{
+                                [Op.like]: "%" + res.locals.user.do+ "%"
                             }
                         }
                     })
@@ -552,12 +552,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.localRange === "1") { // 구 / 읍
+            } else if (req.query.localRange === "1") { // 시
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            gu:{
-                                [Op.like]: "%" + res.locals.user.gu+ "%"
+                            si:{
+                                [Op.like]: "%" + res.locals.user.si+ "%"
                             }
                         }
                     })
@@ -589,12 +589,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.range === "2") { // 시 / 도
+            } else if (req.query.range === "2") { // 도
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            do:{
+                                [Op.like]: "%" + res.locals.user.do+ "%"
                             }
                         }
                     })
@@ -726,7 +726,7 @@ router.get('/it', async (req, res, next) => {
             console.log("req.query.localRange = ", req.query.localRange);
             console.log("dong = ", res.locals.user);
 
-            if (req.query.localRange === "0") { // 동 / 리
+            if (req.query.localRange === "0") { // 동
                 console.log("a1a1a1aa");
                 const [people] = await Promise.all([
                     User.findAll({
@@ -764,12 +764,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.localRange === "1") { // 구 / 읍
+            } else if (req.query.localRange === "1") { // 시
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            gu:{
-                                [Op.like]: "%" + res.locals.user.gu+ "%"
+                            si:{
+                                [Op.like]: "%" + res.locals.user.si+ "%"
                             }
                         }
                     })
@@ -801,12 +801,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.range === "2") { // 시 / 도
+            } else if (req.query.range === "2") { // 도
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            do:{
+                                [Op.like]: "%" + res.locals.user.do+ "%"
                             }
                         }
                     })
@@ -876,7 +876,6 @@ router.get('/it', async (req, res, next) => {
                 console.log("aaaaa");
             }
         } else if (req.query.searchFilter === 'community') {  // 커뮤니티 제목으로 찾기
-            console.log("range = ", req.query);
             /////////////
             console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
@@ -985,12 +984,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.localRange === "1") { // 구 / 읍
+            } else if (req.query.localRange === "1") { // 시
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            gu:{
-                                [Op.like]: "%" + res.locals.user.gu+ "%"
+                            si:{
+                                [Op.like]: "%" + res.locals.user.si+ "%"
                             }
                         }
                     })
@@ -1022,12 +1021,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.range === "2") { // 시 / 도
+            } else if (req.query.range === "2") { // 도
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            do:{
+                                [Op.like]: "%" + res.locals.user.do+ "%"
                             }
                         }
                     })
@@ -1224,12 +1223,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.localRange === "1") { // 구 / 읍
+            } else if (req.query.localRange === "1") { // 시
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            gu:{
-                                [Op.like]: "%" + res.locals.user.gu+ "%"
+                            si:{
+                                [Op.like]: "%" + res.locals.user.si+ "%"
                             }
                         }
                     })
@@ -1287,12 +1286,12 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                 });
                 console.log("aaaaa");
-            } else if (req.query.range === "2") { // 시 / 도
+            } else if (req.query.range === "2") { // 도
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            do:{
+                                [Op.like]: "%" + res.locals.user.do+ "%"
                             }
                         }
                     })
