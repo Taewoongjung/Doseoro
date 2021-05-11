@@ -20,60 +20,6 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 router.get('/it', async (req, res, next) => {
     try {
         if (req.query.searchFilter === 'postTitle') { // 게시물명 으로 찾기   
-            console.log("range = ", req.query);
-            console.log("dong = ", res.locals.user);
-
-            if (req.query.range === 0) { // 동 / 리
-                const [people] = await Promise.all([
-                    User.findAll({
-                        where: {
-                            dong:{
-                                [Op.like]: "%" + res.locals.user.dong+ "%"
-                            }
-                        }
-                    })
-                ]);
-                const [foundBooks] = await Promise.all([
-                    Book.findAll({
-                        where: {
-                            postmessage: {
-                                [Op.like]: "%" + req.query.searchWord + "%"
-                            },
-                        },
-                    }),
-                ]);
-            } else if (req.query.range === 1) { // 구 / 읍
-                const [people] = await Promise.all([
-                    User.findAll({
-                        where: {
-                            gu:{
-                                [Op.like]: "%" + res.locals.user.gu+ "%"
-                            }
-                        }
-                    })
-                ]);
-            } else if (req.query.range === 2) { // 시 / 도
-                const [people] = await Promise.all([
-                    User.findAll({
-                        where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
-                            }
-                        }
-                    })
-                ]);
-            } else { // 모든 지역
-                const [people] = await Promise.all([
-                    User.findAll({
-                        where: {
-                            location:{
-                                [Op.like]: "%" + res.locals.user.location+ "%"
-                            }
-                        }
-                    })
-                ]);
-            }
-
             /////////////
             console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
@@ -137,15 +83,69 @@ router.get('/it', async (req, res, next) => {
                 })
             ]);
             console.log("noticess = ", noticess);
-
             ////////////
-            res.render('searchList.html', {
-                foundBooks,
-                user: res.locals.user,
-                bookId: req.params.id,
-                noticess,
-                likesfornotice,
-            });
+
+            console.log("range = ", req.query);
+            console.log("dong = ", res.locals.user);
+
+            if (req.query.range === 0) { // 동 / 리
+                const [people] = await Promise.all([
+                    User.findAll({
+                        where: {
+                            dong:{
+                                [Op.like]: "%" + res.locals.user.dong+ "%"
+                            }
+                        }
+                    })
+                ]);
+                const [foundBooks] = await Promise.all([
+                    Book.findAll({
+                        where: {
+                            postmessage: {
+                                [Op.like]: "%" + req.query.searchWord + "%"
+                            },
+                            dong: people.dong
+                        },
+                    }),
+                ]);
+                res.render('searchList.html', {
+                    foundBooks,
+                    user: res.locals.user,
+                    bookId: req.params.id,
+                    noticess,
+                    likesfornotice,
+                });
+            } else if (req.query.range === 1) { // 구 / 읍
+                const [people] = await Promise.all([
+                    User.findAll({
+                        where: {
+                            gu:{
+                                [Op.like]: "%" + res.locals.user.gu+ "%"
+                            }
+                        }
+                    })
+                ]);
+            } else if (req.query.range === 2) { // 시 / 도
+                const [people] = await Promise.all([
+                    User.findAll({
+                        where: {
+                            si:{
+                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            }
+                        }
+                    })
+                ]);
+            } else { // 모든 지역
+                const [people] = await Promise.all([
+                    User.findAll({
+                        where: {
+                            location:{
+                                [Op.like]: "%" + res.locals.user.location+ "%"
+                            }
+                        }
+                    })
+                ]);
+            }
         } else if (req.query.searchFilter === 'bookTitle') {  // 책 이름으로 찾기
             console.log("range = ", req.query);
             const [foundBooks] = await Promise.all([
