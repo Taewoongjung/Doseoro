@@ -61,31 +61,36 @@ function displayCenterInfo(result, status) {
         const getInfo1 = document.getElementById('getFirstAddr');
         const getInfo2 = document.getElementById('getSecondAddr');
         const getInfo3 = document.getElementById('getThirdAddr');
+        const getInfoAll = document.getElementById('getAllAddr');
+
         for(var i = 0; i < result.length; i++) {
             // 행정동의 region_type 값은 'H'
             if (result[i].region_type === 'H') {
-                console.log()
+
                 infoDiv.innerHTML = '<a>나의 위치 : </a>' + result[i].address_name;
                 getInfo.value = result[i].address_name;
 
                 const getInfo_region_1 = result[i].region_1depth_name; // 시 도
                 const getInfo_region_2 = result[i].region_2depth_name; // 구
                 const getInfo_region_3 = result[i].region_3depth_name; // 면
+                const getInfo_region_All = result[i].address_name; // 전체 주소
                 getInfo1.value = getInfo_region_1;
                 getInfo2.value = getInfo_region_2;
                 getInfo3.value = getInfo_region_3;
+                getInfoAll.value = getInfo_region_All;
 
                 // - 출력 -
                 console.log("getInfo.value = ", getInfo.value);
                 console.log("getInfo1 = ", result[i].region_1depth_name);
                 console.log("getInfo2 = ", result[i].region_2depth_name);
                 console.log("getInfo3 = ", result[i].region_3depth_name);
+                console.log("getInfoAll = ", result[i].address_name);
 
-                redirection(getInfo.value, getInfo_region_1, getInfo_region_2, getInfo_region_3);
+                redirection(getInfo.value);
                 return
             }
         }
-    }    
+    }
 }
 
 function error(error) {

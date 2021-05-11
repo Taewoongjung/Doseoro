@@ -668,14 +668,21 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 
 router.get('/location', async (req, res, next) => {
     try {
-        const here = req.query.address;
-        const splitedLocation = here.split(" ");
-        // for(let i=0; i < here.length; i++) {
-        //     console.log(here[i].charAt(here[i].length-1));
-        // } 
+        const { region1, region2, region3, wholeRegion } =req.query;
+        console.log(" region1 = ", region1);    // 도
+        console.log(" region2 = ", region2);    // 시/구
+        console.log(" region3 = ", region3);    // 동/리
+        console.log(" wholeRegion = ", wholeRegion);
+        // const splitedLocation = here.split(" ");
+        // for(let i=0; i < region1.length; i++) {
+        //     console.log(region1[i].charAt(region1[i].length-1));
+        // }
         
         await User.update({
-            location: here,
+            location: wholeRegion,
+            do: region1,
+            si: region2,
+            dong: region3,
         }, {
             where: { id: res.locals.user.id }
         });

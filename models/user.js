@@ -44,11 +44,11 @@ module.exports = class User extends Sequelize.Model {
                 type: Sequelize.STRING(10),
                 allowNull: true,
             },
-            gu: {
+            si: {
                 type: Sequelize.STRING(10),
                 allowNull: true,
             },
-            si: {
+            do: {
                 type: Sequelize.STRING(10),
                 allowNull: true,
             },
