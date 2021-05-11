@@ -107,7 +107,7 @@ router.get('/it', async (req, res, next) => {
                 }
                 
                 console.log("a111aa");
-                console.log("livein = ", );
+                console.log("livein = ", livein );
                 const [foundBooks] = await Promise.all([
                     Book.findAll({
                         where: {
@@ -119,6 +119,7 @@ router.get('/it', async (req, res, next) => {
                     }),
                 ]);
                 console.log("aaa");
+                console.log("foundBooks", foundBooks);
                 res.render('searchList.html', {
                     foundBooks,
                     user: res.locals.user,
