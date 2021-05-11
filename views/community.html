@@ -31,7 +31,7 @@
                 <form id="book-form" class="mb-5"><a href="/pages/registCommunity"
                         class="addBook text-decoration-none btn-primary p-2">글 등록</a></form>
 
-                <!-- 각 게시물 -->
+             <!-- 각 게시물 -->
             {% for community in communities | reverse %}
             <div class="postingList border p-5" onclick="location.href='/free_community/community/{{community.id}}'">
                 <div class="pb-3 border-bottom">
@@ -45,6 +45,13 @@
                 <p class="postingBody pt-3">{{community.content}}</p>
             </div>
             {% endfor %}
+
+            <!-- 페이징 -->
+            <div class="pagingWrap">
+                <ul class="pagination">
+                    <li class=""></li>
+                </ul>
+            </div>
         </div>
         </main>
 
