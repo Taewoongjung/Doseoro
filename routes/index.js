@@ -113,11 +113,12 @@ router.get('/', async (req, res, next) => {
                     }
                 })
             ]);
-
+            console.log("@@! = ", req.user);
             res.render('index.html', {
                 books,
                 noticess,
                 likesfornotice,
+                user: req.user,
             });
         } else {
             const [books] = await Promise.all([
@@ -131,6 +132,7 @@ router.get('/', async (req, res, next) => {
                     }
                 })
             ]);
+            console.log("@@! = ", req.user);
             res.render('index.html', {
                 books,
             });

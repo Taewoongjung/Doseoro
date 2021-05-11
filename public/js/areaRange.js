@@ -14,7 +14,7 @@ function rangeIntro() {
                 checkRangeValue.value = 1;
         }
         else if (checkRange == 2) {
-                getRage.innerText = '시 / 군';
+                getRage.innerText = '시 / 도';
                 checkRangeValue.value = 2;
         }
         else {

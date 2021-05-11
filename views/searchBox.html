@@ -10,18 +10,6 @@
                 </select>
                 <input type="text" class="form-control ps-3" id="book-publisher" name="searchWord" placeholder="검색">
                 <button class="btn btn-primary" type="submit"><img src="/img/pngegg.png" width="35" height="25"class="mt-1"></button>
-
-                <!-- 클릭하면 지역 필터 표시/숨김 디자인 미구현 -->
-                <div><a href="#" onclick="showRange('areaFilter')">지역필터</a></div>
-        </div>
-
-        <!-- 지역설정 필터 -->
-        <div class="m-3" id="areaFilter" style="display:none;">
-                <label for="customRange3" class="form-label fw-bold">지역 범위</label>
-                <input type="range" class="form-range" value="3" min="0" max="3" step="1" id="localRange" onchange="rangeIntro()">
-                <!-- 범위 -->
-                <input type="hidden" name="localRange" id="localRangeValue" value=""> 
-                <a id="getRage">모든 지역</a>
         </div>
 </form>
 
@@ -36,5 +24,3 @@
         <div class="ms-1 me-1"><button type="button" class="btn fw-bold"
                         onclick="location.href='/pages/community'">커뮤니티</button></div>
 </div>
-
-<script src="/js/areaRange.js"></script>

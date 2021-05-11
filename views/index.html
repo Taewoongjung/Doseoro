@@ -24,8 +24,12 @@
     <!-- main -->
     <main class="container-sm mt-0 mb-0 min-vh-100 pt-5">
       <!-- 검색, 메뉴이동 기능 -->
-      {% include "searchBox.html" %}
-
+      <!-- 로그인 하면 지역필터 나옴 -->
+      {% if user %}
+        {% include "searchBoxLoggedIn.html" %}
+      {% else %}
+        {% include "searchBox.html" %}
+      {% endif %}
       <!-- 배너 -->
       <div>
         <div class="bd-example">
