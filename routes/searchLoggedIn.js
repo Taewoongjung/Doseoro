@@ -1352,13 +1352,9 @@ router.get('/it', async (req, res, next) => {
                 });
                 console.log("aaaaa");
             } else { // 모든 지역
+                console.log('res.locals.user.location', res.locals.user.location);
                 const [people] = await Promise.all([
                     User.findAll({
-                        where: {
-                            location:{
-                                [Op.like]: "%" + res.locals.user.location+ "%"
-                            }
-                        }
                     })
                 ]);
                 const livein = [];
@@ -1367,7 +1363,7 @@ router.get('/it', async (req, res, next) => {
                     livein.push(id);
                 }
 
-                console.log("a111aa");
+                console.log("livein", livein);
                 const [foundCommus] = await Promise.all([
                     Community.findAll({
                         where: {
@@ -1404,6 +1400,8 @@ router.get('/it', async (req, res, next) => {
                     }),
                 ]);
                 console.log("aaa");
+                console.log("foundBooks = ", foundBooks);
+                console.log("foundCommus = ", foundCommus);
                 res.render('searchList.html', {
                     foundBooks,
                     foundCommus,
