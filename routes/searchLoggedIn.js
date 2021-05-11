@@ -83,7 +83,7 @@ router.get('/it', async (req, res, next) => {
             ]);
             console.log("noticess = ", noticess);
             ////////////
-            
+
             console.log("range = ", req.query);
             console.log("req.query.localRange = ", req.query.localRange);
             console.log("dong = ", res.locals.user);
@@ -105,8 +105,9 @@ router.get('/it', async (req, res, next) => {
                     const { id } = peopleLivingIn;
                     livein.push(id);
                 }
-
+                
                 console.log("a111aa");
+                console.log("livein = ", );
                 const [foundBooks] = await Promise.all([
                     Book.findAll({
                         where: {
