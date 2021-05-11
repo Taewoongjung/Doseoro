@@ -24,7 +24,11 @@
         <!-- main -->
         <main class="container-sm mt-0 mb-0 min-vh-100 pt-5">
             <!-- 검색, 메뉴이동 기능 -->
-            {% include "searchBox.html" %}
+            {% if user %}
+                {% include "searchBoxLoggedIn.html" %}
+            {% else %}
+                {% include "searchBox.html" %}
+            {% endif %}
 
             <div class="saleList pt-5 mt-5 border-top">
                 <h1 class="h2 fw-bold mb-4">커뮤니티</h1>
@@ -32,20 +36,21 @@
                         class="addBook text-decoration-none btn-primary p-2">글 등록</a></form>
 
                 <!-- 각 게시물 -->
-            {% for community in communities | reverse %}
-            <div class="postingList border p-5" onclick="location.href='/free_community/community/{{community.id}}'">
-                <div class="pb-3 border-bottom">
-                    <h1 class="h5 fw-bold text-primary">{{community.category}}</h1>
-                    <div class="d-sm-flex justify-content-between align-items-center mb-3">
-                        <h1 class="postingTitle h3 fw-bold">{{community.title}}</h1>
-                        <a class="text-decoration-none text-dark">{{community.createdAt}}</a>
+                {% for community in communities | reverse %}
+                <div class="postingList border p-5"
+                    onclick="location.href='/free_community/community/{{community.id}}'">
+                    <div class="pb-3 border-bottom">
+                        <h1 class="h5 fw-bold text-primary">{{community.category}}</h1>
+                        <div class="d-sm-flex justify-content-between align-items-center mb-3">
+                            <h1 class="postingTitle h3 fw-bold">{{community.title}}</h1>
+                            <a class="text-decoration-none text-dark">{{community.createdAt}}</a>
+                        </div>
+                        <a>{{community.postingNick}}</a>
                     </div>
-                    <a>{{community.postingNick}}</a>
+                    <p class="postingBody pt-3">{{community.content}}</p>
                 </div>
-                <p class="postingBody pt-3">{{community.content}}</p>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
         </main>
 
         <!-- footer -->
