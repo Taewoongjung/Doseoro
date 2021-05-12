@@ -32,17 +32,18 @@
                     {% endif %}
                     <!-- 프로필 적용여부 논의 필요 -->
                     <!-- <a class="h5 mt-2 text-decoration-none" href="/pages/myProfile">프로필</a> -->
-                    <button class="btn btn-primary" type="submit" onclick="getLocation()">위치</button>
+                    <div class="gelocationBtn d-flex">
+                        <button class="btn btn-primary me-3" type="submit" onclick="getLocation()">위치</button>
 
-                    <input id="getMyAddr" name="address" style="display: none;">
-                    <form id="regions">
-                        <input type="hidden" name="region1" id="getFirstAddr" value="">
-                        <input type="hidden" name="region2" id="getSecondAddr" value="">
-                        <input type="hidden" name="region3" id="getThirdAddr" value="">
-                        <input type="hidden" name="wholeRegion" id="getAllAddr" value="">
-
-                        <button class="btn btn-primary" type="submit" onclick="fixAddr()">위치설정하기</button>
-                    </form>
+                        <input id="getMyAddr" name="address" style="display: none;">
+                        <form id="regions">
+                            <input type="hidden" name="region1" id="getFirstAddr" value="">
+                            <input type="hidden" name="region2" id="getSecondAddr" value="">
+                            <input type="hidden" name="region3" id="getThirdAddr" value="">
+                            <input type="hidden" name="wholeRegion" id="getAllAddr" value="">
+                            <button id="submitBtn" style="display: none;" class="btn btn-primary" type="submit" onclick="fixAddr()">위치설정하기</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -89,6 +90,8 @@
     <script>
         function fixAddr(){
             const request = document.getElementById('regions');
+            alert("위치등록을 완료했습니다");
+
             request.setAttribute('action', '/location');
             request.setAttribute('method', 'GET');
         }

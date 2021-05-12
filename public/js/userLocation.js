@@ -85,6 +85,9 @@ function displayCenterInfo(result, status) {
                 console.log("getInfo2 = ", result[i].region_2depth_name);
                 console.log("getInfo3 = ", result[i].region_3depth_name);
                 console.log("getInfoAll = ", result[i].address_name);
+                alert("'위치설정하기' 버튼을 꼭 눌러주세요!");
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.style.display = "block";
 
                 redirection(getInfo.value);
                 return

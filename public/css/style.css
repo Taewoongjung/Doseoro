@@ -24,7 +24,9 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 1000px white inset;
+}
 @font-face {
 	font-family: "NanumSquareR"; 
 	src: url("/css/NanumSquareR.ttf");
@@ -400,4 +402,11 @@ textarea {
 	background-color: rgb(235, 235, 235);
 	border-radius: 15px;
 	margin-bottom: 25px;
+}
+
+/* paging */
+.pagingWrap {
+	display: flex;
+	justify-content: center;
+	margin: 2rem;
 }
