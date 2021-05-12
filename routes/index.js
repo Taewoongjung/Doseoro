@@ -38,7 +38,7 @@ router.get('/', async (req, res, next) => {
         const [recentSoldBooks] = await Promise.all([
             Book.findAll({
                 where: { 
-                    isSelling: { [Op.eq]: 1 },
+                    sold: { [Op.eq]: 1 },
                     SoldId: { [Op.ne]: null },
                     price: { [Op.ne]: -1 },
                 },
