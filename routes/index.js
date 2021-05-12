@@ -29,7 +29,7 @@ router.get('/', async (req, res, next) => {
                     SoldId: null,
                     price: { [Op.ne]: -1 },
                 },
-                order: [['likecount', 'DESC']],
+                order: [['likecount', 'ASC']],
                 limit: 4,
             })
         ]);  
