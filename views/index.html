@@ -66,8 +66,16 @@
                     슬라이드</text>
                 </svg>
                 <div class="carousel-caption d-none d-md-block">
-                  <h2>두번째 슬라이드</h2>
-                  <p>슬라이드2입니다.</p>
+                  {% for book in recentSoldBooks %}
+                  <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;"
+                    onclick="location.href='/book/{{book.id}}'">
+                    <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
+                    <div class="card-body text-center">
+                      <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
+                      <a>{{book.price}} 원</a>
+                    </div>
+                  </div>
+                  {% endfor %}
                 </div>
               </div>
               <div class="carousel-item">

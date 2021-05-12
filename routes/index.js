@@ -35,18 +35,18 @@ router.get('/', async (req, res, next) => {
         ]);  
         console.log("hot books = ", rankedBooks);
 
-        const [rankedBooks] = await Promise.all([
+        const [recentSoldBooks] = await Promise.all([
             Book.findAll({
                 where: { 
-                    likecount: { [Op.gte]: 6 }, 
-                    SoldId: null,
+                    isSelling: { [Op.eq]: 1 },
+                    SoldId: { [Op.ne]: null },
                     price: { [Op.ne]: -1 },
                 },
-                order: [['likecount', 'DESC']],
-                limit: 3,
+                order: [['updatedAt', 'ASC']],
+                limit: 4,
             })
-        ]);  
-        console.log("hot books = ", rankedBooks);
+        ]);
+        console.log("recent sold books = ", recentSoldBooks);
         // // 좋아요 5개 이하
         // console.log("@@@@@@@@@", hit_books);
         // const [reg_books] = await Promise.all([
@@ -134,6 +134,7 @@ router.get('/', async (req, res, next) => {
             res.render('index.html', {
                 books,
                 rankedBooks,
+                recentSoldBooks,
                 noticess,
                 likesfornotice,
                 user: req.user,
@@ -154,6 +155,7 @@ router.get('/', async (req, res, next) => {
             res.render('index.html', {
                 books,
                 rankedBooks,
+                recentSoldBooks,
             });
         }
     } catch (error) {
