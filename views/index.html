@@ -20,15 +20,15 @@
   <div class="flex w-100">
     <!-- 상단 바 -->
     {% include "topNavbar.html" %}
-    
+
     <!-- main -->
     <main class="container-sm mt-0 mb-0 min-vh-100 pt-5">
       <!-- 검색, 메뉴이동 기능 -->
       <!-- 로그인 하면 지역필터 나옴 -->
       {% if user %}
-        {% include "searchBoxLoggedIn.html" %}
+      {% include "searchBoxLoggedIn.html" %}
       {% else %}
-        {% include "searchBox.html" %}
+      {% include "searchBox.html" %}
       {% endif %}
       <!-- 배너 -->
       <div>
@@ -47,8 +47,16 @@
                     슬라이드</text>
                 </svg>
                 <div class="carousel-caption d-none d-md-block">
-                  <h2>첫번째 슬라이드</h2>
-                  <p>슬라이드1입니다.</p>
+                  {% for book in rankedBooks %}
+                  <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;"
+                    onclick="location.href='/book/{{book.id}}'">
+                    <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
+                    <div class="card-body text-center">
+                      <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
+                      <a>{{book.price}} 원</a>
+                    </div>
+                  </div>
+                  {% endfor %}
                 </div>
               </div>
               <div class="carousel-item">

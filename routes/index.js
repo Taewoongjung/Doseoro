@@ -22,14 +22,31 @@ router.get('/', async (req, res, next) => {
         // --------- 인기 순으로 정렬하기 ---------
         //
         // // 좋아요 6개 이상
-        // const [hit_books] = await Promise.all([
-        //     Book.findAll({
-        //         where: { 
-        //             likecount: { [Op.gte]: 6 }, 
-        //             SoldId: null 
-        //         },
-        //     })
-        // ]);  
+        const [rankedBooks] = await Promise.all([
+            Book.findAll({
+                where: { 
+                    likecount: { [Op.gte]: 6 }, 
+                    SoldId: null,
+                    price: { [Op.ne]: -1 },
+                },
+                order: [['likecount', 'DESC']],
+                limit: 4,
+            })
+        ]);  
+        console.log("hot books = ", rankedBooks);
+
+        const [rankedBooks] = await Promise.all([
+            Book.findAll({
+                where: { 
+                    likecount: { [Op.gte]: 6 }, 
+                    SoldId: null,
+                    price: { [Op.ne]: -1 },
+                },
+                order: [['likecount', 'DESC']],
+                limit: 3,
+            })
+        ]);  
+        console.log("hot books = ", rankedBooks);
         // // 좋아요 5개 이하
         // console.log("@@@@@@@@@", hit_books);
         // const [reg_books] = await Promise.all([
@@ -116,6 +133,7 @@ router.get('/', async (req, res, next) => {
             console.log("@@! = ", req.user);
             res.render('index.html', {
                 books,
+                rankedBooks,
                 noticess,
                 likesfornotice,
                 user: req.user,
@@ -135,6 +153,7 @@ router.get('/', async (req, res, next) => {
             console.log("@@! = ", req.user);
             res.render('index.html', {
                 books,
+                rankedBooks,
             });
         }
     } catch (error) {
