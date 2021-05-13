@@ -126,13 +126,16 @@
                                             <input type="hidden" name="title" value="{{book.title}}">
                                             <input type="hidden" name="price" value="{{book.price}}">
                                             <input type="hidden" name="registeredUserNick" value="{{book.usernick}}">
-                                            <button class="btn  btn-outline-primary" class="btn" type="submit"
-                                                onclick="like()" style="border: 0px">❤️</button>
+                                            {% if book.sold == 1 %}
+                                            {% else %}
+                                                <button class="btn  btn-outline-primary" class="btn" type="submit"
+                                                    onclick="like()" style="border: 0px">❤️</button>
 
-                                            <!-- 좋아요 눌린 갯수 -->
-                                            <div class="saleCheck border-0 pt-1" style="border-radius: 10px">
-                                                <a class="h5 text-decoration-none fw-bold">+ {{book.likecount}}</a>
-                                            </div>
+                                                    <!-- 좋아요 눌린 갯수 -->
+                                                <div class="saleCheck border-0 pt-1" style="border-radius: 10px">
+                                                    <a class="h5 text-decoration-none fw-bold">+ {{book.likecount}}</a>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </form>
                                 </div>
