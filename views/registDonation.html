@@ -84,7 +84,7 @@
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state2" name="checkState" value="필기있음">
             <label for="book-state2" class="me-3 ms-2" style="display: block;">필기있음</label></div>
 
-          <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state3" name="checkState" value="접힌저국">
+          <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state3" name="checkState" value="접힌자국">
             <label for="book-state3" class="me-3 ms-2" style="display: block;">접힌자국</label></div>
 
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state4" name="checkState" value="찢김">
@@ -104,9 +104,19 @@
         </div>
 
         <h1 class="h4 mt-3">상품 사진</h1>
-        <div class="input-group mb-4">
+        <div class="imgPreview mb-3 text-center">
+          <!-- <a><img id="nowimage" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image"></a> -->
+        </div>
+
+        <!-- 멀티 업로드 test -->
+        <div id="nowimage"></div>
+
+        <div id="ckPhoto"></div>
+        <div class="input-group mb-3">
           <label for="book-photo">상품 사진</label>
-          <input type="file" class="form-control" id="book-photo" name="img" required>
+          <!-- <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" multiple required> -->
+
+          <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" onchange="clearImg()" multiple required>
         </div>
 
         <!-- 여기에 사용자 위치를 표시합니다 -->
@@ -115,8 +125,12 @@
           <a><img src="/img/marker.png" width="25px" height="25px"></a>
           <a class="fw-bold h5 text-black-50 text-decoration-none" id="postLocation">{{ user.location }}</a>
           {% else %}
-          <p class="h4"><a data-toggle="tooltip" class="locationGuide">❓</a> 위치등록이 안되어있습니다</p>
-          <a class="fw-bold h5 text-black-50 text-decoration-none" id="postLocation">{{ user.location }}</a>
+          <div id="popGuide" onmouseout="popupGuide(false)" onmouseover="popupGuide(true)" class="fw-bold align-items-center d-flex mb-2">
+            <p><img src="/img/locationGuide.png" alt="guide" width="25px"></p>
+            <a>&nbsp&nbsp위치를 등록해주세요</a>
+            <a id="postLocation">{{ user.location }}</a>
+          </div>
+          <div id="popupBox" style="display:none;"><a>마이페이지 → "위치" 클릭</a></div>
           {% endif %}
         </div>
 
@@ -125,7 +139,7 @@
           <textarea type="text" class="form-control p-3 mb-4" id="book-about" name="about" placeholder="내용" rows="10"></textarea>
         </div>
 
-        <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">상품 등록</button>
+        <button id="registBtn" class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">상품 등록</button>
       </form>
     </main>
 
@@ -144,6 +158,10 @@
   <script src="/js/topNav.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
   <script src="/js/ckboxLimit.js"></script>
+  <script src="/js/popGuide.js"></script>
+
+  <!-- 테스트 flex -->
+  <script src="/js/previewPost2.js"></script>
 </body>
 
 </html>

@@ -37,7 +37,7 @@ module.exports = class Book extends Sequelize.Model {
                 allowNull: true,
             },
             img: {
-                type: Sequelize.STRING(200),
+                type: Sequelize.JSON,
                 allowNull: true,
             },
             likecount: {
@@ -56,6 +56,11 @@ module.exports = class Book extends Sequelize.Model {
             usernick: {
                 type: Sequelize.STRING(100),
                 allowNull: true,
+            },
+            hits: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+                defaultValue: 0,
             },
             isSelling: {
                 type: Sequelize.BOOLEAN,

@@ -43,7 +43,7 @@
                 <!-- 게시물 불러오는 위치 -->
                 {% for book in wantsell_books | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
-                        <img src="/img/{{book.img}}" class="" width="150px" height="200px">
+                        <img src="/img/{{book.img[0]}}" class="" width="150px" height="200px">
                         
                         <div class="d-flex w-75 justify-content-between mt-2">
                             <div class="ms-sm-4 w-100">
@@ -58,8 +58,7 @@
                                     <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
                                     <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
                                     <div class="dropdown">
-                                        <a class="btn" href="#" data-bs-toggle="dropdown"
-                                            aria-expanded="true">⁝</a>
+                                        <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                             <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
@@ -97,8 +96,7 @@
                                             <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
                                             <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
                                             <div class="dropdown">
-                                                <a class="btn" href="#" data-bs-toggle="dropdown"
-                                                    aria-expanded="true">⁝</a>
+                                                <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                                     <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
                                                             role="menuitem" tabindex="-1" type="submit" class="btn"
@@ -125,12 +123,11 @@
                 <!-- 게시물 불러오는 위치 -->
                 {% for book in free_books | reverse %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
-                        <img src="/img/{{book.img}}" class="" width="150px" height="200px">
+                        <img src="/img/{{book.img[0]}}" class="" width="150px" height="200px">
                         
                         <div class="d-flex w-75 justify-content-between mt-2">
                             <div class="ms-sm-4">
                                 <h1 class="postTitle h2 m-1 fw-bold mb-3">{{book.title}}</h1>
-                                <!-- <h4 class="h5 m-1 mb-2">가격: 무료나눔</h4> -->
                                 <h4 class="h5 m-1 mb-2">카테고리: {{book.category}}</h4>
                                 <h4 class="h5 m-1 mb-2">거래 방법: {{book.tradingmethod}}</h4>
                             </div>
@@ -140,8 +137,7 @@
                                     <input type="hidden" id="delete_it-{{book.id}}" name="this_item_OwnerId" value="{{book.OwnerId}}">
                                     <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt" value="{{book.createdAt}}">
                                     <div class="dropdown">
-                                        <a class="btn" href="#" data-bs-toggle="dropdown"
-                                            aria-expanded="true">⁝</a>
+                                        <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                             <li><button id="item-edit-btn-{{book.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
@@ -178,8 +174,7 @@
                                         <input type="hidden" id="delete_it-{{community.id}}" name="this_item_content" value="{{community.content}}">
                                         <input type="hidden" id="delete_it-{{community.id}}" name="this_item_createdAt" value="{{community.createdAt}}">
                                         <div class="dropdown">
-                                            <a class="btn" href="#" data-bs-toggle="dropdown"
-                                                aria-expanded="true">⁝</a>
+                                            <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown" aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu" width="15px"></a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                                 <li><button id="item-edit-btn-{{community.id}}" class="dropdown-item"
                                                         role="menuitem" tabindex="-1" type="submit" class="btn"
@@ -226,7 +221,7 @@
 
         function buy_item_delete(id) {
             const request = document.getElementById(`buy_item-ED-form-${id}`);
-            request.setAttribute('action', '/wannabuy/delete');
+            request.setAttribute('action', '/wannabuy/delete_myPage');
             request.setAttribute('method', 'GET');
         }
 
@@ -246,13 +241,13 @@
         // 커뮤니티 스크립트
         function community_item_edit(id) {
             const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/editIt_community');
+            request.setAttribute('action', '/free_community/editIt_community_mypage');
             request.setAttribute('method', 'POST');
         }
 
         function community_item_delete(id) {
             const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/delete_community');
+            request.setAttribute('action', '/free_community/delete_community_mypage');
             request.setAttribute('method', 'GET');
         }
     </script>

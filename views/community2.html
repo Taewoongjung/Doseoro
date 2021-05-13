@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<!-- 
+  페이징 테스트입니다
+ -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <style>
+        * {padding:0; border:0; margin:0; list-style:none; font-family:'d2coding'; font-size:16px;}
+body {margin:50px;}
+
+/* 내용 */
+.wrap_con .con {display:none;}
+.wrap_con .con.on {display:block;}
+
+/* 페이징 */
+.paging a {display:none;}
+.paging a.view {display:block;}
+.paging a.on {color:#ff0000; font-weight:bold;}
+    </style>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <title>커뮤니티</title>
+</head>
+
+<body>
+    <div class="flex w-100">
+        <!-- 상단 바 -->
+        {% include "topNavbar.html" %}
+
+        <!-- main -->
+        <main class="container-sm mt-0 mb-0 min-vh-100 pt-5">
+            <!-- 검색, 메뉴이동 기능 -->
+            {% if user %}
+            {% include "searchBoxLoggedIn.html" %}
+            {% else %}
+            {% include "searchBox.html" %}
+            {% endif %}
+
+            <div class="saleList pt-5 mt-5 border-top">
+                <div class="wrap_con">
+                    <ul class="con on">
+                        <li>li1-1</li>
+                        <li>li1-2</li>
+                        <li>li1-3</li>
+                    </ul>
+                    <ul class="con">
+                        <li>li2-1</li>
+                        <li>li2-2</li>
+                        <li>li2-3</li>
+                    </ul>
+                    <ul class="con">
+                        <li>li3-1</li>
+                        <li>li3-2</li>
+                        <li>li3-3</li>
+                    </ul>
+                    <ul class="con">
+                        <li>li4-1</li>
+                        <li>li4-2</li>
+                        <li>li4-3</li>
+                    </ul>
+                    <ul class="con">
+                        <li>li5-1</li>
+                        <li>li5-2</li>
+                        <li>li5-3</li>
+                    </ul>
+                    <ul class="con">
+                        <li>li6-1</li>
+                        <li>li6-2</li>
+                        <li>li6-3</li>
+                    </ul>
+                    <ul class="con">
+                        <li>li7-1</li>
+                        <li>li7-2</li>
+                        <li>li7-3</li>
+                    </ul>
+                    <ul class="con">
+                        <li>li8-1</li>
+                        <li>li8-2</li>
+                        <li>li8-3</li>
+                    </ul>
+                </div>
+                
+                <br><br>
+                
+                <div class="wrap_paging">
+                    <a href="#none" class="first">맨처음</a><br>
+                    <a href="#none" class="prev">이전</a>
+                    <div class="paging">
+                        <a href="#none" class="on view">1</a>
+                        <a href="#none" class="view">2</a>
+                        <a href="#none" class="view">3</a>
+                        <a href="#none">4</a>
+                        <a href="#none">5</a>
+                        <a href="#none">6</a>
+                        <a href="#none">7</a>
+                        <a href="#none">8</a>
+                    </div>
+                    <a href="#none" class="next">다음</a><br>
+                    <a href="#none" class="last">마지막</a>
+                </div>
+            </div>
+
+            <!-- 페이징 -->
+            <div class="pagingWrap">
+                <ul id="Postpages" class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                </ul>
+            </div>
+        </main>
+
+        <!-- footer -->
+        <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+    </div>
+    <script>
+        function one() {
+            const request = document.getElementById('search-form');
+            request.setAttribute('action', '/search{{searchWord}}');
+            request.setAttribute('method', 'GET');
+        }
+    </script>
+    <script src="/js/topNav.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/paging.js"></script>
+    <script>
+        // 페이징 클릭시
+$('.paging a').on('click', function(){
+	var index =  $(this).index();
+	$('.wrap_con .con').removeClass('on');
+	$('.wrap_con .con').eq(index).addClass('on'); // 해당 내용 보임
+	$('.paging a').removeClass('on');
+	$(this).addClass('on'); // 불 들어옴
+});
+
+var nowIdx = 0; // 현재 페이지
+
+// 기본 함수
+function show(i) { 
+	nowIdx = i; // 클릭횟수
+	var j = i * 3; // 클릭해서 넘어간 1번째 페이지
+	$('.paging a').removeClass('on view');
+	$('.paging a').eq(j).addClass('on'); // 클릭해서 넘어간 1번째 페이징 불
+	$('.paging a').eq(j).addClass('view'); // 클릭해서 넘어간 페이징 3개 보임
+	$('.paging a').eq(j+1).addClass('view');
+	$('.paging a').eq(j+2).addClass('view');
+	$('.wrap_con .con').removeClass('on');
+	$('.wrap_con .con').eq(j).addClass('on'); // 클릭해서 넘어간 1번째 페이지 해당 내용 보임
+}
+
+// 페이징 123일때 함수
+function showFirst() { 
+	$('.paging a').removeClass('view');
+	$('.paging a').eq(0).addClass('view'); // 페이징 3개 보임 (불 처리 안함)
+	$('.paging a').eq(1).addClass('view');
+	$('.paging a').eq(2).addClass('view');
+}
+
+// 페이징 마지막일때 함수
+function showLast(i) { 
+	nowIdx = i; // 클릭횟수
+	var j = i * 3; // 클릭해서 넘어간 1번째 페이지
+	$('.paging a').removeClass('view');
+	$('.paging a').eq(j).addClass('view'); // 페이징 마지막 3개 보임 (불 처리 안함)
+	$('.paging a').eq(j+1).addClass('view');
+	$('.paging a').eq(j+2).addClass('view');
+}
+
+var total =  $('.paging a').length;
+var result = parseInt(total/3); // 3페이징씩 몇개인지
+
+$('.next').on('click', function(){ // 다음버튼 클릭시
+	var viewIdx = nowIdx + 1; // 현재 클릭수 = 이전 클릭수 + 1
+	if(viewIdx > result){ // 마지막 페이지인데 다음버튼 클릭하면 (클릭수 초과)
+		viewIdx = result; // 계속 마지막 페이지이게
+		showLast(viewIdx); // 마지막 페이지 함수 실행
+	} else {show(viewIdx);} // 마지막 페이지 아니면 기본 함수 실행
+	
+});
+
+$('.prev').on('click', function(){ // 이전버튼 클릭시
+	var viewIdx = nowIdx - 1; // 현재 클릭수 = 이전 클릭수 -1
+	if(viewIdx < 0){ // 첫번째 페이지인데 이전버튼 클릭하면 (클릭수 음수)
+		viewIdx = 0; // 계속 첫번째 페이지이게
+		showFirst(); // 첫번째 페이지 함수 실행
+	} else {show(viewIdx);} // 첫번째 페이지 아니면 기본 함수 실행
+	
+});
+
+$('.first').on('click', function(){
+	show(0);
+});
+
+$('.last').on('click', function(){
+	show(result);
+	$('.paging a').removeClass('on');
+	$('.paging a').last().addClass('on');
+});
+    </script>
+</body>
+
+</html>

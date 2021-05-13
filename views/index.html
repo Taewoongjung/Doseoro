@@ -24,8 +24,12 @@
     <!-- main -->
     <main class="container-sm mt-0 mb-0 min-vh-100 pt-5">
       <!-- 검색, 메뉴이동 기능 -->
-      {% include "searchBox.html" %}
-
+      <!-- 로그인 하면 지역필터 나옴 -->
+      {% if user %}
+        {% include "searchBoxLoggedIn.html" %}
+      {% else %}
+        {% include "searchBox.html" %}
+      {% endif %}
       <!-- 배너 -->
       <div>
         <div class="bd-example">
@@ -92,7 +96,7 @@
           {% for book in books | reverse %}
           <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;"
             onclick="location.href='/book/{{book.id}}'">
-            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="280px">
+            <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
             <div class="card-body text-center">
               <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
               <!-- <p>{{book.createdAt}}</p> -->
@@ -102,59 +106,6 @@
           </div>
           {% endfor %}
         </div>
-
-        <!-- 검색결과 -->
-        <div class="searchResult mt-5">
-          <p class="h4 fw-bold">검색 결과</p>
-          <div class="justify-content-center flex-wrap">
-            {% for foundBook in foundBooks %}
-
-            <!-- 무료나눔 -->
-            {% if foundBook.price <= 0 %}
-            <div class="saleCard card mt-4 m-2 border p-4" onclick="location.href='/book/{{foundBook.id}}'">
-              <p class="fw-bold text-primary mb-2">무료나눔</p>
-              <div class="card-body d-sm-flex flex-wrap align-items-center">
-                <img src="/img/{{foundBook.img}}" class="card-img-top" style="max-width: 180px;" height="250px">
-                <div class="ms-4 w-75">
-                  <p class="postTitle h3 card-title fw-bold mb-1">{{foundBook.postmessage}}</p>
-                  <p class="mb-3">{{foundBook.usernick}}</p>
-                  <!-- <a class="h5 text-black-50 fw-bolder text-decoration-none">무료나눔</a> -->
-                  <p class="postingBody pt-3">{{foundBook.about}}</p>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-
-            {% if foundBook.img %}
-            {% if foundBook.price > 0 %}
-            <div class="saleCard card mt-4 m-2 border p-4" onclick="location.href='/book/{{foundBook.id}}'">
-              <p class="fw-bold text-primary mb-2">판매</p>
-              <div class="card-body d-sm-flex flex-wrap align-items-center">
-                <img src="/img/{{foundBook.img}}" class="card-img-top" style="max-width: 180px;" height="250px">
-                <div class="ms-4 w-75">
-                  <p class="postTitle h3 card-title fw-bold mb-1">{{foundBook.postmessage}}</p>
-                  <p class="mb-3">{{foundBook.usernick}}</p>
-                  <a class="h5 text-black-50 fw-bolder text-decoration-none">{{foundBook.price}} 원</a>
-                  <p class="postingBody pt-3">{{foundBook.about}}</p>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-            {% else %}
-            <div class="saleCard card mt-4 m-2 border p-4" onclick="location.href='/wannabuy/buybook/{{foundBook.id}}'">
-              <div class="pb-3 border-bottom">
-                <p class="fw-bold text-primary mb-2">구매</p>
-                <div class="d-sm-flex justify-content-between align-items-center">
-                  <h1 class="postingTitle h3 fw-bold">{{foundBook.postmessage}}</h1>
-                  <!-- <a class="text-decoration-none text-dark">{{foundBook.createdAt}}</a> -->
-                </div>
-                <p class="mt-3">{{foundBook.usernick}}</p>
-              </div>
-              <p class="postingBody pt-3">{{foundBook.about}}</p>
-            </div>
-            {% endif %}
-            {% endfor %}
-          </div>
     </main>
 
     <!-- footer -->
@@ -162,12 +113,11 @@
   </div>
   <script>
     function one() {
-    const request = document.getElementById('search-form');
-    request.setAttribute('action', '/search{{searchWord}}');
-    request.setAttribute('method', 'GET');
+      const request = document.getElementById('search-form');
+      request.setAttribute('action', '/search{{searchWord}}');
+      request.setAttribute('method', 'GET');
     }
   </script>
-
   <!-- <script src="/js/searchBook.js"></script> -->
   <script src="/js/topNav.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>

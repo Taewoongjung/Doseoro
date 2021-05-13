@@ -26,7 +26,16 @@ module.exports = class Post extends Sequelize.Model {
       reCommentNick: {
         type: Sequelize.STRING(100),
         allowNull: true,
-      }
+      },
+      isNotified_posts: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: 0,
+      },
+      thisURL: {  // 댓글을 달면 해당 url을 가져오기
+        type: Sequelize.STRING(500),
+        allowNull: true,
+      },
     }, {
       sequelize,
       timestamps: true,
@@ -43,5 +52,6 @@ module.exports = class Post extends Sequelize.Model {
     db.Post.belongsTo(db.User, { as: 'Commenting' });
     db.Post.belongsTo(db.Book, { as: 'Commenter' });
     db.Post.belongsTo(db.Community, { as: 'Poster' });
+    db.Post.belongsTo(db.Complain);
   }
 };

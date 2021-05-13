@@ -3,7 +3,7 @@ const moment = require('moment-timezone');
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
-const { User, Book, Who, Post } = require('../models');
+const { User, Book, Who, Post, Community } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -40,10 +40,26 @@ router.post('/thisbook', isLoggedIn, async (req, res, next) => {
 // 0410 구매내역 삭제
 router.get('/delete', isLoggedIn, async (req, res, next) => {
     try {
-        const { this_item_id, this_item_createdAt, this_item_OwnerId } = req.query;
+        const { this_item_id, this_item_OwnerId } = req.query;
         if (this_item_OwnerId === String(req.user.id)) {
-            await Book.destroy({ where: { id: this_item_id, createdAt: this_item_createdAt, OwnerId: this_item_OwnerId, isSelling: '1' }, });
+            await Book.destroy({ where: { id: this_item_id, OwnerId: this_item_OwnerId, isSelling: '1' }, });
             res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/bookRequest";</script>`);
+        } else {
+            return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다."); location.href="/wannabuy/buybook/${this_item_id}";</script>`);
+        }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 0507 구매내역 삭제(마이페이지에서)
+router.get('/delete_myPage', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, this_item_OwnerId } = req.query;
+        if (this_item_OwnerId === String(req.user.id)) {
+            await Book.destroy({ where: { id: this_item_id, OwnerId: this_item_OwnerId, isSelling: '1' }, });
+            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/myPostingList";</script>`);
         } else {
             return res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다."); location.href="/wannabuy/buybook/${this_item_id}";</script>`);
         }
@@ -109,6 +125,16 @@ router.get('/buybook/:id', async (req, res, next) => {
                 },
             }),
         ]);
+
+        const plus_hits = book.hits + 1; // 조회수 +1
+        console.log("@@ = ", plus_hits);
+
+        await Book.update({
+            hits: plus_hits,
+        }, {
+            where: { id: req.params.id }
+        });
+
         const [user] = await Promise.all([
             User.findOne({
                 where: { id: book.OwnerId }
@@ -152,36 +178,117 @@ router.get('/buybook/:id', async (req, res, next) => {
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;
             time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 commentingNick,
                 content,
                 id,
                 UserId
             });
         }
+        const re_time = [];
+        for (const new_time of re_comments) {
+            const { createdAt, id, content, UserId, reCommentNick, reCommentedId, reCommentingId } = new_time;
+            re_time.push({
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
+                reCommentNick,
+                reCommentedId,
+                reCommentingId,
+                content,
+                id,
+                UserId,
+            });
+        }
         if (res.locals.user) {
             console.log("login");
+            /////////////
+
+            console.log("@@! = ", req.user.id);
+            const [books_for_notice] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        OwnerId: req.user.id,
+                    }
+                })
+            ]);
+
+            const [books_for_notice_commu] = await Promise.all([
+                Community.findAll({
+                    where: {
+                        postingId: req.user.id,
+                    }
+                })
+            ]);
+
+
+            const notices = [];
+            for (const notice of books_for_notice) {
+                const { id } = notice;
+                notices.push(id);
+            }
+
+            const [likesfornotice] = await Promise.all([
+                Who.findAll({
+                    where: {
+                        thisbook: notices,
+                        isNotified_like: {
+                            [Op.ne]: '1'
+                        },
+                    }
+                })
+            ]);
+
+            const notices_commu = [];
+            for (const notice of books_for_notice_commu) {
+                const { id } = notice;
+                notices_commu.push(id);
+            }
+
+            console.log("WWW = ", notices);
+            console.log("book = ", books_for_notice);
+            console.log("user = ", req.user.id);
+            const [noticess] = await Promise.all([
+                Post.findAll({
+                    where: {
+                        [Op.or]: [
+                            {
+                                BookId: notices,
+                                UserId: { [Op.ne]: String(req.user.id) }
+                            }, { // 커뮤니티 댓글 구별
+                                CommunityId: notices_commu,
+                                UserId: { [Op.ne]: String(req.user.id) }
+                            }],
+                        isNotified_posts: {
+                            [Op.ne]: '1'
+                        },
+                    }
+                })
+            ]);
+            console.log("noticess = ", noticess);
+
+            ////////////
             res.render('buyDetail.html', {
                 title: `책 구매`,
                 book,
-                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(book.createdAt).format('YYYY.MM.DD HH:mm'),
                 users: res.locals.user,
                 user: book.OwnerId,
                 bookId: req.params.id,
                 comments: time,
-                re_comments,
-                comment_createdAt: moment(comments.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                re_comments: re_time,
+                comment_createdAt: moment(comments.createdAt).format('YYYY.MM.DD HH:mm'),
                 this_book_location: user.location,
+                noticess,
+                likesfornotice,
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
             res.render('buyDetail.html', {
                 title: `책 구매`,
                 book,
-                createdAt: moment(book.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(book.createdAt).format('YYYY.MM.DD HH:mm'),
                 user: book.OwnerId,
                 comments: time,
-                re_comments,
+                re_comments: re_time,
                 this_book_location: user.location,
             });
         }
@@ -194,13 +301,14 @@ router.get('/buybook/:id', async (req, res, next) => {
 // 0411 댓글기능
 router.post('/buybook/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
-        const { comment } = req.body;
+        const { comment, bookId } = req.body;
         console.log("comment = ", comment);
         const post = await Post.create({
             content: comment,
             commentingNick: req.user.nick,
             UserId: req.user.id,
             BookId: req.params.id,
+            thisURL: String(`/wannabuy/buybook/${bookId}`),
         });
         return res.send(`<script type="text/javascript">location.href="/wannabuy/buybook/${post.BookId}";</script>`);
     } catch (error) {
@@ -222,6 +330,7 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
             reCommentingId: commentId,
             reCommentedId: req.user.id,
             reCommentNick: req.user.nick,
+            thisURL: String(`/wannabuy/buybook/${bookId}`),
         });
         return res.send(`<script type="text/javascript">location.href="/wannabuy/buybook/${post.BookId}";</script>`);
     } catch (error) {

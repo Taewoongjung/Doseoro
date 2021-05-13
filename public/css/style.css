@@ -24,7 +24,9 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 1000px white inset;
+}
 @font-face {
 	font-family: "NanumSquareR"; 
 	src: url("/css/NanumSquareR.ttf");
@@ -39,6 +41,9 @@ body {
 	background-color: rgb(248, 248, 248);
 	padding-top: 6rem;
 	min-height: 100%;
+}
+a {
+	word-break: break-all;
 }
 ol, ul {
 	list-style: none;
@@ -55,15 +60,57 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-@media (min-width: 768px) {
-	.nav-item a {
-		font-size : 18px;
+.nav-item a {
+	font-size : 18px;
+}
+@media (max-width: 768px) {
+	.notionInner {
+		left: 80px;
 	}
 }
 textarea {
 	resize: none;
 }
 
+/* topNavbar stype */
+.notionBtn {
+	border-radius: 7px;
+	text-decoration: none;
+	font-weight: bold;
+}
+.delBtn{
+	border-radius: 7px;
+	border: 0;
+	font-weight: bold;
+	background-color: inherit;
+}
+.notionMsg {
+	text-align: left;
+	border: none;
+	background-color: inherit;
+	padding: 5px;
+	border-radius: 7px;
+}
+.notionMsg:hover {
+	background-color: rgb(207, 207, 207);
+	cursor: pointer;
+}
+.notionBtn:hover, .delBtn:hover {
+	background-color: rgba(73, 158, 255, 0.822);
+	cursor: pointer;
+}
+.notionBox {
+	position: relative;
+}
+.notionInner {
+	width: 70%;
+	border: 1px solid rgb(238, 238, 238);
+	border-radius: 10px;
+	background-color: rgb(248, 248, 248);
+	position: absolute;
+	top: 50px;
+	display: none;
+}
 /* index style */
 .searchForm {
 	max-width: 500px;
@@ -90,7 +137,6 @@ textarea {
 }
 .menuForm {
 	max-width: 500px;
-	/* margin: auto 0 auto 0; */
 }
 .menuForm button:hover {
 	background-color: rgb(6, 143, 255);
@@ -107,15 +153,12 @@ textarea {
 }
 .saleCard img {
 	border-radius: 12px;
-	/* border-top-left-radius: 15px;
-	border-top-right-radius: 15px; */
 }
 .saleCard:hover {
 	background-color: rgb(243, 243, 243);
 	cursor: pointer;
 }
 .postTitle {
-	/* width: 200px; */
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -133,10 +176,73 @@ textarea {
 }
 .inputForm {
 	border: 0;
-	/* border-bottom: solid  rgb(230, 230, 230) 1px; */
 }
-.locationGuide:hover{
-	
+.usreLocation {
+	position: relative;
+}
+#popupBox {
+	background-color: rgb(53, 53, 53);
+	/* border: 1px solid rgb(255, 255, 255); */
+	border-radius: 15px;
+	padding: 1.3rem;
+	position: absolute;
+	top: -80px;
+	left: 10px;
+	z-index: 1;
+}
+#popupBox a {
+	color: rgb(255, 255, 255);
+}
+#popupBox:after, #popupBox:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+#popupBox:after {
+	/* border-color: rgb(230, 230, 230); */
+	border-top-color: rgb(53, 53, 53);
+	border-width: 5px;
+	margin-left: -5px;
+}
+#popupBox:before {
+	/* border-color: rgb(230, 230, 230); */
+	border-top-color: rgb(53, 53, 53);
+	border-width: 18px;
+	margin-left: -18px;
+}
+/* #nowimage {
+	width: 200px;
+	height: 250px;
+	border-radius: 12px;
+} */
+#nowimage {
+	display: flex;
+	flex-wrap: wrap;
+	/* grid-template-columns: 1fr 1fr 1fr; */
+	justify-content: center;
+}
+.imageBox {
+	overflow: hidden;
+	width: 160px;
+	height: 210px;
+	margin: 10px;
+	border-radius: 10px;
+}
+.image {
+	width: 100%;
+	height: 100%;
+}
+.imageLabel {
+	position: relative;
+	bottom: 22px;
+	left: 5px;
+	color: white;
+	text-shadow: 2px 2px 2px black;
 }
 
 /* myPage.html */
@@ -184,7 +290,6 @@ textarea {
 	cursor: pointer;
 }
 .postTitle {
-	/* width: 100%; */
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -225,4 +330,83 @@ textarea {
 	margin: 0 auto;
 }
 
+/* detailes */
+.commentList {
+	width: 100%;
+	padding: 10px;
+}
+.commentListInner {
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+.reComment {
+	border: 1px solid rgb(226, 226, 226);
+	border-radius: 5px;
+}
+.reComment:focus{
+	border-color: rgba(158, 220, 255);
+    box-shadow: 0 1px 3px rgba(137, 179, 219) inset, 0 0 8px rgb(137, 179, 219);
+    outline: 0 none;
+}
+.reCommentList {
+	background-color: rgba(242, 242, 242);
+	border: 1px solid rgb(226, 226, 226);
+	border-radius: 8px;
+	width: 100%;
+	margin: 5px 0;
+	padding: 10px;
+	align-items: center;
+}
+.reCommentListInner {
+	margin-bottom: 10px;
+	justify-content: space-between;
+	align-items: center;
+}
+.kebobMenu:hover {
+	background-color: rgb(228, 228, 228);
+	transition: 300ms;
+}
+.slideBox {
+	width: 320px;
+	height: 400px;
+}
+
 /* communityDetail.html */
+
+/* tradeHistory.html */
+.tradeBoxInner {
+	border-bottom: 1px solid rgb(228, 228, 228);
+}
+.tadeBtn {
+	font-weight: bold;
+}
+.tadeBtn:hover {
+	background-color: rgb(70, 131, 245);
+	color: rgb(243, 243, 243)
+}
+#boughtBooksBox {
+	display: block;
+}
+#soldBooksBox {
+	display: none;
+}
+#soldBooks_buy_Box {
+	display: none;
+}
+#boughtBooks_buy_Box {
+	display: none;
+}
+.btnInner {
+	padding: 15px 0px 15px 0px;
+	background-color: rgb(235, 235, 235);
+	border-radius: 15px;
+	margin-bottom: 25px;
+}
+
+/* paging */
+.pagingWrap {
+	display: flex;
+	justify-content: center;
+	margin: 2rem;
+}

@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon start",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "live": "NODE_ENV=production PORT=2030 pm2 start server.js -i 0"
   },
   "author": "TaeWoongJung",
   "license": "MIT",

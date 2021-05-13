@@ -29,17 +29,25 @@ const upload = multer({  // multer 설정
     limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-// 0415 무료나눔
-router.post('/book', isLoggedIn, upload.single('img'), async (req, res, next) => {
+// 0415 무료나눔 등록
+router.post('/book', isLoggedIn, upload.array('img', 5), async (req, res, next) => {
     try {
         const { postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
+        console.log("files = ", req.files);
+
+        const notices = [];
+        for (const imgs of req.files) {
+            const { filename } = imgs;
+            notices.push(filename);
+        }
+        
         const book = await Book.create({
             OwnerId: req.user.id,
             postmessage: postmessage,
             title: title,
             author: author,
             publisher: publisher,
-            img: req.file.filename,
+            img: notices,
             category: checkCategory,
             state: checkState,
             price: -1,
@@ -111,10 +119,22 @@ router.get('/delete_community', isLoggedIn, async (req, res, next) => {
         const { this_item_id, this_item_content, this_item_postingId } = req.query;
         if (this_item_postingId === String(req.user.id)) {
             const aa = await Community.destroy({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
-            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/community";</script>`);    
+            res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/community";</script>`);
         } else {
             res.send(`<script type="text/javascript">alert("삭제 권한이 없습니다."); location.href="/free_community/community/${this_item_id}";</script>`);
         }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 0507 커뮤니티내역 삭제(마이페이지에서)
+router.get('/delete_community_mypage', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, this_item_content, this_item_postingId } = req.query;
+        const aa = await Community.destroy({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
+        res.send(`<script type="text/javascript">alert("게시물 삭제 완료!"); location.href="/pages/myPostingList";</script>`);
     } catch (error) {
         console.error(error);
         next(error);
@@ -133,6 +153,20 @@ router.post('/editIt_community', isLoggedIn, async (req, res, next) => {
         } else {
             res.send(`<script type="text/javascript">alert("수정 권한이 없습니다."); location.href="/free_community/community/${this_item_id}";</script>`);
         }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+// 0507 커뮤니티 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터(마이페이지에서)
+router.post('/editIt_community_mypage', isLoggedIn, async (req, res, next) => {
+    try {
+        const { this_item_id, this_item_content } = req.body;
+            const community = await Community.findOne({ where: { id: this_item_id, postingId: req.user.id, content: this_item_content }, });
+            res.render('edit_commuDetail.html', {
+                community,
+            });
     } catch (error) {
         console.error(error);
         next(error);
@@ -160,16 +194,16 @@ router.post('/edit_community', isLoggedIn, async (req, res, next) => {
     }
 });
 
-
 // 0415 커뮤니티 등록
 router.post('/community', isLoggedIn, async (req, res, next) => {
     try {
-        const { postTitle, postAbout } = req.body;
+        const { postTitle, postAbout, commu_category } = req.body;
         const commu = await Community.create({
             title: postTitle,
             content: postAbout,
             postingId: req.user.id,
             postingNick: req.user.nick,
+            category: commu_category,
         });
         res.send(`<script type="text/javascript">alert("커뮤니티 등록 완료"); location.href="/free_community/community/${commu.id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
@@ -186,6 +220,16 @@ router.get('/community/:id', async (req, res, next) => {
                 where: { id: req.params.id },
             }),
         ]);
+
+        const plus_hits = community.hits + 1; // 조회수 +1
+        console.log("@@ = ", plus_hits);
+
+        await Community.update({
+            hits: plus_hits,
+        }, {
+            where: { id: req.params.id }
+        });
+
         const [comments] = await Promise.all([
             Post.findAll({
                 where: {
@@ -205,7 +249,7 @@ router.get('/community/:id', async (req, res, next) => {
         const [re_comments] = await Promise.all([
             Post.findAll({
                 where: {
-                    BookId: req.params.id,
+                    CommunityId: req.params.id,
                     reCommentingId: {
                         [Op.in]: findcommentId,
                     },
@@ -215,12 +259,12 @@ router.get('/community/:id', async (req, res, next) => {
         ]);
         // console.log("대댓글 = ", re_comments);
         // console.log("대댓글 테스트 = ", String(findcommentId));
-        
+
         const re_time = [];
         for (const new_time of re_comments) {
             const { createdAt, id, content, UserId, reCommentNick, reCommentedId, reCommentingId } = new_time;
             re_time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 reCommentNick,
                 reCommentedId,
                 reCommentingId,
@@ -233,7 +277,7 @@ router.get('/community/:id', async (req, res, next) => {
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;
             time.push({
-                createdAt: moment(createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
                 commentingNick,
                 content,
                 id,
@@ -242,21 +286,89 @@ router.get('/community/:id', async (req, res, next) => {
         }
         if (res.locals.user) {
             console.log("login");
+            /////////////
+
+            console.log("@@! = ", req.user.id);
+            const [books_for_notice] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        OwnerId: req.user.id,
+                    }
+                })
+            ]);
+
+            const [books_for_notice_commu] = await Promise.all([
+                Community.findAll({
+                    where: {
+                        postingId: req.user.id,
+                    }
+                })
+            ]);
+
+
+            const notices = [];
+            for (const notice of books_for_notice) {
+                const { id } = notice;
+                notices.push(id);
+            }
+
+            const [likesfornotice] = await Promise.all([
+                Who.findAll({
+                    where: {
+                        thisbook: notices,
+                        isNotified_like: {
+                            [Op.ne]: '1'
+                        },
+                    }
+                })
+            ]);
+
+            const notices_commu = [];
+            for (const notice of books_for_notice_commu) {
+                const { id } = notice;
+                notices_commu.push(id);
+            }
+
+            console.log("WWW = ", notices);
+            console.log("book = ", books_for_notice);
+            console.log("user = ", req.user.id);
+            const [noticess] = await Promise.all([
+                Post.findAll({
+                    where: {
+                        [Op.or]: [
+                            {
+                                BookId: notices,
+                                UserId: { [Op.ne]: String(req.user.id) }
+                            }, { // 커뮤니티 댓글 구별
+                                CommunityId: notices_commu,
+                                UserId: { [Op.ne]: String(req.user.id) }
+                            }],
+                        isNotified_posts: {
+                            [Op.ne]: '1'
+                        },
+                    }
+                })
+            ]);
+            console.log("noticess = ", noticess);
+
+            ////////////
             res.render('communityDetail.html', {
                 community,
-                createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(community.createdAt).format('YYYY.MM.DD HH:mm'),
                 users: res.locals.user,
                 user: community.postingId,
                 communityId: community.id,
                 comments: time,
                 re_comments: re_time,
+                noticess,
+                likesfornotice,
             });
         } else if (isNotLoggedIn) {
             console.log("not login");
             res.render('communityDetail.html', {
                 title: `책 구경`,
                 community,
-                createdAt: moment(community.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+                createdAt: moment(community.createdAt).format('YYYY.MM.DD HH:mm'),
                 user: community.postingId,
                 comments: time,
                 re_comments: re_time,
@@ -271,13 +383,14 @@ router.get('/community/:id', async (req, res, next) => {
 // 커뮤니티 댓글 달기
 router.post('/community/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
-        const { comment } = req.body;
+        const { comment, communityId } = req.body;
         console.log("comment = ", comment);
         const post = await Post.create({
             content: comment,
             commentingNick: req.user.nick,
             UserId: req.user.id,
             CommunityId: req.params.id,
+            thisURL: String(`/free_community/community/${communityId}`),
         });
         return res.send(`<script type="text/javascript">location.href="/free_community/community/${post.CommunityId}";</script>`);
     } catch (error) {
@@ -289,18 +402,19 @@ router.post('/community/:id/comment', isLoggedIn, async (req, res, next) => {
 // 0421 대댓글 기능 
 router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
-        // console.log("@!@!@@");
+        // console.log("/free_community/recomment 진입");
         const { comment, UserId, communityId, commentId } = req.body;
-        // console.log("@!@!@@ = ", commentId);
-        // console.log("@!@!@@ = ", communityId);
-        // console.log("@!@!@@ = ", req.body);
-        const post = await Post.create({
+        console.log("community에 commentId = ", commentId);
+        // console.log("communityId = ", communityId);
+        // console.log("req.body = ", req.body);
+        await Post.create({
             content: comment,
             UserId: req.user.id,
             CommunityId: communityId,
             reCommentingId: commentId,
             reCommentedId: req.user.id,
             reCommentNick: req.user.nick,
+            thisURL: String(`/free_community/community/${communityId}`),
         });
         return res.send(`<script type="text/javascript">location.href="/free_community/community/${communityId}";</script>`);
     } catch (error) {
@@ -308,7 +422,5 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
-
-
 
 module.exports = router;

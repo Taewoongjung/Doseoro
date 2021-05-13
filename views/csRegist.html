@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <title>문의 등록</title>
+</head>
+
+<body>
+  <div class="flex w-100">
+    <!-- top -->
+    {% include "topNavbar.html" %}
+
+    <!-- 커뮤니티 등록 -->
+    <main class="registerForm border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
+      <form id="register_book-form" class="regiRequest p-5">
+
+        <div class="mb-1">
+          <h1 class="h3">고객문의</h1>
+          <input type="text" class="form-control p-3" id="postTitle" name="postTitle" placeholder="제목" required autofocus>
+        </div>
+
+        <div class="input-group">
+          <label for="book-about">문의 내용</label>
+          <textarea type="text" class="textInput form-control p-3 mb-4" id="book-about" name="postAbout" placeholder="내용" rows="10"></textarea>
+        </div>
+
+        <button class="btn btn-lg btn-primary w-100" class="btn" type="submit" onclick="one()">게시물 등록</button>
+      </form>
+    </main>
+
+  </div>
+
+  <!-- footer -->
+  <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+
+  <script>
+    function one() {
+      const request = document.getElementById('register_book-form');
+      request.setAttribute('action', '/customer/customerComplain');
+      request.setAttribute('method', 'POST');
+    }
+  </script>
+  <script src="/js/ckboxLimit.js"></script>
+  <script src="/js/topNav.js"></script>
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/changeLine.js"></script>
+</body>
+
+</html>

@@ -28,25 +28,73 @@
             <div class="w-75 ms-auto me-auto">
                 <!-- 제목 -->
                 <div class="w-100 pb-2 mb-4 border-bottom">
-                    <div class="d-lg-flex align-items-center">
-                        <h1 class="h2 text-decoration-none w-100 fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
-                        <!-- 등록 시간을 DB에서 받아와 YMD 형식으로 바꿀 JS코드 필요 => 해결 -->
-                        <a class="text-decoration-none w-100 text-dark text-end" id="getPostingDate">{{createdAt}}</a>
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        <h1 class="h2 fw-bold" id="getPostingTitle">{{book.postmessage}}</h1>
+                        <p class="">조회수 : {{book.hits}}</p>
                     </div>
-                    <p class="mt-3 mb-3 fw-bold">{{book.usernick}}</p>
-                    {% if this_book_location %}
-                    <p><a><img src="/img/marker.png" width="25px" height="25px"></a>{{this_book_location}}</p>
-                    {% else %}
-                    <p><a><img src="/img/marker.png" width="25px" height="25px"></a>위치 등록이 안되었습니다.</p>
-                    {% endif %}
+                    <div class="d-lg-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center mb-2">
+                            <p class="me-2 mt-2 fw-bold">{{book.usernick}}</p>
+                            {% if this_book_location %}
+                            <p><a><img src="/img/marker.png" width="20px"></a>{{this_book_location}}</p>
+                            {% else %}
+                            <p><a><img src="/img/marker.png" width="20px"></a>미등록</p>
+                            {% endif %}
+                        </div>
+                        <!-- <a class="text-decoration-none text-dark text-end" id="getPostingDate">{{createdAt}}</a> -->
+                        <a class="text-decoration-none text-dark text-end" id="getPostingDate"></a>
+                        <input id="postingTime" type="hidden" value="{{createdAt}}">
+                    </div>
                 </div>
 
                 <!-- 책 정보 -->
                 <div class="wrapBookInfo d-lg-flex align-items-center ">
-                    <div class="bookImg mb-3">
-                        <a href="#" class=""><img class="" src="/img/{{book.img}}" style="border-radius:21px"
-                                width="320px" height="400px"></a>
+                    <!-- 이미지 슬라이드 -->
+                    <div id="carouselExampleControls" class="carousel slide slideBox" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% if book.img[0] != NULL %}
+                            <div class="carousel-item active">
+                                <img class="" src="/img/{{book.img[0]}}" style="border-radius:21px;" width="320px"
+                                    height="400px" alt="bookImg">
+                            </div>
+                            {% endif %}
+                            {% if book.img[1] != NULL %}
+                            <div class="carousel-item">
+                                <img class="" src="/img/{{book.img[1]}}" style="border-radius:21px" width="320px"
+                                    height="400px" alt="bookImg">
+                            </div>
+                            {% endif %}
+                            {% if book.img[2] != NULL %}
+                            <div class="carousel-item">
+                                <img class="" src="/img/{{book.img[2]}}" style="border-radius:21px" width="320px"
+                                    height="400px" alt="bookImg">
+                            </div>
+                            {% endif %}
+                            {% if book.img[3] != NULL %}
+                            <div class="carousel-item">
+                                <img class="" src="/img/{{book.img[3]}}" style="border-radius:21px" width="320px"
+                                    height="400px" alt="bookImg">
+                            </div>
+                            {% endif %}
+                            {% if book.img[4] != NULL %}
+                            <div class="carousel-item">
+                                <img class="" src="/img/{{book.img[4]}}" style="border-radius:21px" width="320px"
+                                    height="400px" alt="bookImg">
+                            </div>
+                            {% endif %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
                     </div>
+
                     <div class="bookInfo w-75 me-0 ms-sm-5 align-content-between">
                         <div class="d-flex mb-3 align-items-center w-100 justify-content-between">
                             <div class="saleCheck d-flex border-0 p-2 me-2 align-items-center"
@@ -68,6 +116,7 @@
                                             <input type="hidden" name="postmessage" value="{{book.postmessage}}">
                                             <input type="hidden" name="title" value="{{book.title}}">
                                             <input type="hidden" name="price" value="{{book.price}}">
+                                            <input type="hidden" name="registeredUserNick" value="{{book.usernick}}">
                                             <button class="btn  btn-outline-primary" class="btn" type="submit"
                                                 onclick="like()" style="border: 0px">❤️</button>
 
@@ -89,7 +138,9 @@
                                     <input type="hidden" id="delete_it-{{book.id}}" name="this_item_createdAt"
                                         value="{{book.createdAt}}">
                                     <div class="dropdown">
-                                        <a class="btn" href="#" data-bs-toggle="dropdown" aria-expanded="true">⁝</a>
+                                        <a class="btn kebobMenu" href="#" data-bs-toggle="dropdown"
+                                            aria-expanded="true"><img src="/img/kebob.png" alt="dropdownMenu"
+                                                width="15px"></a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdown1">
                                             <!-- 무료나눔 or 판매 -->
                                             {% if free_books | length %}
@@ -144,11 +195,6 @@
                             <h4 class="h4 fw-bold w-50">거래방법</h4>
                             <a class="text-body text-decoration-none" id="getAppearanceInfo">{{book.tradingmethod}}</a>
                         </div>
-                        <!-- 판매자 위치 표시 -->
-                        <!-- <div class="category d-flex align-items-center mt-2 mb-2">
-                            <h4 class="h4 fw-bold w-50">거래지역</h4>
-                            <a class="text-body text-decoration-none" id="postLocation">위치를 표시합니다</a>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -177,18 +223,45 @@
                     {% if users and users.id %}
                     <form id="comment-ED-form-{{comment.id}}">
                         <!-- 댓글 -->
-                        <div class="d-flex align-items-center">
+                        <div>
                             <input type="hidden" name="bookId" value="{{bookId}}">
                             <input type="hidden" name="UserId" value="{{comment.UserId}}">
                             <input type="hidden" name="commentId" value="{{comment.id}}">
                             <input type="hidden" name="comment_createdAt" value="{{comment.createdAt}}">
 
-                            <div class="d-flex justify-content-between w-100">
-                                <div class="d-flex">
-                                    <div class="comment-nick me-5">{{comment.commentingNick}}</div>
-                                    <div class="comment-content">{{comment.content}}</div>
+                            <!-- 댓글본문 -->
+                            <div class="commentList">
+                                <div class="d-sm-flex commentListInner">
+                                    <!-- 유저닉네임 받아오기 -->
+                                    <div class="comment-nick fw-bold">{{comment.commentingNick}}</div>
+                                    <input hidden id="comment-nick-{{comment.id}}" value="{{comment.commentingNick}}">
+
+                                    <div class="d-flex align-items-center">
+                                        <div class="comment-content">{{comment.createdAt}}</div>
+                                        <div class="dropdown">
+                                            <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
+                                                aria-expanded="true"></a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                                <li><a id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
+                                                        role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                        onclick="re_comment('{{comment.id}}')">댓글</a></li>
+                                                <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
+                                                        role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                        onclick="comment_edit('{{comment.id}}')">수정</button></li>
+                                                <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
+                                                        role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                        onclick="comment_delete('{{comment.id}}')">삭제</button></li>
+                                                {% if users.nick == book.usernick %}
+                                                <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
+                                                        role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                        onclick="comment_trade_complete('{{comment.id}}')">거래완료</button>
+                                                </li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="comment-content me-3">{{comment.createdAt}}</div>
+                                <div class="comment-content"><a>{{comment.content}}</a></div>
                             </div>
 
                             <input type="hidden" id="edit_it-{{comment.id}}" name="edited_comment"
@@ -197,26 +270,10 @@
                                 value="{{comment.UserId}}">
                             <input type="hidden" id="commentid_it-{{comment.id}}" name="commentId"
                                 value="{{comment.id}}">
-
-                            <div class="dropdown">
-                                <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
-                                    aria-expanded="true"></a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                    <li><a id="comment-edit-btn-{{comment.id}}" class="dropdown-item" role="menuitem"
-                                            tabindex="-1" type="submit" class="btn"
-                                            onclick="re_comment('{{comment.id}}')">댓글</a></li>
-                                    <li><button id="comment-edit-btn-{{comment.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="comment_edit('{{comment.id}}')">수정</button></li>
-                                    <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="comment_delete('{{comment.id}}')">삭제</button></li>
-                                </ul>
-                            </div>
                         </div>
                     </form>
-                    <!-- 대댓글표시위치 -->
-                    <div id="inputReComment-{{comment.id}}"></div>
+                    <!-- 답글입력 -->
+                    <div id="inputReComment-{{comment.id}}" class="w-100"></div>
                     <!-- 로그인 대댓글 -->
                     {% for re_comment in re_comments %}
                     <form id="re_comment-ED-form-{{comment.id}}-{{re_comment.id}}">
@@ -226,62 +283,83 @@
                         <input type="hidden" name="re_bookId" value="{{bookId}}">
                         <input type="hidden" name="re_commentId" value="{{re_comment.id}}">
                         <input type="hidden" name="re_comment_createdAt" value="{{re_comment.createdAt}}">
-                        <div class="d-flex align-items-center">
-                            <div class="comment-nick me-3">
-                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{re_comment.reCommentNick}}</div>
-                            <div class="comment-content me-3">
-                                {{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+                        <div class="reCommentList">
+                            <div class="reCommentListInner d-sm-flex">
+                                <div class="d-flex align-items-center">
+                                    <div class="p-2"><img src="/img/reply.png" style="opacity: 0.5;" width="15px"></div>
+
+                                    <!-- 유저닉네임 받아오기 -->
+                                    <div class="comment-nick fw-bold">{{re_comment.reCommentNick}}</div>
+                                    <input hidden id="reCom_nick-{{comment.id}}-{{re_comment.id}}"
+                                        value="{{re_comment.reCommentNick}}">
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="comment-content">{{re_comment.createdAt}}</div>
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
+                                            aria-expanded="true"></a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                                            <li><button id="re_comment-edit-btn-{{re_comment.id}}" class="dropdown-item"
+                                                    role="menuitem" tabindex="-1" type="submit" class="btn"
+                                                    onclick="re_comment_edit('{{comment.id}}','{{re_comment.id}}')">
+                                                    수정</button>
+                                            </li>
+                                            <li><button id="re_comment-delete-btn-{{re_comment.id}}"
+                                                    class="dropdown-item" role="menuitem" tabindex="-1" type="submit"
+                                                    class="btn"
+                                                    onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">
+                                                    삭제</button>
+                                            </li>
+                                            {% if users.nick == book.usernick %}
+                                            <li id="finTrade"><button id="re_comment-delete-btn-{{re_comment.id}}"
+                                                    class="dropdown-item" role="menuitem" tabindex="-1" type="submit"
+                                                    class="btn"
+                                                    onclick="re_comment_trade_complete('{{comment.id}}','{{re_comment.id}}')">
+                                                    거래완료</button>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="comment-content me-3">
-                                {{re_comment.createdAt}}
-                            </div>
+                            <div class="comment-content ms-sm-2"><a>{{re_comment.content}}</a></div>
                             <input type="hidden" id="reCom_id-{{re_comment.id}}" name="reCom_edited_comment"
                                 value="{{re_comment.content}}">
-                            <div class="dropdown">
-                                <a class="dropdown-toggle btn" href="#" data-bs-toggle="dropdown"
-                                    aria-expanded="true"></a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                    <li><button id="re_comment-edit-btn-{{re_comment.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="re_comment_edit('{{comment.id}}','{{re_comment.id}}')">수정</button></li>
-                                    <li><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item"
-                                            role="menuitem" tabindex="-1" type="submit" class="btn"
-                                            onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">삭제</button></li>
-                                </ul>
-                            </div>
                         </div>
                         {% endif %}
                     </form>
                     {% endfor %}
-
-                    <!-- 비로그인 댓글 -->
-                    {% else %}
-                    <div class="d-flex align-items-center">
-                        <div class="comment-nick me-3">{{comment.commentingNick}}</div>
-                        <div class="comment-content me-3">{{comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                        </div>
-                        <div class="comment-content me-3">{{comment.createdAt}}</div>
-                    </div>
-
-                    <!-- 비로그인 대댓글 -->
-                    {% for re_comment in re_comments %}
-                    {% if re_comment.reCommentingId == comment.id %}
-                    <div class="d-flex align-items-center">
-                        <div class="comment-nick me-3">
-                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{re_comment.reCommentNick}}</div>
-                        <div class="comment-content me-3">
-                            {{re_comment.content}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                        </div>
-                        <div class="comment-content me-3">
-                            {{re_comment.createdAt}}
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                    {% endif %}
-                </table>
-                {% endfor %}
             </div>
+
+            <!-- 비로그인 댓글 -->
+            {% else %}
+            <div class="commentList">
+                <div class="d-sm-flex commentListInner">
+                    <div class="comment-nick fw-bold">{{comment.commentingNick}}</div>
+                    <div class="comment-content">{{comment.createdAt}}</div>
+                </div>
+                <div class="comment-content"><a>{{comment.content}}</a></div>
+            </div>
+
+            <!-- 비로그인 대댓글 -->
+            {% for re_comment in re_comments %}
+            {% if re_comment.reCommentingId == comment.id %}
+            <div class="reCommentList">
+                <div class="reCommentListInner d-sm-flex">
+                    <div class="d-flex align-items-center">
+                        <div class="p-2"><img src="/img/reply.png" style="opacity: 0.5;" width="15px"></div>
+                        <div class="comment-nick fw-bold">{{re_comment.reCommentNick}}</div>
+                    </div>
+                    <div class="comment-content">{{re_comment.createdAt}}</div>
+                </div>
+                <div class="comment-content ms-sm-2"><a>{{re_comment.content}}</a></div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            </table>
+            {% endfor %}
         </main>
         <!-- footer -->
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
@@ -353,7 +431,7 @@
             const commentId = document.getElementById(`commentid_it-${id}`).value;
             console.log("@@ = ", commentId);
             const inputRe = document.getElementById(`inputReComment-${id}`);
-            inputRe.innerHTML = '<form action="/recomment" method="POST"><div class="input-group"><input id="comment" autofocus class="w-25 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">대댓글등록</button></div></form>';
+            inputRe.innerHTML = '<form action="/recomment" method="POST"><div class="input-group"><input type="text" id="comment" class="reComment inputForm w-50 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">답글등록</button></div></form>';
             document.getElementById(`userId`).value = userId;
             document.getElementById(`commentId`).value = commentId;
         }
@@ -385,9 +463,40 @@
             request.setAttribute('method', 'GET');
         }
 
+        // 댓글 거래 완료
+        function comment_trade_complete(id) {
+            const name = document.getElementById(`comment-nick-${id}`).value
+            console.log(name);
+            const request = document.getElementById(`comment-ED-form-${id}`);
+            // confirm에서 선택에 따라 이벤트 발생
+            if (confirm('"' + name + '"' + "님과 거래를 마쳤습니까?")) {
+                // 성공
+                request.setAttribute('action', '/trade/commentTrade_sale');
+                request.setAttribute('method', 'POST');
+            } else
+                // 취소
+                alert("거래 취소");
+        }
+
+        // 대댓글 거래 완료
+        function re_comment_trade_complete(cid, id) {
+            const reName = document.getElementById(`reCom_nick-${cid}-${id}`).value
+            console.log(reName);
+            const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
+            // confirm에서 선택에 따라 이벤트 발생
+            if (confirm(reName + "님과 거래를 마쳤습니까?")) {
+                // 성공
+                request.setAttribute('action', '/trade/reCommentTrade_sale');
+                request.setAttribute('method', 'POST');
+            } else
+                // 취소
+                alert("거래 취소");
+        }
+
     </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/topNav.js"></script>
+    <script src="/js/timestamp.js"></script>
 
 </body>
 

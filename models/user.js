@@ -40,6 +40,18 @@ module.exports = class User extends Sequelize.Model {
                 type: Sequelize.STRING(150),
                 allowNull: true,
             },
+            dong: {
+                type: Sequelize.STRING(10),
+                allowNull: true,
+            },
+            si: {
+                type: Sequelize.STRING(10),
+                allowNull: true,
+            },
+            do: {
+                type: Sequelize.STRING(10),
+                allowNull: true,
+            },
             provider: { // kakao로 할 때는 kakao로 바뀜
                 type: Sequelize.STRING(10),
                 allowNull: false,

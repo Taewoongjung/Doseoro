@@ -2,15 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="/css/style.css">
-    
-    <title>판매 게시판</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <title>팝니다</title>
 </head>
 
 <body>
@@ -21,42 +22,31 @@
     <!-- main -->
     <main class="container-sm mt-0 mb-0 min-vh-100 pt-5">
       <!-- 검색, 메뉴이동 기능 -->
-      {% include "searchBox.html" %}
+      {% if user %}
+        {% include "searchBoxLoggedIn.html" %}
+      {% else %}
+        {% include "searchBox.html" %}
+      {% endif %}
 
       <!-- 판매리스트 -->
       <div class="saleList pt-5 mt-5 border-top">
         <h1 class="h2 fw-bold">판매중인 책</h1><br>
-        <form id="book-form"><a href="/pages/regi-book"class="addBook text-decoration-none btn-primary p-2">상품 등록</a></form>
+        <form id="book-form"><a href="/pages/regi-book" class="addBook text-decoration-none btn-primary p-2">상품 등록</a>
+        </form>
 
         <div class="d-flex justify-content-center flex-wrap mt-5">
           {% for book in books | reverse %}
           {% if book.price > 0 %}
-          <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
-            <img src="/img/{{book.img}}" class="card-img-top" width="100%" height="280px">
+          <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;"
+            onclick="location.href='/book/{{book.id}}'">
+            <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
             <div class="card-body text-center">
               <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
               <p>{{book.price}} 원</p>
-              <!-- <a href="/book/{{book.id}}" class="enter btn-primary ms-5 p-2 text-decoration-none">자세히</a> -->
             </div>
           </div>
           {% endif %}
           {% endfor %}
-        </div>
-
-        <!-- 검색결과 -->
-        <div class="searchResult mt-5">
-          <p class="h4 fw-bold">검색 결과</p>
-          <div class="d-flex justify-content-center flex-wrap">
-            {% for foundBook in foundBooks %}
-            <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
-              <img src="/img/{{foundBook.img}}" class="card-img-top" width="100%" height="280px">
-              <div class="card-body">
-                <p class="postTitle card-title fw-bold mb-3">{{foundBook.postmessage}}</p>
-                <a>{{foundBook.price}} 원</a>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
         </div>
 
       </div>
@@ -72,7 +62,6 @@
       request.setAttribute('method', 'GET');
     }
   </script>
-  <!-- <script src="/js/searchDisplay.js"></script> -->
   <script src="/js/topNav.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
 </body>

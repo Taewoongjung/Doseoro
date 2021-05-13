@@ -13,7 +13,7 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/css/style.css">
-    <title>도서로</title>
+    <title>커뮤니티</title>
 </head>
 
 <body>
@@ -22,26 +22,51 @@
         {% include "topNavbar.html" %}
 
         <!-- main -->
-        <main class="border container-sm mt-0 mb-0 min-vh-100 pt-5">
+        <main class="container-sm mt-0 mb-0 min-vh-100 pt-5">
             <!-- 검색, 메뉴이동 기능 -->
-            {% include "searchBox.html" %}
+            {% if user %}
+                {% include "searchBoxLoggedIn.html" %}
+            {% else %}
+                {% include "searchBox.html" %}
+            {% endif %}
 
-            <h1 class="h2 fw-bold mb-4">커뮤니티</h1>
-            <form id="book-form" class="mb-5"><a href="/pages/registCommunity"
-                    class="addBook text-decoration-none btn-primary p-2">글 등록</a></form>
+            <div class="saleList pt-5 mt-5 border-top">
+                <h1 class="h2 fw-bold mb-4">커뮤니티</h1>
+                <form id="book-form" class="mb-5"><a href="/pages/registCommunity"
+                        class="addBook text-decoration-none btn-primary p-2">글 등록</a></form>
 
-            <!-- 각 게시물 -->
-            {% for community in communities | reverse %}
-            <div class="postingList border p-5" onclick="location.href='/free_community/community/{{community.id}}'">
-                <div class="pb-3 border-bottom">
-                    <div class="d-sm-flex justify-content-between align-items-center">
-                        <h1 class="postingTitle h3 fw-bold">{{community.title}}</h1>
-                        <a class="text-decoration-none text-dark">{{community.createdAt}}</a>
+                <!-- 각 게시물 -->
+                {% for community in communities | reverse %}
+                <div id="postNum_{{loop.index}}" class="postingList border p-5" onclick="location.href='/free_community/community/{{community.id}}'">
+                    <a>{{loop.index}}</a>
+                    <div class="pb-3 border-bottom">
+                        <h1 class="h5 fw-bold text-primary">{{community.category}}</h1>
+                        <div class="d-sm-flex justify-content-between align-items-center mb-3">
+                            <h1 class="postingTitle h3 fw-bold">{{community.title}}</h1>
+                            <a class="text-decoration-none text-dark">{{community.createdAt}}</a>
+                        </div>
+                        <a>{{community.postingNick}}</a>
                     </div>
+                    <p class="postingBody pt-3">{{community.content}}</p>
                 </div>
-                <p class="postingBody pt-3">{{community.content}}</p>
+                {% endfor %}
+                <!-- <div style='page-break-before:always'></div> -->
             </div>
-            {% endfor %}
+
+            <!-- 페이징 -->
+            <div class="pagingWrap">
+                <ul id="Postpages"class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                  </ul>
+            </div>
         </main>
 
         <!-- footer -->
@@ -54,9 +79,9 @@
             request.setAttribute('method', 'GET');
         }
     </script>
-    <!-- <script src="/js/searchDisplay.js"></script> -->
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/paging.js"></script>
 </body>
 
 </html>

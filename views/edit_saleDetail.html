@@ -89,7 +89,7 @@
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state2" name="checkState" value="필기있음">
             <label for="book-state2" class="me-3 ms-2" style="display: block;">필기있음</label></div>
 
-          <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state3" name="checkState" value="접힌저국">
+          <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state3" name="checkState" value="접힌자국">
             <label for="book-state3" class="me-3 ms-2" style="display: block;">접힌자국</label></div>
 
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state4" name="checkState" value="찢김">
@@ -97,8 +97,6 @@
 
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state5" name="checkState" value="기타">
            <label for="book-state5" class="me-3 ms-2" style="display: block;">기타</label></div>
-
-          <!-- <input type="text" class="form-control p-3" id="book-demaged" name="demaged" placeholder="외관손상" required> -->
         </div>
 
         <h1 class="h4 mt-3">거래방법</h1>
@@ -109,18 +107,20 @@
           <option name="dealRoot" value="직거래">직거래</option>
           <option name="dealRoot" value="택배">택배</option>
         </select>
-
-        <h1 class="h4 mt-3">이전 상품 사진</h1>
-        <div class="bookImg mb-3">
-          <a href="#" class=""><img class="" src="/img/{{books.img}}" style="border-radius:21px"
-                  width="320px" height="400px"></a>
-          <p>파일명:&nbsp&nbsp&nbsp&nbsp&nbsp{{books.img}}</p>
+        
+        <h1 class="h4 mt-3">상품 사진</h1>
+        <!-- 멀티 업로드 test -->
+        <div id="nowimage">
+          {% for i in range(0,5) -%}
+            {% if books.img[i] != NULL %}
+              <img src="/img/{{books.img[i]}}" width="180px" style="border-radius: 8px; margin: 10px;">
+            {% endif %}
+          {%- endfor %}
         </div>
 
-        <h1 class="h4 mt-3">상품 사진</h1>
         <div class="input-group mb-3">
           <label for="book-photo">상품 사진</label>
-          <input type="file" class="form-control" id="book-photo" name="img" required>
+          <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" onchange="clearImg()" multiple required>
         </div>
 
         <div class="input-group">
@@ -148,6 +148,7 @@
   </script>
   <script src="/js/ckboxLimit.js"></script>
   <script src="/js/topNav.js"></script>
+  <script src="/js/previewPost.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 
