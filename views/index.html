@@ -72,7 +72,11 @@
                     <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
                     <div class="card-body text-center">
                       <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
-                      <a>{{book.price}} 원</a>
+                      {% if book.price == -1 %}
+                        <a>무료나눔</a>
+                      {% else %}
+                        <a>{{book.price}} 원</a>
+                      {% endif %}
                     </div>
                   </div>
                   {% endfor %}

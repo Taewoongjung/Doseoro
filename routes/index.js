@@ -35,28 +35,35 @@ router.get('/', async (req, res, next) => {
         ]);  
         console.log("hot books = ", rankedBooks);
 
+        // 최근 판매한 상품들 (팝니다, 무료나눔)
         const [recentSoldBooks] = await Promise.all([
             Book.findAll({
                 where: { 
                     sold: { [Op.eq]: 1 },
                     SoldId: { [Op.ne]: null },
-                    price: { [Op.ne]: -1 },
+                    // price: { [Op.ne]: -1 },
+                    img: { [Op.ne]: null }
                 },
                 order: [['updatedAt', 'ASC']],
                 limit: 4,
             })
         ]);
         console.log("recent sold books = ", recentSoldBooks);
-        // // 좋아요 5개 이하
-        // console.log("@@@@@@@@@", hit_books);
-        // const [reg_books] = await Promise.all([
+
+        // 최근 구매한 상품들
+        // const [recentBoughtBooks] = await Promise.all([
         //     Book.findAll({
         //         where: { 
-        //             likecount: { [Op.lte]: 3 }, 
-        //             SoldId: null 
+        //             sold: { [Op.eq]: 1 },
+        //             SoldId: { [Op.ne]: null },
+        //             img: null
         //         },
+        //         order: [['updatedAt', 'ASC']],
+        //         limit: 4,
         //     })
         // ]);
+        // console.log("recent sold books = ", recentBoughtBooks);
+
         if (req.user) {
             console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
