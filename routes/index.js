@@ -517,10 +517,10 @@ router.get('/book/:id', async (req, res, next) => {
 
         const [free_books] = await Promise.all([
             Book.findAll({
-                where: { id: req.params.id, SoldId: null, isSelling: null, price: -1 }
+                where: { id: req.params.id, price: -1 }
             })
         ]);
-
+        console.log("free = ", free_books);
         const time = [];
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;
