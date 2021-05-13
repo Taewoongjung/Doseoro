@@ -51,18 +51,18 @@ router.get('/', async (req, res, next) => {
         console.log("recent sold books = ", recentSoldBooks);
 
         // 최근 구매한 상품들
-        // const [recentBoughtBooks] = await Promise.all([
-        //     Book.findAll({
-        //         where: { 
-        //             sold: { [Op.eq]: 1 },
-        //             SoldId: { [Op.ne]: null },
-        //             img: null
-        //         },
-        //         order: [['updatedAt', 'ASC']],
-        //         limit: 4,
-        //     })
-        // ]);
-        // console.log("recent sold books = ", recentBoughtBooks);
+        const [recentBoughtBooks] = await Promise.all([
+            Book.findAll({
+                where: { 
+                    sold: { [Op.eq]: 1 },
+                    SoldId: { [Op.ne]: null },
+                    img: null
+                },
+                order: [['updatedAt', 'ASC']],
+                limit: 4,
+            })
+        ]);
+        console.log("recent bought books = ", recentBoughtBooks);
 
         if (req.user) {
             console.log("@@! = ", req.user.id);

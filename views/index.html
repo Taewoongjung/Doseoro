@@ -38,6 +38,7 @@
               <li data-bs-target="#bannerList" data-bs-slide-to="0" class="active"></li>
               <li data-bs-target="#bannerList" data-bs-slide-to="1"></li>
               <li data-bs-target="#bannerList" data-bs-slide-to="2"></li>
+              <li data-bs-target="#bannerList" data-bs-slide-to="3"></li>
             </ol>
             <div class="carousel-inner">
               <div class="carousel-item active">
@@ -89,11 +90,30 @@
                     슬라이드</text>
                 </svg>
                 <div class="carousel-caption d-none d-md-block">
-                  <h2>세번째 슬라이드</h2>
-                  <p>슬라이드3입니다.</p>
+                  {% for book in recentBoughtBooks %}
+                    <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
+                        <div class="d-flex w-75 justify-content-between mt-2">
+                            <div class="ms-sm-4">
+                                <h1 class="h2 m-1 fw-bold mb-3">{{book.title}}</h1>
+                                <h4 class="h5 m-1 mb-2">가격: {{book.price}} 원</h4>
+                                <h4 class="h5 m-1 mb-2">카테고리: {{book.category}}</h4>
+                                <h4 class="h5 m-1 mb-2">거래 방법: {{book.tradingmethod}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
                 </div>
               </div>
-            </div>
+              <div class="carousel-item">
+                <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400"
+                  xmlns="http://www.w3.org/2000/svg" role="img" focusable="false">
+                  <rect width="100%" height="100%" fill="#444" /><text x="50%" y="50%" fill="#333" dy=".3em">네번째
+                    슬라이드</text>
+                </svg>
+                <div class="carousel-caption d-none d-md-block">
+                  <div>4번째 슬라이드</div>
+                </div>
+              </div>
             <a class="carousel-control-prev" href="#bannerList" role="button" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
