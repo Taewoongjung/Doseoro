@@ -54,7 +54,11 @@
                         <div class="d-flex mb-3 align-items-center w-100 justify-content-between">
                             <div class="saleCheck d-flex border-0 p-2 me-2 align-items-center"
                                 style="border-radius: 10px">
-                                <a class="h5 mb-0 text-decoration-none fw-bold">구매</a>
+                                {% if book.sold == 1 %}
+                                    <a class="h5 mb-0 text-decoration-none fw-bold">구매완료</a>
+                                {% else %}
+                                    <a class="h5 mb-0 text-decoration-none fw-bold">구매</a>
+                                {% endif %}
                                 <div class="">
                                     <form id="book_like-form">
                                         <div class="saleCheck border-0 p-2 d-flex" style="border-radius: 10px">

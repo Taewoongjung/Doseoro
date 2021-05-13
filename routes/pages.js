@@ -111,6 +111,20 @@ router.get('/csList', isLoggedIn, async (req, res) => {
         }),
     ]);
 
+    const Acomplain = [];
+    for (const complain of complains) {
+        const { createdAt, complainedNick, isSettled, complainedId, id, content, title } = complain;
+        Acomplain.push({
+            createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
+            title,
+            content,
+            complainedNick,
+            complainedId,
+            id,
+            isSettled
+        });
+    }
+
     /////////////
 
     console.log("@@! = ", req.user.id);
@@ -179,7 +193,7 @@ router.get('/csList', isLoggedIn, async (req, res) => {
     ////////////
 
     res.render('csList.html',{
-        complains,
+        complains: Acomplain,
         noticess,
         likesfornotice,
     });

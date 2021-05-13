@@ -79,7 +79,7 @@ router.post('/reCommentTrade_sale', isLoggedIn, async (req, res, next) => {
                 where: { id: theBook.id},
             });                            
             // return res.send(`<script type="text/javascript">alert("거래 완료!"); location.href="/book/${re_bookId}";</script>`);
-            return res.send(`<script type="text/javascript">alert("거래 완료!"); location.href="/tradeHistory";</script>`);
+            return res.send(`<script type="text/javascript">alert("거래 완료!"); location.href="/tory";</script>`);
         } else {
             return res.send(`<script type="text/javascript">alert("잘못된 접근 입니다.(자신한테 거래)"); location.href="/book/${re_bookId}";</script>`);
         }
@@ -117,7 +117,7 @@ router.post('/commentTrade_buy', isLoggedIn, async (req, res, next) => {
                 where: { id: theBook.id},
             });                             // 거래 완료되면 판매내역으로 이동할지 조원들과 회의
             // return res.send(`<script type="text/javascript">alert("거래 완료!"); location.href="/wannabuy/buybook/${bookId}";</script>`);
-            return res.send(`<script type="text/javascript">alert("거래 완료!"); location.href="/tradeHistory";</script>`);
+            return res.send(`<script type="text/javascript">alert("거래 완료!"); location.href="/tory";</script>`);
         } else {
             return res.send(`<script type="text/javascript">alert("잘못된 접근 입니다.(자신한테 거래)"); location.href="/wannabuy/buybook/${bookId}";</script>`);
         }
@@ -155,7 +155,7 @@ router.post('/reCommentTrade_buy', isLoggedIn, async (req, res, next) => {
                 where: { id: theBook.id},
             });                             // 거래 완료되면 판매내역으로 이동할지 조원들과 회의
             // return res.send(`<script type="text/javascript">alert("거래 완료!"); location.href="/wannabuy/buybook/${re_bookId}";</script>`);
-            return res.send(`<script type="text/javascript">alert("거래 완료!"); location.href="/tradeHistory";</script>`);
+            return res.send(`<script type="text/javascript">alert("거래 완료!"); location.href="/tory";</script>`);
         } else {
             return res.send(`<script type="text/javascript">alert("잘못된 접근 입니다.(자신한테 거래)"); location.href="/wannabuy/buybook/${re_bookId}";</script>`);
         }

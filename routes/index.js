@@ -22,24 +22,48 @@ router.get('/', async (req, res, next) => {
         // --------- 인기 순으로 정렬하기 ---------
         //
         // // 좋아요 6개 이상
-        // const [hit_books] = await Promise.all([
-        //     Book.findAll({
-        //         where: { 
-        //             likecount: { [Op.gte]: 6 }, 
-        //             SoldId: null 
-        //         },
-        //     })
-        // ]);  
-        // // 좋아요 5개 이하
-        // console.log("@@@@@@@@@", hit_books);
-        // const [reg_books] = await Promise.all([
-        //     Book.findAll({
-        //         where: { 
-        //             likecount: { [Op.lte]: 3 }, 
-        //             SoldId: null 
-        //         },
-        //     })
-        // ]);
+        const [rankedBooks] = await Promise.all([
+            Book.findAll({
+                where: { 
+                    likecount: { [Op.gte]: 6 }, 
+                    SoldId: null,
+                    price: { [Op.ne]: -1 },
+                },
+                order: [['likecount', 'ASC']],
+                limit: 4,
+            })
+        ]);  
+        console.log("hot books = ", rankedBooks);
+
+        // 최근 판매한 상품들 (팝니다, 무료나눔)
+        const [recentSoldBooks] = await Promise.all([
+            Book.findAll({
+                where: { 
+                    sold: { [Op.eq]: 1 },
+                    SoldId: { [Op.ne]: null },
+                    // price: { [Op.ne]: -1 },
+                    img: { [Op.ne]: null }
+                },
+                order: [['updatedAt', 'ASC']],
+                limit: 4,
+            })
+        ]);
+        console.log("recent sold books = ", recentSoldBooks);
+
+        // 최근 구매한 상품들
+        const [recentBoughtBooks] = await Promise.all([
+            Book.findAll({
+                where: { 
+                    sold: { [Op.eq]: 1 },
+                    SoldId: { [Op.ne]: null },
+                    img: null
+                },
+                order: [['updatedAt', 'ASC']],
+                limit: 4,
+            })
+        ]);
+        console.log("recent bought books = ", recentBoughtBooks);
+
         if (req.user) {
             console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
@@ -116,6 +140,8 @@ router.get('/', async (req, res, next) => {
             console.log("@@! = ", req.user);
             res.render('index.html', {
                 books,
+                rankedBooks,
+                recentSoldBooks,
                 noticess,
                 likesfornotice,
                 user: req.user,
@@ -135,6 +161,8 @@ router.get('/', async (req, res, next) => {
             console.log("@@! = ", req.user);
             res.render('index.html', {
                 books,
+                rankedBooks,
+                recentSoldBooks,
             });
         }
     } catch (error) {
@@ -496,10 +524,10 @@ router.get('/book/:id', async (req, res, next) => {
 
         const [free_books] = await Promise.all([
             Book.findAll({
-                where: { id: req.params.id, SoldId: null, isSelling: null, price: -1 }
+                where: { id: req.params.id, price: -1 }
             })
         ]);
-
+        console.log("free = ", free_books);
         const time = [];
         for (const new_time of comments) {
             const { createdAt, commentingNick, id, content, UserId } = new_time;
