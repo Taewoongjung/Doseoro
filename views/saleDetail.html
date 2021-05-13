@@ -102,7 +102,11 @@
                                 {% if free_books | length %}
                                 <a class="h5 mb-0 text-decoration-none fw-bold">무료나눔</a>
                                 {% else %}
-                                <a class="h5 mb-0 text-decoration-none fw-bold">판매</a>
+                                    {% if book.sold == 1 %}
+                                        <a class="h5 mb-0 text-decoration-none fw-bold">판매완료</a>
+                                    {% else %}
+                                        <a class="h5 mb-0 text-decoration-none fw-bold">판매</a>
+                                    {% endif %}
                                 {% endif %}
                                 <div class="">
                                     <form id="book_like-form">
