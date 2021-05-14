@@ -382,10 +382,10 @@ router.get('/saleBoard', async (req, res, next) => {
             ////////////
 
             let pageArr = new Array();
-            for (let i = 0; i < Math.ceil(AllPageBooks.length / 3); i++) {
+            for (let i = 0; i < Math.ceil(AllPageBooks.length / 8); i++) {
                 pageArr[i] = i;
             }
-
+            console.log("pageArr = ", pageArr);
             const { page } = req.query;
 
             res.render('saleBoard.html', {
@@ -398,7 +398,7 @@ router.get('/saleBoard', async (req, res, next) => {
         } else {
 
             let pageArr = new Array();
-            for (let i = 0; i < Math.ceil(AllPageBooks.length / 3); i++) {
+            for (let i = 0; i < Math.ceil(AllPageBooks.length / 8); i++) {
                 pageArr[i] = i;
             }
 
@@ -727,7 +727,7 @@ router.get('/bookRequest', async (req, res, next) => {
             ////////////
 
             let pageArr = new Array();
-            for (let i = 0; i < Math.ceil(AllPageBuyingBooks.length / 3); i++) {
+            for (let i = 0; i < Math.ceil(AllPageBuyingBooks.length / 6); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
@@ -742,7 +742,7 @@ router.get('/bookRequest', async (req, res, next) => {
         } else {
 
             let pageArr = new Array();
-            for (let i = 0; i < Math.ceil(AllPageBuyingBooks.length / 3); i++) {
+            for (let i = 0; i < Math.ceil(AllPageBuyingBooks.length / 6); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
@@ -978,7 +978,7 @@ router.get('/donationBoard', async (req, res, next) => {
             ////////////
 
             let pageArr = new Array();
-            for (let i = 0; i < Math.ceil(AllPageDonatedBooks.length / 3); i++) {
+            for (let i = 0; i < Math.ceil(AllPageDonatedBooks.length / 8); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
@@ -993,7 +993,7 @@ router.get('/donationBoard', async (req, res, next) => {
         } else {
 
             let pageArr = new Array();
-            for (let i = 0; i < Math.ceil(AllPageDonatedBooks.length / 3); i++) {
+            for (let i = 0; i < Math.ceil(AllPageDonatedBooks.length / 8); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
@@ -1183,7 +1183,7 @@ router.get('/community', async (req, res, next) => {
             ]);
             ////////////
             let pageArr = new Array();
-            for (let i = 0; i < Math.ceil(AllPagecommunities.length / 3); i++) {
+            for (let i = 0; i < Math.ceil(AllPagecommunities.length / 6); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
@@ -1197,7 +1197,7 @@ router.get('/community', async (req, res, next) => {
             });
         } else {
             let pageArr = new Array();
-            for (let i = 0; i < Math.ceil(AllPagecommunities.length / 3); i++) {
+            for (let i = 0; i < Math.ceil(AllPagecommunities.length / 6); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
