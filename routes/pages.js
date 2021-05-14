@@ -1048,7 +1048,7 @@ router.get('/community', async (req, res, next) => {
             ]);
             ////////////
             let arr = new Array();
-            for(let i=0; i<AllPagecommunities.length; i++) {
+            for(let i=0; i<Math.ceil(AllPagecommunities.length/3); i++) {
                 arr[i] = i; 
             }
             res.render('community.html', {
@@ -1060,7 +1060,7 @@ router.get('/community', async (req, res, next) => {
             });
         } else {
             let arr = new Array();
-            for(let i=0; i<AllPagecommunities.length; i++) {
+            for(let i=0; i<Math.ceil(AllPagecommunities.length/3); i++) {
                 arr[i] = i; 
             }
             res.render('community.html', {
