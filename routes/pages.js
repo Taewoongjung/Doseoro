@@ -281,7 +281,7 @@ router.get('/saleBoard', async (req, res, next) => {
         let pageNum = req.query.page; // 전체 게시물 수
         let offset = 0;
         if (pageNum > 1) {  // 보여줄 게시물 수
-            offset = 3 * (pageNum - 1);
+            offset = 8 * (pageNum - 1);
         }
 
         const [books] = await Promise.all([
@@ -294,8 +294,8 @@ router.get('/saleBoard', async (req, res, next) => {
                     },
                 },
                 order: [['createdAt', 'ASC']],
+                limit: 8,
                 offset: offset,
-                limit: 6,
             }),
         ]);
         console.log("books = ", books);
@@ -623,7 +623,7 @@ router.get('/bookRequest', async (req, res, next) => {
         let pageNum = req.query.page; // 전체 게시물 수
         let offset = 0;
         if (pageNum > 1) {  // 보여줄 게시물 수
-            offset = 3 * (pageNum - 1);
+            offset = 6 * (pageNum - 1);
         }
 
         const [books] = await Promise.all([
@@ -884,7 +884,7 @@ router.get('/donationBoard', async (req, res, next) => {
         let pageNum = req.query.page; // 전체 게시물 수
         let offset = 0;
         if (pageNum > 1) {  // 보여줄 게시물 수
-            offset = 3 * (pageNum - 1);
+            offset = 8 * (pageNum - 1);
         }
 
         const [free_books] = await Promise.all([
@@ -892,7 +892,7 @@ router.get('/donationBoard', async (req, res, next) => {
                 where: { SoldId: null, isSelling: null, price: -1 },
                 order: [['createdAt', 'ASC']],
                 offset: offset,
-                limit: 6,
+                limit: 8,
             })
         ]);
         console.log("free_books = ", free_books);
@@ -1090,7 +1090,7 @@ router.get('/community', async (req, res, next) => {
         let pageNum = req.query.page; // 전체 게시물 수
         let offset = 0;
         if (pageNum > 1) {  // 보여줄 게시물 수
-            offset = 3 * (pageNum - 1);
+            offset = 6 * (pageNum - 1);
         }
         // 페이징 추가
         let maxPage;
