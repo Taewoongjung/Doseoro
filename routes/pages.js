@@ -304,6 +304,7 @@ router.get('/saleBoard', async (req, res, next) => {
             Book.findAll({
                 where: {
                     SoldId: null,
+                    isSelling: null,
                     price: {
                         [Op.ne]: -1
                     }
@@ -384,7 +385,9 @@ router.get('/saleBoard', async (req, res, next) => {
             for (let i = 0; i < Math.ceil(AllPageBooks.length / 3); i++) {
                 pageArr[i] = i;
             }
+
             const { page } = req.query;
+
             res.render('saleBoard.html', {
                 books,
                 noticess,
@@ -393,11 +396,14 @@ router.get('/saleBoard', async (req, res, next) => {
                 currentPage: page,
             });
         } else {
+
             let pageArr = new Array();
             for (let i = 0; i < Math.ceil(AllPageBooks.length / 3); i++) {
                 pageArr[i] = i;
             }
+
             const { page } = req.query;
+
             res.render('saleBoard.html', {
                 books,
                 maxPage: pageArr,
