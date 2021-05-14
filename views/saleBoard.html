@@ -23,9 +23,9 @@
     <main class="container-sm mt-0 mb-0 min-vh-100 pt-5">
       <!-- 검색, 메뉴이동 기능 -->
       {% if user %}
-        {% include "searchBoxLoggedIn.html" %}
+      {% include "searchBoxLoggedIn.html" %}
       {% else %}
-        {% include "searchBox.html" %}
+      {% include "searchBox.html" %}
       {% endif %}
 
       <!-- 판매리스트 -->
@@ -49,11 +49,34 @@
           {% endfor %}
         </div>
 
-      </div>
+        <!-- 페이징 -->
+        <div class="pagingWrap">
+          <ul id="Postpages" class="pagination">
+            <li class="page-item">
+              <!-- 이전 페이지 = 현재페이지 - 1 -->
+              <a class="page-link" href="/pages/saleBoard?page={{currentPage - 1}}" aria-label="Previous"><span
+                  aria-hidden="true">&laquo;</span></a>
+            </li>
+            {% for i in maxPage%}
+            <!-- for문으로 페이지 번호 추가-->
+            <li class="page-item"><a class="page-link" href="/pages/saleBoard?page={{ i + 1 }}">{{ i + 1 }}</a></li>
+            <!-- <li class="page-item"><a class="page-link" href="/pages/community?page=2">2</a></li>
+                      <li class="page-item"><a class="page-link" href="/pages/community?page=3">3</a></li> -->
+            {% endfor %}
+            <li class="page-item">
+              <!-- 다음 페이지 = 현재페이지 + 1 -->
+              <a class="page-link" href="/pages/saleBoard?page={{currentPage + 1}}" aria-label="Next"><span
+                  aria-hidden="true">&raquo;</span></a>
+            </li>
+          </ul>
+        </div>
     </main>
 
-    <!-- footer -->
-    <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+  </div>
+  </main>
+
+  <!-- footer -->
+  <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
   </div>
   <script>
     function one() {

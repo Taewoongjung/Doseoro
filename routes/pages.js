@@ -276,6 +276,14 @@ router.get('/csRegist', isLoggedIn, async (req, res, next) => {
 
 router.get('/saleBoard', async (req, res, next) => {
     try {
+        // 페이징 준비
+        console.log("page = ", req.query.page);
+        let pageNum = req.query.page; // 전체 게시물 수
+        let offset = 0;
+        if(pageNum > 1){  // 보여줄 게시물 수
+            offset = 3 * (pageNum - 1);
+        }
+
         const [books] = await Promise.all([
             Book.findAll({
                 where: {
@@ -283,10 +291,29 @@ router.get('/saleBoard', async (req, res, next) => {
                     isSelling: null,
                     price: {
                         [Op.ne]: -1
-                    }
-                }
+                    },
+                },
+                    order: [['createdAt', 'ASC']],
+                    offset: offset,
+                    limit: 3,
             }),
         ]);
+        console.log("books = ", books);
+
+        const [AllPageBooks] = await Promise.all([ // 전체 페이지
+            Book.findAll({
+                where: {
+                    SoldId: null,
+                    price: {
+                        [Op.ne]: -1
+                    }
+                },
+                order: [['createdAt', 'ASC']],
+            })
+        ]);
+
+        console.log("-길이- = ", AllPageBooks.length);
+
         /////////////
         if (req.user) {
             console.log("@@! = ", req.user.id);
@@ -352,14 +379,29 @@ router.get('/saleBoard', async (req, res, next) => {
             ]);
             console.log("noticess = ", noticess);
             ////////////
+
+            let pageArr = new Array();
+            for(let i=0; i<Math.ceil(AllPageBooks.length/3); i++) {
+                pageArr[i] = i;
+            }
+            const { page } = req.query;
             res.render('saleBoard.html', {
                 books,
                 noticess,
                 likesfornotice,
+                maxPage: pageArr,
+                currentPage: page,
             });
         } else {
+            let pageArr = new Array();
+            for(let i=0; i<Math.ceil(AllPageBooks.length/3); i++) {
+                pageArr[i] = i;
+            }
+            const { page } = req.query;
             res.render('saleBoard.html', {
                 books,
+                maxPage: pageArr,
+                currentPage: page,
             });
         }
     } catch (error) {
@@ -1047,26 +1089,31 @@ router.get('/community', async (req, res, next) => {
                 })
             ]);
             ////////////
-            let arr = new Array();
+            let pageArr = new Array();
             for(let i=0; i<Math.ceil(AllPagecommunities.length/3); i++) {
-                arr[i] = i; 
+                pageArr[i] = i;
             }
+            const { page } = req.query;
             res.render('community.html', {
                 communities: responseCommunities,
                 AllPagecommunities,
                 noticess,
                 likesfornotice,
-                maxPage: arr,
+                maxPage: pageArr,
+                currentPage: page
             });
         } else {
-            let arr = new Array();
+            let pageArr = new Array();
             for(let i=0; i<Math.ceil(AllPagecommunities.length/3); i++) {
-                arr[i] = i; 
+                pageArr[i] = i; 
             }
+            const { page } = req.query;
+            console.log("currentPage = ", page);
             res.render('community.html', {
                 communities: responseCommunities,
                 AllPagecommunities,
-                maxPage: arr,
+                maxPage: pageArr,
+                currentPage: page
             });
         }
     } catch (error) {
