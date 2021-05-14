@@ -952,14 +952,11 @@ router.get('/community', async (req, res, next) => {
     try {
         // 페이징 준비
         console.log("page = ", req.query.page);
-        let pageNum = req.query.page; // 전체 게시물 수
+        let pageNum = req.query.page;
         let offset = 0;
-        if(pageNum > 1){  // 보여줄 게시물 수
+        if(pageNum > 1){
             offset = 3 * (pageNum - 1);
         }
-        // 페이징 추가
-        let maxPage;
-
         const [communities] = await Promise.all([
             Community.findAll({
                 order: [['createdAt', 'ASC']],
