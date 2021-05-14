@@ -970,9 +970,9 @@ router.get('/donationBoard', async (req, res, next) => {
             ]);
             console.log("noticess = ", noticess);
             ////////////
-            
+
             let pageArr = new Array();
-            for (let i = 0; i < Math.ceil(AllPageBooks.length / 3); i++) {
+            for (let i = 0; i < Math.ceil(AllPageDonatedBooks.length / 3); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
@@ -987,7 +987,7 @@ router.get('/donationBoard', async (req, res, next) => {
         } else {
 
             let pageArr = new Array();
-            for (let i = 0; i < Math.ceil(AllPageBooks.length / 3); i++) {
+            for (let i = 0; i < Math.ceil(AllPageDonatedBooks.length / 3); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
