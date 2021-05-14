@@ -966,6 +966,14 @@ router.get('/community', async (req, res, next) => {
         ]);
         console.log("community = ", communities);
 
+        const [AllPagecommunities] = await Promise.all([ // 전체 페이지
+            Community.findAll({
+                order: [['createdAt', 'ASC']],
+            })
+        ]);
+
+        console.log("-길이- = ", AllPagecommunities.length);
+
         const responseCommunities = [];
         for (const community of communities) {
             const { createdAt, content, id, title, postingNick, category } = community;
@@ -1036,14 +1044,26 @@ router.get('/community', async (req, res, next) => {
                 })
             ]);
             ////////////
+            let arr = new Array();
+            for(let i=0; i<Math.ceil(AllPagecommunities.length/3); i++) {
+                arr[i] = i; 
+            }
             res.render('community.html', {
                 communities: responseCommunities,
+                AllPagecommunities,
                 noticess,
                 likesfornotice,
+                maxPage: arr,
             });
         } else {
+            let arr = new Array();
+            for(let i=0; i<Math.ceil(AllPagecommunities.length/3); i++) {
+                arr[i] = i; 
+            }
             res.render('community.html', {
                 communities: responseCommunities,
+                AllPagecommunities,
+                maxPage: arr,
             });
         }
     } catch (error) {
