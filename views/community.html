@@ -34,7 +34,7 @@
                         class="addBook text-decoration-none btn-primary p-2">글 등록</a></form>
 
                 <!-- 각 게시물 -->
-                {% for community in communities | reverse %}
+                {% for community in communities %}
                 <div id="postNum_{{loop.index}}" class="postingList border p-5" onclick="location.href='/free_community/community/{{community.id}}'">
                     <a>{{loop.index}}</a>
                     <div class="pb-3 border-bottom">
@@ -57,9 +57,9 @@
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                     </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item active"><a class="page-link" href="/pages/community?page=1">1</a></li>
+                    <li class="page-item"><a class="page-link" href="/pages/community?page=2">2</a></li>
+                    <li class="page-item"><a class="page-link" href="/pages/community?page=3">3</a></li>
                     <li class="page-item">
                       <a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                     </li>

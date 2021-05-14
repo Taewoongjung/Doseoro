@@ -950,12 +950,23 @@ router.get('/registDonation', isLoggedIn, async (req, res) => {
 // 0414 커뮤니티
 router.get('/community', async (req, res, next) => {
     try {
+        // 페이징 준비
+        console.log("page = ", req.query.page);
+        let pageNum = req.query.page;
+        let offset = 0;
+        if(pageNum > 1){
+            offset = 3 * (pageNum - 1);
+        }
+
         const [communities] = await Promise.all([
             Community.findAll({
-            },{
                 order: [['createdAt', 'ASC']],
+                offset: offset,
+                limit: 3,
             })
         ]);
+        console.log("community = ", communities);
+
         const responseCommunities = [];
         for (const community of communities) {
             const { createdAt, content, id, title, postingNick, category } = community;
@@ -984,7 +995,6 @@ router.get('/community', async (req, res, next) => {
                     }
                 })
             ]);
-
 
             const notices = [];
             for (const notice of books_for_notice) {
