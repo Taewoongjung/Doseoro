@@ -192,7 +192,7 @@ router.get('/csList', isLoggedIn, async (req, res) => {
 
     ////////////
 
-    res.render('csList.html',{
+    res.render('csList.html', {
         complains: Acomplain,
         noticess,
         likesfornotice,
@@ -268,7 +268,7 @@ router.get('/csRegist', isLoggedIn, async (req, res, next) => {
     console.log("noticess = ", noticess);
 
     ////////////
-    res.render('csRegist.html',{
+    res.render('csRegist.html', {
         noticess,
         likesfornotice,
     });
@@ -280,7 +280,7 @@ router.get('/saleBoard', async (req, res, next) => {
         console.log("page = ", req.query.page);
         let pageNum = req.query.page; // 전체 게시물 수
         let offset = 0;
-        if(pageNum > 1){  // 보여줄 게시물 수
+        if (pageNum > 1) {  // 보여줄 게시물 수
             offset = 3 * (pageNum - 1);
         }
 
@@ -293,9 +293,9 @@ router.get('/saleBoard', async (req, res, next) => {
                         [Op.ne]: -1
                     },
                 },
-                    order: [['createdAt', 'ASC']],
-                    offset: offset,
-                    limit: 3,
+                order: [['createdAt', 'ASC']],
+                offset: offset,
+                limit: 3,
             }),
         ]);
         console.log("books = ", books);
@@ -381,7 +381,7 @@ router.get('/saleBoard', async (req, res, next) => {
             ////////////
 
             let pageArr = new Array();
-            for(let i=0; i<Math.ceil(AllPageBooks.length/3); i++) {
+            for (let i = 0; i < Math.ceil(AllPageBooks.length / 3); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
@@ -394,7 +394,7 @@ router.get('/saleBoard', async (req, res, next) => {
             });
         } else {
             let pageArr = new Array();
-            for(let i=0; i<Math.ceil(AllPageBooks.length/3); i++) {
+            for (let i = 0; i < Math.ceil(AllPageBooks.length / 3); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
@@ -612,11 +612,34 @@ router.get('/registRequest', isLoggedIn, async (req, res, next) => {
 // 0409 삽니다
 router.get('/bookRequest', async (req, res, next) => {
     try {
+        // 페이징 준비
+        console.log("page = ", req.query.page);
+        let pageNum = req.query.page; // 전체 게시물 수
+        let offset = 0;
+        if (pageNum > 1) {  // 보여줄 게시물 수
+            offset = 3 * (pageNum - 1);
+        }
+
         const [books] = await Promise.all([
             Book.findAll({
-                where: { SoldId: null, isSelling: '1' }
+                where: { SoldId: null, isSelling: '1' },
+                order: [['createdAt', 'ASC']],
+                offset: offset,
+                limit: 3,
             })
         ]);
+
+        const [AllPageBuyingBooks] = await Promise.all([ // 전체 페이지
+            Book.findAll({
+                where: {
+                    SoldId: null,
+                    isSelling: '1',
+                },
+                order: [['createdAt', 'ASC']],
+            })
+        ]);
+
+        console.log("-길이- = ", AllPageBuyingBooks.length);
 
         const responseBooks = [];
         for (const book of books) {
@@ -696,14 +719,32 @@ router.get('/bookRequest', async (req, res, next) => {
             ]);
             console.log("noticess = ", noticess);
             ////////////
+
+            let pageArr = new Array();
+            for (let i = 0; i < Math.ceil(AllPageBuyingBooks.length / 3); i++) {
+                pageArr[i] = i;
+            }
+            const { page } = req.query;
+
             res.render('bookRequest.html', {
-                books:responseBooks,
+                books: responseBooks,
                 noticess,
                 likesfornotice,
+                maxPage: pageArr,
+                currentPage: page,
             });
         } else {
+
+            let pageArr = new Array();
+            for (let i = 0; i < Math.ceil(AllPageBuyingBooks.length / 3); i++) {
+                pageArr[i] = i;
+            }
+            const { page } = req.query;
+
             res.render('bookRequest.html', {
-                books:responseBooks,
+                books: responseBooks,
+                maxPage: pageArr,
+                currentPage: page,
             });
         }
     } catch (error) {
@@ -716,10 +757,10 @@ router.get('/bookRequest', async (req, res, next) => {
 router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
     try {
         const [wantsell_books] = await Promise.all([
-            Book.findAll({ where: { OwnerId: req.user.id, sold:null, isSelling: null, price: { [Op.ne]: -1 } } }),
+            Book.findAll({ where: { OwnerId: req.user.id, sold: null, isSelling: null, price: { [Op.ne]: -1 } } }),
         ]);
         const [wantbuy_books] = await Promise.all([
-            Book.findAll({ where: { OwnerId: req.user.id, sold:null, isSelling: '1' } }),
+            Book.findAll({ where: { OwnerId: req.user.id, sold: null, isSelling: '1' } }),
         ]);
         const responseWantbuy = [];
         for (const buy of wantbuy_books) {
@@ -832,11 +873,39 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
 // 0414 무료나눔
 router.get('/donationBoard', async (req, res, next) => {
     try {
+        // 페이징 준비
+        console.log("page = ", req.query.page);
+        let pageNum = req.query.page; // 전체 게시물 수
+        let offset = 0;
+        if (pageNum > 1) {  // 보여줄 게시물 수
+            offset = 3 * (pageNum - 1);
+        }
+
         const [free_books] = await Promise.all([
             Book.findAll({
                 where: { SoldId: null, isSelling: null, price: -1 },
+                order: [['createdAt', 'ASC']],
+                offset: offset,
+                limit: 3,
             })
         ]);
+        console.log("free_books = ", free_books);
+
+        const [AllPageDonatedBooks] = await Promise.all([ // 전체 페이지
+            Book.findAll({
+                where: {
+                    SoldId: null,
+                    isSelling: null,
+                    price: -1
+                },
+                order: [['createdAt', 'ASC']],
+            })
+        ]);
+
+        console.log("-길이- = ", AllPageDonatedBooks.length);
+
+        ////////////////
+
         if (req.user) {
             console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
@@ -901,14 +970,32 @@ router.get('/donationBoard', async (req, res, next) => {
             ]);
             console.log("noticess = ", noticess);
             ////////////
+            
+            let pageArr = new Array();
+            for (let i = 0; i < Math.ceil(AllPageBooks.length / 3); i++) {
+                pageArr[i] = i;
+            }
+            const { page } = req.query;
+
             res.render('donationBoard.html', {
                 free_books,
                 noticess,
                 likesfornotice,
+                maxPage: pageArr,
+                currentPage: page
             });
         } else {
+
+            let pageArr = new Array();
+            for (let i = 0; i < Math.ceil(AllPageBooks.length / 3); i++) {
+                pageArr[i] = i;
+            }
+            const { page } = req.query;
+
             res.render('donationBoard.html', {
                 free_books,
+                maxPage: pageArr,
+                currentPage: page
             });
         }
     } catch (error) {
@@ -996,7 +1083,7 @@ router.get('/community', async (req, res, next) => {
         console.log("page = ", req.query.page);
         let pageNum = req.query.page; // 전체 게시물 수
         let offset = 0;
-        if(pageNum > 1){  // 보여줄 게시물 수
+        if (pageNum > 1) {  // 보여줄 게시물 수
             offset = 3 * (pageNum - 1);
         }
         // 페이징 추가
@@ -1090,7 +1177,7 @@ router.get('/community', async (req, res, next) => {
             ]);
             ////////////
             let pageArr = new Array();
-            for(let i=0; i<Math.ceil(AllPagecommunities.length/3); i++) {
+            for (let i = 0; i < Math.ceil(AllPagecommunities.length / 3); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
@@ -1104,8 +1191,8 @@ router.get('/community', async (req, res, next) => {
             });
         } else {
             let pageArr = new Array();
-            for(let i=0; i<Math.ceil(AllPagecommunities.length/3); i++) {
-                pageArr[i] = i; 
+            for (let i = 0; i < Math.ceil(AllPagecommunities.length / 3); i++) {
+                pageArr[i] = i;
             }
             const { page } = req.query;
             console.log("currentPage = ", page);
