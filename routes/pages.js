@@ -295,7 +295,7 @@ router.get('/saleBoard', async (req, res, next) => {
                 },
                 order: [['createdAt', 'ASC']],
                 offset: offset,
-                limit: 3,
+                limit: 6,
             }),
         ]);
         console.log("books = ", books);
@@ -625,7 +625,7 @@ router.get('/bookRequest', async (req, res, next) => {
                 where: { SoldId: null, isSelling: '1' },
                 order: [['createdAt', 'ASC']],
                 offset: offset,
-                limit: 3,
+                limit: 6,
             })
         ]);
 
@@ -886,7 +886,7 @@ router.get('/donationBoard', async (req, res, next) => {
                 where: { SoldId: null, isSelling: null, price: -1 },
                 order: [['createdAt', 'ASC']],
                 offset: offset,
-                limit: 3,
+                limit: 6,
             })
         ]);
         console.log("free_books = ", free_books);
@@ -1093,7 +1093,7 @@ router.get('/community', async (req, res, next) => {
             Community.findAll({
                 order: [['createdAt', 'ASC']],
                 offset: offset,
-                limit: 3,
+                limit: 6,
             })
         ]);
         console.log("community = ", communities);
