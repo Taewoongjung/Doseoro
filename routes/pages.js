@@ -761,40 +761,6 @@ router.get('/bookRequest', async (req, res, next) => {
 // 0414 작성한 글 목록
 router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
     try {
-        const [wantsell_books] = await Promise.all([
-            Book.findAll({ where: { OwnerId: req.user.id, sold: null, isSelling: null, price: { [Op.ne]: -1 } } }),
-        ]);
-        const [wantbuy_books] = await Promise.all([
-            Book.findAll({ where: { OwnerId: req.user.id, sold: null, isSelling: '1' } }),
-        ]);
-        const responseWantbuy = [];
-        for (const buy of wantbuy_books) {
-            const { createdAt, postmessage, id, OwnerId, about } = buy;
-            responseWantbuy.push({
-                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
-                OwnerId,
-                postmessage,
-                about,
-                id,
-            });
-        }
-        const [free_books] = await Promise.all([
-            Book.findAll({ where: { OwnerId: req.user.id, SoldId: null, isSelling: null, price: -1 } }),
-        ]);
-        const [communities] = await Promise.all([
-            Community.findAll({ where: { postingId: req.user.id, postingNick: req.user.nick } }),
-        ]);
-        const responseCommunities = [];
-        for (const community of communities) {
-            const { createdAt, title, id, OwnerId, content } = community;
-            responseCommunities.push({
-                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
-                title,
-                OwnerId,
-                content,
-                id,
-            });
-        }
         /////////////
 
         console.log("@@! = ", req.user.id);
@@ -813,7 +779,6 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
                 }
             })
         ]);
-
 
         const notices = [];
         for (const notice of books_for_notice) {
@@ -861,6 +826,77 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         console.log("noticess = ", noticess);
 
         ////////////
+
+        // 페이징 준비
+        console.log("page = ", req.query.page);
+        let pageNum = req.query.page; // 전체 게시물 수
+        let offset = 0;
+        if (pageNum > 1) {  // 보여줄 게시물 수
+            offset = 4 * (pageNum - 1);
+        }
+
+        // 판매하기
+        const [wantsell_books] = await Promise.all([
+            Book.findAll({ where: { OwnerId: req.user.id, sold: null, isSelling: null, price: { [Op.ne]: -1 }}, limit: 4, offset: offset, } ),
+        ]);
+
+        console.log("books = ", wantsell_books);
+
+        const [AllPageBooks] = await Promise.all([ // 전체 페이지
+            Book.findAll({
+                where: {
+                    SoldId: null,
+                    isSelling: null,
+                    price: {
+                        [Op.ne]: -1
+                    }
+                },
+                order: [['createdAt', 'ASC']],
+            })
+        ]);
+
+        console.log("-길이- = ", AllPageBooks.length);
+
+        let pageArrSale = new Array();
+        for (let i = 0; i < Math.ceil(AllPageBooks.length / 4); i++) {
+            pageArrSale[i] = i;
+        }
+        console.log("pageArrSale = ", pageArrSale);
+        const { page } = req.query;
+
+        // 구매하기
+        const [wantbuy_books] = await Promise.all([
+            Book.findAll({ where: { OwnerId: req.user.id, sold: null, isSelling: '1' } }),
+        ]);
+        const responseWantbuy = [];
+        for (const buy of wantbuy_books) {
+            const { createdAt, postmessage, id, OwnerId, about } = buy;
+            responseWantbuy.push({
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
+                OwnerId,
+                postmessage,
+                about,
+                id,
+            });
+        }
+        const [free_books] = await Promise.all([
+            Book.findAll({ where: { OwnerId: req.user.id, SoldId: null, isSelling: null, price: -1 } }),
+        ]);
+        const [communities] = await Promise.all([
+            Community.findAll({ where: { postingId: req.user.id, postingNick: req.user.nick } }),
+        ]);
+        const responseCommunities = [];
+        for (const community of communities) {
+            const { createdAt, title, id, OwnerId, content } = community;
+            responseCommunities.push({
+                createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
+                title,
+                OwnerId,
+                content,
+                id,
+            });
+        }
+
         res.render('myPostingList.html', {
             wantsell_books,
             wantbuy_books: responseWantbuy,
@@ -868,6 +904,8 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
             communities: responseCommunities,
             noticess,
             likesfornotice,
+            maxPageSale: pageArrSale,
+            currentPageSale: page
         });
     } catch (error) {
         console.error(error);
