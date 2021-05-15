@@ -66,7 +66,13 @@
                     <li class="page-item {% if currentPage >= maxPage | length %}disabled{% endif %}">
                         <a class="page-link" href="/pages/community?page={{ currentPage | int + 1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                     </li>
-                  </ul>
+                </ul>
+            </div>
+            <div class="movePage">
+                <form action="javascript:movePages()" class="d-flex">
+                    <input class="form-control" id="inputPage" type="number" placeholder="move page">
+                    <input type="submit" class="btn-primary border-0">
+                </form>
             </div>
         </main>
 
@@ -83,6 +89,7 @@
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/paging.js"></script>
+    <script src="/js/movePage.js"></script>
 </body>
 
 </html>
