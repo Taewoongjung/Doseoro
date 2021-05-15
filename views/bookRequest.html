@@ -33,7 +33,7 @@
                         class="addBook text-decoration-none btn-primary p-2">요청 등록</a></form>
 
                 <!-- 각 게시물 -->
-                {% for book in books | reverse %}
+                {% for book in books %}
                 <div class="postingList border p-5" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
                     <div class="pb-3 border-bottom">
                         <div class="d-sm-flex justify-content-between align-items-center">
@@ -45,6 +45,25 @@
                     <p class="postingBody pt-3">{{book.about}}</p>
                 </div>
                 {% endfor %}
+            </div>
+
+            <!-- 페이징 -->
+            <div class="pagingWrap">
+                <ul id="Postpages"class="pagination">
+                    <li class="page-item">
+                        <!-- 이전 페이지 = 현재페이지 - 1 -->
+                        <a class="page-link" href="/pages/bookRequest?page={{currentPage - 1}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                    </li>
+                    {% for i in maxPage%} <!-- for문으로 페이지 번호 추가-->
+                        <li class="page-item"><a class="page-link" href="/pages/bookRequest?page={{ i + 1 }}">{{ i + 1 }}</a></li>
+                        <!-- <li class="page-item"><a class="page-link" href="/pages/community?page=2">2</a></li>
+                        <li class="page-item"><a class="page-link" href="/pages/community?page=3">3</a></li> -->
+                    {% endfor %}
+                    <li class="page-item">
+                        <!-- 다음 페이지 = 현재페이지 + 1 -->
+                      <a class="page-link" href="/pages/bookRequest?page={{currentPage + 1}}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                  </ul>
             </div>
         </main>
 

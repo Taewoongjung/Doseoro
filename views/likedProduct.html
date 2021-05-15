@@ -24,7 +24,7 @@
                 <h1 class="h4 fw-bold mb-5">관심상품</h1>
                 <div class="mb-5">
                     <h1 class="h4 fw-bold">판매</h1>
-                    {% for book in books | reverse%}
+                    {% for book in books %}
                     <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.thisbook}}'">
                         <img src="/img/{{book.img[0]}}" class="" width="150px" height="200px">
                         <div class="ms-4">

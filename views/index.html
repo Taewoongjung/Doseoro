@@ -133,7 +133,7 @@
         </form>
 
         <div class="d-flex flex-wrap justify-content-center mt-5">
-          {% for book in books | reverse %}
+          {% for book in books %}
           <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;"
             onclick="location.href='/book/{{book.id}}'">
             <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
