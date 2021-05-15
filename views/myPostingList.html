@@ -277,6 +277,26 @@
                     <p class="postingBody pt-3">{{community.content}}</p>
                 </div>
                 {% endfor %}
+
+                <!-- 페이징 -->
+                <div class="pagingWrap">
+                    <ul id="Postpages" class="pagination">
+                        <li class="page-item">
+                            <!-- 이전 페이지 = 현재페이지 - 1 -->
+                            <a class="page-link" href="/pages/myPostingList?pageCommunity={{currentPageCommunity - 1}}"
+                                aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                        </li>
+                        {% for i in maxPageFree%}
+                        <!-- for문으로 페이지 번호 추가-->
+                        <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageCommunity={{ i + 1 }}">{{ i + 1 }}</a></li>
+                        {% endfor %}
+                        <li class="page-item">
+                            <!-- 다음 페이지 = 현재페이지 + 1 -->
+                            <a class="page-link" href="/pages/myPostingList?pageCommunity={{currentPageCommunity + 1}}"
+                                aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </main>
 

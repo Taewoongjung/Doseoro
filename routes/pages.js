@@ -829,6 +829,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
 
         // 판매하기
         // 판매글 페이징 준비
+        /////////////////
         console.log("pageSale = ", req.query.pageSale);
         let pageNumSale = req.query.pageSale; // 전체 게시물 수
         let offsetSale = 0;
@@ -865,6 +866,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
 
         // 구매하기
         // 구매글 페이징 준비
+        /////////////////
         console.log("page = ", req.query.pageBuying);
         let pageNumBuying = req.query.pageBuying; // 전체 게시물 수
         let offsetBuying = 0;
@@ -909,6 +911,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
 
         // 무료나눔
         // 무료나눔 페이징 준비
+        ///////////////////
         console.log("page = ", req.query.pageFree);
         let pageNumFree = req.query.pageFree; // 전체 게시물 수
         let offsetFree = 0;
@@ -942,10 +945,18 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         console.log("pageArrFree = ", pageArrFree);
         const { pageFree } = req.query;
 
-
         // 커뮤니티
+        // 커뮤니티 페이징 준비
+        ///////////////////
+        console.log("page = ", req.query.pageCommunity);
+        let pageNumCommunity = req.query.pageCommunity; // 전체 게시물 수
+        let offsetCommunity = 0;
+        if (pageNumCommunity > 1) {  // 보여줄 게시물 수
+            offsetCommunity = 4 * (pageNumCommunity - 1);
+        }
+
         const [communities] = await Promise.all([
-            Community.findAll({ where: { postingId: req.user.id, postingNick: req.user.nick } }),
+            Community.findAll({ where: { postingId: req.user.id, postingNick: req.user.nick }, limit: 4, offset: offsetCommunity }),
         ]);
         const responseCommunities = [];
         for (const community of communities) {
@@ -958,6 +969,28 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
                 id,
             });
         }
+
+        console.log("communities = ", communities);
+
+        const [AllPageBooksCommunity] = await Promise.all([ // mypage 구매글 페이지
+            Book.findAll({
+                where: {
+                    OwnerId: req.user.id,
+                    SoldId: null,
+                    isSelling: null,
+                    price: -1,
+                }
+            })
+        ]);
+
+        console.log("-길이- = ", AllPageBooksCommunity.length);
+
+        let pageArrCommunity = new Array();
+        for (let i = 0; i < Math.ceil(AllPageBooksCommunity.length / 4); i++) {
+            pageArrCommunity[i] = i;
+        }
+        console.log("pageArrFree = ", pageArrCommunity);
+        const { pageCommunity } = req.query;
 
         res.render('myPostingList.html', {
             wantsell_books,
@@ -972,6 +1005,8 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
             currentPageBuying: pageBuying,
             maxPageFree: pageArrFree, // 무료나눔 페이징
             currentPageFree: pageFree,
+            maxPageCommunity: pageArrCommunity, // 커뮤니티 페이징
+            currentPageCommunity: pageCommunity,
         });
     } catch (error) {
         console.error(error);
