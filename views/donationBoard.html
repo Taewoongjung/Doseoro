@@ -37,7 +37,7 @@
                         class="addBook text-decoration-none btn-primary p-2">나눔 등록</a></form>
 
                 <div class="d-flex justify-content-center flex-wrap mt-5">
-                    {% for book in free_books | reverse %}
+                    {% for book in free_books %}
                     <div class="saleCard card m-sm-5 mt-4 m-2" style="min-width: 210px; max-width: 210px;"
                         onclick="location.href='/book/{{book.id}}'">
                         <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">

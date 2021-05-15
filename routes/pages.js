@@ -640,8 +640,7 @@ router.get('/bookRequest', async (req, res, next) => {
                 where: {
                     SoldId: null,
                     isSelling: '1',
-                },
-                order: [['createdAt', 'ASC']],
+                }
             })
         ]);
 

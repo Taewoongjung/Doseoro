@@ -35,7 +35,7 @@
         </form>
 
         <div class="d-flex justify-content-center flex-wrap mt-5">
-          {% for book in books | reverse %}
+          {% for book in books %}
           {% if book.price > 0 %}
           <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;"
             onclick="location.href='/book/{{book.id}}'">
