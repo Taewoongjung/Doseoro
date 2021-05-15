@@ -909,16 +909,39 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
 
         // 무료나눔
         // 무료나눔 페이징 준비
-        console.log("page = ", req.query.page);
-        let pageNum = req.query.page; // 전체 게시물 수
-        let offset = 0;
-        if (pageNum > 1) {  // 보여줄 게시물 수
-            offset = 4 * (pageNum - 1);
+        console.log("page = ", req.query.pageFree);
+        let pageNumFree = req.query.pageFree; // 전체 게시물 수
+        let offsetFree = 0;
+        if (pageNumFree > 1) {  // 보여줄 게시물 수
+            offsetFree = 4 * (pageNumFree - 1);
         }
 
         const [free_books] = await Promise.all([
-            Book.findAll({ where: { OwnerId: req.user.id, SoldId: null, isSelling: null, price: -1 } }),
+            Book.findAll({ where: { OwnerId: req.user.id, SoldId: null, isSelling: null, price: -1 }, limit: 4, offset: offsetFree }),
         ]);
+        
+        console.log("free_books = ", free_books);
+
+        const [AllPageBooksFree] = await Promise.all([ // mypage 구매글 페이지
+            Book.findAll({
+                where: {
+                    OwnerId: req.user.id,
+                    SoldId: null,
+                    isSelling: null,
+                    price: -1,
+                }
+            })
+        ]);
+
+        console.log("-길이- = ", AllPageBooksFree.length);
+
+        let pageArrFree = new Array();
+        for (let i = 0; i < Math.ceil(AllPageBooksFree.length / 4); i++) {
+            pageArrFree[i] = i;
+        }
+        console.log("pageArrFree = ", pageArrFree);
+        const { pageFree } = req.query;
+
 
         // 커뮤니티
         const [communities] = await Promise.all([
@@ -947,6 +970,8 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
             currentPageSale: pageSale,
             maxPageBuying: pageArrBuying, // 구매글 페이징
             currentPageBuying: pageBuying,
+            maxPageFree: pageArrFree, // 무료나눔 페이징
+            currentPageFree: pageFree,
         });
     } catch (error) {
         console.error(error);
