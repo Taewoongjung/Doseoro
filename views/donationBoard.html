@@ -52,28 +52,31 @@
                 </div>
 
                 <!-- 페이징 -->
+                {% set pageBlock = 2 %}
                 <div class="pagingWrap">
-                    <ul id="Postpages" class="pagination">
-                        <li class="page-item">
-                            <!-- 이전 페이지 = 현재페이지 - 1 -->
-                            <a class="page-link" href="/pages/donationBoard?page={{currentPage - 1}}"
-                                aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                    <ul id="Postpages"class="pagination">
+                        <li class="page-item {% if currentPage <= 1%}disabled{% endif %}">
+                            <a class="page-link" href="/pages/donationBoard?page={{currentPage - 1}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                         </li>
-                        {% for i in maxPage%}
-                        <!-- for문으로 페이지 번호 추가-->
-                        <li class="page-item"><a class="page-link" href="/pages/donationBoard?page={{ i + 1 }}">{{ i + 1
-                                }}</a></li>
-                        <!-- <li class="page-item"><a class="page-link" href="/pages/community?page=2">2</a></li>
-                        <li class="page-item"><a class="page-link" href="/pages/community?page=3">3</a></li> -->
+                        {% for i in maxPage%} <!-- for문으로 페이지 번호 추가-->
+                            {% if i==0 or i+1==maxPage|length or (i+1>=currentPage-pageBlock and i+1<=currentPage|int+pageBlock) %}
+                            <li class="page-item"><a class="page-link" href="/pages/donationBoard?page={{ i + 1 }}">{{ i + 1 }}</a></li>
+                            {% elif i==1 or i+1==maxPage|length-2%}
+                            <li class="page-item"><a class="page-link">..</a></li>
+                            {% endif %}
                         {% endfor %}
-                        <li class="page-item">
-                            <!-- 다음 페이지 = 현재페이지 + 1 -->
-                            <a class="page-link" href="/pages/donationBoard?page={{currentPage + 1}}"
-                                aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                        <li class="page-item {% if currentPage >= maxPage | length %}disabled{% endif %}">
+                            <a class="page-link" href="/pages/donationBoard?page={{ currentPage | int + 1 }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                         </li>
                     </ul>
                 </div>
-        </main>
+                <div class="movePage">
+                    <form action="javascript:movePagesFree()" class="d-flex">
+                        <input class="form-control" id="inputPage" type="number" placeholder="move page">
+                        <input id="maxPage" type="number" value="{{maxPage|length}}" hidden>
+                        <input type="submit" class="btn-primary border-0" value="이동">
+                    </form>
+                </div>
         </main>
 
         <!-- footer -->
@@ -89,6 +92,7 @@
     <!-- <script src="/js/searchDisplay.js"></script> -->
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/movePage.js"></script>
 </body>
 
 </html>
