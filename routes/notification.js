@@ -241,7 +241,6 @@ router.get('/onlyCommu_second_click', isLoggedIn, async(req, res, next) => {
     }
 });
 
-
 // 해당 알람 클릭하면 그 url로 리다이렉팅 + 알람 사라짐 (좋아요)
 router.get('/notyLike_click', isLoggedIn, async(req, res, next) => {
     try{

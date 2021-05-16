@@ -286,7 +286,6 @@ router.get('/tradeHistory', isLoggedIn, async (req, res) => {
         })
     ]);
     console.log("noticess = ", noticess);
-
     ////////////
 
     res.render('tradeHistory.html', {
