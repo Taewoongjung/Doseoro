@@ -89,7 +89,7 @@
                         </li>
                         {% for i in maxPageSale%}
                         <!-- for문으로 페이지 번호 추가-->
-                        <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageSale={{ i + 1 }}">{{ i + 1 }}</a></li>
+                        <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageSale={{ i + 1 }}" onclick="showSale()" >{{ i + 1 }}</a></li>
                         {% endfor %}
                         <li class="page-item">
                             <!-- 다음 페이지 = 현재페이지 + 1 -->
@@ -157,7 +157,7 @@
                         </li>
                         {% for i in maxPageBuying%}
                         <!-- for문으로 페이지 번호 추가-->
-                        <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageBuying={{ i + 1 }}">{{ i + 1 }}</a></li>
+                        <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageBuying={{ i + 1 }}" onclick="showRequset()">{{ i + 1 }}</a></li>
                         {% endfor %}
                         <li class="page-item">
                             <!-- 다음 페이지 = 현재페이지 + 1 -->

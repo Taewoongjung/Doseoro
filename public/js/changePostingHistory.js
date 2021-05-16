@@ -11,8 +11,6 @@ function showSale() {
 }
 
 function showRequset() {
-    console.log('구매클릭');
-
     salePosting.style.display = donatePosting.style.display = communityPosting.style.display = "none";
     requestPosting.style.display = "block";
 }
