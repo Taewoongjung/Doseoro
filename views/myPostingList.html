@@ -37,13 +37,12 @@
             </div>
 
             <!-- 판매글 목록 -->
-            <div id="salePosting" class="mb-3 mt-3">
+            <div id="salePosting" class="mb-3 mt-3" style="display: none;">
                 <h1 class="h4 fw-bold">판매글</h1>
 
                 <!-- 게시물 불러오는 위치 -->
                 {% for book in wantsell_books %}
-                <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap"
-                    onclick="location.href='/book/{{book.id}}'">
+                <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/book/{{book.id}}'">
                     <img src="/img/{{book.img[0]}}" class="" width="150px" height="200px">
 
                     <div class="d-flex w-75 justify-content-between mt-2">
@@ -89,11 +88,11 @@
                         </li>
                         {% for i in maxPageSale%}
                         <!-- for문으로 페이지 번호 추가-->
-                        <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageSale={{ i + 1 }}">{{ i + 1 }}</a></li>
+                        <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageSale={{ i + 1 }}" onclick="showSale()" >{{ i + 1 }}</a></li>
                         {% endfor %}
                         <li class="page-item">
                             <!-- 다음 페이지 = 현재페이지 + 1 -->
-                            <a class="page-link" href="/pages/myPostingList?pageSale={{currentPageSale + 1}}"
+                            <a class="page-link" href="/pages/myPostingList?pageSale={{currentPageSale | int + 1}}"
                                 aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                         </li>
                     </ul>
@@ -157,11 +156,11 @@
                         </li>
                         {% for i in maxPageBuying%}
                         <!-- for문으로 페이지 번호 추가-->
-                        <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageBuying={{ i + 1 }}">{{ i + 1 }}</a></li>
+                        <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageBuying={{ i + 1 }}" onclick="showRequset()">{{ i + 1 }}</a></li>
                         {% endfor %}
                         <li class="page-item">
                             <!-- 다음 페이지 = 현재페이지 + 1 -->
-                            <a class="page-link" href="/pages/myPostingList?pageBuying={{currentPageBuying + 1}}"
+                            <a class="page-link" href="/pages/myPostingList?pageBuying={{currentPageBuying | int+ 1}}"
                                 aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                         </li>
                     </ul>
@@ -225,7 +224,7 @@
                         {% endfor %}
                         <li class="page-item">
                             <!-- 다음 페이지 = 현재페이지 + 1 -->
-                            <a class="page-link" href="/pages/myPostingList?pageFree={{currentPageFree + 1}}"
+                            <a class="page-link" href="/pages/myPostingList?pageFree={{currentPageFree | int + 1}}"
                                 aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                         </li>
                     </ul>
@@ -292,12 +291,13 @@
                         {% endfor %}
                         <li class="page-item">
                             <!-- 다음 페이지 = 현재페이지 + 1 -->
-                            <a class="page-link" href="/pages/myPostingList?pageCommunity={{currentPageCommunity + 1}}"
+                            <a class="page-link" href="/pages/myPostingList?pageCommunity={{currentPageCommunity | int + 1}}"
                                 aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                         </li>
                     </ul>
                 </div>
             </div>
+
         </main>
 
         <!-- footer -->
