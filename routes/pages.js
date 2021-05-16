@@ -103,28 +103,6 @@ router.get('/searchList', async (req, res) => {
 
 // 0503 고객문의
 router.get('/csList', isLoggedIn, async (req, res) => {
-    const [complains] = await Promise.all([
-        Complain.findAll({
-            where: {
-                isSettled: { [Op.ne]: 1 },
-            }
-        }),
-    ]);
-
-    const Acomplain = [];
-    for (const complain of complains) {
-        const { createdAt, complainedNick, isSettled, complainedId, id, content, title } = complain;
-        Acomplain.push({
-            createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
-            title,
-            content,
-            complainedNick,
-            complainedId,
-            id,
-            isSettled
-        });
-    }
-
     /////////////
 
     console.log("@@! = ", req.user.id);
@@ -191,6 +169,48 @@ router.get('/csList', isLoggedIn, async (req, res) => {
     console.log("noticess = ", noticess);
 
     ////////////
+
+    // 페이징 준비
+    console.log("page = ", req.query.page);
+    let pageNum = req.query.page; // 전체 게시물 수
+    let offset = 0;
+    if (pageNum > 1) {  // 보여줄 게시물 수
+        offset = 5 * (pageNum - 1);
+    }
+
+    const [complains] = await Promise.all([
+        Complain.findAll({
+            where: {
+                isSettled: { [Op.ne]: 1 },
+                offset: offset,
+                limit: 5,
+            }
+        }),
+    ]);
+
+    const [AllComplains] = await Promise.all([ // 전체 페이지
+        Complain.findAll({
+            where: {
+                isSettled: { [Op.ne]: 1 },
+            }
+        })
+    ]);
+
+    console.log("-길이- = ", AllComplains.length);
+
+    const Acomplain = [];
+    for (const complain of complains) {
+        const { createdAt, complainedNick, isSettled, complainedId, id, content, title } = complain;
+        Acomplain.push({
+            createdAt: moment(createdAt).format('YYYY.MM.DD HH:mm'),
+            title,
+            content,
+            complainedNick,
+            complainedId,
+            id,
+            isSettled
+        });
+    }
 
     res.render('csList.html', {
         complains: Acomplain,
@@ -838,7 +858,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         }
 
         const [wantsell_books] = await Promise.all([
-            Book.findAll({ where: { OwnerId: req.user.id, sold: null, isSelling: null, price: { [Op.ne]: -1 }}, limit: 4, offset: offsetSale, } ),
+            Book.findAll({ where: { OwnerId: req.user.id, sold: null, isSelling: null, price: { [Op.ne]: -1 } }, limit: 4, offset: offsetSale, }),
         ]);
 
         console.log("wantsell_books = ", wantsell_books);
@@ -876,7 +896,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         }
 
         const [wantbuy_books] = await Promise.all([
-            Book.findAll({ where: { OwnerId: req.user.id, sold: null, isSelling: '1' }, limit: 4, offset: offsetBuying,}),
+            Book.findAll({ where: { OwnerId: req.user.id, sold: null, isSelling: '1' }, limit: 4, offset: offsetBuying, }),
         ]);
         const responseWantbuy = [];
         for (const buy of wantbuy_books) {
@@ -924,10 +944,10 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         const [free_books] = await Promise.all([
             Book.findAll({ where: { OwnerId: req.user.id, SoldId: null, isSelling: null, price: -1 }, limit: 4, offset: offsetFree }),
         ]);
-        
+
         console.log("free_books = ", free_books);
 
-        const [AllPageBooksFree] = await Promise.all([ // mypage 구매글 페이지
+        const [AllPageBooksFree] = await Promise.all([ // mypage 무료나눔 페이지
             Book.findAll({
                 where: {
                     OwnerId: req.user.id,
