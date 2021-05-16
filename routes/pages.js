@@ -175,16 +175,16 @@ router.get('/csList', isLoggedIn, async (req, res) => {
     let pageNum = req.query.page; // 전체 게시물 수
     let offset = 0;
     if (pageNum > 1) {  // 보여줄 게시물 수
-        offset = 5 * (pageNum - 1);
+        offset = 4 * (pageNum - 1);
     }
 
     const [complains] = await Promise.all([
         Complain.findAll({
             where: {
                 isSettled: { [Op.ne]: 1 },
-                offset: offset,
-                limit: 5,
-            }
+            },
+            offset: offset,
+            limit: 4,
         }),
     ]);
 
@@ -212,10 +212,19 @@ router.get('/csList', isLoggedIn, async (req, res) => {
         });
     }
 
+    let pageArr = new Array();
+    for (let i = 0; i < Math.ceil(AllComplains.length / 4); i++) {
+        pageArr[i] = i;
+    }
+    console.log("pageArr = ", pageArr);
+    const { page } = req.query;
+
     res.render('csList.html', {
         complains: Acomplain,
         noticess,
         likesfornotice,
+        maxPage: pageArr,
+        currentPage: page,
     });
 })
 
