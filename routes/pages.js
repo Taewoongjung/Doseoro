@@ -846,6 +846,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         const [AllPageBooksSale] = await Promise.all([ // mypage 판매글 전체 페이지
             Book.findAll({
                 where: {
+                    OwnerId: req.user.id,
                     sold: null,
                     isSelling: null,
                     price: {
@@ -894,6 +895,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         const [AllPageBooksBuying] = await Promise.all([ // mypage 구매글 페이지
             Book.findAll({
                 where: {
+                    OwnerId: req.user.id,
                     sold: null,
                     isSelling: '1',
                 }
@@ -972,13 +974,11 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
 
         console.log("communities = ", communities);
 
-        const [AllPageBooksCommunity] = await Promise.all([ // mypage 구매글 페이지
-            Book.findAll({
+        const [AllPageBooksCommunity] = await Promise.all([ // mypage 커뮤니티 페이지
+            Community.findAll({
                 where: {
-                    OwnerId: req.user.id,
-                    SoldId: null,
-                    isSelling: null,
-                    price: -1,
+                    postingId: req.user.id,
+                    postingNick: req.user.nick,
                 }
             })
         ]);
