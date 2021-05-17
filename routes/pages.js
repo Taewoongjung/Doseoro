@@ -3,7 +3,7 @@ const moment = require('moment-timezone');
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
-const { User, Book, Who, Post, Community, Complain } = require('../models');
+const { Book, Who, Post, Community, Complain } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -14,8 +14,10 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 });
 
 // 판매 책 등록
-router.get('/regi-book', isLoggedIn, async (req, res) => {
-    console.log("@@! = ", req.user.id);
+router.get('/registerBook', isLoggedIn, async (req, res) => {
+    console.log("pages/registerBook 진입");
+
+    //////////// 알림 ////////////
     const [books_for_notice] = await Promise.all([
         Book.findAll({
             where: {
@@ -56,9 +58,6 @@ router.get('/regi-book', isLoggedIn, async (req, res) => {
         notices_commu.push(id);
     }
 
-    console.log("WWW = ", notices);
-    console.log("book = ", books_for_notice);
-    console.log("user = ", req.user.id);
     const [noticess] = await Promise.all([
         Post.findAll({
             where: {
@@ -76,36 +75,43 @@ router.get('/regi-book', isLoggedIn, async (req, res) => {
             }
         })
     ]);
-    console.log("noticess = ", noticess);
-    ////////////
+    //////////// 알림 ////////////
+
     res.render('registerBook.html', {
         noticess,
         likesfornotice,
     });
 })
 
+// 아이디 찾기
 router.get('/findID', isNotLoggedIn, (req, res) => {
+    console.log("pages/findID 진입");
     res.render('findID.html');
 });
 
+// 비밀번호 찾기
 router.get('/findPW', isNotLoggedIn, (req, res) => {
+    console.log("pages/findPW 진입");
     res.render('findPW.html');
 });
 
+// 비밀번호 변경
 router.get('/changePW', isNotLoggedIn, (req, res) => {
+    console.log("pages/changePW 진입");
     res.render('changePW.html');
 })
 
-// 0510 검색 결과
+// 검색 결과
 router.get('/searchList', async (req, res) => {
+    console.log("pages/searchList 진입");
     res.render('searchList.html')
 })
 
-// 0503 고객문의
+// 고객문의
 router.get('/csList', isLoggedIn, async (req, res) => {
-    /////////////
+    console.log("pages/csList 진입");
 
-    console.log("@@! = ", req.user.id);
+    //////////// 알림 ////////////
     const [books_for_notice] = await Promise.all([
         Book.findAll({
             where: {
@@ -121,7 +127,6 @@ router.get('/csList', isLoggedIn, async (req, res) => {
             }
         })
     ]);
-
 
     const notices = [];
     for (const notice of books_for_notice) {
@@ -146,9 +151,6 @@ router.get('/csList', isLoggedIn, async (req, res) => {
         notices_commu.push(id);
     }
 
-    console.log("WWW = ", notices);
-    console.log("book = ", books_for_notice);
-    console.log("user = ", req.user.id);
     const [noticess] = await Promise.all([
         Post.findAll({
             where: {
@@ -166,12 +168,9 @@ router.get('/csList', isLoggedIn, async (req, res) => {
             }
         })
     ]);
-    console.log("noticess = ", noticess);
+    //////////// 알림 ////////////
 
-    ////////////
-
-    // 페이징 준비
-    console.log("page = ", req.query.page);
+    // 고객문의 페이징
     let pageNum = req.query.page; // 전체 게시물 수
     let offset = 0;
     if (pageNum > 1) {  // 보여줄 게시물 수
@@ -230,10 +229,9 @@ router.get('/csList', isLoggedIn, async (req, res) => {
 
 // 0506 고객문의 등록
 router.get('/csRegist', isLoggedIn, async (req, res, next) => {
-    console.log("@@! = ", req.user.id);
-    /////////////
+    console.log("pages/csRegist 진입");
 
-    console.log("@@! = ", req.user.id);
+    //////////// 알림 ////////////
     const [books_for_notice] = await Promise.all([
         Book.findAll({
             where: {
@@ -249,7 +247,6 @@ router.get('/csRegist', isLoggedIn, async (req, res, next) => {
             }
         })
     ]);
-
 
     const notices = [];
     for (const notice of books_for_notice) {
@@ -274,9 +271,6 @@ router.get('/csRegist', isLoggedIn, async (req, res, next) => {
         notices_commu.push(id);
     }
 
-    console.log("WWW = ", notices);
-    console.log("book = ", books_for_notice);
-    console.log("user = ", req.user.id);
     const [noticess] = await Promise.all([
         Post.findAll({
             where: {
@@ -294,9 +288,8 @@ router.get('/csRegist', isLoggedIn, async (req, res, next) => {
             }
         })
     ]);
-    console.log("noticess = ", noticess);
+    //////////// 알림 ////////////
 
-    ////////////
     res.render('csRegist.html', {
         noticess,
         likesfornotice,
@@ -305,8 +298,9 @@ router.get('/csRegist', isLoggedIn, async (req, res, next) => {
 
 router.get('/saleBoard', async (req, res, next) => {
     try {
-        // 페이징 준비
-        console.log("page = ", req.query.page);
+        console.log("pages/saleBoard 진입");
+
+        // 팝니다 리스트 페이징
         let pageNum = req.query.page; // 전체 게시물 수
         let offset = 0;
         if (pageNum > 1) {  // 보여줄 게시물 수
@@ -344,9 +338,8 @@ router.get('/saleBoard', async (req, res, next) => {
 
         console.log("-길이- = ", AllPageBooks.length);
 
-        /////////////
+        //////////// 알림 ////////////
         if (req.user) {
-            console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -362,7 +355,6 @@ router.get('/saleBoard', async (req, res, next) => {
                     }
                 })
             ]);
-
 
             const notices = [];
             for (const notice of books_for_notice) {
@@ -387,9 +379,6 @@ router.get('/saleBoard', async (req, res, next) => {
                 notices_commu.push(id);
             }
 
-            console.log("WWW = ", notices);
-            console.log("book = ", books_for_notice);
-            console.log("user = ", req.user.id);
             const [noticess] = await Promise.all([
                 Post.findAll({
                     where: {
@@ -407,8 +396,7 @@ router.get('/saleBoard', async (req, res, next) => {
                     }
                 })
             ]);
-            console.log("noticess = ", noticess);
-            ////////////
+            //////////// 알림 ////////////
 
             let pageArr = new Array();
             for (let i = 0; i < Math.ceil(AllPageBooks.length / 8); i++) {
@@ -448,7 +436,7 @@ router.get('/saleBoard', async (req, res, next) => {
 // 0403 관심상품 창
 router.get('/like', isLoggedIn, async (req, res, next) => {
     try {
-        console.log("user id = ", String(req.user.id));
+        console.log("pages/like 진입");
         const [books] = await Promise.all([
             Who.findAll({
                 where: {
@@ -464,9 +452,8 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
                 where: { liked: String(req.user.id), price: -1, },
             })
         ]);
-        /////////////
 
-        console.log("@@! = ", req.user.id);
+        //////////// 알림 ////////////
         const [books_for_notice] = await Promise.all([
             Book.findAll({
                 where: {
@@ -482,7 +469,6 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
                 }
             })
         ]);
-
 
         const notices = [];
         for (const notice of books_for_notice) {
@@ -507,9 +493,6 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
             notices_commu.push(id);
         }
 
-        console.log("WWW = ", notices);
-        console.log("book = ", books_for_notice);
-        console.log("user = ", req.user.id);
         const [noticess] = await Promise.all([
             Post.findAll({
                 where: {
@@ -527,9 +510,8 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
                 }
             })
         ]);
-        console.log("noticess = ", noticess);
+        //////////// 알림 ////////////
 
-        ////////////
         res.render('likedProduct.html', {
             books,
             free_books,
@@ -545,6 +527,8 @@ router.get('/like', isLoggedIn, async (req, res, next) => {
 // 0410 구매내역 창
 router.get('/buying', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("pages/buying 진입");
+
         const books = await Book.findAll({ where: { OwnerId: req.user.id, isSelling: '1' } });
         res.render('buyingList.html', {
             books,
@@ -558,6 +542,8 @@ router.get('/buying', isLoggedIn, async (req, res, next) => {
 // 0407 판매내역 창
 router.get('/selling', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("pages/selling 진입");
+
         const books = await Book.findAll({ where: { OwnerId: req.user.id, isSelling: null } });
         res.render('sellingList.html', {
             books,
@@ -570,12 +556,16 @@ router.get('/selling', isLoggedIn, async (req, res, next) => {
 
 // 0408 프로필
 router.get('/myProfile', isNotLoggedIn, (req, res, next) => {
+    console.log("pages/myProfile 진입");
+
     res.render('myProfile.html');
 });
 
 // 0409 삽니다 등록
 router.get('/registRequest', isLoggedIn, async (req, res, next) => {
-    console.log("@@! = ", req.user.id);
+    console.log("pages/registRequest 진입");
+
+    //////////// 알림 ////////////
     const [books_for_notice] = await Promise.all([
         Book.findAll({
             where: {
@@ -591,7 +581,6 @@ router.get('/registRequest', isLoggedIn, async (req, res, next) => {
             }
         })
     ]);
-
 
     const notices = [];
     for (const notice of books_for_notice) {
@@ -616,9 +605,6 @@ router.get('/registRequest', isLoggedIn, async (req, res, next) => {
         notices_commu.push(id);
     }
 
-    console.log("WWW = ", notices);
-    console.log("book = ", books_for_notice);
-    console.log("user = ", req.user.id);
     const [noticess] = await Promise.all([
         Post.findAll({
             where: {
@@ -636,8 +622,8 @@ router.get('/registRequest', isLoggedIn, async (req, res, next) => {
             }
         })
     ]);
-    console.log("noticess = ", noticess);
-    ////////////
+    //////////// 알림 ////////////
+
     res.render('registRequest.html', {
         noticess,
         likesfornotice,
@@ -647,7 +633,9 @@ router.get('/registRequest', isLoggedIn, async (req, res, next) => {
 // 0409 삽니다
 router.get('/bookRequest', async (req, res, next) => {
     try {
-        // 페이징 준비
+        console.log("pages/bookRequest 진입");
+
+        // 삽니다 리스트 페이징 준비
         console.log("page = ", req.query.page);
         let pageNum = req.query.page; // 전체 게시물 수
         let offset = 0;
@@ -688,7 +676,7 @@ router.get('/bookRequest', async (req, res, next) => {
             });
         }
 
-        /////////////
+        //////////// 알림 ////////////
         if (req.user) {
             console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
@@ -706,7 +694,6 @@ router.get('/bookRequest', async (req, res, next) => {
                     }
                 })
             ]);
-
 
             const notices = [];
             for (const notice of books_for_notice) {
@@ -731,9 +718,6 @@ router.get('/bookRequest', async (req, res, next) => {
                 notices_commu.push(id);
             }
 
-            console.log("WWW = ", notices);
-            console.log("book = ", books_for_notice);
-            console.log("user = ", req.user.id);
             const [noticess] = await Promise.all([
                 Post.findAll({
                     where: {
@@ -751,8 +735,7 @@ router.get('/bookRequest', async (req, res, next) => {
                     }
                 })
             ]);
-            console.log("noticess = ", noticess);
-            ////////////
+            //////////// 알림 ////////////
 
             let pageArr = new Array();
             for (let i = 0; i < Math.ceil(AllPageBuyingBooks.length / 6); i++) {
@@ -790,9 +773,10 @@ router.get('/bookRequest', async (req, res, next) => {
 // 0414 작성한 글 목록
 router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
     try {
-        /////////////
+        console.log("pages/bookRequest 진입");
 
-        console.log("@@! = ", req.user.id);
+        //////////// 알림 ////////////
+
         const [books_for_notice] = await Promise.all([
             Book.findAll({
                 where: {
@@ -832,9 +816,6 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
             notices_commu.push(id);
         }
 
-        console.log("WWW = ", notices);
-        console.log("book = ", books_for_notice);
-        console.log("user = ", req.user.id);
         const [noticess] = await Promise.all([
             Post.findAll({
                 where: {
@@ -853,11 +834,10 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
             })
         ]);
         console.log("noticess = ", noticess);
-
-        ////////////
+        //////////// 알림 ////////////
 
         // 판매하기
-        // 판매글 페이징 준비
+        // 판매글 페이징 
         /////////////////
         console.log("pageSale = ", req.query.pageSale);
         let pageNumSale = req.query.pageSale; // 전체 게시물 수
@@ -895,7 +875,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         const { pageSale } = req.query;
 
         // 구매하기
-        // 구매글 페이징 준비
+        // 구매글 페이징 
         /////////////////
         console.log("page = ", req.query.pageBuying);
         let pageNumBuying = req.query.pageBuying; // 전체 게시물 수
@@ -941,7 +921,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         const { pageBuying } = req.query;
 
         // 무료나눔
-        // 무료나눔 페이징 준비
+        // 무료나눔 페이징
         ///////////////////
         console.log("page = ", req.query.pageFree);
         let pageNumFree = req.query.pageFree; // 전체 게시물 수
@@ -977,7 +957,7 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
         const { pageFree } = req.query;
 
         // 커뮤니티
-        // 커뮤니티 페이징 준비
+        // 커뮤니티 페이징 
         ///////////////////
         console.log("page = ", req.query.pageCommunity);
         let pageNumCommunity = req.query.pageCommunity; // 전체 게시물 수
@@ -1046,8 +1026,9 @@ router.get('/myPostingList', isLoggedIn, async (req, res, next) => {
 // 0414 무료나눔
 router.get('/donationBoard', async (req, res, next) => {
     try {
-        // 페이징 준비
-        console.log("page = ", req.query.page);
+        console.log("pages/donationBoard 진입");
+
+        // 무료나눔 리스트 페이징
         let pageNum = req.query.page; // 전체 게시물 수
         let offset = 0;
         if (pageNum > 1) {  // 보여줄 게시물 수
@@ -1077,10 +1058,8 @@ router.get('/donationBoard', async (req, res, next) => {
 
         console.log("-길이- = ", AllPageDonatedBooks.length);
 
-        ////////////////
-
+        //////////// 알림 ////////////
         if (req.user) {
-            console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -1096,7 +1075,6 @@ router.get('/donationBoard', async (req, res, next) => {
                     }
                 })
             ]);
-
 
             const notices = [];
             for (const notice of books_for_notice) {
@@ -1121,9 +1099,6 @@ router.get('/donationBoard', async (req, res, next) => {
                 notices_commu.push(id);
             }
 
-            console.log("WWW = ", notices);
-            console.log("book = ", books_for_notice);
-            console.log("user = ", req.user.id);
             const [noticess] = await Promise.all([
                 Post.findAll({
                     where: {
@@ -1141,8 +1116,7 @@ router.get('/donationBoard', async (req, res, next) => {
                     }
                 })
             ]);
-            console.log("noticess = ", noticess);
-            ////////////
+            //////////// 알림 ////////////
 
             let pageArr = new Array();
             for (let i = 0; i < Math.ceil(AllPageDonatedBooks.length / 8); i++) {
@@ -1180,7 +1154,9 @@ router.get('/donationBoard', async (req, res, next) => {
 
 // 0414 나눔 등록
 router.get('/registDonation', isLoggedIn, async (req, res) => {
-    console.log("@@! = ", req.user.id);
+    console.log("pages/registDonation 진입");
+
+    //////////// 알림 ////////////
     const [books_for_notice] = await Promise.all([
         Book.findAll({
             where: {
@@ -1196,7 +1172,6 @@ router.get('/registDonation', isLoggedIn, async (req, res) => {
             }
         })
     ]);
-
 
     const notices = [];
     for (const notice of books_for_notice) {
@@ -1221,9 +1196,6 @@ router.get('/registDonation', isLoggedIn, async (req, res) => {
         notices_commu.push(id);
     }
 
-    console.log("WWW = ", notices);
-    console.log("book = ", books_for_notice);
-    console.log("user = ", req.user.id);
     const [noticess] = await Promise.all([
         Post.findAll({
             where: {
@@ -1241,8 +1213,8 @@ router.get('/registDonation', isLoggedIn, async (req, res) => {
             }
         })
     ]);
-    console.log("noticess = ", noticess);
-    ////////////
+    //////////// 알림 ////////////
+
     res.render('registDonation.html', {
         noticess,
         likesfornotice,
@@ -1252,7 +1224,9 @@ router.get('/registDonation', isLoggedIn, async (req, res) => {
 // 0414 커뮤니티
 router.get('/community', async (req, res, next) => {
     try {
-        // 페이징 준비
+        console.log("pages/community 진입");
+
+        // 커뮤니티 리스트 페이징
         console.log("page = ", req.query.page);
         let pageNum = req.query.page;
         let offset = 0;
@@ -1288,6 +1262,7 @@ router.get('/community', async (req, res, next) => {
                 category,
             });
         }
+        //////////// 알림 ////////////
         if (req.user) {
             const [books_for_notice] = await Promise.all([
                 Book.findAll({
@@ -1345,12 +1320,14 @@ router.get('/community', async (req, res, next) => {
                     }
                 })
             ]);
-            ////////////
+            //////////// 알림 ////////////
+
             let pageArr = new Array();
             for (let i = 0; i < Math.ceil(AllPagecommunities.length / 6); i++) {
                 pageArr[i] = i;
             }
             const { page } = req.query;
+
             res.render('community.html', {
                 communities: responseCommunities,
                 AllPagecommunities,
@@ -1365,6 +1342,7 @@ router.get('/community', async (req, res, next) => {
                 pageArr[i] = i;
             }
             const { page } = req.query;
+
             console.log("currentPage = ", page);
             res.render('community.html', {
                 communities: responseCommunities,
@@ -1381,7 +1359,9 @@ router.get('/community', async (req, res, next) => {
 
 // 0414 커뮤니티 등록
 router.get('/registCommunity', isLoggedIn, async (req, res) => {
-    console.log("@@! = ", req.user.id);
+    console.log("pages/registCommunity 진입");
+
+    //////////// 알림 ////////////
     const [books_for_notice] = await Promise.all([
         Book.findAll({
             where: {
@@ -1421,9 +1401,6 @@ router.get('/registCommunity', isLoggedIn, async (req, res) => {
         notices_commu.push(id);
     }
 
-    console.log("WWW = ", notices);
-    console.log("book = ", books_for_notice);
-    console.log("user = ", req.user.id);
     const [noticess] = await Promise.all([
         Post.findAll({
             where: {
@@ -1441,8 +1418,8 @@ router.get('/registCommunity', isLoggedIn, async (req, res) => {
             }
         })
     ]);
-    console.log("noticess = ", noticess);
-    ////////////
+    //////////// 알림 ////////////
+
     res.render('registCommunity.html', {
         noticess,
         likesfornotice,
