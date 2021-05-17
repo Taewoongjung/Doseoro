@@ -3,7 +3,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 
-const { User, Book, Who, Post } = require('../models');
+const { Book, Who } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -16,6 +16,8 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 // 0407 판매내역 삭제
 router.get('/delete', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("mpfunc/delete 진입");
+
         const { this_item_id, this_item_createdAt, this_item_OwnerId } = req.query;
         await Book.destroy({ where: { id: this_item_id, createdAt: this_item_createdAt, OwnerId: this_item_OwnerId }, });
         await Who.destroy({ where: { thisbook: this_item_id } });
@@ -29,6 +31,8 @@ router.get('/delete', isLoggedIn, async (req, res, next) => {
 // 0407 판매내역 삭제
 router.get('/deleteInDetail', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("mpfunc/deleteInDetail 진입");
+
         const { this_item_OwnerId, this_item_id } = req.query;
         if (this_item_OwnerId === String(req.user.id)) {
             await Book.destroy({ where: { id: this_item_id, OwnerId: this_item_OwnerId }, });
@@ -46,6 +50,8 @@ router.get('/deleteInDetail', isLoggedIn, async (req, res, next) => {
 // 0407 판매내역 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt_A', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("mpfunc/editIt_A 진입");
+
         const { this_item_OwnerId, this_item_id } = req.body;
         if (this_item_OwnerId === String(req.user.id)) {
             const books = await Book.findOne({ where: { id: this_item_id } });
@@ -64,6 +70,8 @@ router.post('/editIt_A', isLoggedIn, async (req, res, next) => {
 // 0418 무료나눔 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt_B', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("mpfunc/editIt_B 진입");
+
         const { this_item_OwnerId, this_item_id } = req.body;
         if (this_item_OwnerId === String(req.user.id)) {
             const books = await Book.findOne({ where: { id: this_item_id } });
@@ -96,6 +104,8 @@ const upload = multer({  // multer 설정
 // 0408 오류 수정
 router.post('/edit', isLoggedIn, upload.array('img', 5 ), async (req, res, next) => {
     try {
+        console.log("mpfunc/edit 진입");
+
         const { this_item_id, postmessage, title, price, author, publisher, checkCategory, checkState, dealRoot, about } = req.body;
 
         const notices = [];

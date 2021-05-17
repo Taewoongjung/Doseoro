@@ -702,12 +702,12 @@ router.post('/like', isLoggedIn, async (req, res, next) => {
 router.get('/location', async (req, res, next) => {
     try {
         console.log("index/location 진입");
-        
+
         const { region1, region2, region3, wholeRegion } =req.query;
         console.log(" region1 = ", region1);    // 도
         console.log(" region2 = ", region2);    // 시/구
         console.log(" region3 = ", region3);    // 동/리
-        console.log(" wholeRegion = ", wholeRegion);
+        console.log(" wholeRegion = ", wholeRegion);    // 전체
         
         await User.update({
             location: wholeRegion,
