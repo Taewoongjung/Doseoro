@@ -146,7 +146,6 @@ router.post('/changePW', async (req, res, next) => {
     }
 });
 
-
 router.get('/kakao', passport.authenticate('kakao'));
 router.get('/google', passport.authenticate('google', { scope: [
     'https://www.googleapis.com/auth/userinfo.profile',

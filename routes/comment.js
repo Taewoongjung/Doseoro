@@ -1,8 +1,7 @@
 const express = require('express');
 const sequelize = require("sequelize");
-const Op = sequelize.Op;
 
-const { User, Book, Who, Post, Community, Complain } = require('../models');
+const { Book, Post, Community, Complain } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -15,6 +14,8 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 // 댓글 수정(판매)
 router.get('/commentEdit', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("comment/commentEdit 진입");
+
         const { UserId, commentId, bookId, edited_comment } = req.query;
         console.log("Com = ", edited_comment);
         const thisBook = await Book.findOne({ where: { id: bookId } });
@@ -40,6 +41,8 @@ router.get('/commentEdit', isLoggedIn, async (req, res, next) => {
 // 댓글 삭제 (판매)
 router.get('/commentDelete', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("comment/commentDelete 진입");
+
         const { UserId, commentId, bookId } = req.query;
         const thisBook = await Book.findOne({ where: { id: bookId } });
         if (UserId === String(res.locals.user.id)){
@@ -57,7 +60,9 @@ router.get('/commentDelete', isLoggedIn, async (req, res, next) => {
 // 대댓글 수정(판매)
 router.get('/reCommentEdit', isLoggedIn, async (req, res, next) => {
     try {
-        const { recomment_UserId, re_bookId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
+        console.log("comment/reCommentEdit 진입");
+
+        const { re_bookId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
         
         const thisBook = await Book.findOne({ where: { id: re_bookId } });
         if (recomment_reCommentedId !== String(req.user.id)){
@@ -82,7 +87,9 @@ router.get('/reCommentEdit', isLoggedIn, async (req, res, next) => {
 // 대댓글 삭제 (판매)
 router.get('/reCommentDelete', isLoggedIn, async (req, res, next) => {
     try {
-        const { recomment_UserId, re_commentId, re_bookId, recomment_reCommentedId } = req.query;
+        console.log("comment/reCommentDelete 진입");
+
+        const { re_commentId, re_bookId, recomment_reCommentedId } = req.query;
 
         const thisBook = await Book.findOne({ where: { id: re_bookId } });
         if (recomment_reCommentedId === String(res.locals.user.id)){
@@ -100,6 +107,8 @@ router.get('/reCommentDelete', isLoggedIn, async (req, res, next) => {
 // 0403 댓글 수정(구매)
 router.get('/commentEdit_buy', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("comment/commentEdit_buy 진입");
+
         const { UserId, commentId, bookId, edited_comment } = req.query;
         console.log("Com = ", edited_comment);
         const thisBook = await Book.findOne({ where: { id: bookId } });
@@ -126,6 +135,8 @@ router.get('/commentEdit_buy', isLoggedIn, async (req, res, next) => {
 // 댓글 삭제 (구매)
 router.get('/commentDelete_buy', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("comment/commentDelete_buy 진입");
+
         const { UserId, commentId, bookId } = req.query;
         const thisBook = await Book.findOne({ where: { id: bookId } });
 
@@ -144,9 +155,10 @@ router.get('/commentDelete_buy', isLoggedIn, async (req, res, next) => {
 // 대댓글 삭제(구매)
 router.get('/reCommentDelete_buy', isLoggedIn, async (req, res, next) => {
     try {
-        const { recomment_UserId, re_commentId, re_bookId, recomment_reCommentedId } = req.query;
+        console.log("comment/reCommentDelete_buy 진입");
 
-        const thisBook = await Book.findOne({ where: { id: re_bookId } });
+        const { re_commentId, re_bookId, recomment_reCommentedId } = req.query;
+
         if (recomment_reCommentedId === String(res.locals.user.id)){
             await Post.destroy({ where: { id: re_commentId, UserId: req.user.id } });
 
@@ -162,15 +174,10 @@ router.get('/reCommentDelete_buy', isLoggedIn, async (req, res, next) => {
 // 대댓글 수정(구매)
 router.get('/reCommentEdit_buy', isLoggedIn, async (req, res, next) => {
     try {
-        // console.log(req.query);
-        // console.log(' ');
-        const { recomment_UserId, re_bookId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
-        // console.log("Com = ", reCom_edited_comment);
-        // console.log("ID = ", re_commentId);
-        // console.log("recomment_reCommentedId = ", recomment_reCommentedId);
-        // console.log("UserId = ", String(recomment_UserId));
-        // console.log("req.user.id = ", req.user.id);
-        // console.log("req.locals.user.id = ", res.locals.user.id);
+        console.log("comment/reCommentEdit_buy 진입");
+
+        const { re_bookId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
+
         if (recomment_reCommentedId !== String(req.user.id)){
             return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/wannabuy/buybook/${re_bookId}";</script>`);  
         } else {
@@ -194,6 +201,8 @@ router.get('/reCommentEdit_buy', isLoggedIn, async (req, res, next) => {
 // 0415 댓글 수정(커뮤니티)
 router.get('/commentEdit_commu', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("comment/commentEdit_commu 진입");
+
         const { UserId, commentId, communityId, edited_comment } = req.query;
         console.log("Com = ", edited_comment);
         console.log("Community id = ", communityId);
@@ -221,7 +230,9 @@ router.get('/commentEdit_commu', isLoggedIn, async (req, res, next) => {
 // 0415 댓글 삭제 (커뮤니티)
 router.get('/commentDelete_commu', isLoggedIn, async (req, res, next) => {
     try {
-        const { UserId, commentId, comment_createdAt, communityId } = req.query;
+        console.log("comment/commentDelete_commu 진입");
+
+        const { UserId, commentId, communityId } = req.query;
         const thisCommunity = await Community.findOne({ where: { id: communityId } });
         if (UserId === String(res.locals.user.id)){
             await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
@@ -238,16 +249,10 @@ router.get('/commentDelete_commu', isLoggedIn, async (req, res, next) => {
 // 0423 대댓글 수정(커뮤니티)
 router.get('/reCommentEdit_commu', isLoggedIn, async (req, res, next) => {
     try {
-        console.log(req.query);
-        console.log('@@@@@ 커뮤니티 대댓글 수정 @@@@@');
-        const { recomment_UserId, re_bookId, communityId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
-        console.log("Com = ", reCom_edited_comment);
-        console.log("communityId = ", communityId);
-        console.log("ID = ", re_commentId);
-        console.log("recomment_reCommentedId = ", recomment_reCommentedId);
-        console.log("UserId = ", String(recomment_UserId));
-        console.log("req.user.id = ", req.user.id);
-        console.log("req.locals.user.id = ", res.locals.user.id);
+        console.log("comment/reCommentEdit_commu 진입");
+
+        const { communityId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
+
         if (recomment_reCommentedId !== String(req.user.id)){
             return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/free_community/community/${communityId}";</script>`);  
         } else {
@@ -270,7 +275,9 @@ router.get('/reCommentEdit_commu', isLoggedIn, async (req, res, next) => {
 // 0423 대댓글 삭제 (커뮤니티)
 router.get('/reCommentDelete_commu', isLoggedIn, async (req, res, next) => {
     try {
-        const { recomment_UserId, re_commentId, communityId, recomment_reCommentedId } = req.query;
+        console.log("comment/reCommentDelete_commu 진입");
+
+        const { re_commentId, communityId, recomment_reCommentedId } = req.query;
         console.log("user id = ", res.locals.user.id);
         console.log("recommenid = ", String(recomment_reCommentedId));
         if (String(recomment_reCommentedId) === String(res.locals.user.id)){
@@ -288,6 +295,8 @@ router.get('/reCommentDelete_commu', isLoggedIn, async (req, res, next) => {
 // 0507댓글 수정(고객문의)
 router.get('/commentEdit_customer', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("comment/commentEdit_customer 진입");
+
         const { UserId, commentId, complainId, edited_comment } = req.query;
         console.log("Com = ", edited_comment);
         console.log("thisComplain id = ", complainId);
@@ -315,7 +324,9 @@ router.get('/commentEdit_customer', isLoggedIn, async (req, res, next) => {
 // 0507 댓글 삭제(고객문의)
 router.get('/commentDelete_customer', isLoggedIn, async (req, res, next) => {
     try {
-        const { UserId, commentId, comment_createdAt, complainId } = req.query;
+        console.log("comment/commentDelete_customer 진입");
+
+        const { UserId, commentId, complainId } = req.query;
         const thisComplain = await Complain.findOne({ where: { id: complainId } });
         if (UserId === String(res.locals.user.id)){
             await Post.destroy({ where: { id: commentId, UserId: req.user.id } });
@@ -332,8 +343,9 @@ router.get('/commentDelete_customer', isLoggedIn, async (req, res, next) => {
 // 0507 대댓글 수정(고객문의)
 router.get('/reCommentEdit_customer', isLoggedIn, async (req, res, next) => {
     try {
-        console.log('@@@@@ 고객문의 대댓글 수정 @@@@@');
-        const { recomment_UserId, re_bookId, complainId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
+        console.log("comment/reCommentEdit_customer 진입");
+
+        const { complainId, re_commentId, reCom_edited_comment, recomment_reCommentedId } = req.query;
         if (recomment_reCommentedId !== String(req.user.id)){
             return res.send(`<script type="text/javascript">alert("수정 권한이 없습니다!"); location.href="/customer/complain/${complainId}";</script>`);  
         } else {
@@ -356,7 +368,9 @@ router.get('/reCommentEdit_customer', isLoggedIn, async (req, res, next) => {
 // 0507 대댓글 삭제 (고객문의)
 router.get('/reCommentDelete_customer', isLoggedIn, async (req, res, next) => {
     try {
-        const { recomment_UserId, re_commentId, complainId, recomment_reCommentedId } = req.query;
+        console.log("comment/reCommentDelete_customer 진입");
+
+        const { re_commentId, complainId, recomment_reCommentedId } = req.query;
         if (String(recomment_reCommentedId) === String(res.locals.user.id)){
             await Post.destroy({ where: { id: re_commentId, UserId: req.user.id } });
 
@@ -372,16 +386,15 @@ router.get('/reCommentDelete_customer', isLoggedIn, async (req, res, next) => {
 // 0507 고객문의 게시물내용 수정하기
 router.post('/edit_community', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("comment/edit_community 진입");
+
         const { this_item_id, communityTitle, communityContent } = req.body;
-        console.log("body = ", req.body);
-        const a = await Community.update({
+        await Community.update({
             title: communityTitle,
             content: communityContent,
         }, {
             where: { id: this_item_id }
         });
-        console.log("body = ", req.body);
-        console.log("aa = ", a);
 
         res.send(`<script type="text/javascript">alert("커뮤니티 정보 수정 완료"); location.href="/free_community/community/${this_item_id}";</script>`); // 등록 하고 자기가 등록한 책 화면 띄우게 하기
     } catch (error) {
