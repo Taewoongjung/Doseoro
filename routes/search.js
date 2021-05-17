@@ -1,13 +1,9 @@
 const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 const sequelize = require("sequelize");
-const moment = require('moment-timezone');
 const Op = sequelize.Op;
 
-const { User, Book, Who, Post, Community } = require('../models');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { Book, Who, Post, Community } = require('../models');
+const { isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
@@ -19,6 +15,8 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 // 카테고리 검색
 router.get('/it', async (req, res, next) => {
     try {
+        console.log("search/it 진입");
+
         if (req.query.searchFilter === 'postTitle') { // 게시물명 으로 찾기
             const [foundBooks] = await Promise.all([
                 Book.findAll({
@@ -29,10 +27,9 @@ router.get('/it', async (req, res, next) => {
                     },
                 }),
             ]);
-            if (res.locals.user) {
-                /////////////
 
-                console.log("@@! = ", req.user.id);
+            //////////// 알림 ////////////
+            if (res.locals.user) {
                 const [books_for_notice] = await Promise.all([
                     Book.findAll({
                         where: {
@@ -48,7 +45,6 @@ router.get('/it', async (req, res, next) => {
                         }
                     })
                 ]);
-
 
                 const notices = [];
                 for (const notice of books_for_notice) {
@@ -73,9 +69,6 @@ router.get('/it', async (req, res, next) => {
                     notices_commu.push(id);
                 }
 
-                console.log("WWW = ", notices);
-                console.log("book = ", books_for_notice);
-                console.log("user = ", req.user.id);
                 const [noticess] = await Promise.all([
                     Post.findAll({
                         where: {
@@ -93,9 +86,8 @@ router.get('/it', async (req, res, next) => {
                         }
                     })
                 ]);
-                console.log("noticess = ", noticess);
+                //////////// 알림 ////////////
 
-                ////////////
                 res.render('searchList.html', {
                     foundBooks,
                     user: res.locals.user,
@@ -120,10 +112,9 @@ router.get('/it', async (req, res, next) => {
                     },
                 }),
             ]);
-            if (res.locals.user) {
-                /////////////
 
-                console.log("@@! = ", req.user.id);
+            //////////// 알림 ////////////
+            if (res.locals.user) {
                 const [books_for_notice] = await Promise.all([
                     Book.findAll({
                         where: {
@@ -139,7 +130,6 @@ router.get('/it', async (req, res, next) => {
                         }
                     })
                 ]);
-
 
                 const notices = [];
                 for (const notice of books_for_notice) {
@@ -164,9 +154,6 @@ router.get('/it', async (req, res, next) => {
                     notices_commu.push(id);
                 }
 
-                console.log("WWW = ", notices);
-                console.log("book = ", books_for_notice);
-                console.log("user = ", req.user.id);
                 const [noticess] = await Promise.all([
                     Post.findAll({
                         where: {
@@ -184,7 +171,7 @@ router.get('/it', async (req, res, next) => {
                         }
                     })
                 ]);
-                console.log("noticess = ", noticess);
+                //////////// 알림 ////////////
 
                 res.render('searchList.html', {
                     foundBooks,
@@ -210,10 +197,9 @@ router.get('/it', async (req, res, next) => {
                     },
                 }),
             ]);
-            if (res.locals.user) {
-                /////////////
 
-                console.log("@@! = ", req.user.id);
+            //////////// 알림 ////////////
+            if (res.locals.user) {
                 const [books_for_notice] = await Promise.all([
                     Book.findAll({
                         where: {
@@ -229,7 +215,6 @@ router.get('/it', async (req, res, next) => {
                         }
                     })
                 ]);
-
 
                 const notices = [];
                 for (const notice of books_for_notice) {
@@ -254,9 +239,6 @@ router.get('/it', async (req, res, next) => {
                     notices_commu.push(id);
                 }
 
-                console.log("WWW = ", notices);
-                console.log("book = ", books_for_notice);
-                console.log("user = ", req.user.id);
                 const [noticess] = await Promise.all([
                     Post.findAll({
                         where: {
@@ -274,9 +256,8 @@ router.get('/it', async (req, res, next) => {
                         }
                     })
                 ]);
-                console.log("noticess = ", noticess);
+                //////////// 알림 ////////////
 
-                ////////////
                 res.render('searchList.html', {
                     foundBooks,
                     user: res.locals.user,
@@ -301,9 +282,9 @@ router.get('/it', async (req, res, next) => {
                     },
                 }),
             ]);
-            if (res.locals.user) {
-                /////////////
 
+            //////////// 알림 ////////////
+            if (res.locals.user) {
                 console.log("@@! = ", req.user.id);
                 const [books_for_notice] = await Promise.all([
                     Book.findAll({
@@ -320,7 +301,6 @@ router.get('/it', async (req, res, next) => {
                         }
                     })
                 ]);
-
 
                 const notices = [];
                 for (const notice of books_for_notice) {
@@ -345,9 +325,6 @@ router.get('/it', async (req, res, next) => {
                     notices_commu.push(id);
                 }
 
-                console.log("WWW = ", notices);
-                console.log("book = ", books_for_notice);
-                console.log("user = ", req.user.id);
                 const [noticess] = await Promise.all([
                     Post.findAll({
                         where: {
@@ -365,9 +342,8 @@ router.get('/it', async (req, res, next) => {
                         }
                     })
                 ]);
-                console.log("noticess = ", noticess);
+                //////////// 알림 ////////////
 
-                ////////////
                 res.render('searchList.html', {
                     foundBooks,
                     user: res.locals.user,
@@ -392,10 +368,9 @@ router.get('/it', async (req, res, next) => {
                     },
                 }),
             ]);
-            if (res.locals.user) {
-                /////////////
 
-                console.log("@@! = ", req.user.id);
+            //////////// 알림 ////////////
+            if (res.locals.user) {
                 const [books_for_notice] = await Promise.all([
                     Book.findAll({
                         where: {
@@ -411,7 +386,6 @@ router.get('/it', async (req, res, next) => {
                         }
                     })
                 ]);
-
 
                 const notices = [];
                 for (const notice of books_for_notice) {
@@ -436,9 +410,6 @@ router.get('/it', async (req, res, next) => {
                     notices_commu.push(id);
                 }
 
-                console.log("WWW = ", notices);
-                console.log("book = ", books_for_notice);
-                console.log("user = ", req.user.id);
                 const [noticess] = await Promise.all([
                     Post.findAll({
                         where: {
@@ -456,9 +427,8 @@ router.get('/it', async (req, res, next) => {
                         }
                     })
                 ]);
-                console.log("noticess = ", noticess);
+                //////////// 알림 ////////////
 
-                ////////////
                 res.render('searchList.html', {
                     foundCommus,
                     user: res.locals.user,
@@ -475,7 +445,7 @@ router.get('/it', async (req, res, next) => {
             }
         } 
             else if (req.query.searchFilter === 'All') {  // 전체
-                console.log("@@ all");
+                console.log("all");
                 const [foundCommus] = await Promise.all([
                     Community.findAll({
                         where: {
@@ -509,9 +479,9 @@ router.get('/it', async (req, res, next) => {
                         },
                     }),
                 ]);
-                if (res.locals.user) {
-                    /////////////
 
+                //////////// 알림 ////////////
+                if (res.locals.user) {
                     console.log("@@! = ", req.user.id);
                     const [books_for_notice] = await Promise.all([
                         Book.findAll({
@@ -552,9 +522,6 @@ router.get('/it', async (req, res, next) => {
                         notices_commu.push(id);
                     }
 
-                    console.log("WWW = ", notices);
-                    console.log("book = ", books_for_notice);
-                    console.log("user = ", req.user.id);
                     const [noticess] = await Promise.all([
                         Post.findAll({
                             where: {
@@ -572,9 +539,8 @@ router.get('/it', async (req, res, next) => {
                             }
                         })
                     ]);
-                    console.log("noticess = ", noticess);
-
-                    ////////////
+                    //////////// 알림 ////////////
+                    
                     res.render('searchList.html', {
                         foundBooks,
                         foundCommus,
