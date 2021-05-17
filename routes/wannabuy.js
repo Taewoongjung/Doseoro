@@ -16,6 +16,8 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 // 0410 구매내역 등록
 router.post('/thisbook', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("wannabuy/thisbook 진입");
+
         const { postmessage, title, price, author, publisher, checkCategory, dealRoot, about } = req.body;
         const book = await Book.create({
             OwnerId: req.user.id,
@@ -40,6 +42,8 @@ router.post('/thisbook', isLoggedIn, async (req, res, next) => {
 // 0410 구매내역 삭제
 router.get('/delete', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("wannabuy/delete 진입");
+
         const { this_item_id, this_item_OwnerId } = req.query;
         if (this_item_OwnerId === String(req.user.id)) {
             await Book.destroy({ where: { id: this_item_id, OwnerId: this_item_OwnerId, isSelling: '1' }, });
@@ -56,6 +60,8 @@ router.get('/delete', isLoggedIn, async (req, res, next) => {
 // 0507 구매내역 삭제(마이페이지에서)
 router.get('/delete_myPage', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("wannabuy/delete_myPage 진입");
+
         const { this_item_id, this_item_OwnerId } = req.query;
         if (this_item_OwnerId === String(req.user.id)) {
             await Book.destroy({ where: { id: this_item_id, OwnerId: this_item_OwnerId, isSelling: '1' }, });
@@ -72,6 +78,8 @@ router.get('/delete_myPage', isLoggedIn, async (req, res, next) => {
 // 0410 구매내역 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("wannabuy/editIt 진입");
+
         const { this_item_OwnerId, this_item_id } = req.body;
         if (this_item_OwnerId === String(req.user.id)) {
             const books = await Book.findOne({ where: { id: this_item_id, isSelling: '1' } });
@@ -91,8 +99,9 @@ router.post('/editIt', isLoggedIn, async (req, res, next) => {
 // 구매요청 게시물 수정하기
 router.post('/edit', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("wannabuy/edit 진입");
+
         const { this_item_id, postmessage, title, price, author, publisher, checkCategory, dealRoot, about } = req.body;
-        console.log("body = ", req.body);
         const a = await Book.update({
             postmessage: postmessage,
             title: title,
@@ -116,6 +125,8 @@ router.post('/edit', isLoggedIn, async (req, res, next) => {
 // 0411 구매 책 디테일
 router.get('/buybook/:id', async (req, res, next) => {
     try {
+        console.log("wannabuy/buybook/:id 진입");
+
         const [book] = await Promise.all([
             Book.findOne({
                 where: { id: req.params.id },
@@ -127,7 +138,7 @@ router.get('/buybook/:id', async (req, res, next) => {
         ]);
 
         const plus_hits = book.hits + 1; // 조회수 +1
-        console.log("@@ = ", plus_hits);
+        console.log("hit = ", plus_hits);
 
         await Book.update({
             hits: plus_hits,
@@ -140,6 +151,7 @@ router.get('/buybook/:id', async (req, res, next) => {
                 where: { id: book.OwnerId }
             }),
         ]);
+
         const [comments] = await Promise.all([
             Post.findAll({
                 where: {
@@ -153,12 +165,13 @@ router.get('/buybook/:id', async (req, res, next) => {
                 order: [['createdAt', 'DESC']],
             }),
         ]);
+
         const findcommentId = [];
         for (const find_commentId of comments) {
-            // const { createdAt, commentingNick, id, content, UserId, BookId, reCommentedId, reCommentingId, reCommentNick } = find_commentId;
             const { id } = find_commentId;
             findcommentId.push(id);
         }
+
         // 대댓글
         const [re_comments] = await Promise.all([
             Post.findAll({
@@ -171,8 +184,6 @@ router.get('/buybook/:id', async (req, res, next) => {
                 order: [['createdAt', 'ASC']],
             }),
         ]);
-        console.log("대댓글 = ", re_comments);
-        console.log("대댓글 테스트 = ", String(findcommentId));
 
         const time = [];
         for (const new_time of comments) {
@@ -198,11 +209,10 @@ router.get('/buybook/:id', async (req, res, next) => {
                 UserId,
             });
         }
+
+        //////////// 알림 ////////////
         if (res.locals.user) {
             console.log("login");
-            /////////////
-
-            console.log("@@! = ", req.user.id);
             const [books_for_notice] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -218,7 +228,6 @@ router.get('/buybook/:id', async (req, res, next) => {
                     }
                 })
             ]);
-
 
             const notices = [];
             for (const notice of books_for_notice) {
@@ -243,9 +252,6 @@ router.get('/buybook/:id', async (req, res, next) => {
                 notices_commu.push(id);
             }
 
-            console.log("WWW = ", notices);
-            console.log("book = ", books_for_notice);
-            console.log("user = ", req.user.id);
             const [noticess] = await Promise.all([
                 Post.findAll({
                     where: {
@@ -263,9 +269,8 @@ router.get('/buybook/:id', async (req, res, next) => {
                     }
                 })
             ]);
-            console.log("noticess = ", noticess);
+            //////////// 알림 ////////////
 
-            ////////////
             res.render('buyDetail.html', {
                 title: `책 구매`,
                 book,
@@ -301,6 +306,8 @@ router.get('/buybook/:id', async (req, res, next) => {
 // 0411 댓글기능
 router.post('/buybook/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("wannabuy/buybook/:id/comment 진입");
+
         const { comment, bookId } = req.body;
         console.log("comment = ", comment);
         const post = await Post.create({
@@ -320,9 +327,9 @@ router.post('/buybook/:id/comment', isLoggedIn, async (req, res, next) => {
 // 0421 대댓글 기능 (구매)
 router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
-        console.log("@!@!@@", req.body);
+        console.log("wannabuy/recomment 진입");
+
         const { comment, bookId, commentId } = req.body;
-        console.log("@!@!@@ = ", commentId);
         const post = await Post.create({
             content: comment,
             UserId: req.user.id,
