@@ -1,5 +1,4 @@
 const express = require('express');
-const sequelize = require("sequelize");
 
 const { Book, Post, Community, Complain } = require('../models');
 const { isLoggedIn } = require('./middlewares');

@@ -3,7 +3,7 @@ const moment = require('moment-timezone');
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
-const { User, Book, Who, Post, Community, Complain } = require('../models');
+const { Book, Who, Post, Community, Complain } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -15,6 +15,8 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 
 router.post('/customerComplain', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("customer/customerComplain 진입");
+
         const { postTitle, postAbout } = req.body;
         const Acomplain = await Complain.create({
             title: postTitle,
@@ -32,6 +34,8 @@ router.post('/customerComplain', isLoggedIn, async (req, res, next) => {
 // 0415 커뮤니티 들어가기
 router.get('/complain/:id', async (req, res, next) => {
     try {
+        console.log("customer/complain/:id 진입");
+
         const [complain] = await Promise.all([
             Complain.findOne({
                 where: { id: req.params.id },
@@ -39,7 +43,7 @@ router.get('/complain/:id', async (req, res, next) => {
         ]);
 
         const plus_hits = complain.hits + 1; // 조회수 +1
-        console.log("@@ = ", plus_hits);
+        console.log("is added? = ", plus_hits);
 
         await Complain.update({
             hits: plus_hits,
@@ -62,6 +66,7 @@ router.get('/complain/:id', async (req, res, next) => {
             const { id } = find_commentId;
             findcommentId.push(id);
         }
+        
         // 대댓글들
         const [re_comments] = await Promise.all([ 
             Post.findAll({
@@ -74,8 +79,6 @@ router.get('/complain/:id', async (req, res, next) => {
                 order: [['createdAt', 'ASC']],
             }),
         ]);
-        // console.log("대댓글 = ", re_comments);
-        // console.log("대댓글 테스트 = ", String(findcommentId));
 
         const re_time = [];
         for (const new_time of re_comments) {
@@ -101,8 +104,8 @@ router.get('/complain/:id', async (req, res, next) => {
                 UserId
             });
         }
-        /////////////
-        console.log("@@! = ", req.user.id);
+
+        //////////// 알림 ////////////
         const [books_for_notice] = await Promise.all([
             Book.findAll({
                 where: {
@@ -110,6 +113,7 @@ router.get('/complain/:id', async (req, res, next) => {
                 }
             })
         ]);
+
         const [books_for_notice_commu] = await Promise.all([
             Community.findAll({
                 where: {
@@ -117,11 +121,13 @@ router.get('/complain/:id', async (req, res, next) => {
                 }
             })
         ]);
+
         const notices = [];
         for (const notice of books_for_notice) {
             const { id } = notice;
             notices.push(id);
         }
+
         const [likesfornotice] = await Promise.all([
             Who.findAll({
                 where: {
@@ -132,14 +138,13 @@ router.get('/complain/:id', async (req, res, next) => {
                 }
             })
         ]);
+
         const notices_commu = [];
         for (const notice of books_for_notice_commu) {
             const { id } = notice;
             notices_commu.push(id);
         }
-        console.log("WWW = ", notices);
-        console.log("book = ", books_for_notice);
-        console.log("user = ", req.user.id);
+
         const [noticess] = await Promise.all([
             Post.findAll({
                 where: {
@@ -157,8 +162,7 @@ router.get('/complain/:id', async (req, res, next) => {
                 }
             })
         ]);
-        console.log("noticess = ", noticess);
-        ////////////
+        //////////// 알림 ////////////
 
         res.render('csDetail.html', {
             title: `고객문의`,
@@ -180,9 +184,9 @@ router.get('/complain/:id', async (req, res, next) => {
 // 고객문의 댓글 달기
 router.post('/complain/:id/comment', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("customer/complain/:id/comment 진입");
+
         const { comment, complainId } = req.body;
-        console.log("comment = ", comment);
-        console.log("complainId = ", complainId);
         const post = await Post.create({
             content: comment,
             commentingNick: req.user.nick,
@@ -190,7 +194,7 @@ router.post('/complain/:id/comment', isLoggedIn, async (req, res, next) => {
             ComplainId: req.params.id,
             thisURL: String(`/customer/complain/${complainId}`),
         });
-        console.log("req.params.id=", req.params.id);
+
         return res.send(`<script type="text/javascript">location.href="/customer/complain/${complainId}";</script>`);
     } catch (error) {
         console.error(error);
@@ -201,11 +205,10 @@ router.post('/complain/:id/comment', isLoggedIn, async (req, res, next) => {
 // 고객문의 대댓글 기능 
 router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
-        // console.log("/complain/recomment 진입");
+        console.log("/customer/recomment 진입");
         const { comment, UserId, complainId, commentId } = req.body;
         console.log("complain에 commentId = ", commentId);
-        // console.log("complainId = ", complainId);
-        // console.log("req.body = ", req.body);
+
         await Post.create({
             content: comment,
             UserId: req.user.id,
@@ -225,6 +228,8 @@ router.post('/recomment', isLoggedIn, async (req, res, next) => {
 // 0507 고객문의 게시글 삭제
 router.get('/delete_customer', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("/customer/delete_customer 진입");
+
         const { this_item_id, this_item_content, this_item_complainedId } = req.query;
         if (this_item_complainedId === String(req.user.id)) {
             await Complain.destroy({ where: { id: this_item_id, complainedId: req.user.id, content: this_item_content }, });
@@ -241,6 +246,8 @@ router.get('/delete_customer', isLoggedIn, async (req, res, next) => {
 // 0507 고객문의 창에 수정을 누르면 나오는 수정하는 창을 띄어주는 라우터
 router.post('/editIt_complain', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("/customer/editIt_complain 진입");
+
         const { this_item_id, this_item_content, this_item_complainedId } = req.body;
         if (this_item_complainedId === String(req.user.id)) {
             const complain = await Complain.findOne({ where: { id: this_item_id, complainedId: req.user.id, content: this_item_content }, });
@@ -259,6 +266,8 @@ router.post('/editIt_complain', isLoggedIn, async (req, res, next) => {
 // 0507 고객문의 게시물 내용 수정하기
 router.post('/edit_complain', isLoggedIn, async (req, res, next) => {
     try {
+        console.log("/customer/edit_complain 진입");
+
         const { this_item_id, complainTitle, complainAbout } = req.body;
         await Complain.update({
             title: complainTitle,
