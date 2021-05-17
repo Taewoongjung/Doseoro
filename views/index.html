@@ -31,7 +31,6 @@
       {% include "searchBox.html" %}
       {% endif %}
       <!-- 배너 -->
-      <div>
         <div class="bd-example">
           <div id="bannerList" class="carousel slide" data-bs-ride="carousel">
             <ol class="carousel-indicators">
@@ -74,9 +73,9 @@
                     <div class="card-body text-center">
                       <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
                       {% if book.price == -1 %}
-                        <a>무료나눔</a>
+                      <a>무료나눔</a>
                       {% else %}
-                        <a>{{book.price}} 원</a>
+                      <a>{{book.price}} 원</a>
                       {% endif %}
                     </div>
                   </div>
@@ -91,16 +90,17 @@
                 </svg>
                 <div class="carousel-caption d-none d-md-block">
                   {% for book in recentBoughtBooks %}
-                    <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
-                        <div class="d-flex w-75 justify-content-between mt-2">
-                            <div class="ms-sm-4">
-                                <h1 class="h2 m-1 fw-bold mb-3">{{book.title}}</h1>
-                                <h4 class="h5 m-1 mb-2">가격: {{book.price}} 원</h4>
-                                <h4 class="h5 m-1 mb-2">카테고리: {{book.category}}</h4>
-                                <h4 class="h5 m-1 mb-2">거래 방법: {{book.tradingmethod}}</h4>
-                            </div>
-                        </div>
+                  <div class="likeList w-100 mt-3 mb-3 border d-flex flex-wrap"
+                    onclick="location.href='/wannabuy/buybook/{{book.id}}'">
+                    <div class="d-flex w-75 justify-content-between mt-2">
+                      <div class="ms-sm-4">
+                        <h1 class="h2 m-1 fw-bold mb-3">{{book.title}}</h1>
+                        <h4 class="h5 m-1 mb-2">가격: {{book.price}} 원</h4>
+                        <h4 class="h5 m-1 mb-2">카테고리: {{book.category}}</h4>
+                        <h4 class="h5 m-1 mb-2">거래 방법: {{book.tradingmethod}}</h4>
+                      </div>
                     </div>
+                  </div>
                   {% endfor %}
                 </div>
               </div>
@@ -114,42 +114,113 @@
                   <div>4번째 슬라이드</div>
                 </div>
               </div>
-            <a class="carousel-control-prev" href="#bannerList" role="button" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#bannerList" role="button" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </a>
+              <a class="carousel-control-prev" href="#bannerList" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#bannerList" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- 판매리스트 -->
+        <!-- 판매리스트 -->
+        <div class="saleList pt-5 mt-5 border-top">
+          <div class="d-flex align-items-center">
+            <h2 class="h3 fw-bold">최근 올라온 책</h2>
+            <a class="ms-3 mb-2 fw-bold text-decoration-none" href="/pages/saleBoard">더보기</a>
+          </div>
+          <!-- <form id="book-form"><a href="/pages/registerBook" class="addBook text-decoration-none btn-primary p-2">상품 등록</a> -->
+          <div class="d-flex flex-wrap justify-content-center">
+            {% for book in books | reverse %}
+            {% if loop.index <= 4%}
+            <div class="saleCard card mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
+              <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
+              <div class="card-body text-center">
+                <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
+                <a>{{book.price}} 원</a>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+      <!-- 무료나눔 -->
+      <!-- free_books 넌적스 변수 추가 필요 -->
       <div class="saleList pt-5 mt-5 border-top">
-        <h1 class="h2 fw-bold">판매중인 책</h1><br>
-        <form id="book-form"><a href="/pages/registerBook" class="addBook text-decoration-none btn-primary p-2">상품 등록</a>
-        </form>
-
-        <div class="d-flex flex-wrap justify-content-center mt-5">
-          {% for book in books %}
-          <div class="saleCard card m-sm-5 mt-4 m-2" style="max-width: 210px;"
-            onclick="location.href='/book/{{book.id}}'">
+        <div class="d-flex align-items-center">
+          <h2 class="h3 fw-bold">무료나눔</h2>
+          <a class="ms-3 mb-2 fw-bold text-decoration-none" href="/pages/donationBoard">더보기</a>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center">
+          {% for book in free_books | reverse %}
+          {% if loop.index <= 4 %}
+          <div class="saleCard card mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
             <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
             <div class="card-body text-center">
               <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
-              <!-- <p>{{book.createdAt}}</p> -->
-              <a>{{book.price}} 원</a>
-              <!-- <a href="/book/{{book.id}}" class="enter btn-primary ms-5 p-2 text-decoration-none">자세히</a> -->
+              <a>{{book.usernick}}</a>
             </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
-    </main>
+      </div>
 
-    <!-- footer -->
-    <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
+    <!-- 삽니다 -->
+    <div class="saleList pt-5 mt-5 border-top">
+      <div class="d-flex align-items-center">
+        <h2 class="h3 fw-bold">구매희망</h2>
+        <a class="ms-3 mb-2 fw-bold text-decoration-none" href="/pages/bookRequest">더보기</a>
+      </div>
+
+      <!-- 게시물 출력 -->
+      <div class="d-flex flex-wrap justify-content-center">
+        <div class="buycard card ms-2 me-3 mb-3" style="max-width: 18rem;" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
+          <div class="postTitle card-header fw-bold p-3">책을 삽니다 책제목은 쉽게배우는 자바스크립트입니다</div>
+          <div class="card-body text-secondary pt-4 pb-4">
+            <h5 class="card-title postTitle fw-bold">유저이름</h5>
+            <br>
+            <p class="card-text postMsg">다 asdasdasdasdasdasd책제목은바스크립트입니다책을 삽니다 책삽니다 책제목은 쉽게배우는 자바스크립트입니다</p>
+          </div>
+        </div>
+
+        <div class="buycard card ms-2 me-3 mb-3" style="max-width: 18rem;" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
+          <div class="postTitle card-header fw-bold p-3">책을 삽니다 책제목은 쉽게배우는 자바스크립트입니다</div>
+          <div class="card-body text-secondary pt-4 pb-4">
+            <h5 class="card-title postTitle fw-bold">유저이름</h5>
+            <br>
+            <p class="card-text postMsg">다 asdasdasdasdasdasd책제목은바스크립트입니다책을 삽니다 책삽니다 책제목은 쉽게배우는 자바스크립트입니다</p>
+          </div>
+        </div>
+
+        <div class="buycard card ms-2 me-3 mb-3" style="max-width: 18rem;" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
+          <div class="postTitle card-header fw-bold p-3">책을 삽니다 책제목은 쉽게배우는 자바스크립트입니다</div>
+          <div class="card-body text-secondary pt-4 pb-4">
+            <h5 class="card-title postTitle fw-bold">유저이름</h5>
+            <br>
+            <p class="card-text postMsg">다 asdasdasdasdasdasd책제목은바스크립트입니다책을 삽니다 책삽니다 책제목은 쉽게배우는 자바스크립트입니다</p>
+          </div>
+        </div>
+
+        <div class="buycard card ms-2 me-3 mb-3" style="max-width: 18rem;" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
+          <div class="postTitle card-header fw-bold p-3">책을 삽니다 책제목은 쉽게배우는 자바스크립트입니다</div>
+          <div class="card-body text-secondary pt-4 pb-4">
+            <h5 class="card-title postTitle fw-bold">유저이름</h5>
+            <br>
+            <p class="card-text postMsg">다 asdasdasdasdasdasd책제목은바스크립트입니다책을 삽니다 책삽니다 책제목은 쉽게배우는 자바스크립트입니다</p>
+          </div>
+        </div>
+
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
   </div>
   <script>
     function one() {
