@@ -9,6 +9,8 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.post('/signup', isNotLoggedIn, async (req, res, next) => {
+    console.log("auth/signup 진입");
+
     const { name, phone, nick, email, password, answer, re_password, question } = req.body;
     try {
         const exUser = await User.findOne({ where: { email: email } });
@@ -41,6 +43,8 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
 });
 
 router.post('/login', isNotLoggedIn, (req, res, next) => {
+    console.log("auth/login 진입");
+
     passport.authenticate('local', (authError, user, info) => {
         if (authError) {
             console.error(authError);
@@ -60,12 +64,16 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 });
 
 router.get('/logout', isLoggedIn, (req, res) => {
+    console.log("auth/logout 진입");
+
     req.logout();
     req.session.destroy();
     res.redirect('/');
 });
 
 router.post('/ID', async (req, res, next) => {
+    console.log("auth/ID 진입");
+
     const { phone } = req.body;
     try {
         const FindUser = await User.findOne({ where: { phone: phone } });
@@ -81,6 +89,8 @@ router.post('/ID', async (req, res, next) => {
 });
 
 router.post('/PW_fir', async (req, res, next) => {
+    console.log("auth/PW_fir 진입");
+    
     const { email } = req.body;
     try {
         const FindUser = await User.findOne({ where: { email: email } });
@@ -96,6 +106,8 @@ router.post('/PW_fir', async (req, res, next) => {
 });
 
 router.post('/PW_sec', async (req, res, next) => {
+    console.log("auth/PW_sec 진입");
+
     const { answer } = req.body;
     try {
         const FindUser = await User.findOne({ where: { answer: answer } });
@@ -111,6 +123,8 @@ router.post('/PW_sec', async (req, res, next) => {
 });
 
 router.post('/changePW', async (req, res, next) => {
+    console.log("auth/changePW 진입");
+
     const { newPW, check_newPW, email } = req.body;
     try {
         const FindUser = await User.findOne({ where: { email: email } });
