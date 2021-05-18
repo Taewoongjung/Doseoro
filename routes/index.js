@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
     try {
         console.log("index/ 진입");
 
-        // --------- 인기 순으로 정렬하기 ---------
+        // --------- 슬라이드에 들어 갈 것들 ---------
         //
         // // 좋아요 6개 이상
         const [rankedBooks] = await Promise.all([
@@ -65,6 +65,18 @@ router.get('/', async (req, res, next) => {
             })
         ]);
         console.log("recent bought books = ", recentBoughtBooks);
+        // --------------------------------------- 
+
+        const [recentRegisteredBooks] = await Promise.all([
+            Book.findAll({
+                where: {
+                    sold: { [Op.ne]: 1 },
+                    price: { [Op.ne]: -1 },
+                },
+                order: [['createdAt', 'ASC']],
+                limit: 4,
+            })
+        ]);
 
         //////////// 알림 ////////////
         if (req.user) {
@@ -134,7 +146,19 @@ router.get('/', async (req, res, next) => {
                         price: {
                             [Op.ne]: -1
                         },
-                    }
+                    },
+                    order: [['createdAt', 'DESC']],
+                })
+            ]);
+
+            const [FreeBooksIndex] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        SoldId: null,
+                        isSelling: null,
+                        price: -1,
+                    },
+                    order: [['createdAt', 'DESC']],
                 })
             ]);
 
@@ -142,6 +166,7 @@ router.get('/', async (req, res, next) => {
                 books,
                 rankedBooks,
                 recentSoldBooks,
+                FreeBooksIndex,
                 noticess,
                 likesfornotice,
                 user: req.user,
@@ -155,7 +180,19 @@ router.get('/', async (req, res, next) => {
                         price: {
                             [Op.ne]: -1
                         },
-                    }
+                    },
+                    order: [['createdAt', 'DESC']],
+                })
+            ]);
+
+            const [FreeBooksIndex] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        SoldId: null,
+                        isSelling: null,
+                        price: -1,
+                    },
+                    order: [['createdAt', 'DESC']],
                 })
             ]);
 
@@ -163,6 +200,7 @@ router.get('/', async (req, res, next) => {
                 books,
                 rankedBooks,
                 recentSoldBooks,
+                FreeBooksIndex,
             });
         }
     } catch (error) {

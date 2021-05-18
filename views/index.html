@@ -134,7 +134,7 @@
           </div>
           <!-- <form id="book-form"><a href="/pages/registerBook" class="addBook text-decoration-none btn-primary p-2">상품 등록</a> -->
           <div class="d-flex flex-wrap justify-content-center">
-            {% for book in books | reverse %}
+            {% for book in books %}
             {% if loop.index <= 4%}
             <div class="saleCard card mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
               <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
@@ -155,7 +155,7 @@
           <a class="ms-3 mb-2 fw-bold text-decoration-none" href="/pages/donationBoard">더보기</a>
         </div>
         <div class="d-flex flex-wrap justify-content-center">
-          {% for book in free_books | reverse %}
+          {% for book in FreeBooksIndex %}
           {% if loop.index <= 4 %}
           <div class="saleCard card mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
             <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
