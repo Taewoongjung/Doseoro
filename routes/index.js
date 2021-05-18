@@ -148,7 +148,7 @@ router.get('/', async (req, res, next) => {
                         },
                     },
                     order: [['createdAt', 'DESC']],
-                    limit: 5,
+                    limit: 4,
                 })
             ]);
 
@@ -160,7 +160,7 @@ router.get('/', async (req, res, next) => {
                         price: -1,
                     },
                     order: [['createdAt', 'DESC']],
-                    limit: 5,
+                    limit: 4,
                 })
             ]);
 
@@ -171,7 +171,7 @@ router.get('/', async (req, res, next) => {
                         isSelling: 1,
                     },
                     order: [['createdAt', 'DESC']],
-                    limit: 5,
+                    limit: 4,
                 })
             ]);
 
@@ -182,7 +182,7 @@ router.get('/', async (req, res, next) => {
                         isSelling: 1,
                     },
                     order: [['createdAt', 'DESC']],
-                    limit: 5,
+                    limit: 4,
                 })
             ]);
 
@@ -208,7 +208,7 @@ router.get('/', async (req, res, next) => {
                         },
                     },
                     order: [['createdAt', 'DESC']],
-                    limit: 5,
+                    limit: 4,
                 })
             ]);
 
@@ -220,7 +220,7 @@ router.get('/', async (req, res, next) => {
                         price: -1,
                     },
                     order: [['createdAt', 'DESC']],
-                    limit: 5,
+                    limit: 4,
                 })
             ]);
 
@@ -231,7 +231,7 @@ router.get('/', async (req, res, next) => {
                         isSelling: 1,
                     },
                     order: [['createdAt', 'DESC']],
-                    limit: 5,
+                    limit: 4,
                 })
             ]);
 
