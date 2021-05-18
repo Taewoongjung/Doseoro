@@ -8,7 +8,6 @@ const Op = sequelize.Op;
 
 const { User, Book, Who, Post, Community } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { associate } = require('../models/user');
 
 const router = express.Router();
 
@@ -22,7 +21,6 @@ router.get('/', async (req, res, next) => {
         console.log("index/ 진입");
 
         // --------- 슬라이드에 들어 갈 것들 ---------
-        //
         // // 좋아요 6개 이상
         const [rankedBooks] = await Promise.all([
             Book.findAll({
