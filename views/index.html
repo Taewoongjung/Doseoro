@@ -135,7 +135,6 @@
           <!-- <form id="book-form"><a href="/pages/registerBook" class="addBook text-decoration-none btn-primary p-2">상품 등록</a> -->
           <div class="d-flex flex-wrap justify-content-center">
             {% for book in books %}
-            {% if loop.index <= 4%}
             <div class="saleCard card mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
               <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
               <div class="card-body text-center">
@@ -143,7 +142,6 @@
                 <a>{{book.price}} 원</a>
               </div>
             </div>
-            {% endif %}
             {% endfor %}
           </div>
         </div>
@@ -155,8 +153,7 @@
           <a class="ms-3 mb-2 fw-bold text-decoration-none" href="/pages/donationBoard">더보기</a>
         </div>
         <div class="d-flex flex-wrap justify-content-center">
-          {% for book in FreeBooksIndex %}
-          {% if loop.index <= 4 %}
+          {% for book in freeBooksIndex %}
           <div class="saleCard card mt-4 m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
             <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
             <div class="card-body text-center">
@@ -164,7 +161,6 @@
               <a>{{book.usernick}}</a>
             </div>
           </div>
-          {% endif %}
           {% endfor %}
         </div>
       </div>
@@ -178,42 +174,16 @@
 
       <!-- 게시물 출력 / 넌적스 추가 후 아래 3개 지우기 -->
       <div class="d-flex flex-wrap justify-content-center">
+        {% for book in wannabuyBooksIndex %}
         <div class="buycard card ms-2 me-3 mb-3" style="max-width: 18rem;" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
-          <div class="postTitle card-header fw-bold p-3">책을 삽니다 책제목은 쉽게배우는 자바스크립트입니다</div>
+          <div class="postTitle card-header fw-bold p-3">{{book.postmessage}}</div>
           <div class="card-body text-secondary pt-4 pb-4">
-            <h5 class="card-title postTitle fw-bold">유저이름</h5>
+            <h5 class="card-title postTitle fw-bold">{{book.usernick}}</h5>
             <br>
-            <p class="card-text postMsg">다 asdasdasdasdasdasd책제목은바스크립트입니다책을 삽니다 책삽니다 책제목은 쉽게배우는 자바스크립트입니다</p>
+            <p class="card-text postMsg">{{book.about}}</p>
           </div>
         </div>
-
-        <div class="buycard card ms-2 me-3 mb-3" style="max-width: 18rem;" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
-          <div class="postTitle card-header fw-bold p-3">책을 삽니다 책제목은 쉽게배우는 자바스크립트입니다</div>
-          <div class="card-body text-secondary pt-4 pb-4">
-            <h5 class="card-title postTitle fw-bold">유저이름</h5>
-            <br>
-            <p class="card-text postMsg">다 asdasdasdasdasdasd책제목은바스크립트입니다책을 삽니다 책삽니다 책제목은 쉽게배우는 자바스크립트입니다</p>
-          </div>
-        </div>
-
-        <div class="buycard card ms-2 me-3 mb-3" style="max-width: 18rem;" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
-          <div class="postTitle card-header fw-bold p-3">책을 삽니다 책제목은 쉽게배우는 자바스크립트입니다</div>
-          <div class="card-body text-secondary pt-4 pb-4">
-            <h5 class="card-title postTitle fw-bold">유저이름</h5>
-            <br>
-            <p class="card-text postMsg">다 asdasdasdasdasdasd책제목은바스크립트입니다책을 삽니다 책삽니다 책제목은 쉽게배우는 자바스크립트입니다</p>
-          </div>
-        </div>
-
-        <div class="buycard card ms-2 me-3 mb-3" style="max-width: 18rem;" onclick="location.href='/wannabuy/buybook/{{book.id}}'">
-          <div class="postTitle card-header fw-bold p-3">책을 삽니다 책제목은 쉽게배우는 자바스크립트입니다</div>
-          <div class="card-body text-secondary pt-4 pb-4">
-            <h5 class="card-title postTitle fw-bold">유저이름</h5>
-            <br>
-            <p class="card-text postMsg">다 asdasdasdasdasdasd책제목은바스크립트입니다책을 삽니다 책삽니다 책제목은 쉽게배우는 자바스크립트입니다</p>
-          </div>
-        </div>
-
+        {% endfor %}
     </div>
 
   </main>

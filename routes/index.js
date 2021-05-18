@@ -138,7 +138,7 @@ router.get('/', async (req, res, next) => {
             ]);
             //////////// 알림 ////////////
 
-            const [books] = await Promise.all([
+            const [books] = await Promise.all([ // index에 팝니다 상품들
                 Book.findAll({
                     where: {
                         SoldId: null,
@@ -148,10 +148,11 @@ router.get('/', async (req, res, next) => {
                         },
                     },
                     order: [['createdAt', 'DESC']],
+                    limit: 5,
                 })
             ]);
 
-            const [FreeBooksIndex] = await Promise.all([
+            const [freeBooksIndex] = await Promise.all([ // index에 무료나눔
                 Book.findAll({
                     where: {
                         SoldId: null,
@@ -159,6 +160,29 @@ router.get('/', async (req, res, next) => {
                         price: -1,
                     },
                     order: [['createdAt', 'DESC']],
+                    limit: 5,
+                })
+            ]);
+
+            const [sellBooksIndex] = await Promise.all([ // index에 무료나눔
+                Book.findAll({
+                    where: {
+                        SoldId: null,
+                        isSelling: 1,
+                    },
+                    order: [['createdAt', 'DESC']],
+                    limit: 5,
+                })
+            ]);
+
+            const [wannabuyBooksIndex] = await Promise.all([ // index에 무료나눔
+                Book.findAll({
+                    where: {
+                        SoldId: null,
+                        isSelling: 1,
+                    },
+                    order: [['createdAt', 'DESC']],
+                    limit: 5,
                 })
             ]);
 
@@ -166,13 +190,15 @@ router.get('/', async (req, res, next) => {
                 books,
                 rankedBooks,
                 recentSoldBooks,
-                FreeBooksIndex,
+                freeBooksIndex,
+                wannabuyBooksIndex,
+                sellBooksIndex,
                 noticess,
                 likesfornotice,
                 user: req.user,
             });
         } else {
-            const [books] = await Promise.all([
+            const [books] = await Promise.all([ // index에 팝니다 상품들
                 Book.findAll({
                     where: {
                         SoldId: null,
@@ -182,10 +208,11 @@ router.get('/', async (req, res, next) => {
                         },
                     },
                     order: [['createdAt', 'DESC']],
+                    limit: 5,
                 })
             ]);
 
-            const [FreeBooksIndex] = await Promise.all([
+            const [freeBooksIndex] = await Promise.all([ // index에 무료나눔
                 Book.findAll({
                     where: {
                         SoldId: null,
@@ -193,6 +220,18 @@ router.get('/', async (req, res, next) => {
                         price: -1,
                     },
                     order: [['createdAt', 'DESC']],
+                    limit: 5,
+                })
+            ]);
+
+            const [wannabuyBooksIndex] = await Promise.all([ // index에 무료나눔
+                Book.findAll({
+                    where: {
+                        SoldId: null,
+                        isSelling: 1,
+                    },
+                    order: [['createdAt', 'DESC']],
+                    limit: 5,
                 })
             ]);
 
@@ -200,7 +239,8 @@ router.get('/', async (req, res, next) => {
                 books,
                 rankedBooks,
                 recentSoldBooks,
-                FreeBooksIndex,
+                freeBooksIndex,
+                wannabuyBooksIndex,
             });
         }
     } catch (error) {
