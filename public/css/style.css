@@ -112,6 +112,48 @@ textarea {
 	display: none;
 }
 /* index style */
+.slide2Inner {
+	background-color: #80d1f1;
+	/* 53B1D7 */
+	border-radius: 12px;
+	/* padding-top: 40px; */
+	display: flex;
+	align-items: center;
+}
+.slide2 {
+	/* background-color: #FFFEFC; */
+	/* background-color: #fd8989; */
+	min-height:100%;
+	width: 75%;
+	margin: 0 auto;
+	/* line-height: 3rem; */
+	padding: 1rem 3rem 1rem 3rem;
+	/* border-radius: 15px; */
+}
+.slide2 li {
+	font-size: 24px
+}
+.slideTitle {
+	font-size: 72px;
+	color: #ffffff;
+	font-weight: bolder;
+}
+.slideSubTitle {
+	font-size: 24px;
+	color: #ffffff;
+	margin-bottom: 3rem;
+}
+.slideGuide {
+	border: solid 2px #ffffff;
+	padding: 1rem;
+	text-decoration: none;
+	color: #ffffff;
+}
+.slideGuide:hover {
+	cursor: pointer;
+	background-color: #51b6df;
+	color: #ffffff
+}
 .searchForm {
 	max-width: 500px;
 }
