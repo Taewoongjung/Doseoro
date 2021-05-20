@@ -15,6 +15,7 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
 router.get('/witoutCommu', isLoggedIn, async(req, res, next) => {
     try{
         console.log("notification/witoutCommu 진입");
+
         const { notCommunity_Id } = req.query;
         await Post.update({
             isNotified_posts: '1',
@@ -32,6 +33,7 @@ router.get('/witoutCommu', isLoggedIn, async(req, res, next) => {
 router.get('/onlyCommu', isLoggedIn, async(req, res, next) => {
     try{
         console.log("notification/onlyCommu 진입");
+
         const { community_Id } = req.query;
         await Post.update({
             isNotified_posts: '1',
@@ -49,6 +51,7 @@ router.get('/onlyCommu', isLoggedIn, async(req, res, next) => {
 router.get('/notyLike', isLoggedIn, async(req, res, next) => {
     try{
         console.log("notification/notyLike 진입");
+
         const { Like_Id } = req.query;
         await Who.update({
             isNotified_like: '1',
@@ -66,6 +69,7 @@ router.get('/notyLike', isLoggedIn, async(req, res, next) => {
 router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
     try{
         console.log("notification/deleteAll 진입");
+
         const [books_for_notice] = await Promise.all([ // 내가 올린 책 모두 찾기
             Book.findAll({
                 where: {
@@ -164,6 +168,7 @@ router.get('/deleteAll', isLoggedIn, async(req, res, next) => {
 router.get('/witoutCommu_first_click', isLoggedIn, async(req, res, next) => {
     try{
         console.log("notification/witoutCommu_first_click 진입");
+
         const { notCommunity_Id, theURL } = req.query;
 
         await Post.update({
@@ -184,6 +189,7 @@ router.get('/witoutCommu_first_click', isLoggedIn, async(req, res, next) => {
 router.get('/witoutCommu_second_click', isLoggedIn, async(req, res, next) => {
     try{
         console.log("notification/witoutCommu_second_click 진입");
+
         const { notCommunity_Id, theURL } = req.query;
 
         await Post.update({
@@ -204,6 +210,7 @@ router.get('/witoutCommu_second_click', isLoggedIn, async(req, res, next) => {
 router.get('/onlyCommu_first_click', isLoggedIn, async(req, res, next) => {
     try{
         console.log("notification/onlyCommu_first_click 진입");
+
         const { community_Id, theURL } = req.query;
 
         await Post.update({
@@ -224,6 +231,7 @@ router.get('/onlyCommu_first_click', isLoggedIn, async(req, res, next) => {
 router.get('/onlyCommu_second_click', isLoggedIn, async(req, res, next) => {
     try{
         console.log("notification/onlyCommu_second_click 진입");
+
         const { community_Id, theURL } = req.query;
 
         await Post.update({
@@ -244,6 +252,7 @@ router.get('/onlyCommu_second_click', isLoggedIn, async(req, res, next) => {
 router.get('/notyLike_click', isLoggedIn, async(req, res, next) => {
     try{
         console.log("notification/notyLike_click 진입");
+        
         const { Like_Id, theURL_like } = req.query;
         await Who.update({
             isNotified_like: '1',
