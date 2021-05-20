@@ -34,7 +34,8 @@ router.get('/', async (req, res, next) => {
             })
         ]);  
         console.log("hot books = ", rankedBooks);
-
+        // --------------------------------------- 
+        
         // 최근 판매한 상품들 (팝니다, 무료나눔)
         const [recentSoldBooks] = await Promise.all([
             Book.findAll({
@@ -63,7 +64,6 @@ router.get('/', async (req, res, next) => {
             })
         ]);
         console.log("recent bought books = ", recentBoughtBooks);
-        // --------------------------------------- 
 
         const [recentRegisteredBooks] = await Promise.all([
             Book.findAll({
