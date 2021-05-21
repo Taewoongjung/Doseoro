@@ -21,3 +21,18 @@ function telFormat(str) {
     let lastNum = inputPhone.replace(/(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)/, '$1$2$3-$4$5$6$7-$8$9$10$11');
     document.getElementById('inputPhone').value = lastNum;
 }
+
+// 검색 필터
+function checkText() {
+    const searchText = document.getElementById('book-publisher').value;
+    const submitBtn = document.getElementById('submitBtn');
+
+    let convText = searchText.replace(/\s|  /gi, '');
+    if (convText == '') {
+            // alert("내용을 입력하세요");
+            submitBtn.disabled = true;
+    } else {
+            // alert("성공");
+            submitBtn.disabled = false;
+    }
+}

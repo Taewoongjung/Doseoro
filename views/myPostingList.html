@@ -86,9 +86,14 @@
                             <a class="page-link" href="/pages/myPostingList?pageSale={{currentPageSale - 1}}"
                                 aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                         </li>
-                        {% for i in maxPageSale%}
+                        {% for i in maxPageSale %}
                         <!-- for문으로 페이지 번호 추가-->
-                        <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageSale={{ i + 1 }}" onclick="showSale()" >{{ i + 1 }}</a></li>
+                            {% if currentPage-1 == i %}
+                            <li class="page-item active"><a class="page-link" href="/pages/myPostingList?pageSale={{ i + 1 }}">{{ i + 1 }}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageSale={{ i + 1 }}">{{ i + 1 }}</a></li>
+                            {% endif %}
+                        <!-- <li class="page-item"><a class="page-link" href="/pages/myPostingList?pageSale={{ i + 1 }}" onclick="showSale()" >{{ i + 1 }}</a></li> -->
                         {% endfor %}
                         <li class="page-item">
                             <!-- 다음 페이지 = 현재페이지 + 1 -->
