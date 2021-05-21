@@ -182,6 +182,7 @@ router.get('/csList', isLoggedIn, async (req, res) => {
             where: {
                 isSettled: { [Op.ne]: 1 },
             },
+            order: [['createdAt', 'DESC']],
             offset: offset,
             limit: 4,
         }),
