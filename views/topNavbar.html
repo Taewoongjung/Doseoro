@@ -9,10 +9,11 @@
             <ul class="navbar-nav mb-2 mb-md-0 notionBox">
                 {% if user and user.id %}
                 <li class="nav-item">
-                    <a onclick="notionClick(true)" class="nav-link btn notionBtn"><img src="/img/notionF.png"
-                            width="23px" alt="notionImg"></a>
+                    <div onclick="notionClick(true)" class="nav-link btn notionBtn d-flex align-items-center">
+                        <img src="/img/notionF.png" width="23px" alt="notionImg">
+                        <p style="color:red">{% if noticess == 0 %}{% else %}!{% endif %}</p>
+                    </div>
                     <div id="notionList" class="notionInner p-2">
-                        <!-- 알림 테스트 -->
                         <ul class="m-2"><a class="notionBtn p-2" onclick="notionClick(false)">close</a></ul>
 
                         {% if noticess == 0 %}
