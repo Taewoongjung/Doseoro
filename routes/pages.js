@@ -182,6 +182,7 @@ router.get('/csList', isLoggedIn, async (req, res) => {
             where: {
                 isSettled: { [Op.ne]: 1 },
             },
+            order: [['createdAt', 'DESC']],
             offset: offset,
             limit: 4,
         }),
@@ -316,7 +317,7 @@ router.get('/saleBoard', async (req, res, next) => {
                         [Op.ne]: -1
                     },
                 },
-                order: [['createdAt', 'ASC']],
+                order: [['createdAt', 'DESC']],
                 limit: 8,
                 offset: offset,
             }),
@@ -331,8 +332,7 @@ router.get('/saleBoard', async (req, res, next) => {
                     price: {
                         [Op.ne]: -1
                     }
-                },
-                order: [['createdAt', 'ASC']],
+                }
             })
         ]);
 
@@ -646,7 +646,7 @@ router.get('/bookRequest', async (req, res, next) => {
         const [books] = await Promise.all([
             Book.findAll({
                 where: { SoldId: null, isSelling: '1' },
-                order: [['createdAt', 'ASC']],
+                order: [['createdAt', 'DESC']],
                 offset: offset,
                 limit: 6,
             })
@@ -1038,7 +1038,7 @@ router.get('/donationBoard', async (req, res, next) => {
         const [free_books] = await Promise.all([
             Book.findAll({
                 where: { SoldId: null, isSelling: null, price: -1 },
-                order: [['createdAt', 'ASC']],
+                order: [['createdAt', 'DESC']],
                 offset: offset,
                 limit: 8,
             })
@@ -1051,8 +1051,7 @@ router.get('/donationBoard', async (req, res, next) => {
                     SoldId: null,
                     isSelling: null,
                     price: -1
-                },
-                order: [['createdAt', 'ASC']],
+                }
             })
         ]);
 
@@ -1235,7 +1234,7 @@ router.get('/community', async (req, res, next) => {
         }
         const [communities] = await Promise.all([
             Community.findAll({
-                order: [['createdAt', 'ASC']],
+                order: [['createdAt', 'DESC']],
                 offset: offset,
                 limit: 6,
             })
@@ -1243,9 +1242,7 @@ router.get('/community', async (req, res, next) => {
         console.log("community = ", communities);
 
         const [AllPagecommunities] = await Promise.all([ // 전체 페이지
-            Community.findAll({
-                order: [['createdAt', 'ASC']],
-            })
+            Community.findAll({})
         ]);
 
         console.log("-길이- = ", AllPagecommunities.length);
