@@ -21,26 +21,26 @@
     <!-- 책 등록 -->
     <main class="registerForm border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
       <form id="edit_book-form" class="p-5">
-        <input type="text" class="form-control p-3" id="postTitle" name="postmessage" value="{{books.postmessage}}" required autofocus>
+        <input type="text" class="form-control p-3" id="postTitle" name="postmessage" value="{{books.postmessage}}" placeholder="포스팅 제목" required autofocus>
 
         <div class="input-group">
           <label for="book-name">책 이름</label>
-          <input type="text" class="form-control p-3" id="book-name" name="title" value="{{books.title}}" required>
+          <input type="text" class="form-control p-3" id="book-name" name="title" value="{{books.title}}" placeholder="책 이름" required>
         </div>
 
         <div class="input-group">
           <label for="book-price">가격</label>
-          <input type="number" class="form-control p-3" id="book-price" name="price" value="{{books.price}}" required>
+          <input type="number" class="form-control p-3" id="book-price" name="price" value="{{books.price}}" placeholder="가격" required>
         </div>
 
         <div class="input-group">
           <label for="book-author">저자</label>
-          <input type="text" class="form-control p-3" id="book-author" name="author" value="{{books.author}}">
+          <input type="text" class="form-control p-3" id="book-author" name="author" value="{{books.author}}" placeholder="저자">
         </div>
 
         <div class="input-group">
           <label for="book-publisher">출판사</label>
-          <input type="text" class="form-control p-3" id="book-publisher" name="publisher" value="{{books.publisher}}">
+          <input type="text" class="form-control p-3" id="book-publisher" name="publisher" value="{{books.publisher}}" placeholder="출판사">
         </div>
 
         <h1 class="h4 mt-3">카테고리</h1>

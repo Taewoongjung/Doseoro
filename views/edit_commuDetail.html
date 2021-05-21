@@ -25,7 +25,17 @@
         <main class="registerForm border container-sm overflow-hidden mt-0 mb-0 min-vh-100 pt-3 pb-5">
             <form id="edit_commu-form" class="regiRequest p-5">
                 <input type="hidden" name="this_item_id" value="{{community.id}}">
-                <input type="text" class="form-control p-3" id="postTitle" name="communityTitle" value="{{community.title}}" required autofocus>
+                <div class="mb-1 d-sm-flex">
+                    <select class="postCategory w-25 form-select" id="commuCategory" name="commu_category">
+                      <option name="commu_category" value="자유" selected>자유</option>
+                      <option name="commu_category" value="서평">서평</option>
+                      <option name="commu_category" value="추천">추천</option>
+                      <option name="commu_category" value="질문">질문</option>
+                    </select>
+                    <input type="text" class="form-control p-3" id="postTitle" name="communityTitle" value="{{community.title}}" placeholder="제목" required autofocus>
+                </div>
+
+                <!-- <input type="text" class="form-control p-3" id="postTitle" name="communityTitle" value="{{community.title}}" placeholder="제목" required autofocus> -->
 
                 <div class="input-group">
                     <label for="book-about">게시판 내용</label>
