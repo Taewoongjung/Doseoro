@@ -65,17 +65,6 @@ router.get('/', async (req, res, next) => {
         ]);
         console.log("recent bought books = ", recentBoughtBooks);
 
-        const [recentRegisteredBooks] = await Promise.all([
-            Book.findAll({
-                where: {
-                    sold: { [Op.ne]: 1 },
-                    price: { [Op.ne]: -1 },
-                },
-                order: [['createdAt', 'ASC']],
-                limit: 4,
-            })
-        ]);
-
         //////////// 알림 ////////////
         if (req.user) {
             const [books_for_notice] = await Promise.all([
