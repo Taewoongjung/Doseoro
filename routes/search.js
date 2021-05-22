@@ -146,6 +146,9 @@ router.get('/it', async (req, res, next) => {
         } else if (req.query.searchFilter === 'bookTitle') {  // 책 이름으로 찾기
             console.log("책 이름으로 검색 들어옴");
 
+            const searchFilter = req.query.searchFilter;
+            const searchWord = req.query.searchWord;
+
             // 책 이름으로 찾기 리스트 페이징
             let pageNum = req.query.page; // 전체 게시물 수
             let offset = 0;
@@ -251,6 +254,8 @@ router.get('/it', async (req, res, next) => {
                     noticess,
                     likesfornotice,maxPage: pageArr,
                     currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
@@ -259,10 +264,15 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     maxPage: pageArr,
                     currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             }
         } else if (req.query.searchFilter === 'bookAuther') {  // 책 저자명 으로 찾기
             console.log("책 저자명으로 검색 들어옴");
+
+            const searchFilter = req.query.searchFilter;
+            const searchWord = req.query.searchWord;
 
             // 책 저자명으로 찾기 리스트 페이징
             let pageNum = req.query.page; // 전체 게시물 수
@@ -370,6 +380,8 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                     maxPage: pageArr,
                     currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
@@ -378,10 +390,15 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     maxPage: pageArr,
                     currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             }
         } else if (req.query.searchFilter === 'bookPublisher') {  // 출판사명 으로 찾기
             console.log("출판사명으로 검색 들어옴");
+
+            const searchFilter = req.query.searchFilter;
+            const searchWord = req.query.searchWord;
 
             // 출판사명으로 찾기 리스트 페이징
             let pageNum = req.query.page; // 전체 게시물 수
@@ -490,6 +507,8 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                     maxPage: pageArr,
                     currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
@@ -498,10 +517,15 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     maxPage: pageArr,
                     currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             }
         } else if (req.query.searchFilter === 'community') {  // 커뮤니티 제목으로 찾기
             console.log("community 들어옴");
+
+            const searchFilter = req.query.searchFilter;
+            const searchWord = req.query.searchWord;
 
             // 커뮤니티 제목으로 찾기 리스트 페이징
             let pageNum = req.query.page; // 전체 게시물 수
@@ -609,6 +633,8 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                     maxPage: pageArr,
                     currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
@@ -617,12 +643,18 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     maxPage: pageArr,
                     currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             }
         }
         else if (req.query.searchFilter === 'All') {  // 전체
             console.log("all");
             console.log("all 들어옴");
+
+            const searchFilter = req.query.searchFilter;
+            const searchWord = req.query.searchWord;
+
             // 전체 찾기 리스트 페이징
             let pageNum = req.query.page; // 전체 게시물 수
             let offset = 0;
@@ -784,6 +816,8 @@ router.get('/it', async (req, res, next) => {
                     likesfornotice,
                     maxPage: pageArr,
                     currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
@@ -793,6 +827,8 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     maxPage: pageArr,
                     currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             }
         }
