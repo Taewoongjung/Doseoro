@@ -477,3 +477,8 @@ textarea {
 	width: 200px;
 	margin: 1rem auto;
 }
+
+/* index main popup */
+.StepList {
+	margin: 0 0 2rem 0;
+}

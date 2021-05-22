@@ -39,15 +39,15 @@
           </ol>
           <div class="carousel-inner">
             <div class="carousel-item">
-              <div class="justify-content-center text-center pt-4" style="min-height: 400px; max-height: 400px;" focusable="false">
+              <div class="justify-content-center text-center pt-4" style="min-height: 500px; max-height: 500px;" focusable="false">
                 <h1 class="h3">지금 인기있는 책</h1>
                 <div class="d-flex justify-content-center">
                   <!-- 랭크 기준을 6개 이상이 아니라 좋아요 내림차순으로 4개정도 출력했으면 좋겠습니다. rankedBooks recentSoldBooks-->
-                  {% if recentSoldBooks == 0 %}
+                  {% if rankedBooks == 0 %}
                   <img class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400"
                     xmlns="http://www.w3.org/2000/svg" role="img" focusable="false">
                   {% else %}
-                  {% for book in recentSoldBooks %}
+                  {% for book in rankedBooks %}
                   <div class="saleCard card m-2" style="max-width: 210px;" onclick="location.href='/book/{{book.id}}'">
                     <img src="/img/{{book.img[0]}}" class="card-img-top" width="100%" height="280px">
                     <div class="card-body text-center">
@@ -66,18 +66,12 @@
             </div>
 
             <div class="carousel-item active">
-              <div class="slide2Inner carousel-inner" focusable="false" style="min-height: 400px; max-height: 400px;">
+              <div class="slide2Inner carousel-inner" focusable="false" style="min-height: 500px; max-height: 500px;">
                 <div class="slide2 text-center mb-4" focusable="false">
                     <p class="slideTitle">도서로</p><br>
                     <p class="slideSubTitle">중고 도서 거래 플랫폼</p>
-                    <!-- view guide 클릭시 팝업으로 주의사항 표시 예정 -->
-                    <a class="slideGuide">View Guide</a>
-                    <!-- <ul class="text-start">
-                      <li>대화는 존댓말로 서로를 존중해주세요</li>
-                      <li>시간 약속을 꼭 지켜주세요</li>
-                      <li>어떤 상황에서도 욕설, 비방, 명예훼손 등의 언행은 지양해 주세요</li>
-                      <li>사기 예방을 위해 사전에 꼭 충분한 대화 후 거래하세요</li>
-                    </ul> -->
+                    <!-- view guide 클릭시 팝업으로 주의사항 표시 예정 / onclick="popUpPage()" -->
+                    <a class="slideGuide" onclick="popUpPage()">View Guide</a>
                 </div>
               </div>
             </div>
@@ -166,6 +160,7 @@
   <!-- <script src="/js/searchBook.js"></script> -->
   <script src="/js/topNav.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/popGuide.js"></script>
 
 </body>
 
