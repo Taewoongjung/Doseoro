@@ -1423,4 +1423,15 @@ router.get('/registCommunity', isLoggedIn, async (req, res) => {
     });
 });
 
+// 0522 메인페이지 팝업
+router.get('/mainPopup', async (req, res) => {
+    try {
+        console.log("pages/selling 진입");
+        res.render('mainPopup.html');
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
 module.exports = router;

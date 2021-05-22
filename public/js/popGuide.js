@@ -9,3 +9,9 @@ function popupGuide(tf) {
     
     console.log("hover");
 }
+
+// 메인페이지 view guide팝업 이벤트
+function popUpPage() {
+    console.log("팝업이벤트 발생");
+    window.open('/pages/mainPopup','viewGuide','wideth=10px, height=100px');
+}
