@@ -18,6 +18,18 @@ router.get('/it', async (req, res, next) => {
         console.log("search/it 진입");
 
         if (req.query.searchFilter === 'postTitle') { // 게시물명 으로 찾기
+            console.log("게시물명으로 검색 들어옴");
+
+            const searchFilter = req.query.searchFilter;
+            const searchWord = req.query.searchWord;
+
+            // 게시물명으로 찾기 리스트 페이징
+            let pageNum = req.query.page; // 전체 게시물 수
+            let offset = 0;
+            if (pageNum > 1) {  // 보여줄 게시물 수
+                offset = 5 * (pageNum - 1);
+            }
+
             const [foundBooks] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -25,8 +37,29 @@ router.get('/it', async (req, res, next) => {
                             [Op.like]: "%" + req.query.searchWord + "%"
                         },
                     },
+                    limit: 5,
+                    offset: offset,
                 }),
             ]);
+
+            const [AllPageBooks] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        postmessage: {
+                            [Op.like]: "%" + req.query.searchWord + "%"
+                        },
+                    },
+                })
+            ]);
+
+            console.log("-출판사명 책 길이- = ", AllPageBooks.length);
+
+            let pageArr = new Array();
+            for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
+                pageArr[i] = i;
+            }
+            console.log("pageArr = ", pageArr);
+            const { page } = req.query;
 
             //////////// 알림 ////////////
             if (res.locals.user) {
@@ -94,15 +127,32 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     noticess,
                     likesfornotice,
+                    maxPage: pageArr,
+                    currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
+                    maxPage: pageArr,
+                    currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
                 });
             }
         } else if (req.query.searchFilter === 'bookTitle') {  // 책 이름으로 찾기
+            console.log("책 이름으로 검색 들어옴");
+
+            // 책 이름으로 찾기 리스트 페이징
+            let pageNum = req.query.page; // 전체 게시물 수
+            let offset = 0;
+            if (pageNum > 1) {  // 보여줄 게시물 수
+                offset = 5 * (pageNum - 1);
+            }
+
             const [foundBooks] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -110,8 +160,29 @@ router.get('/it', async (req, res, next) => {
                             [Op.like]: "%" + req.query.searchWord + "%"
                         },
                     },
+                    limit: 5,
+                    offset: offset,
                 }),
             ]);
+
+            const [AllPageBooks] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        title: {
+                            [Op.like]: "%" + req.query.searchWord + "%"
+                        },
+                    },
+                })
+            ]);
+
+            console.log("-출판사명 책 길이- = ", AllPageBooks.length);
+
+            let pageArr = new Array();
+            for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
+                pageArr[i] = i;
+            }
+            console.log("pageArr = ", pageArr);
+            const { page } = req.query;
 
             //////////// 알림 ////////////
             if (res.locals.user) {
@@ -178,16 +249,28 @@ router.get('/it', async (req, res, next) => {
                     user: res.locals.user,
                     bookId: req.params.id,
                     noticess,
-                    likesfornotice,
+                    likesfornotice,maxPage: pageArr,
+                    currentPage: page,
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
+                    maxPage: pageArr,
+                    currentPage: page,
                 });
             }
         } else if (req.query.searchFilter === 'bookAuther') {  // 책 저자명 으로 찾기
+            console.log("책 저자명으로 검색 들어옴");
+
+            // 책 저자명으로 찾기 리스트 페이징
+            let pageNum = req.query.page; // 전체 게시물 수
+            let offset = 0;
+            if (pageNum > 1) {  // 보여줄 게시물 수
+                offset = 5 * (pageNum - 1);
+            }
+
             const [foundBooks] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -195,8 +278,29 @@ router.get('/it', async (req, res, next) => {
                             [Op.like]: "%" + req.query.searchWord + "%"
                         },
                     },
+                    limit: 5,
+                    offset: offset,
                 }),
             ]);
+
+            const [AllPageBooks] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        author: {
+                            [Op.like]: "%" + req.query.searchWord + "%"
+                        },
+                    },
+                })
+            ]);
+
+            console.log("-출판사명 책 길이- = ", AllPageBooks.length);
+
+            let pageArr = new Array();
+            for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
+                pageArr[i] = i;
+            }
+            console.log("pageArr = ", pageArr);
+            const { page } = req.query;
 
             //////////// 알림 ////////////
             if (res.locals.user) {
@@ -264,15 +368,28 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     noticess,
                     likesfornotice,
+                    maxPage: pageArr,
+                    currentPage: page,
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
+                    maxPage: pageArr,
+                    currentPage: page,
                 });
             }
         } else if (req.query.searchFilter === 'bookPublisher') {  // 출판사명 으로 찾기
+            console.log("출판사명으로 검색 들어옴");
+
+            // 출판사명으로 찾기 리스트 페이징
+            let pageNum = req.query.page; // 전체 게시물 수
+            let offset = 0;
+            if (pageNum > 1) {  // 보여줄 게시물 수
+                offset = 5 * (pageNum - 1);
+            }
+            
             const [foundBooks] = await Promise.all([
                 Book.findAll({
                     where: {
@@ -280,8 +397,29 @@ router.get('/it', async (req, res, next) => {
                             [Op.like]: "%" + req.query.searchWord + "%"
                         },
                     },
+                    limit: 5,
+                    offset: offset,
                 }),
             ]);
+
+            const [AllPageBooks] = await Promise.all([
+                Book.findAll({
+                    where: {
+                        publisher: {
+                            [Op.like]: "%" + req.query.searchWord + "%"
+                        },
+                    },
+                })
+            ]);
+
+            console.log("-출판사명 책 길이- = ", AllPageBooks.length);
+
+            let pageArr = new Array();
+            for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
+                pageArr[i] = i;
+            }
+            console.log("pageArr = ", pageArr);
+            const { page } = req.query;
 
             //////////// 알림 ////////////
             if (res.locals.user) {
@@ -350,15 +488,28 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     noticess,
                     likesfornotice,
+                    maxPage: pageArr,
+                    currentPage: page,
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
+                    maxPage: pageArr,
+                    currentPage: page,
                 });
             }
         } else if (req.query.searchFilter === 'community') {  // 커뮤니티 제목으로 찾기
+            console.log("community 들어옴");
+
+            // 커뮤니티 제목으로 찾기 리스트 페이징
+            let pageNum = req.query.page; // 전체 게시물 수
+            let offset = 0;
+            if (pageNum > 1) {  // 보여줄 게시물 수
+                offset = 5 * (pageNum - 1);
+            }
+
             const [foundCommus] = await Promise.all([
                 Community.findAll({
                     where: {
@@ -366,8 +517,29 @@ router.get('/it', async (req, res, next) => {
                             [Op.like]: "%" + req.query.searchWord + "%"
                         },
                     },
+                    limit: 5,
+                    offset: offset,
                 }),
             ]);
+
+            const [AllPageCommu] = await Promise.all([
+                Community.findAll({
+                    where: {
+                        title: {
+                            [Op.like]: "%" + req.query.searchWord + "%"
+                        },
+                    },
+                })
+            ]);
+
+            console.log("-커뮤니티 길이- = ", AllPageCommu.length);
+
+            let pageArr = new Array();
+            for (let i = 0; i < Math.ceil((AllPageCommu.length) / 5); i++) {
+                pageArr[i] = i;
+            }
+            console.log("pageArr = ", pageArr);
+            const { page } = req.query;
 
             //////////// 알림 ////////////
             if (res.locals.user) {
@@ -435,23 +607,27 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     noticess,
                     likesfornotice,
+                    maxPage: pageArr,
+                    currentPage: page,
                 });
             } else if (isNotLoggedIn) {
                 res.render('searchList.html', {
                     foundCommus,
                     user: res.locals.user,
                     bookId: req.params.id,
+                    maxPage: pageArr,
+                    currentPage: page,
                 });
             }
         }
         else if (req.query.searchFilter === 'All') {  // 전체
             console.log("all");
-
+            console.log("all 들어옴");
             // 전체 찾기 리스트 페이징
             let pageNum = req.query.page; // 전체 게시물 수
             let offset = 0;
             if (pageNum > 1) {  // 보여줄 게시물 수
-                offset = 8 * (pageNum - 1);
+                offset = 4 * (pageNum - 1);
             }
             
             const [foundCommus] = await Promise.all([
