@@ -367,7 +367,7 @@ router.get('/it', async (req, res, next) => {
                     currentPage: page,
                     searchFilter: searchFilter,
                     searchWord: searchWord,
-                    localRange: 3,
+                    localRange: localRange,
                 });
             }
         } else if (req.query.searchFilter === 'bookTitle') {  // 책 이름으로 찾기
@@ -483,7 +483,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageBooks.length);
+                console.log("-책(동) 길이- = ", AllPageBooks.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
@@ -556,7 +556,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageBooks.length);
+                console.log("-책(시) 길이- = ", AllPageBooks.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
@@ -630,7 +630,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageBooks.length);
+                console.log("-책(도) 길이- = ", AllPageBooks.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
@@ -722,7 +722,7 @@ router.get('/it', async (req, res, next) => {
                     currentPage: page,
                     searchFilter: searchFilter,
                     searchWord: searchWord,
-                    localRange: 3,
+                    localRange: localRange,
                 });
             }
         } else if (req.query.searchFilter === 'bookAuther') {  // 책 저자명 으로 찾기
@@ -838,7 +838,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageBooks.length);
+                console.log("-책(동) 길이- = ", AllPageBooks.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
@@ -912,7 +912,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageBooks.length);
+                console.log("-책(시) 길이- = ", AllPageBooks.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
@@ -985,7 +985,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageBooks.length);
+                console.log("-책(도) 길이- = ", AllPageBooks.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
@@ -1077,7 +1077,7 @@ router.get('/it', async (req, res, next) => {
                     currentPage: page,
                     searchFilter: searchFilter,
                     searchWord: searchWord,
-                    localRange: 3,
+                    localRange: localRange,
                 });
             }
         } else if (req.query.searchFilter === 'bookPublisher') {  // 출판사명 으로 찾기
@@ -1193,7 +1193,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageBooks.length);
+                console.log("-책(동) 길이- = ", AllPageBooks.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
@@ -1266,7 +1266,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageBooks.length);
+                console.log("-책(시) 길이- = ", AllPageBooks.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
@@ -1339,7 +1339,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageBooks.length);
+                console.log("-책(도) 길이- = ", AllPageBooks.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
@@ -1431,7 +1431,7 @@ router.get('/it', async (req, res, next) => {
                     currentPage: page,
                     searchFilter: searchFilter,
                     searchWord: searchWord,
-                    localRange: 3,
+                    localRange: localRange,
                 });
             }
         } else if (req.query.searchFilter === 'community') {  // 커뮤니티 제목으로 찾기
@@ -1547,7 +1547,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageCommu.length);
+                console.log("-커뮤니티(동) 길이- = ", AllPageCommu.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageCommu.length) / 5); i++) {
@@ -1620,7 +1620,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageCommu.length);
+                console.log("-커뮤니티(시) 길이- = ", AllPageCommu.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageCommu.length) / 5); i++) {
@@ -1693,7 +1693,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageCommu.length);
+                console.log("-커뮤니티(도) 길이- = ", AllPageCommu.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageCommu.length) / 5); i++) {
@@ -1766,7 +1766,7 @@ router.get('/it', async (req, res, next) => {
                     })
                 ]);
 
-                console.log("-책(모든 지역) 길이- = ", AllPageCommu.length);
+                console.log("-커뮤니티(모든 지역) 길이- = ", AllPageCommu.length);
     
                 let pageArr = new Array();
                 for (let i = 0; i < Math.ceil((AllPageCommu.length) / 5); i++) {
@@ -1785,7 +1785,7 @@ router.get('/it', async (req, res, next) => {
                     currentPage: page,
                     searchFilter: searchFilter,
                     searchWord: searchWord,
-                    localRange: 3,
+                    localRange: localRange,
                 });
             }
         } else if (req.query.searchFilter === 'All') {  // 전체
@@ -1958,6 +1958,13 @@ router.get('/it', async (req, res, next) => {
                 console.log("-책 길이- = ", AllPageBooks.length);
                 console.log("-커뮤니티 길이- = ", AllPageCommu.length);
 
+                let pageArr = new Array();
+                for (let i = 0; i < Math.ceil((AllPageCommu.length + AllPageCommu.length) / 8); i++) {
+                    pageArr[i] = i;
+                }
+                console.log("pageArr = ", pageArr);
+                const { page } = req.query;
+
                 res.render('searchListLoggedIn.html', {
                     foundBooks,
                     foundCommus,
@@ -2079,6 +2086,13 @@ router.get('/it', async (req, res, next) => {
     
                 console.log("-책 길이- = ", AllPageBooks.length);
                 console.log("-커뮤니티 길이- = ", AllPageCommu.length);
+
+                let pageArr = new Array();
+                for (let i = 0; i < Math.ceil((AllPageCommu.length + AllPageCommu.length) / 8); i++) {
+                    pageArr[i] = i;
+                }
+                console.log("pageArr = ", pageArr);
+                const { page } = req.query;
 
                 res.render('searchListLoggedIn.html', {
                     foundBooks,
@@ -2202,6 +2216,13 @@ router.get('/it', async (req, res, next) => {
                 console.log("-책 길이- = ", AllPageBooks.length);
                 console.log("-커뮤니티 길이- = ", AllPageCommu.length);
 
+                let pageArr = new Array();
+                for (let i = 0; i < Math.ceil((AllPageCommu.length + AllPageCommu.length) / 8); i++) {
+                    pageArr[i] = i;
+                }
+                console.log("pageArr = ", pageArr);
+                const { page } = req.query;
+
                 res.render('searchListLoggedIn.html', {
                     foundBooks,
                     foundCommus,
@@ -2320,6 +2341,12 @@ router.get('/it', async (req, res, next) => {
                 console.log("-책 길이- = ", AllPageBooks.length);
                 console.log("-커뮤니티 길이- = ", AllPageCommu.length);
 
+                let pageArr = new Array();
+                for (let i = 0; i < Math.ceil((AllPageCommu.length + AllPageCommu.length) / 8); i++) {
+                    pageArr[i] = i;
+                }
+                console.log("pageArr = ", pageArr);
+                const { page } = req.query;
 
                 res.render('searchListLoggedIn.html', {
                     foundBooks,
@@ -2332,7 +2359,7 @@ router.get('/it', async (req, res, next) => {
                     currentPage: page,
                     searchFilter: searchFilter,
                     searchWord: searchWord,
-                    localRange: 3,
+                    localRange: localRange,
                 });
             }
         }
