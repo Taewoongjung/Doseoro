@@ -128,7 +128,7 @@
                             {% endif %}
                             {% endfor %}
                             <li class="page-item {% if currentPage >= maxPage | length %}disabled{% endif %}">
-                                <a class="page-link" href="/searchLoggedIn/it/?searchFilter={{searchFilter}}&searchWord={{searchWord}}&page={{ currentPage | int + 1 }}"
+                                <a class="page-link" href="/searchLoggedIn/it/?searchFilter={{searchFilter}}&searchWord={{searchWord}}&localRange={{localRange}}&page={{ currentPage | int + 1 }}"
                                     aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                             </li>
                     </ul>

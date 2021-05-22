@@ -81,12 +81,23 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            dong:{
-                                [Op.like]: "%" + res.locals.user.dong+ "%"
+                            dong: {
+                                [Op.like]: "%" + res.locals.user.dong + "%"
                             }
                         }
                     })
                 ]);
+
+                const searchFilter = req.query.searchFilter;
+                const searchWord = req.query.searchWord;
+                const localRange = req.query.localRange;
+
+                // 전체 찾기 리스트 페이징
+                let pageNum = req.query.page; // 전체 게시물 수
+                let offset = 0;
+                if (pageNum > 1) {  // 보여줄 게시물 수
+                    offset = 5 * (pageNum - 1);
+                }
 
                 const livein = [];
                 for (const peopleLivingIn of people) {
@@ -102,8 +113,30 @@ router.get('/it', async (req, res, next) => {
                             },
                             OwnerId: livein
                         },
+                        limit: 5,
+                        offset: offset,
                     }),
                 ]);
+
+                const [AllPageBooks] = await Promise.all([
+                    Book.findAll({
+                        where: {
+                            postmessage: {
+                                [Op.like]: "%" + req.query.searchWord + "%"
+                            },
+                            OwnerId: livein
+                        },
+                    })
+                ]);
+    
+                console.log("-책(동/리) 길이- = ", AllPageBooks.length);
+    
+                let pageArr = new Array();
+                for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
+                    pageArr[i] = i;
+                }
+                console.log("pageArr = ", pageArr);
+                const { page } = req.query;
 
                 res.render('searchList.html', {
                     foundBooks,
@@ -111,17 +144,33 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     noticess,
                     likesfornotice,
+                    maxPage: pageArr,
+                    currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
+                    localRange: localRange,
                 });
             } else if (req.query.localRange === "1") { // 시
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            si: {
+                                [Op.like]: "%" + res.locals.user.si + "%"
                             }
                         }
                     })
                 ]);
+
+                const searchFilter = req.query.searchFilter;
+                const searchWord = req.query.searchWord;
+                const localRange = req.query.localRange;
+
+                // 전체 찾기 리스트 페이징
+                let pageNum = req.query.page; // 전체 게시물 수
+                let offset = 0;
+                if (pageNum > 1) {  // 보여줄 게시물 수
+                    offset = 5 * (pageNum - 1);
+                }
 
                 const livein = [];
                 for (const peopleLivingIn of people) {
@@ -137,8 +186,30 @@ router.get('/it', async (req, res, next) => {
                             },
                             OwnerId: livein
                         },
+                        limit: 5,
+                        offset: offset,
                     }),
                 ]);
+
+                const [AllPageBooks] = await Promise.all([
+                    Book.findAll({
+                        where: {
+                            postmessage: {
+                                [Op.like]: "%" + req.query.searchWord + "%"
+                            },
+                            OwnerId: livein
+                        },
+                    })
+                ]);
+
+                console.log("-책(시) 길이- = ", AllPageBooks.length);
+    
+                let pageArr = new Array();
+                for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
+                    pageArr[i] = i;
+                }
+                console.log("pageArr = ", pageArr);
+                const { page } = req.query;
 
                 res.render('searchList.html', {
                     foundBooks,
@@ -146,17 +217,33 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     noticess,
                     likesfornotice,
+                    maxPage: pageArr,
+                    currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
+                    localRange: localRange,
                 });
             } else if (req.query.range === "2") { // 도
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            do:{
-                                [Op.like]: "%" + res.locals.user.do+ "%"
+                            do: {
+                                [Op.like]: "%" + res.locals.user.do + "%"
                             }
                         }
                     })
                 ]);
+
+                const searchFilter = req.query.searchFilter;
+                const searchWord = req.query.searchWord;
+                const localRange = req.query.localRange;
+
+                // 전체 찾기 리스트 페이징
+                let pageNum = req.query.page; // 전체 게시물 수
+                let offset = 0;
+                if (pageNum > 1) {  // 보여줄 게시물 수
+                    offset = 5 * (pageNum - 1);
+                }
 
                 const livein = [];
                 for (const peopleLivingIn of people) {
@@ -175,19 +262,44 @@ router.get('/it', async (req, res, next) => {
                     }),
                 ]);
 
+                const [AllPageBooks] = await Promise.all([
+                    Book.findAll({
+                        where: {
+                            postmessage: {
+                                [Op.like]: "%" + req.query.searchWord + "%"
+                            },
+                            OwnerId: livein
+                        },
+                    })
+                ]);
+
+                console.log("-책(시) 길이- = ", AllPageBooks.length);
+    
+                let pageArr = new Array();
+                for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
+                    pageArr[i] = i;
+                }
+                console.log("pageArr = ", pageArr);
+                const { page } = req.query;
+
                 res.render('searchList.html', {
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
                     noticess,
                     likesfornotice,
+                    maxPage: pageArr,
+                    currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
+                    localRange: localRange,
                 });
             } else { // 모든 지역
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            location:{
-                                [Op.like]: "%" + res.locals.user.location+ "%"
+                            location: {
+                                [Op.like]: "%" + res.locals.user.location + "%"
                             }
                         }
                     })
@@ -210,12 +322,48 @@ router.get('/it', async (req, res, next) => {
                     }),
                 ]);
 
+                const searchFilter = req.query.searchFilter;
+                const searchWord = req.query.searchWord;
+                const localRange = req.query.localRange;
+
+                // 전체 찾기 리스트 페이징
+                let pageNum = req.query.page; // 전체 게시물 수
+                let offset = 0;
+                if (pageNum > 1) {  // 보여줄 게시물 수
+                    offset = 5 * (pageNum - 1);
+                }
+
+                const [AllPageBooks] = await Promise.all([
+                    Book.findAll({
+                        where: {
+                            postmessage: {
+                                [Op.like]: "%" + req.query.searchWord + "%"
+                            },
+                            OwnerId: livein
+                        },
+                    })
+                ]);
+
+                console.log("-책(모든 지역) 길이- = ", AllPageBooks.length);
+    
+                let pageArr = new Array();
+                for (let i = 0; i < Math.ceil((AllPageBooks.length) / 5); i++) {
+                    pageArr[i] = i;
+                }
+                console.log("pageArr = ", pageArr);
+                const { page } = req.query;
+
                 res.render('searchList.html', {
                     foundBooks,
                     user: res.locals.user,
                     bookId: req.params.id,
                     noticess,
                     likesfornotice,
+                    maxPage: pageArr,
+                    currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
+                    localRange: 3,
                 });
             }
         } else if (req.query.searchFilter === 'bookTitle') {  // 책 이름으로 찾기
@@ -284,8 +432,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            dong:{
-                                [Op.like]: "%" + res.locals.user.dong+ "%"
+                            dong: {
+                                [Op.like]: "%" + res.locals.user.dong + "%"
                             }
                         }
                     })
@@ -319,8 +467,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            si: {
+                                [Op.like]: "%" + res.locals.user.si + "%"
                             }
                         }
                     })
@@ -354,8 +502,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            do:{
-                                [Op.like]: "%" + res.locals.user.do+ "%"
+                            do: {
+                                [Op.like]: "%" + res.locals.user.do + "%"
                             }
                         }
                     })
@@ -384,13 +532,18 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     noticess,
                     likesfornotice,
+                    maxPage: pageArr,
+                    currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
+                    localRange: localRange,
                 });
             } else { // 모든 지역
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            location:{
-                                [Op.like]: "%" + res.locals.user.location+ "%"
+                            location: {
+                                [Op.like]: "%" + res.locals.user.location + "%"
                             }
                         }
                     })
@@ -418,6 +571,11 @@ router.get('/it', async (req, res, next) => {
                     bookId: req.params.id,
                     noticess,
                     likesfornotice,
+                    maxPage: pageArr,
+                    currentPage: page,
+                    searchFilter: searchFilter,
+                    searchWord: searchWord,
+                    localRange: 3,
                 });
             }
         } else if (req.query.searchFilter === 'bookAuther') {  // 책 저자명 으로 찾기
@@ -486,8 +644,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            dong:{
-                                [Op.like]: "%" + res.locals.user.dong+ "%"
+                            dong: {
+                                [Op.like]: "%" + res.locals.user.dong + "%"
                             }
                         }
                     })
@@ -521,8 +679,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            si: {
+                                [Op.like]: "%" + res.locals.user.si + "%"
                             }
                         }
                     })
@@ -556,8 +714,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            do:{
-                                [Op.like]: "%" + res.locals.user.do+ "%"
+                            do: {
+                                [Op.like]: "%" + res.locals.user.do + "%"
                             }
                         }
                     })
@@ -591,8 +749,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            location:{
-                                [Op.like]: "%" + res.locals.user.location+ "%"
+                            location: {
+                                [Op.like]: "%" + res.locals.user.location + "%"
                             }
                         }
                     })
@@ -687,8 +845,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            dong:{
-                                [Op.like]: "%" + res.locals.user.dong+ "%"
+                            dong: {
+                                [Op.like]: "%" + res.locals.user.dong + "%"
                             }
                         }
                     })
@@ -722,8 +880,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            si: {
+                                [Op.like]: "%" + res.locals.user.si + "%"
                             }
                         }
                     })
@@ -757,8 +915,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            do:{
-                                [Op.like]: "%" + res.locals.user.do+ "%"
+                            do: {
+                                [Op.like]: "%" + res.locals.user.do + "%"
                             }
                         }
                     })
@@ -792,8 +950,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            location:{
-                                [Op.like]: "%" + res.locals.user.location+ "%"
+                            location: {
+                                [Op.like]: "%" + res.locals.user.location + "%"
                             }
                         }
                     })
@@ -883,7 +1041,7 @@ router.get('/it', async (req, res, next) => {
                 })
             ]);
             //////////// 알림 ////////////
-            
+
             res.render('searchList.html', {
                 foundCommus,
                 user: res.locals.user,
@@ -896,8 +1054,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            dong:{
-                                [Op.like]: "%" + res.locals.user.dong+ "%"
+                            dong: {
+                                [Op.like]: "%" + res.locals.user.dong + "%"
                             }
                         }
                     })
@@ -931,8 +1089,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            si: {
+                                [Op.like]: "%" + res.locals.user.si + "%"
                             }
                         }
                     })
@@ -966,8 +1124,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            do:{
-                                [Op.like]: "%" + res.locals.user.do+ "%"
+                            do: {
+                                [Op.like]: "%" + res.locals.user.do + "%"
                             }
                         }
                     })
@@ -1001,8 +1159,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            location:{
-                                [Op.like]: "%" + res.locals.user.location+ "%"
+                            location: {
+                                [Op.like]: "%" + res.locals.user.location + "%"
                             }
                         }
                     })
@@ -1098,8 +1256,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            dong:{
-                                [Op.like]: "%" + res.locals.user.dong+ "%"
+                            dong: {
+                                [Op.like]: "%" + res.locals.user.dong + "%"
                             }
                         }
                     })
@@ -1160,8 +1318,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            si:{
-                                [Op.like]: "%" + res.locals.user.si+ "%"
+                            si: {
+                                [Op.like]: "%" + res.locals.user.si + "%"
                             }
                         }
                     })
@@ -1221,8 +1379,8 @@ router.get('/it', async (req, res, next) => {
                 const [people] = await Promise.all([
                     User.findAll({
                         where: {
-                            do:{
-                                [Op.like]: "%" + res.locals.user.do+ "%"
+                            do: {
+                                [Op.like]: "%" + res.locals.user.do + "%"
                             }
                         }
                     })
