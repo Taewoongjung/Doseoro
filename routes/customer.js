@@ -206,7 +206,7 @@ router.post('/complain/:id/comment', isLoggedIn, async (req, res, next) => {
 router.post('/recomment', isLoggedIn, async (req, res, next) => {
     try {
         console.log("/customer/recomment 진입");
-        const { comment, UserId, complainId, commentId } = req.body;
+        const { comment, complainId, commentId } = req.body;
         console.log("complain에 commentId = ", commentId);
 
         await Post.create({
