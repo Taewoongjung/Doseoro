@@ -20,7 +20,7 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
         }
         else if (exNick) {
             return res.send(`<script type="text/javascript">alert("사용할 수 없는 닉네임입니다."); location.href="/signup/";</script>`);
-        } 
+        }
         else if (password !== re_password) {
             return res.send(`<script type="text/javascript">alert("비밀번호가 맞지 않습니다."); location.href="/signup/";</script>`);
         }
