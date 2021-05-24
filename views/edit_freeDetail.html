@@ -40,6 +40,7 @@
         </div>
 
         <h1 class="h4 mt-3">카테고리</h1>
+        <input type="text" hidden id="getCate" value="{{books.category}}">
         <div class="categoryBox input-group align-items-center p-3 bg-white border" id="categoryCheck">
           <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category1" name="checkCategory" value="경영/경제">
           <label for="book-category1" class="me-3 ms-2" style="display: block;">경영/경제</label></div>
@@ -68,7 +69,7 @@
           <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category9" name="checkCategory" value="여행/취미">
           <label for="book-category9" class="me-3 ms-2" style="display: block;">여행/취미</label></div>
 
-          <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category11" name="checkCategory" value="기타" checked>
+          <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category10" name="checkCategory" value="기타">
           <label for="book-category11" class="me-3 ms-2" style="display: block;">기타</label></div>
         </div>
 
@@ -134,10 +135,13 @@
       request.setAttribute('method', 'POST');
     }
   </script>
-  <script src="/js/ckboxLimit.js"></script>
   <script src="/js/topNav.js"></script>
   <script src="/js/previewPost.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
+
+  <!-- 순서 혼동 주의 -->
+  <script src="/js/loadCheckBox.js"></script>
+  <script src="/js/edit_ckboxLimit.js"></script>
 </body>
 
 </html>
