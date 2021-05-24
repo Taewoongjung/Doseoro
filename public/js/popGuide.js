@@ -6,8 +6,6 @@ function popupGuide(tf) {
         popupBox.style.display='table';
     else
         popupBox.style.display='none';
-    
-    console.log("hover");
 }
 
 // 메인페이지 view guide팝업 이벤트
