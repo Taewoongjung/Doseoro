@@ -25,11 +25,11 @@ router.get('/', async (req, res, next) => {
         const [rankedBooks] = await Promise.all([
             Book.findAll({
                 where: { 
-                    likecount: { [Op.gte]: 1 }, 
+                    likecount: { [Op.gte]: 2 }, 
                     SoldId: null,
                     price: { [Op.ne]: -1 },
                 },
-                order: [['likecount', 'ASC']],
+                order: [['likecount', 'DESC']],
                 limit: 4,
             })
         ]);  
