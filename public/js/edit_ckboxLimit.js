@@ -1,4 +1,10 @@
-let cnt = 1;
+let cnt = 0;
+const cateBox = []
+for(let i = 1; i<11; i++) {
+    cateBox[i] = document.getElementById('book-category'+i);
+    if(cateBox[i].checked == true)
+        cnt++;
+}
 
 const maxCnt = 3;
 function ckLimit(ck) {

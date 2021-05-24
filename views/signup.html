@@ -31,7 +31,6 @@
                 <input type="text" name="name" id="inputName" class="form-control" placeholder="이름" required autofocus>
                 
                 <label for="inputPhone">핸드폰</label>
-                <!-- <input type="tel" name="phone" id="inputPhone"class="form-control" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" placeholder="휴대전화" required> -->
                 <input type="tel" name="phone" id="inputPhone" class="form-control" onkeyup="telFormat(this)"
                     pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" placeholder="휴대전화" required>
 
@@ -41,7 +40,6 @@
                 <label for="inputId">이메일</label>
                 <input type="email" name="email" id="inputId" class="form-control" placeholder="ex) abc@abc" required>
                 
-                <!-- 비밀번호 확인 미구현 -->
                 <label for="userPassword">비밀번호</label>
                 <input type="password" name="password" id="userPassword" class="form-control" onchange="checkPwd()" placeholder="비밀번호" required>
                 <input type="password" name="re_password" id="userPasswordCheck" class="form-control" onchange="checkPwd()" placeholder="비밀번호 확인" required>

@@ -56,7 +56,7 @@
                     <li class="page-item {% if currentPage <= 1%}disabled{% endif %}">
                         <a class="page-link" href="/pages/community?page={{currentPage - 1}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                     </li>
-                    {% for i in maxPage%} <!-- for문으로 페이지 번호 추가-->
+                    {% for i in maxPage%}
                         {% if i==0 or i+1==maxPage|length or (i+1>=currentPage-pageBlock and i+1<=currentPage|int+pageBlock) %}
                             {% if currentPage-1 == i %}
                             <li class="page-item active"><a class="page-link" href="/pages/community?page={{ i + 1 }}">{{ i + 1 }}</a></li>

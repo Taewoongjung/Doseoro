@@ -44,6 +44,8 @@
         </div>
 
         <h1 class="h4 mt-3">카테고리</h1>
+        <input type="text" hidden id="getCate" value="{{books.category}}">
+
         <div class="categoryBox input-group align-items-center p-3 bg-white border" id="categoryCheck">
           <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category1" name="checkCategory" value="경영/경제">
           <label for="book-category1" class="me-3 ms-2" style="display: block;">경영/경제</label></div>
@@ -72,20 +74,32 @@
           <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category9" name="checkCategory" value="여행/취미">
           <label for="book-category9" class="me-3 ms-2" style="display: block;">여행/취미</label></div>
 
-          <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category11" name="checkCategory" value="기타" checked>
+          <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category10" name="checkCategory" value="기타">
           <label for="book-category11" class="me-3 ms-2" style="display: block;">기타</label></div>
-
-          <!-- <input type="text" class="form-control p-3" id="book-category" name="category" placeholder="카테고리" required> -->
         </div>
 
         <h1 class="h4 mt-3">거래방법</h1>
-        <a class="fw-bold h5 text-black-50 text-decoration-none" id="postMyLocation">내 위치</a>
         <select class="form-select mb-1 p-2" id="dealMethod" name="dealRoot">
           <option  name="dealRoot"value="직거래, 택배" selected>직거래, 택배</option>
           <option name="dealRoot" value="직거래">직거래</option>
           <option name="dealRoot" value="택배">택배</option>
         </select>
 
+        <div class="usreLocation">
+          {% if user.location %}
+          <a><img src="/img/marker.png" width="25px" height="25px"></a>
+          <a class="fw-bold h5 text-black-50 text-decoration-none" id="postLocation">{{ user.location }}</a>
+          {% else %}
+          <div id="popGuide" onmouseout="popupGuide(false)" onmouseover="popupGuide(true)"
+            class="fw-bold align-items-center d-flex mb-2">
+            <p><img src="/img/locationGuide.png" alt="guide" width="25px"></p>
+            <a>&nbsp&nbsp위치를 등록해주세요</a>
+            <a id="postLocation">{{ user.location }}</a>
+          </div>
+          <div id="popupBox" style="display:none;"><a>마이페이지 → "위치" 클릭 → "위치설정하기" 클릭</a></div>
+          {% endif %}
+        </div>
+        
         <div class="input-group">
           <label for="book-about">상품설명</label>
           <textarea type="text" class="form-control p-3 mb-4" id="book-about" name="about" placeholder="내용" rows="10">{{books.about}}</textarea>
@@ -111,7 +125,11 @@
   </script>
   <script src="/js/topNav.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/ckboxLimit.js"></script>
+
+  <!-- 순서 혼동 주의 -->
+  <script src="/js/loadCheckBox.js"></script>
+  <script src="/js/edit_ckboxLimit.js"></script>
+
 </body>
 
 </html>

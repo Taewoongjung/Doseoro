@@ -44,8 +44,7 @@
           <label for="book-publisher">출판사</label>
           <input type="text" class="inputForm form-control p-3" id="book-publisher" name="publisher" placeholder="출판사">
         </div>
-
-        <!-- 체크박스, 텍스트기입 논의 필요 / id를 꼭 확인해주세요 -->
+        
         <h1 class="h4 mt-3">카테고리</h1>
         <div class="categoryBox input-group align-items-center p-3 bg-white border" id="categoryCheck">
           <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category1" name="checkCategory" value="경영/경제">
@@ -77,13 +76,10 @@
 
           <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category11" name="checkCategory" value="기타" checked>
           <label for="book-category11" class="me-3 ms-2" style="display: block;">기타</label></div>
-
-          <!-- <input type="text" class="form-control p-3" id="book-category" name="category" placeholder="카테고리" required> -->
         </div>
 
         <h1 class="h4 mt-3">거래방법</h1>
         <div>
-          <!-- 여기에 사용자 위치를 표시합니다 -->
           <a class="fw-bold h5 text-black-50 text-decoration-none" id="postMyLocation">내 위치</a>
           <select class="form-select mb-1 p-2" id="dealMethod" name="dealRoot">
             <option  name="dealRoot"value="직거래, 택배" selected>직거래, 택배</option>
@@ -92,7 +88,6 @@
           </select>
         </div>
 
-        <!-- 여기에 사용자 위치를 표시합니다 -->
         <div class="usreLocation">
           {% if user.location %}
           <a><img src="/img/marker.png" width="25px" height="25px"></a>

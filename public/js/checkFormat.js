@@ -29,10 +29,8 @@ function checkText() {
 
     let convText = searchText.replace(/\s|  /gi, '');
     if (convText == '') {
-            // alert("내용을 입력하세요");
             submitBtn.disabled = true;
     } else {
-            // alert("성공");
             submitBtn.disabled = false;
     }
 }

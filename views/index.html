@@ -1,8 +1,5 @@
 <!doctype html>
 <html lang="en">
-<!-- 
-  footer는 현재 fixed-bottom 이지만 구현이 완료된 후 static으로 바꿔야함
- -->
 
 <head>
   <meta charset="utf-8">
@@ -42,7 +39,6 @@
               <div class="justify-content-center text-center pt-4" style="min-height: 500px; max-height: 500px;" focusable="false">
                 <h1 class="h3">지금 인기있는 책</h1>
                 <div class="d-flex justify-content-center">
-                  <!-- 랭크 기준을 6개 이상이 아니라 좋아요 내림차순으로 4개정도 출력했으면 좋겠습니다. rankedBooks recentSoldBooks-->
                   {% if rankedBooks == 0 %}
                   <img class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400"
                     xmlns="http://www.w3.org/2000/svg" role="img" focusable="false">
@@ -70,7 +66,6 @@
                 <div class="slide2 text-center mb-4" focusable="false">
                     <p class="slideTitle">도서로</p><br>
                     <p class="slideSubTitle">중고 도서 거래 플랫폼</p>
-                    <!-- view guide 클릭시 팝업으로 주의사항 표시 예정 / onclick="popUpPage()" -->
                     <a class="slideGuide" onclick="popUpPage()">View Guide</a>
                 </div>
               </div>
@@ -106,7 +101,7 @@
         </div>
       </div>
 
-      <!-- 무료나눔 / free_books 넌적스 변수 추가 필요 -->
+      <!-- 무료나눔 -->
       <div class="saleList pt-5 mt-5 border-top">
         <div class="d-flex align-items-center">
           <h2 class="h3 fw-bold">무료나눔</h2>
@@ -157,7 +152,6 @@
       request.setAttribute('method', 'GET');
     }
   </script>
-  <!-- <script src="/js/searchBook.js"></script> -->
   <script src="/js/topNav.js"></script>
   <script src="/js/bootstrap.bundle.min.js"></script>
   <script src="/js/popGuide.js"></script>

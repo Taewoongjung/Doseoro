@@ -11,7 +11,6 @@
 
     <link rel="stylesheet" href="/css/style.css">
 
-    <!-- <title>판매 디테일</title> -->
     <title>커뮤니티</title>
 </head>
 
@@ -31,7 +30,6 @@
                     <h1 class="h5 fw-bold text-primary">{{community.category}}</h1>
                     <div class="d-lg-flex align-items-center justify-content-between">
                         <h1 class="h2 text-decoration-none fw-bold" id="getPostingTitle">{{community.title}}</h1>
-                        <!-- <a class="text-decoration-none w-100 text-dark text-end" id="getPostingDate">{{createdAt}}</a> -->
                         <a class="text-decoration-none text-dark" id="getPostingDate"></a>
                         <input id="postingTime" type="hidden" value="{{createdAt}}">
                     </div>
@@ -82,7 +80,6 @@
             <form id="comment-form" class="mt-5 w-75 ms-auto me-auto">
                 <div class="input-group">
                     <input id="comment" class="form-control p-2" name="comment">
-                    <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
 
                     <input type="hidden" name="communityId" value="{{communityId}}">
                     <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()"
@@ -122,9 +119,6 @@
                                                 <li><button id="comment-delete-btn-{{comment.id}}" class="dropdown-item"
                                                         role="menuitem" tabindex="-1" type="submit" class="btn"
                                                         onclick="comment_delete('{{comment.id}}')">삭제</button></li>
-                                                <!-- <li><button id="item-delete-btn-{{comment.id}}" class="dropdown-item"
-                                                    role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                    onclick="item_treade('{{comment.id}}')">거래완료</button></li> -->
                                             </ul>
                                         </div>
                                     </div>
@@ -170,11 +164,6 @@
                                             <li><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item"
                                                     role="menuitem" tabindex="-1" type="submit" class="btn"
                                                     onclick="re_comment_delete('{{comment.id}}','{{re_comment.id}}')">삭제</button>
-                                            </li>
-                                            <!-- <li><button id="re_comment-delete-btn-{{re_comment.id}}" class="dropdown-item" 
-                                                role="menuitem" tabindex="-1" type="submit" class="btn"
-                                                onclick="re_comment_trade('{{comment.id}}','{{re_comment.id}}')">
-                                                거래완료</button> -->
                                             </li>
                                         </ul>
                                     </div>

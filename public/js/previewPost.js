@@ -1,20 +1,3 @@
-
-// 프리뷰
-// function readImg(input) {
-//     if (input.files && input.files[0]) {
-//         // 파일 리더로 파일 읽는 역할
-//         const reader = new FileReader();
-
-//         reader.onload = e => {
-//             const nowimage = document.getElementById('nowimage');
-//             nowimage.src = e.target.result;
-//         }
-
-//         // 리더 이미지 읽기
-//         reader.readAsDataURL(input.files[0])
-//     }
-// }
-
 // 파일 개수 제한
 function checkLimit(num) {
     const ckPhoto = document.getElementById('ckPhoto');
@@ -28,22 +11,13 @@ function checkLimit(num) {
         registBtn.disabled = false;
     }
 }
-// const inputImg = document.getElementById('book-photo');
-// inputImg.addEventListener("change", e => {
-//     readImg(e.target);
-//     checkLimit(inputImg.files.length);
-// })
 
-// 멀티 프리뷰 (flex, fix 방식 결정필요), fix방식
+// 멀티 프리뷰
 function readImg(input) {
     const nowimage = document.getElementById('nowimage');
 
     if (input.files && input.files[0]) {
         const fileArr = Array.from(input.files);
-        const $colDiv1 = document.createElement("div");
-        const $colDiv2 = document.createElement("div");
-        // $colDiv1.classList.add("column");
-        // $colDiv2.classList.add("column");
 
         // 배열로 파일을 차례로 읽어 태그 생성
         fileArr.forEach((file, index) => {
@@ -64,21 +38,12 @@ function readImg(input) {
 
             reader.onload = e => {
                 $img.src = e.target.result;
-                // $imgDiv.style.width = 200 + "px";
-                // $imgDiv.style.height = 200 + "px";
             }
-
-            if (index % 2 == 0)
-                $colDiv1.appendChild($imgDiv);
-            else
-                $colDiv2.appendChild($imgDiv);
 
             // 리더 이미지 읽기
             reader.readAsDataURL(file);
-            // nowimage.appendChild($imgDiv);
+            nowimage.appendChild($imgDiv);
         })
-        nowimage.appendChild($colDiv1);
-        nowimage.appendChild($colDiv2);
     }
 }
 

@@ -10,7 +10,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
   <link rel="stylesheet" href="/css/style.css">
-  <!-- <link rel="stylesheet" href="/css/saleDetail.css"> -->
 
   <title>책 등록</title>
 </head>
@@ -42,7 +41,6 @@
           <input type="text" class="inputForm form-control p-3" id="book-publisher" name="publisher" placeholder="출판사">
         </div>
 
-        <!-- 체크박스, 텍스트기입 논의 필요 / id를 꼭 확인해주세요 -->
         <h1 class="h4 mt-3">카테고리</h1>
         <div class="categoryBox input-group align-items-center p-3 bg-white border" id="categoryCheck">
           <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category1" name="checkCategory" value="경영/경제">
@@ -105,7 +103,6 @@
 
         <h1 class="h4 mt-3">상품 사진</h1>
         <div class="imgPreview mb-3 text-center">
-          <!-- <a><img id="nowimage" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image"></a> -->
         </div>
 
         <!-- 멀티 업로드 test -->
@@ -114,12 +111,10 @@
         <div id="ckPhoto"></div>
         <div class="input-group mb-3">
           <label for="book-photo">상품 사진</label>
-          <!-- <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" multiple required> -->
 
           <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" onchange="clearImg()" multiple required>
         </div>
 
-        <!-- 여기에 사용자 위치를 표시합니다 -->
         <div class="usreLocation">
           {% if user.location %}
           <a><img src="/img/marker.png" width="25px" height="25px"></a>
@@ -159,9 +154,7 @@
   <script src="/js/bootstrap.bundle.min.js"></script>
   <script src="/js/ckboxLimit.js"></script>
   <script src="/js/popGuide.js"></script>
-
-  <!-- 테스트 flex -->
-  <script src="/js/previewPost2.js"></script>
+  <script src="/js/previewPost.js"></script>
 </body>
 
 </html>

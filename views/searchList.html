@@ -27,8 +27,6 @@
             {% include "searchBox.html" %}
             {% endif %}
 
-            <!-- 페이징을 위해 maxPage, currentPage 넌적스 추가가 필요합니다
-                 페이징은 카테고리 구문 없이 전부 출력할 생각입니다 -->
             <div class="saleList pt-5 mt-5 border-top">
                 <!-- 검색결과 -->
                 <div class="searchResult mt-5">
@@ -77,7 +75,6 @@
                             <p class="fw-bold text-primary mb-2">구매</p>
                             <div class="d-sm-flex justify-content-between align-items-center">
                                 <h1 class="postingTitle h3 fw-bold">{{foundBook.postmessage}}</h1>
-                                <!-- <a class="text-decoration-none text-dark">{{foundBook.createdAt}}</a> -->
                             </div>
                             <p class="mt-3">{{foundBook.usernick}}</p>
                         </div>
@@ -122,7 +119,6 @@
                             <li class="page-item"><a class="page-link" href="/search/it/?searchFilter={{searchFilter}}&searchWord={{searchWord}}&page={{ i + 1 }}">{{ i + 1
                                     }}</a></li>
                             {% endif %}
-                            <!-- <li class="page-item active"><a class="page-link" href="/search/it/?searchFilter={{searchFilter}}&searchWord={{searchWord}}&page={{ i + 1 }}">{{ i + 1 }}</a></li> -->
                             {% elif i==1 or i+1==maxPage|length-2%}
                             <li class="page-item"><a class="page-link">..</a></li>
                             {% endif %}

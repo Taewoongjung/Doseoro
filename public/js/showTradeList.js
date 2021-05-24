@@ -5,28 +5,20 @@ const bought_buy_Box = document.getElementById('boughtBooks_buy_Box'); // 삽니
 
 function showSoldBox() {
     boughtBox.style.display = 'block';
-    soldBox.style.display = 'none';
-    sold_buy_Box.style.display = 'none';
-    bought_buy_Box.style.display = 'none';
+    soldBox.style.display = sold_buy_Box.style.display = bought_buy_Box.style.display = 'none';
 }
 
 function showBoughtBox() {
-    boughtBox.style.display = 'none';
     soldBox.style.display = 'block';
-    sold_buy_Box.style.display = 'none';
-    bought_buy_Box.style.display = 'none';
+    boughtBox.style.display = sold_buy_Box.style.display = bought_buy_Box.style.display = 'none';
 }
 
 function showSoldBuyBox() {
-    boughtBox.style.display = 'none';
-    soldBox.style.display = 'none';
     sold_buy_Box.style.display = 'block';
-    bought_buy_Box.style.display = 'none';
+    boughtBox.style.display = soldBox.style.display = bought_buy_Box.style.display = 'none';
 }
 
 function showBoughtBuyBox() {
-    boughtBox.style.display = 'none';
-    soldBox.style.display = 'none';
-    sold_buy_Box.style.display = 'none';
     bought_buy_Box.style.display = 'block';
+    boughtBox.style.display = soldBox.style.display = sold_buy_Box.style.display = 'none';
 }
