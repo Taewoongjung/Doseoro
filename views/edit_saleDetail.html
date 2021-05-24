@@ -10,7 +10,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
   <link rel="stylesheet" href="/css/style.css">
-  <!-- <link rel="stylesheet" href="/css/saleDetail.css"> -->
 
   <title>책 정보 수정</title>
 </head>
@@ -125,7 +124,6 @@
 
         <div class="input-group">
           <label for="book-about">상품설명</label>
-          <!-- <input type="text" class="form-control p-3" id="book-about" name="about" value="{{books.about}}"> -->
           <textarea type="text" class="form-control p-3 mb-4" id="book-about" name="about" placeholder="내용" rows="10">{{books.about}}</textarea>
         </div>
         <input type="hidden" id="delete_it-{{book.id}}" name="this_item_id" value="{{books.id}}">
