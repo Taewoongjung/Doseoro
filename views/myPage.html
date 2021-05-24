@@ -21,7 +21,6 @@
         <!-- 마이페이지 -->
         <main class="myPage min-vh-100 container-sm border p-5">
             <div class="profile d-flex flex-wrap align-items-center pb-5">
-                <!-- 프로필 이미지 추가 여부 논의 필요 -->
                 <img src="/img/profileImg.png" class="rounded-circle w-25" alt="profile">
                 <div class="ms-5">
                     <h1 class="h3 fw-bold">{{user.nick}}</h1>
@@ -30,8 +29,6 @@
                     {% else %}
                     <div id="myAddr" class="mt-1 mb-3 fw-bold">위치를 등록해주세요</div>
                     {% endif %}
-                    <!-- 프로필 적용여부 논의 필요 -->
-                    <!-- <a class="h5 mt-2 text-decoration-none" href="/pages/myProfile">프로필</a> -->
                     <div class="gelocationBtn d-flex">
                         <button class="btn btn-primary me-3" type="submit" onclick="getLocation()">위치</button>
 

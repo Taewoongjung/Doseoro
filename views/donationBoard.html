@@ -1,8 +1,5 @@
 <!doctype html>
 <html lang="en">
-<!-- 
-  footer는 현재 fixed-bottom 이지만 구현이 완료된 후 static으로 바꿔야함
- -->
 
 <head>
     <meta charset="utf-8">
@@ -43,8 +40,6 @@
                         <div class="card-body text-center">
                             <p class="postTitle card-title fw-bold mb-3">{{book.postmessage}}</p>
                             <p class="postTitle card-title fw-bold mb-3">{{book.usernick}}</p>
-                            <!-- <p>무료나눔</p> -->
-                            <!-- <a href="/book/{{book.id}}" class="enter btn-primary ms-5 p-2 text-decoration-none">자세히</a> -->
                         </div>
                     </div>
                     {% endfor %}
@@ -64,7 +59,6 @@
                                 {% else %}
                                 <li class="page-item"><a class="page-link" href="/pages/donationBoard?page={{ i + 1 }}">{{ i + 1 }}</a></li>
                                 {% endif %}
-                            <!-- <li class="page-item"><a class="page-link" href="/pages/donationBoard?page={{ i + 1 }}">{{ i + 1 }}</a></li> -->
                             {% elif i==1 or i+1==maxPage|length-2%}
                             <li class="page-item"><a class="page-link">..</a></li>
                             {% endif %}
@@ -93,7 +87,6 @@
             request.setAttribute('method', 'GET');
         }
     </script>
-    <!-- <script src="/js/searchDisplay.js"></script> -->
     <script src="/js/topNav.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/movePage.js"></script>

@@ -11,7 +11,6 @@
     integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
   <link rel="stylesheet" href="/css/style.css">
-  <!-- <link rel="stylesheet" href="/css/saleDetail.css"> -->
 
   <title>책 등록</title>
 </head>
@@ -146,17 +145,14 @@
 
         <h1 class="h4 mt-3">상품 사진</h1>
         <div class="imgPreview mb-3 text-center">
-          <!-- <a><img id="nowimage" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image"></a> -->
           <input id="img-url" type="hidden" name="imgurl">
         </div>
 
-        <!-- 멀티 업로드 test -->
         <div id="nowimage"></div>
 
         <div id="ckPhoto"></div>
         <div class="input-group mb-3">
           <label for="img">상품 사진</label>
-          <!-- <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" multiple required> -->
           <input type="file" class="form-control" id="book-photo" name="img" accept="image/*" onchange="clearImg()" multiple required>
         </div>
 

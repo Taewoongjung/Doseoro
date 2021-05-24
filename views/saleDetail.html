@@ -11,7 +11,6 @@
 
     <link rel="stylesheet" href="/css/style.css">
 
-    <!-- <title>판매 디테일</title> -->
     <title>{{title}}</title>
 </head>
 
@@ -41,7 +40,6 @@
                             <p><a><img src="/img/marker.png" width="20px"></a>미등록</p>
                             {% endif %}
                         </div>
-                        <!-- <a class="text-decoration-none text-dark text-end" id="getPostingDate">{{createdAt}}</a> -->
                         <a class="text-decoration-none text-dark text-end" id="getPostingDate"></a>
                         <input id="postingTime" type="hidden" value="{{createdAt}}">
                     </div>
@@ -482,11 +480,9 @@
             const request = document.getElementById(`comment-ED-form-${id}`);
             // confirm에서 선택에 따라 이벤트 발생
             if (confirm('"' + name + '"' + "님과 거래를 마쳤습니까?")) {
-                // 성공
                 request.setAttribute('action', '/trade/commentTrade_sale');
                 request.setAttribute('method', 'POST');
             } else
-                // 취소
                 alert("거래 취소");
         }
 
@@ -496,12 +492,10 @@
             console.log(reName);
             const request = document.getElementById(`re_comment-ED-form-${cid}-${id}`);
             // confirm에서 선택에 따라 이벤트 발생
-            if (confirm(reName + "님과 거래를 마쳤습니까?")) {
-                // 성공
+            if (confirm('"' + reName + '"' + "님과 거래를 마쳤습니까?")) {
                 request.setAttribute('action', '/trade/reCommentTrade_sale');
                 request.setAttribute('method', 'POST');
             } else
-                // 취소
                 alert("거래 취소");
         }
 

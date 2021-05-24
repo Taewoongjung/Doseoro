@@ -75,11 +75,8 @@
 
           <div class="d-flex"><input type="checkbox" onclick="ckLimit(this)" class="form-check-input" id="book-category11" name="checkCategory" value="기타" checked>
           <label for="book-category11" class="me-3 ms-2" style="display: block;">기타</label></div>
-
-          <!-- <input type="text" class="form-control p-3" id="book-category" name="category" placeholder="카테고리" required> -->
         </div>
 
-        <!-- 체크박스, 텍스트기입 논의 필요 / id를 꼭 확인해주세요 -->
         <h1 class="h4 mt-3">사용흔적</h1>
         <div class="stateBox input-group align-items-center p-3 bg-white border" id="stateCheck">
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state1" name="checkState" value="깨끗함/새책" checked>
@@ -99,7 +96,6 @@
         </div>
 
         <h1 class="h4 mt-3">거래방법</h1>
-        <!-- 여기에 사용자 위치를 표시합니다 -->
         <a class="fw-bold h5 text-black-50 text-decoration-none" id="postMyLocation">내 위치</a>
         <select class="form-select mb-1 p-2" id="dealMethod" name="dealRoot">
           <option  name="dealRoot"value="직거래, 택배" selected>직거래, 택배</option>
@@ -108,7 +104,6 @@
         </select>
         
         <h1 class="h4 mt-3">상품 사진</h1>
-        <!-- 멀티 업로드 test -->
         <div id="nowimage">
           {% for i in range(0,5) -%}
             {% if books.img[i] != NULL %}

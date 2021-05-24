@@ -43,7 +43,6 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <!-- <a class="text-decoration-none text-dark text-end" id="getPostingDate">{{createdAt}}</a> -->
                         <a class="text-decoration-none text-dark text-end" id="getPostingDate"></a>
                         <input id="postingTime" type="hidden" value="{{createdAt}}">
                     </div>
@@ -62,7 +61,6 @@
                                 <div class="">
                                     <form id="book_like-form">
                                         <div class="saleCheck border-0 p-2 d-flex" style="border-radius: 10px">
-                                            <!-- 책 올린 사람 찾기 위함 -->
                                             <input type="hidden" name="createdat" value="{{book.createdAt}}">
                                             <!-- OwnerId -->
                                             <input type="hidden" name="user" value="{{user}}">
@@ -138,7 +136,6 @@
             <form id="comment-form" class="mt-5 w-75 ms-auto me-auto">
                 <div class="input-group">
                     <input id="comment" class="form-control p-2" name="comment">
-                    <!-- <textarea id="comment" name="comment" maxlength="140"></textarea> -->
 
                     <input type="hidden" name="bookId" value="{{bookId}}">
                     <button id="comment-btn" type="submit" class="btn btn-primary" onclick="postComment()"
