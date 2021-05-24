@@ -37,7 +37,22 @@ function loadCheckState() {
     }
 }
 
+function loadtradeRoot() {
+    const getMethod = document.getElementById('getTradeMethod').value;
+
+    const tradeArr = [];
+    const tradeVal = [];
+    for(let i = 1; i <= 3; i++) {
+        tradeArr[i] = document.getElementById('dealMethod' + i);
+        tradeVal[i] = document.getElementById('dealMethod' + i).value;
+
+        if(getMethod == tradeVal[i])
+            tradeArr[i].selected = true;
+    }
+}
+
 function init() {
     loadCheckCate();
+    loadtradeRoot();
     loadCheckState();
 }init();
