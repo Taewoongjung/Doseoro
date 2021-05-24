@@ -74,8 +74,9 @@
         </div>
 
         <h1 class="h4 mt-3">사용흔적</h1>
+        <input type="text" hidden id="getState" value="{{books.state}}">
         <div class="stateBox input-group align-items-center p-3 bg-white border" id="stateCheck">
-          <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state1" name="checkState" value="깨끗함/새책" checked>
+          <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state1" name="checkState" value="깨끗함/새책">
             <label for="book-state1" class="me-3 ms-2" style="display: block;">깨끗함/새책</label></div>
 
           <div class="d-flex"><input type="checkbox" class="form-check-input" id="book-state2" name="checkState" value="필기있음">
@@ -92,10 +93,11 @@
         </div>
 
         <h1 class="h4 mt-3">거래방법</h1>
+        <input type="text" hidden id="getTradeMethod" value="{{books.tradingmethod}}">
         <select class="form-select mb-1 p-2" id="dealMethod" name="dealRoot">
-          <option  name="dealRoot"value="직거래, 택배" selected>직거래, 택배</option>
-          <option name="dealRoot" value="직거래">직거래</option>
-          <option name="dealRoot" value="택배">택배</option>
+          <option id="dealMethod1" name="dealRoot" value="직거래, 택배">직거래, 택배</option>
+          <option id="dealMethod2" name="dealRoot" value="직거래">직거래</option>
+          <option id="dealMethod3" name="dealRoot" value="택배">택배</option>
         </select>
 
         <h1 class="h4 mt-3">상품 사진</h1>
@@ -126,7 +128,7 @@
           <div id="popupBox" style="display:none;"><a>마이페이지 → "위치" 클릭 → "위치설정하기" 클릭</a></div>
           {% endif %}
         </div>
-        
+
         <div class="input-group">
           <label for="book-about">상품설명</label>
           <textarea type="text" class="form-control p-3 mb-4" id="book-about" name="about" placeholder="내용" rows="10">{{books.about}}</textarea>
