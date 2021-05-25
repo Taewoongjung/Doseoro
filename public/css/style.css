@@ -113,10 +113,8 @@ textarea {
 }
 /* index style */
 .slide2Inner {
-	background-color: #80d1f1;
-	/* 53B1D7 */
+	background-color: #005eb8;
 	border-radius: 12px;
-	/* padding-top: 40px; */
 	display: flex;
 	align-items: center;
 }
@@ -141,18 +139,20 @@ textarea {
 .slideSubTitle {
 	font-size: 24px;
 	color: #ffffff;
-	margin-bottom: 3rem;
+	margin-bottom: 4rem;
 }
 .slideGuide {
 	border: solid 2px #ffffff;
-	padding: 1rem;
+	padding: 1rem 2.4rem;
 	text-decoration: none;
 	color: #ffffff;
 }
 .slideGuide:hover {
 	cursor: pointer;
-	background-color: #51b6df;
+	/* background-color: #51b6df; */
+	background-color: #387cbb;
 	color: #ffffff
+	/* color:black */
 }
 .searchForm {
 	max-width: 500px;
@@ -478,7 +478,41 @@ textarea {
 	margin: 1rem auto;
 }
 
-/* index main popup */
+/* mainPopup.html */
+.guideInner {
+	width: 800px;
+	margin: 2rem auto 5rem auto;
+}
+.guideInner h3 {
+	font-weight: bold;
+}
 .StepList {
 	margin: 0 0 2rem 0;
+	display: flexbox;
+}
+.StepList div {
+	margin-bottom: 1rem;
+}
+.StepList::before {
+	content: "";
+	display: block;
+	border-bottom: 1px solid rgb(187, 187, 187);
+	margin-bottom: 2rem
+}
+.imgInner {
+	width: 100%;
+	text-align: center;
+}
+.mannerInner li {
+	display: flex;
+	align-items: center;
+	margin: 1rem 0;
+}
+.mannerInner li h1 {
+	font-weight: bold;
+}
+.mannerInner img {
+	border: 1px solid black;
+	border-radius: 100%;
+	margin-right: 2rem;
 }
