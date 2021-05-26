@@ -52,7 +52,7 @@ module.exports = class User extends Sequelize.Model {
                 type: Sequelize.STRING(10),
                 allowNull: true,
             },
-            provider: { // kakao로 할 때는 kakao로 바뀜
+            provider: {
                 type: Sequelize.STRING(10),
                 allowNull: false,
                 defaultValue: 'local',
