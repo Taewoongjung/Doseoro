@@ -382,22 +382,6 @@
             request.setAttribute('method', 'POST');
         }
 
-        function sell_item_edit(id) {
-            const request = document.getElementById(`sell_item-ED-form-${id}`);
-            request.setAttribute('action', '/mpfunc/editIt_A');
-            request.setAttribute('method', 'POST');
-        }
-        function sell_item_edit2(id) {
-            const request = document.getElementById(`sell_item-ED-form-${id}`);
-            request.setAttribute('action', '/mpfunc/editIt_B');
-            request.setAttribute('method', 'POST');
-        }
-        function sell_item_delete(id) {
-            const request = document.getElementById(`sell_item-ED-form-${id}`);
-            request.setAttribute('action', '/mpfunc/deleteInDetail');
-            request.setAttribute('method', 'GET');
-        }
-
         function postComment() {
             const request = document.getElementById('comment-form');
 
@@ -503,7 +487,7 @@
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/topNav.js"></script>
     <script src="/js/timestamp.js"></script>
-
+    <script src="/js/postUD.js"></script>
 </body>
 
 </html>
