@@ -28,9 +28,8 @@ function checkText() {
     const submitBtn = document.getElementById('submitBtn');
 
     let convText = searchText.replace(/\s|  /gi, '');
-    if (convText == '') {
-            submitBtn.disabled = true;
-    } else {
-            submitBtn.disabled = false;
-    }
+    if (convText == '')
+        submitBtn.disabled = true;
+    else
+        submitBtn.disabled = false;
 }

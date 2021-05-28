@@ -71,7 +71,12 @@ table {
 textarea {
 	resize: none;
 }
-
+.contentInner {
+	margin: 0 auto;
+	min-height: 100%;
+	padding-top: 30px;
+	/* container-sm mt-0 mb-0 min-vh-100 pt-5 */
+}
 /* topNavbar stype */
 .notionBtn {
 	border-radius: 7px;
@@ -177,6 +182,9 @@ textarea {
 	background-color: rgb(6, 143, 255);
 	border:0px;
 }
+.menuBtn {
+	margin: auto 5px;
+}
 .menuForm {
 	max-width: 500px;
 }
@@ -264,26 +272,18 @@ textarea {
 	pointer-events: none;
 }
 #popupBox:after {
-	/* border-color: rgb(230, 230, 230); */
 	border-top-color: rgb(53, 53, 53);
 	border-width: 5px;
 	margin-left: -5px;
 }
 #popupBox:before {
-	/* border-color: rgb(230, 230, 230); */
 	border-top-color: rgb(53, 53, 53);
 	border-width: 18px;
 	margin-left: -18px;
 }
-/* #nowimage {
-	width: 200px;
-	height: 250px;
-	border-radius: 12px;
-} */
 #nowimage {
 	display: flex;
 	flex-wrap: wrap;
-	/* grid-template-columns: 1fr 1fr 1fr; */
 	justify-content: center;
 }
 .imageBox {
@@ -304,7 +304,9 @@ textarea {
 	color: white;
 	text-shadow: 2px 2px 2px black;
 }
-
+.cateBox {
+	margin: auto 5px auto 10px;
+}
 /* myPage.html */
 .profile img {
 	max-width: 200px;

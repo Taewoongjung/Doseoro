@@ -212,19 +212,6 @@
         <nav class="navbar navbar-expand-md bg-dark border-1" id="footerNav"></nav>
     </div>
     <script>
-        // 커뮤니티 스크립트
-        function community_item_edit(id) {
-            const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/editIt_community');
-            request.setAttribute('method', 'POST');
-        }
-
-        function community_item_delete(id) {
-            const request = document.getElementById(`community_item-ED-form-${id}`);
-            request.setAttribute('action', '/free_community/delete_community');
-            request.setAttribute('method', 'GET');
-        }
-
         // 여기만 수정
         function postComment() {
             const request = document.getElementById('comment-form');
@@ -309,6 +296,7 @@
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/topNav.js"></script>
     <script src="/js/timestamp.js"></script>
+    <script src="/js/postUD.js"></script>
 </body>
 
 </html>
