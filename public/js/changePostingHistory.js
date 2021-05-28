@@ -6,6 +6,9 @@ const communityPosting = document.getElementById('communityPosting');
 // 로컬스토리지 저장 변수
 let loadPage;
 
+// 페이징을 위한 변수
+let nowList = document.location.href.split("?");
+
 function showSale() {
     requestPosting.style.display = donatePosting.style.display = communityPosting.style.display = "none";
     salePosting.style.display = "block";
@@ -13,6 +16,8 @@ function showSale() {
     loadPage = 'salePosting';
     // 로컬 스토리지에 page변수 저장
     localStorage.setItem('page', loadPage);
+
+    location.replace(nowList[0] + '?pageSale=1');
 }
 
 function showRequset() {
@@ -21,6 +26,8 @@ function showRequset() {
 
     loadPage = 'requestPosting';
     localStorage.setItem('page', loadPage);
+
+    location.replace(nowList[0] + '?pageBuying=1');
 }
 
 function showDonate() {
@@ -29,6 +36,8 @@ function showDonate() {
 
     loadPage = 'donatePosting';
     localStorage.setItem('page', loadPage);
+
+    location.replace(nowList[0] + '?pageFree=1');
 }
 
 function showCommunity() {
@@ -37,6 +46,8 @@ function showCommunity() {
 
     loadPage = 'communityPosting';
     localStorage.setItem('page', loadPage);
+
+    location.replace(nowList[0] + '?pageCommunity=1');
 }
 
 // 로컬스토리지
