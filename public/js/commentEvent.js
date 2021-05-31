@@ -52,7 +52,7 @@ function comment_edit(id) {
     }
 }
 
-// 대댓글 등록클릭 이벤트
+// 답글 등록클릭 이벤트
 function postReComment() {
     alert("대댓글 등록");
     window.location.reload();
