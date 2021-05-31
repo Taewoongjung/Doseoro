@@ -410,11 +410,11 @@
             }
         }
 
-        function comment_delete(id) {
-            const request = document.getElementById(`comment-ED-form-${id}`);
-            request.setAttribute('action', '/comment/commentDelete');
-            request.setAttribute('method', 'GET');
-        }
+        // function comment_delete(id) {
+        //     const request = document.getElementById(`comment-ED-form-${id}`);
+        //     request.setAttribute('action', '/comment/commentDelete');
+        //     request.setAttribute('method', 'GET');
+        // }
 
         // 대댓글
         function re_comment(id) {
@@ -428,12 +428,6 @@
             inputRe.innerHTML = '<form action="/recomment" method="POST"><div class="input-group"><input type="text" id="comment" class="reComment inputForm w-50 p-2" name="comment"><input type="hidden" name="bookId" value="{{bookId}}"><input type="hidden" id="commentId" name="commentId" value="{{comment.id}}"><input type="hidden" id="userId" name="UserId" value="{{userId}}"><button id="comment-btn" type="submit" class="btn btn-primary" onclick="postReComment()"value="Click">답글등록</button></div></form>';
             document.getElementById(`userId`).value = userId;
             document.getElementById(`commentId`).value = commentId;
-        }
-
-        // 대댓글 등록클릭 이벤트
-        function postReComment() {
-            alert("대댓글 등록");
-            window.location.reload();
         }
 
         // 대댓글 수정/삭제
@@ -488,6 +482,7 @@
     <script src="/js/topNav.js"></script>
     <script src="/js/timestamp.js"></script>
     <script src="/js/postUD.js"></script>
+    <script src="/js/commentEvent.js"></script>
 </body>
 
 </html>
