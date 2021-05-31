@@ -226,28 +226,6 @@
             }
         }
 
-        // 밑에는 수정 해야함
-        function comment_edit(id) {
-            var Com = prompt('수정 할 문구를 적어주세요');
-            document.getElementById(`edit_it-${id}`).value = `${Com}`;
-
-            const request = document.getElementById(`comment-ED-form-${id}`);
-
-            let ckCom = Com.replace(/\s|　/gi, '');
-            if (ckCom == '') {
-                alert("내용을 입력하세요");
-            } else {
-                request.setAttribute('action', `/comment/commentEdit_commu?Com`);
-                request.setAttribute('method', 'GET');
-            }
-        }
-
-        // function comment_delete(id) {
-        //     const request = document.getElementById(`comment-ED-form-${id}`);
-        //     request.setAttribute('action', '/comment/commentDelete_commu');
-        //     request.setAttribute('method', 'GET');
-        // }
-
         // 대댓글
         function re_comment(id) {
             console.log("대댓글 클릭됨");
