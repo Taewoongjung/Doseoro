@@ -13,7 +13,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
-    "color-hash": "^1.0.3",
     "connect-redis": "^5.1.0",
     "cookie-parser": "^1.4.5",
     "csurf": "^1.11.0",
