@@ -433,6 +433,9 @@ textarea {
 	width: 320px;
 	height: 400px;
 }
+#getPostingContents, #getAppearanceInfo {
+	line-height: 25px;
+}
 
 /* communityDetail.html */
 
