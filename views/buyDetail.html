@@ -300,28 +300,6 @@
             }
         }
 
-        function comment_edit(id) {
-            var Com = prompt('수정 할 문구를 적어주세요');
-            document.getElementById(`edit_it-${id}`).value = `${Com}`;
-
-            const request = document.getElementById(`comment-ED-form-${id}`);
-
-            let ckCom = Com.replace(/\s|　/gi, '');
-            if (ckCom == '') {
-                alert("내용을 입력하세요");
-            } else {
-                request.setAttribute('action', `/comment/commentEdit_buy?Com`);
-                request.setAttribute('method', 'GET');
-            }
-
-        }
-
-        // function comment_delete(id) {
-        //     const request = document.getElementById(`comment-ED-form-${id}`);
-        //     request.setAttribute('action', '/comment/commentDelete_buy');
-        //     request.setAttribute('method', 'GET');
-        // }
-
         // 대댓글
         function re_comment(id) {
             console.log("대댓글 클릭됨");
@@ -366,11 +344,9 @@
             const request = document.getElementById(`comment-ED-form-${id}`);
             // confirm에서 선택에 따라 이벤트 발생
             if(confirm('"' + name + '"' + "님과 거래를 마쳤습니까?")) {
-                // 성공
                 request.setAttribute('action', '/trade/commentTrade_buy');
                 request.setAttribute('method', 'POST');
             } else
-                // 취소
                 alert("거래 취소");
         }
 
