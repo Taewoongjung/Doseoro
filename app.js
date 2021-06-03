@@ -53,7 +53,6 @@ sequelize.sync({ force: false })
 if (process.env.NODE_ENV === 'production') {
   app.enable('trust proxy');
   app.use(morgan('combined'));
-  app.use(helmet());
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(hpp());
 } else {
