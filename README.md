@@ -80,7 +80,7 @@
 * Database: Sequelize, mysql
  
  ## DB 테이블 구조
- * books
+ * [books](https://github.com/Taewoongjung/TeamProject/blob/main/DB_books.md)
  * users
  * posts
  * communities
