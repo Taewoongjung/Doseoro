@@ -79,6 +79,14 @@
 * Frontend: Nunjucks Bootstrap
 * Database: Sequelize, mysql
  
+ ## DB 테이블 구조
+ * books
+ * users
+ * posts
+ * communities
+ * whose
+ * complains
+ 
  ## ER Diagram
  ![image](https://user-images.githubusercontent.com/70272679/122011853-83fdda00-cdf7-11eb-8ed9-0e3b5b472cee.png)
 
