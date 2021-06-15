@@ -81,7 +81,7 @@
  
  ## DB 테이블 구조
  * [books](https://github.com/Taewoongjung/TeamProject/blob/main/DB_books.md)
- * users
+ * [users](https://github.com/Taewoongjung/TeamProject/blob/main/DB_users.md)
  * posts
  * communities
  * whose
