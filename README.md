@@ -20,6 +20,17 @@
  ### 프로젝트의 기대효과
  이용자는 도서명, 저자, 출판사를 중심으로 다양한 형태의 중고거래를 검색할 수 있으며, 카테고리 별로도 거래 현황을 볼 수 있다. 판매 외에도 구매자가 원하는 도서를 게시판에 올려 구매자 위주로의 거래가 활발하게 이루어질 수 있다. 또한 커뮤니티 게시글을 통한 도서의 정보를 다양하게 공유할 수 있으며, 이동경로에 따라 다양한 위치에서의 거래가 가능해 폭넓은 양의 직거래가 가능하다는점을 기대한다. 궁극적으로는 COVID-19 이후로 높아진 수요의 중고거래와 도서를 이용하여 또 다른 경제유통의 장을 열 수 있는 효과가 있다.
 
+## 🗄 파일 구조 
+* public
+  * css - css files
+  * img - image files
+  * js - script files
+* routes - router files
+* views - HTML and nunjucks files
+* config - Setting for linking sequelize and mysql
+* models - sequelize table
+* passport - passport strategy
+
 ## 💡 프로젝트 제안 내용
  ### 주요기능
 번호|기능명|설명 
@@ -64,6 +75,30 @@
 12|trade.js|팝니다, 삽니다 게시판 물품들을 거래할 때 댓글과 대댓글에 구매적용을 담당하고 있는 라우터들의 모임이다.| 팝니다/삽니다 댓글 대댓글에 구매하기 적용
 13|wannabuy.js|삽니다에 해당되는 기능을 담당하고 있는 라우터들의 모임이다.| 삽니다 등록/삭제/(마이페이지에서)삭제/수정/들어가기/댓글 대댓글 등록
 
+#### 📂 config 폴더 안 파일
+번호|파일명|설명|기능
+:---:|:---|---|---|
+1|config|프로젝트 설정을 담당한다.| DB설정/타임존/pool 설정
+
+#### 📂 model 폴더 안 파일
+번호|파일명|설명 및 기능
+:---:|:---|---|
+1|index.js|MySQL과 Node와 sequelize를 연결을 담당한다.
+2|community.js|communities 스키마를 설정한다.
+3|complain.js|complains 스키마를 설정한다.
+4|book.js|books 스키마를 설정한다.
+5|post.js|posts 스키마를 설정한다.
+6|user.js|users 스키마를 설정한다.
+7|who.js|whose 스키마를 설정한다.
+
+#### 📂 passport 폴더 안 파일
+번호|파일명|설명|기능
+:---:|:---|---|---|
+1|index.js|serializeUser와 deserializeUser가 있다.| 세션에 저장할 값들 설정하는 serializeUser와 브라우저로 부터 온 세션쿠키를 보고 아이디를 확인하여 req.user를 만드는 deserializeUser역할을 한다.
+2|google.js|구글로 로그인 하는 담당을 한다.| 구글이 대신 인증
+3|kakao.js|카카오로 로그인 하는 담당을 한다.| 카카오가 대신 인증
+4|local.js|로컬로 로그인 하는 담당을 한다.| 이메일과 비밀번호로 
+
  ### 구현중 변경 내용
 번호|기능명|제안내용|변경사항
 :---:|:---|---|---|
@@ -79,23 +114,12 @@
 10| 메인 페이지 구성| 베너 + 최신 도서 4개로 구성| 베너 + 팝니다, 삽니다, 무료나눔 게시판 최신 등록 글 4개로 변경
 11| 메인 페이지 베너| 최신 등록 글, 이용 매너, 인기글| 도서로 이용 매너, 인기글로 변경
 
-### 추후 추가 구현할 것들
-✔ 가격 순, 최신순 필터 적용
+## 💡 추후 추가 구현할 것들
+- [ ] 가격 순, 최신순 필터 적용
 
-✔ 거래 후기
+- [ ] 거래 후기
 
-✔ 프로필 변경
-
-## 🗄 파일 구조 
-* public
-  * css - css files
-  * img - image files
-  * js - script files
-* routes - router files
-* views - HTML and nunjucks files
-* config - Setting for linking sequelize and mysql
-* models - sequelize table
-* passpor- passport strategy
+- [ ] 프로필 변경
  
  ## 💡 ER Diagram
  ![image](https://user-images.githubusercontent.com/70272679/122011853-83fdda00-cdf7-11eb-8ed9-0e3b5b472cee.png)
