@@ -99,6 +99,54 @@
 3|kakao.js|카카오로 로그인 하는 담당을 한다.| 카카오가 대신 인증
 4|local.js|로컬로 로그인 하는 담당을 한다.| 이메일과 비밀번호로 
 
+#### 📂 public/js 폴더 안 파일
+번호|파일명|설명 및 기능
+:---:|:---|---|
+1|areaRange.js|설정한 지역 범위에 해당하는 게시글을 조회
+2|changePostingHistory.js|글 작성 내역을 카테고리별로 표시
+3|checkFormat.js|회원가입 페이지에서 비밀번호 일치 여부 확인 및 핸드폰 번호 포맷을 적용
+4|ckboxLimit.js|게시글 작성 시 선택할 수 있는 옵션의 갯수를 지정
+5|notionEvent.js|알림 클릭 시 알림 창을 popup 함
+6|popGuide.js|글 작성에서 등록된 사용자의 위치가 없으면 안내 문구를 표시
+7|previewPost.js <br>previewPost2.js|등록한 사진의 미리 보기를 제공
+8|showTradeList.js|판매, 구매 내역을 카테고리별로 표시
+9|timestamp.js|작성시간과 현재 시간을 계산해 timestamp를 표시
+10|topNav.js|페이지 하단의 footer
+11|userLocation.js|Geolocation API로 사용자 위치를 받아 지도에 표시
+
+#### 📂 views 폴더 안 파일
+번호|파일명|설명
+:---:|:---|---|
+1|bookRequest.html|삽니다 포스팅 리스트를 표시함
+2|buyDetail.html|삽니다 상세 페이지
+3|changePW.html|PW 변경 페이지
+4|community.html|커뮤니티 포스팅 리스트 페이지
+5|communityDetail.html|커뮤니티 포스팅 리스트를 표시함
+6|csDetail.html|고객문의 상세 페이지
+7|csList.html|고객문의 포스팅 리스트를 표시함
+8|donationBoard.html|무료나눔 포스팅 리스트를 표시함
+9|edit_buyDetail.html|삽니다 게시글 수정 페이지
+10|edit_commuDetail.html|커뮤니티 게시글 수정 페이지
+11|edit_freeDetail.html|무료나눔 게시글 수정 페이지
+12|edit_saleDetail.html|팝니다 게시글 수정 페이지
+13|error.html|에러 메세지
+14|findID.html|ID 찾기 페이지
+15|findPW.html|PW 찾기 페이지
+16|index.html|메인 페이지
+17|likedProduct.html|관심 상품 페이지
+18|login.html|로그인 페이지
+19|myPage.html|마이페이지
+20|myPostingList.html|내가 쓴 글 페이지
+21|registCommunity.html|커뮤니티 글 등록 페이지
+22|registDonation.html|무료나눔 글 등록 페이지
+23|registerBook.html|팝니다 글 등록 페이지
+24|registRequest.html|삽니다 글 등록 페이지
+25|saleBoard.html|팝니다 포스팅 리스트를 표시함
+26|saleDetail.html|팝니다 상세 페이지
+27|searchBox.html|비로그인 페이지 상단의 검색 바, 메뉴 리스트
+28|searchBoxLoggedIn.html|로그인 한 경우 페이지 상단의 검색 바, 메뉴 리스트
+29|searchList.html|검색 결과 페이지
+
  ### 구현중 변경 내용
 번호|기능명|제안내용|변경사항
 :---:|:---|---|---|
