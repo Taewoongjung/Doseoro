@@ -1,7 +1,11 @@
 # 도서판매 웹사이트
 ### 명지대학교 팀프로젝트2
-* 배포 도메인: https://doseoro.taewoongjung.xyz/
-
+* 배포 도메인: (https://doseoro.taewoongjung.xyz)
+  
+## < 사용 기술 > 
+* Backend: Express, Passport, AWS EC2, Route53, Multer
+* Frontend: Nunjucks Bootstrap
+* Database: Sequelize, mysql
 
 ## < 실행 방법 >
   1. .env가 필요하므로 파일은 저한테 요청해주세요.
@@ -74,11 +78,9 @@
 * models - sequelize table
 * passpor- passport strategy
  
-## < 사용 기술 > 
-* Backend: Express, Passport, AWS EC2, Route53, Multer
-* Frontend: Nunjucks Bootstrap
-* Database: Sequelize, mysql
- 
+ ## ER Diagram
+ ![image](https://user-images.githubusercontent.com/70272679/122011853-83fdda00-cdf7-11eb-8ed9-0e3b5b472cee.png)
+
  ## DB 테이블 구조
  ※원하시는 테이블을 클릭하시면 링크로 이동합니다.
  * [books](https://github.com/Taewoongjung/TeamProject/blob/main/DB_books.md)
@@ -87,9 +89,4 @@
  * [communities](https://github.com/Taewoongjung/TeamProject/blob/main/DB_communities.md)
  * [whose](https://github.com/Taewoongjung/TeamProject/blob/main/DB_whose.md)
  * [complains](https://github.com/Taewoongjung/TeamProject/blob/main/DB_complains.md)
- 
- ## ER Diagram
- ![image](https://user-images.githubusercontent.com/70272679/122011853-83fdda00-cdf7-11eb-8ed9-0e3b5b472cee.png)
-
-
  
