@@ -17,6 +17,6 @@ books| id| INT| NN| PK| -| -| -
 "| hits| INT| -| -| -| -| -
 "| cratedAt| DATETIME| NN| -| -| -| -
 "| updatedAt| DATETIME| NN| -| -| -| -
-"| deletedAt| DATETIME| -| -| -| -
+"| deletedAt| DATETIME| -| -| -| -| -
 "| OwnerId| INT| -| -| FK| users| -
 "| SoldId| INT| -| -| -| -| -
