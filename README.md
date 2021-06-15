@@ -57,11 +57,11 @@
 11| 메인 페이지 베너| 최신 등록 글, 이용 매너, 인기글| 도서로 이용 매너, 인기글로 변경
 
 ### 추후 추가 구현할 것들
-✔가격 순, 최신순 필터 적용
+✔ 가격 순, 최신순 필터 적용
 
-✔거래 후기
+✔ 거래 후기
 
-✔프로필 변경
+✔ 프로필 변경
 
 ## < 파일 구조 📂 >
 * public
@@ -80,6 +80,7 @@
 * Database: Sequelize, mysql
  
  ## DB 테이블 구조
+ ※원하시는 테이블을 클릭하시면 링크로 이동합니다.
  * [books](https://github.com/Taewoongjung/TeamProject/blob/main/DB_books.md)
  * [users](https://github.com/Taewoongjung/TeamProject/blob/main/DB_users.md)
  * [posts](https://github.com/Taewoongjung/TeamProject/blob/main/DB_posts.md)
