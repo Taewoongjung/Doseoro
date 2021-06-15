@@ -83,9 +83,9 @@
  * [books](https://github.com/Taewoongjung/TeamProject/blob/main/DB_books.md)
  * [users](https://github.com/Taewoongjung/TeamProject/blob/main/DB_users.md)
  * [posts](https://github.com/Taewoongjung/TeamProject/blob/main/DB_posts.md)
- * communities
- * whose
- * complains
+ * [communities](https://github.com/Taewoongjung/TeamProject/blob/main/DB_communities.md)
+ * [whose](https://github.com/Taewoongjung/TeamProject/blob/main/DB_whose.md)
+ * [complains](https://github.com/Taewoongjung/TeamProject/blob/main/DB_complains.md)
  
  ## ER Diagram
  ![image](https://user-images.githubusercontent.com/70272679/122011853-83fdda00-cdf7-11eb-8ed9-0e3b5b472cee.png)
