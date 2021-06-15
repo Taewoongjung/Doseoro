@@ -146,4 +146,29 @@ router.post('/edit', isLoggedIn, upload.array('img', 5 ), async (req, res, next)
     }
 });
 
+// 0616 유저의 위치 등록
+router.get('/location', async (req, res, next) => {
+    try {
+        console.log("mpfunc/location 진입");
+
+        const { region1, region2, region3, wholeRegion } =req.query;
+        console.log(" region1 = ", region1);    // 도
+        console.log(" region2 = ", region2);    // 시/구
+        console.log(" region3 = ", region3);    // 동/리
+        console.log(" wholeRegion = ", wholeRegion);    // 전체
+        
+        await User.update({
+            location: wholeRegion,
+            do: region1,
+            si: region2,
+            dong: region3,
+        }, {
+            where: { id: res.locals.user.id }
+        });
+    } catch (error) {
+        console.error(error);
+        return next(error);
+    }
+});
+
 module.exports = router;

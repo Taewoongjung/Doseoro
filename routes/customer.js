@@ -13,6 +13,7 @@ router.use((req, res, next) => { // 모든 라우터에 회원정보 넣어주�
     next();
 });
 
+// 고객문의 등록하기
 router.post('/customerComplain', isLoggedIn, async (req, res, next) => {
     try {
         console.log("customer/customerComplain 진입");
