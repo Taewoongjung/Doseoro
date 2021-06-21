@@ -6,7 +6,7 @@
 * Backend: Express, Passport, AWS EC2, Route53, Multer
 * Frontend: Nunjucks Bootstrap
 * Database: Sequelize, mysql
-
+ 
 ## < 실행 방법 > 
   1. .env가 필요하므로 파일은 저한테 요청해주세요.
   2. 1번을 따라 .env 파일을 받으시면 터미널에 "npm i" 치고 엔터 후 "npx sequelize db:create"를 치고 엔터를 눌러주세요.
