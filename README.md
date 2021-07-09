@@ -12,7 +12,7 @@
   
 ## < 사용 기술 > 
 * Backend: Express, Passport, AWS EC2, Route53, Multer
-* Frontend: Nunjucks Bootstrap
+* Frontend: HTML, CSS, Nunjucks, Bootstrap
 * Database: Sequelize, mysql
   
 ## < 실행 방법 > 
