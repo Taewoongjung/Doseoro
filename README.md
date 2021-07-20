@@ -193,7 +193,8 @@
  ![image](https://user-images.githubusercontent.com/70272679/122011853-83fdda00-cdf7-11eb-8ed9-0e3b5b472cee.png)
 
  ## 💡 DB 테이블 구조
- ※원하시는 테이블을 클릭하시면 링크로 이동합니다.
+ ※ 원하시는 테이블을 클릭하시면 링크로 이동합니다.
+ 
  * [books](https://github.com/Taewoongjung/TeamProject/blob/main/DB_books.md)
  * [users](https://github.com/Taewoongjung/TeamProject/blob/main/DB_users.md)
  * [posts](https://github.com/Taewoongjung/TeamProject/blob/main/DB_posts.md)
