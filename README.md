@@ -8,7 +8,7 @@
 ![image](https://user-images.githubusercontent.com/70272679/123265450-098b3380-d536-11eb-8e68-1eb5af7a6069.png)
 ![image](https://user-images.githubusercontent.com/70272679/123265502-1445c880-d536-11eb-9857-2a23b0c97588.png)
 ![image](https://user-images.githubusercontent.com/70272679/123265524-1c056d00-d536-11eb-99c7-e71e3354184a.png)
-     
+      
     
 ## < 사용 기술 > 
 * Backend: Express, Passport, AWS EC2, Route53, Multer
