@@ -2,7 +2,7 @@
 ### 명지대학교 팀프로젝트2
 * 배포 도메인: (https://doseoro.taewoongjung.xyz)
     
-## < 이용 방법 >
+## < 이용 방법 > 
 ![image](https://user-images.githubusercontent.com/70272679/123265365-f0828280-d535-11eb-8cb9-55af9e65ca21.png)
 ![image](https://user-images.githubusercontent.com/70272679/123265401-faa48100-d535-11eb-97aa-bb5d07aab768.png)
 ![image](https://user-images.githubusercontent.com/70272679/123265450-098b3380-d536-11eb-8e68-1eb5af7a6069.png)
