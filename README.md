@@ -1,6 +1,6 @@
 # 도서판매 웹사이트 
 ### 명지대학교 팀프로젝트2
-* 배포 도메인: (https://doseoro.taewoongjung.xyz)
+* 배포 도메인: (https://doseoro.taewoongjung.xyz) 
    
 ## < 팀 로고 > 
 ![logo_clear](https://user-images.githubusercontent.com/70272679/138470108-f52de0fd-d7c6-4eac-a868-2355e4731ca0.png)
