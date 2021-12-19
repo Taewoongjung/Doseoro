@@ -5,7 +5,7 @@
 ## < 팀 로고 > 
 ![logo_clear](https://user-images.githubusercontent.com/70272679/138470108-f52de0fd-d7c6-4eac-a868-2355e4731ca0.png)
     
-<br>           
+<br>            
            
 ## < 이용 방법 >    
 ![image](https://user-images.githubusercontent.com/70272679/123265365-f0828280-d535-11eb-8cb9-55af9e65ca21.png)
